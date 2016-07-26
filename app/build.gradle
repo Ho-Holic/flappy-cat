@@ -19,17 +19,8 @@ model {
             toolchain 'clang'
             stl 'gnustl_static'
             cppFlags.add('-std=c++11')
+            cppFlags.add("-DTAG=\"FlappyCat\"") // tag for log system
             ldLibs.addAll(['log', 'android', 'EGL', 'GLESv1_CM'])
-        }
-
-        sources {
-            main {
-                jni {
-                    source {
-                        srcDir "src"
-                    }
-                }
-            }
         }
 
         buildTypes {
