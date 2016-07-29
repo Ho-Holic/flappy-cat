@@ -5,6 +5,13 @@
 #include "AndroidApplication.h"
 #include "Log.h"
 
+// std
+#include <thread>
+
+static void* createAndroidApplication(ANativeActivity* activity,
+                                      void* savedState,
+                                      size_t savedStateSize);
+
 static void onDestroy(ANativeActivity* activity);
 static void onStart(ANativeActivity* activity);
 static void onResume(ANativeActivity* activity);
@@ -19,9 +26,7 @@ static void onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* wi
 static void onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue);
 static void onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue);
 
-static void* createAndroidApplication(ANativeActivity* activity,
-                                      void* savedState,
-                                      size_t savedStateSize);
+
 
 //  Hello! This is a list of some conventions and decisions made for this project:
 //    1. Namespaces not used - project too small
@@ -30,32 +35,46 @@ static void* createAndroidApplication(ANativeActivity* activity,
 //       with std::log() function and ease of implementation
 
 // entry point. called from main thread
-void ANativeActivity_onCreate(ANativeActivity* activity,
-                              void* savedState,
-                              size_t savedStateSize) {
+extern "C" {
+  void ANativeActivity_onCreate(ANativeActivity *activity,
+                                void *savedState,
+                                size_t savedStateSize) {
 
-  Log::i(TAG, "Creating: %p\n", activity);
-  activity->callbacks->onDestroy = onDestroy;
-  activity->callbacks->onStart = onStart;
-  activity->callbacks->onResume = onResume;
-  activity->callbacks->onSaveInstanceState = onSaveInstanceState;
-  activity->callbacks->onPause = onPause;
-  activity->callbacks->onStop = onStop;
-  activity->callbacks->onConfigurationChanged = onConfigurationChanged;
-  activity->callbacks->onLowMemory = onLowMemory;
-  activity->callbacks->onWindowFocusChanged = onWindowFocusChanged;
-  activity->callbacks->onNativeWindowCreated = onNativeWindowCreated;
-  activity->callbacks->onNativeWindowDestroyed = onNativeWindowDestroyed;
-  activity->callbacks->onInputQueueCreated = onInputQueueCreated;
-  activity->callbacks->onInputQueueDestroyed = onInputQueueDestroyed;
-  activity->instance = createAndroidApplication(activity, savedState, savedStateSize);
+    Log::i(TAG, "Creating: %p\n", activity);
+    activity->callbacks->onDestroy = onDestroy;
+    activity->callbacks->onStart = onStart;
+    activity->callbacks->onResume = onResume;
+    activity->callbacks->onSaveInstanceState = onSaveInstanceState;
+    activity->callbacks->onPause = onPause;
+    activity->callbacks->onStop = onStop;
+    activity->callbacks->onConfigurationChanged = onConfigurationChanged;
+    activity->callbacks->onLowMemory = onLowMemory;
+    activity->callbacks->onWindowFocusChanged = onWindowFocusChanged;
+    activity->callbacks->onNativeWindowCreated = onNativeWindowCreated;
+    activity->callbacks->onNativeWindowDestroyed = onNativeWindowDestroyed;
+    activity->callbacks->onInputQueueCreated = onInputQueueCreated;
+    activity->callbacks->onInputQueueDestroyed = onInputQueueDestroyed;
+    activity->instance = createAndroidApplication(activity, savedState, savedStateSize);
+  }
 }
 
 void* createAndroidApplication(ANativeActivity* activity,
                                void* savedState,
                                size_t savedStateSize) {
+
   AndroidApplication* application = new AndroidApplication(activity, savedState, savedStateSize);
-#warning free application object and delete this message
+#warning free application object int `onDestroy` and delete this message
+
+  // don't capture `application` pointer, this would produce less readable code
+  auto eventHandlerTask = [](AndroidApplication* application)->void {
+    application->exec();
+  };
+
+  std::thread eventHandlerThread(std::ref(eventHandlerTask), std::ref(application));
+  eventHandlerThread.detach();
+
+  // wait until handler thread lunch event loop
+
   return application;
 }
 
