@@ -20,7 +20,11 @@ model {
             stl 'gnustl_static'
             cppFlags.add('-std=c++11')
             cppFlags.add("-DTAG=\"FlappyCat\"") // tag for log system
-            ldLibs.addAll(['log', 'android', 'EGL', 'GLESv1_CM'])
+
+            // you can change toolchain to `gcc` and remove link against `atomic`
+            // https://code.google.com/p/android/issues/detail?id=68779
+            // bug is still not fixed (29.07.2016)
+            ldLibs.addAll(['log', 'android', 'EGL', 'GLESv1_CM', 'atomic'])
         }
 
         buildTypes {
