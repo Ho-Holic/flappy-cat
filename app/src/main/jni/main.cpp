@@ -8,6 +8,17 @@
 // std
 #include <thread>
 
+//  Hello! This is a list of some conventions and decisions made for this project:
+//
+//    1. Namespaces not used - project too small
+//
+//    2. Java   `Log::i(TAG, "Creating: %p\n", activity);` was prefered to
+//       C++ish `log_i(TAG) << "Creating: " << activity << "\n";` because of confusion
+//       with std::log() function and less error prone implementation
+//
+//    3. Macro `DISABLE_COPY` prefered to manual `= delete` because of easy search and maintenance
+
+
 static void* createAndroidApplication(ANativeActivity* activity,
                                       void* savedState,
                                       size_t savedStateSize);
@@ -26,15 +37,7 @@ static void onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* wi
 static void onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue);
 static void onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue);
 
-
-
-//  Hello! This is a list of some conventions and decisions made for this project:
-//    1. Namespaces not used - project too small
-//    2. Java   `Log::i(TAG, "Creating: %p\n", activity);` was prefered to
-//       C++ish `log_i(TAG) << "Creating: " << activity << "\n";` because of confusion
-//       with std::log() function and ease of implementation
-
-// entry point. called from main thread
+// Entry point called from main thread
 extern "C" {
   void ANativeActivity_onCreate(ANativeActivity *activity,
                                 void *savedState,
@@ -63,9 +66,9 @@ void* createAndroidApplication(ANativeActivity* activity,
                                size_t savedStateSize) {
 
   AndroidApplication* application = new AndroidApplication(activity, savedState, savedStateSize);
-#warning free application object int `onDestroy` and delete this message
 
-  // don't capture `application` pointer, this would produce less readable code
+  // Create `event handler` thread
+  //   - don't capture `application` pointer, this would produce less readable code
   auto eventHandlerTask = [](AndroidApplication* application)->void {
     application->exec();
   };
@@ -73,60 +76,103 @@ void* createAndroidApplication(ANativeActivity* activity,
   std::thread eventHandlerThread(std::ref(eventHandlerTask), std::ref(application));
   eventHandlerThread.detach();
 
-  // wait until handler thread lunch event loop
+  // Wait until `eventHandlerTask` properly lunch the event loop
+  application->waitForStarted();
 
   return application;
 }
 
 void onDestroy(ANativeActivity* activity) {
+
   Log::i(TAG, "Destroy: %p\n", activity);
+
+#warning notifiy client about destroy event
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  delete application;
 }
 
 void onStart(ANativeActivity* activity) {
+
   Log::i(TAG, "Start: %p\n", activity);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
 }
 
 void onResume(ANativeActivity* activity) {
+
   Log::i(TAG, "Resume: %p\n", activity);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
 }
 
 void* onSaveInstanceState(ANativeActivity* activity, size_t* outLen) {
+
   Log::i(TAG, "SaveInstanceState: %p\n", activity);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
   return nullptr;
 }
 
 void onPause(ANativeActivity* activity) {
+
   Log::i(TAG, "Pause: %p\n", activity);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
 }
 
 void onStop(ANativeActivity* activity) {
+
   Log::i(TAG, "Stop: %p\n", activity);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
 }
 
 void onConfigurationChanged(ANativeActivity* activity) {
+
   Log::i(TAG, "ConfigurationChanged: %p\n", activity);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
 }
 
 void onLowMemory(ANativeActivity* activity) {
+
   Log::i(TAG, "LowMemory: %p\n", activity);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
 }
 
 void onWindowFocusChanged(ANativeActivity* activity, int focused) {
+
   Log::i(TAG, "WindowFocusChanged: %p -- %d\n", activity, focused);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
 }
 
 void onNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window) {
+
   Log::i(TAG, "NativeWindowCreated: %p -- %p\n", activity, window);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
 }
 
 void onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window) {
+
   Log::i(TAG, "NativeWindowDestroyed: %p -- %p\n", activity, window);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
 }
 
 void onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue) {
+
   Log::i(TAG, "InputQueueCreated: %p -- %p\n", activity, queue);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
 }
 
 void onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue) {
+
   Log::i(TAG, "InputQueueDestroyed: %p -- %p\n", activity, queue);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
 }

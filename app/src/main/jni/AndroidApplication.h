@@ -8,16 +8,26 @@
 #include <mutex>
 #include <condition_variable>
 
+// self
+#include "macro.h"
+
 class AndroidApplication {
+private:
+  DISABLE_COPY(AndroidApplication)
 public:
   AndroidApplication(ANativeActivity* activity,
                      void* savedState,
                      size_t savedStateSize);
 public:
   void exec();
+  void waitForStarted();
+  bool isRunning() const;
+
 private:
+  ANativeActivity* mActivity;
   std::mutex mMutex;
-  std::condition_variable mConditionalVariable;
+  std::condition_variable mConditionVariable;
+  bool mIsRunning;
 };
 
 
