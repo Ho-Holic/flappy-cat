@@ -17,7 +17,9 @@
 //       with std::log() function and less error prone implementation
 //
 //    3. Macro `DISABLE_COPY` prefered to manual `= delete` because of easy search and maintenance
-
+//
+//    4. Initialize smart pointers with `nullptr` for readability and back compatibility with
+//       raw pointers
 
 static void* createAndroidApplication(ANativeActivity* activity,
                                       void* savedState,

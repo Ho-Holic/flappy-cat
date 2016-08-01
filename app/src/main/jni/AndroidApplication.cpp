@@ -10,22 +10,10 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
 : mActivity(activity)
 , mMutex()
 , mConditionVariable()
-, mIsRunning(false) {
+, mIsRunning(false)
+, mConfiguration(nullptr, &AConfiguration_delete) {
   UNUSED(savedState);     // we don't save and load state for now
   UNUSED(savedStateSize); // --/--
-}
-
-void AndroidApplication::exec() {
-
-  SCOPE("application is initialized now") {
-    std::lock_guard<std::mutex> lock(mMutex);
-    mIsRunning = true;
-    mConditionVariable.notify_all();
-  }
-
-#warning start event loop here
-
-#warning free some application resources on exit
 }
 
 void AndroidApplication::waitForStarted() {
@@ -38,4 +26,30 @@ void AndroidApplication::waitForStarted() {
 bool AndroidApplication::isRunning() const {
 
   return mIsRunning;
+}
+
+void AndroidApplication::exec() {
+
+  initialize();
+
+  SCOPE("application is initialized now") {
+    std::lock_guard<std::mutex> lock(mMutex);
+    UNUSED(lock);
+    mIsRunning = true;
+    mConditionVariable.notify_all();
+  }
+
+#warning start event loop here
+
+#warning free some application resources on exit
+}
+
+void AndroidApplication::initialize() {
+
+  // load configuration
+  mConfiguration.reset(AConfiguration_new());
+  AConfiguration_fromAssetManager(mConfiguration.get(), mActivity->assetManager);
+  
+#warning print configuration
+
 }
