@@ -18,8 +18,12 @@
 //
 //    3. Macro `DISABLE_COPY` prefered to manual `= delete` because of easy search and maintenance
 //
-//    4. Initialize smart pointers with `nullptr` for readability and back compatibility with
-//       raw pointers
+//    4. Initialize smart pointers  `shared_ptr(nullptr)` instead of `shared_ptr()`
+//       for readability and back compatibility with raw pointers
+//
+//    5. Yse of UNUSED macro for every case, even if I can omit it in well
+//       known places like `std::lock_guard`
+//
 
 static void* createAndroidApplication(ANativeActivity* activity,
                                       void* savedState,

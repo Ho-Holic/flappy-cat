@@ -11,7 +11,7 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
 , mMutex()
 , mConditionVariable()
 , mIsRunning(false)
-, mConfiguration(nullptr, &AConfiguration_delete) {
+, mConfiguration() {
   UNUSED(savedState);     // we don't save and load state for now
   UNUSED(savedStateSize); // --/--
 }
@@ -34,7 +34,7 @@ void AndroidApplication::exec() {
 
   SCOPE("application is initialized now") {
     std::lock_guard<std::mutex> lock(mMutex);
-    UNUSED(lock);
+    UNUSED(lock); // unlocks when goes out of a scope
     mIsRunning = true;
     mConditionVariable.notify_all();
   }
@@ -47,9 +47,8 @@ void AndroidApplication::exec() {
 void AndroidApplication::initialize() {
 
   // load configuration
-  mConfiguration.reset(AConfiguration_new());
-  AConfiguration_fromAssetManager(mConfiguration.get(), mActivity->assetManager);
-  
+  mConfiguration.reloadFrom(mActivity->assetManager);
+
 #warning print configuration
 
 }

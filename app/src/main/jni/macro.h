@@ -1,5 +1,5 @@
-#ifndef FLAPPYCAT_MACRO_H
-#define FLAPPYCAT_MACRO_H
+#ifndef FLAPPY_CAT_MACRO_H
+#define FLAPPY_CAT_MACRO_H
 
 /**
  * @def UNUSED - document that variable is unused and programmer know this
@@ -19,4 +19,4 @@
   Class(const Class &) = delete;\
   Class &operator=(const Class &) = delete;
 
-#endif //FLAPPYCAT_MACRO_H
+#endif //FLAPPY_CAT_MACRO_H

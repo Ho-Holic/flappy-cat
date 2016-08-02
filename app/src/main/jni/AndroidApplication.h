@@ -1,5 +1,5 @@
-#ifndef FLAPPYCAT_ANDROIDAPPLICATION_H
-#define FLAPPYCAT_ANDROIDAPPLICATION_H
+#ifndef FLAPPY_CAT_ANDROIDAPPLICATION_H
+#define FLAPPY_CAT_ANDROIDAPPLICATION_H
 
 // ndk
 #include <android/native_activity.h>
@@ -8,10 +8,10 @@
 // std
 #include <mutex>
 #include <condition_variable>
-#include <memory>
 
 // self
 #include "macro.h"
+#include "AndroidConfiguration.h"
 
 class AndroidApplication {
 private:
@@ -37,8 +37,8 @@ private:
   std::mutex mMutex;
   std::condition_variable mConditionVariable;
   bool mIsRunning;
-  std::unique_ptr<AConfiguration, ConfigurationDeleter> mConfiguration;
+  AndroidConfiguration mConfiguration;
 };
 
 
-#endif //FLAPPYCAT_ANDROIDAPPLICATION_H
+#endif //FLAPPY_CAT_ANDROIDAPPLICATION_H

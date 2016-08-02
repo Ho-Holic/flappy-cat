@@ -1,5 +1,5 @@
-#ifndef FLAPPYCAT_LOG_H
-#define FLAPPYCAT_LOG_H
+#ifndef FLAPPY_CAT_LOG_H
+#define FLAPPY_CAT_LOG_H
 
 // ndk
 #include <android/log.h>
@@ -13,9 +13,13 @@ public:
   template <typename... Args> static int e(const char* tag, Args... args);
   template <typename... Args> static int wtf(const char* tag, Args... args);
 
+  //static int v(std::string& )
+
 private:
   template <typename... Args> static int android_log_print(int priority,
                                                            const char* tag, Args... args);
+
+  static int android_log_print(int priority, const char* tag, const std::string& message);
 };
 
 // implementation
@@ -55,4 +59,10 @@ int Log::android_log_print(int priority, const char* tag, Args... args) {
   return __android_log_print(priority, tag, args...);
 }
 
-#endif //FLAPPYCAT_LOG_H
+int Log::android_log_print(int priority, const char* tag, const std::string& message) {
+  return android_log_print(priority, tag, "%s", message.data());
+}
+
+#endif //FLAPPY_CAT_LOG_H
+
+

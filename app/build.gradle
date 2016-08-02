@@ -24,7 +24,7 @@ model {
             // you can change toolchain to `gcc` and remove link against `atomic`
             // https://code.google.com/p/android/issues/detail?id=68779
             // bug is still not fixed (29.07.2016)
-            ldLibs.addAll(['log', 'android', 'EGL', 'GLESv1_CM', 'atomic'])
+            ldLibs.addAll(['log', 'android', 'EGL', 'GLESv1_CM', 'atomic']) // change to GLESv2
         }
 
         buildTypes {
