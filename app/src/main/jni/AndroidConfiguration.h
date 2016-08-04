@@ -25,6 +25,7 @@ public:
 public:
   std::string toString() const;
   void reloadFrom(AAssetManager* manager);
+  void reset();
 
 private:
   void reloadCacheForToString();

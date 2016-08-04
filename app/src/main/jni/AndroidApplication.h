@@ -31,6 +31,7 @@ public:
 
 private:
   void initialize();
+  void deinitialize();
 
 private:
   ANativeActivity* mActivity;

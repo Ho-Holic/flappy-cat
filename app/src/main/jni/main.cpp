@@ -25,6 +25,13 @@
 //       known places like `std::lock_guard`
 //
 
+//  Known errors, glitches and strange behaviour
+//
+//    1. Linker error `unused DT entry: type blahhh arg blabla`
+//       http://stackoverflow.com/questions/33206409/unused-dt-entry-type-0x1d-arg
+//
+//    2. app/build.gradle link against `atomic`
+
 static void* createAndroidApplication(ANativeActivity* activity,
                                       void* savedState,
                                       size_t savedStateSize);

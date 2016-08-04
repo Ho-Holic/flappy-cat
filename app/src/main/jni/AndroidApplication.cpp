@@ -1,5 +1,6 @@
 // self
 #include "AndroidApplication.h"
+#include "Log.h"
 
 // stl
 #include <functional>
@@ -41,14 +42,21 @@ void AndroidApplication::exec() {
 
 #warning start event loop here
 
-#warning free some application resources on exit
+  deinitialize();
 }
 
 void AndroidApplication::initialize() {
 
   // load configuration
   mConfiguration.reloadFrom(mActivity->assetManager);
+  Log::i(TAG, mConfiguration.toString());
 
-#warning print configuration
+#warning a looper
 
+}
+
+void AndroidApplication::deinitialize() {
+
+#warning free some application resources on exit
+  mConfiguration.reset();
 }
