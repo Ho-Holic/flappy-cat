@@ -4,6 +4,9 @@
 // ndk
 #include <android/log.h>
 
+// std
+#include <string>
+
 class Log {
 public:
   template <typename... Args> static int v(const char* tag, Args... args);
@@ -18,7 +21,7 @@ public:
 
 namespace {
 
-  // make this free functions to avoid complex template specialization for variadic templates
+  // make this functions `free` to avoid complex template specialization for variadic templates
 
   template<typename... Args>
   inline int android_log_print(int priority,
@@ -27,7 +30,7 @@ namespace {
     return __android_log_print(priority, tag, args...);
   }
 
-  inline int android_log_print(int priority, const char *tag, const std::string &message) {
+  inline int android_log_print(int priority, const char* tag, const std::string &message) {
     return android_log_print(priority, tag, "%s", message.data());
   }
 
