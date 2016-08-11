@@ -5,7 +5,7 @@
 #include <android/configuration.h>
 
 // self
-#include "macro.h"
+#include "Guidelines.h"
 
 // std
 #include <memory>

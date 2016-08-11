@@ -99,9 +99,9 @@ void onDestroy(ANativeActivity* activity) {
 
   Log::i(TAG, "Destroy: %p\n", activity);
 
-#warning notifiy client about destroy event
-
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  application->requestDestruction();
+
   delete application;
 }
 

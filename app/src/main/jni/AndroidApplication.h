@@ -10,8 +10,9 @@
 #include <condition_variable>
 
 // self
-#include "macro.h"
+#include "Guidelines.h"
 #include "AndroidConfiguration.h"
+#include "AndroidLooper.h"
 
 class AndroidApplication {
 private:
@@ -26,7 +27,9 @@ public:
                      size_t savedStateSize);
 public:
   void waitForStarted();
+  void requestDestruction();
   bool isRunning() const;
+  bool isDestroyed() const;
   void exec();
 
 private:
@@ -38,7 +41,9 @@ private:
   std::mutex mMutex;
   std::condition_variable mConditionVariable;
   bool mIsRunning;
+  bool mIsDestroyed;
   AndroidConfiguration mConfiguration;
+  AndroidLooper mLooper;
 };
 
 

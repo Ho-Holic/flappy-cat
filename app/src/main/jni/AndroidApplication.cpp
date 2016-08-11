@@ -12,7 +12,9 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
 , mMutex()
 , mConditionVariable()
 , mIsRunning(false)
-, mConfiguration() {
+, mIsDestroyed(false)
+, mConfiguration()
+, mLooper() {
   UNUSED(savedState);     // we don't save and load state for now
   UNUSED(savedStateSize); // --/--
 }
@@ -24,9 +26,24 @@ void AndroidApplication::waitForStarted() {
   mMutex.unlock();
 }
 
+void AndroidApplication::requestDestruction() {
+
+  std::unique_lock<std::mutex> lock(mMutex);
+
+#warning write command to break an event loop
+
+  mConditionVariable.wait(lock, std::bind(&AndroidApplication::isDestroyed, std::ref(*this)));
+  mMutex.unlock();
+}
+
 bool AndroidApplication::isRunning() const {
 
   return mIsRunning;
+}
+
+bool AndroidApplication::isDestroyed() const {
+
+  return mIsDestroyed;
 }
 
 void AndroidApplication::exec() {
@@ -40,7 +57,10 @@ void AndroidApplication::exec() {
     mConditionVariable.notify_all();
   }
 
-#warning start event loop here
+  forever() {
+#warning main loop here
+    break;
+  }
 
   deinitialize();
 }
@@ -51,12 +71,27 @@ void AndroidApplication::initialize() {
   mConfiguration.reloadFrom(mActivity->assetManager);
   Log::i(TAG, mConfiguration.toString());
 
-#warning a looper
+  // prepare looper for this thread to read events
+  mLooper.prepare();
 
 }
 
 void AndroidApplication::deinitialize() {
 
-#warning free some application resources on exit
+  Log::i(TAG, "android_app_destroy!");
+
+#warning free saved state
+
+  std::lock_guard<std::mutex> lock(mMutex);
+  UNUSED(lock); // unlocks when goes out of a scope
+
+#warning detach looper from event queue
+
   mConfiguration.reset();
+
+  mIsDestroyed = true;
+
+  mConditionVariable.notify_all();
+
+  CAUTION("If you `unlock` mutex, you can't touch `this` object");
 }

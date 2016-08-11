@@ -30,3 +30,11 @@ AndroidPipe::~AndroidPipe() {
   ::close(mReadEnd);
   ::close(mWriteEnd);
 }
+
+int AndroidPipe::readEnd() const {
+  return mReadEnd;
+}
+
+int AndroidPipe::writeEnd() const {
+  return mWriteEnd;
+}

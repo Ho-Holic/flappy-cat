@@ -2,7 +2,7 @@
 #define FLAPPY_CAT_ANDROIDPIPE_H
 
 // self
-#include "macro.h"
+#include "Guidelines.h"
 
 class AndroidPipe {
 private:
@@ -11,6 +11,10 @@ private:
 public:
   AndroidPipe();
   ~AndroidPipe();
+
+public:
+  int readEnd() const;
+  int writeEnd() const;
 
 private:
   int mReadEnd;
