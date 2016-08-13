@@ -42,5 +42,4 @@
  */
 #define REQUIRE(tag, condition, ...) Log::assert(condition, #condition, tag, __VA_ARGS__)
 
-
 #endif //FLAPPY_CAT_GUIDELINES_H

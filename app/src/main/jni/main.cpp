@@ -50,7 +50,6 @@ static void onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* wi
 static void onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue);
 static void onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue);
 
-// Entry point called from main thread
 extern "C" {
   void ANativeActivity_onCreate(ANativeActivity *activity,
                                 void *savedState,

@@ -32,6 +32,9 @@ public:
   bool isDestroyed() const;
   void exec();
 
+public:
+  void main();
+
 private:
   void initialize();
   void deinitialize();

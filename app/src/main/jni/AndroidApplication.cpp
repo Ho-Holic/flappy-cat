@@ -57,11 +57,8 @@ void AndroidApplication::exec() {
     mConditionVariable.notify_all();
   }
 
-  forever() {
-#warning main loop here
-    break;
-  }
-
+  main();
+  
   deinitialize();
 }
 
@@ -94,4 +91,8 @@ void AndroidApplication::deinitialize() {
   mConditionVariable.notify_all();
 
   CAUTION("If you `unlock` mutex, you can't touch `this` object");
+}
+
+void AndroidApplication::main() {
+
 }
