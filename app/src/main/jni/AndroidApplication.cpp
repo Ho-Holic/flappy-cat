@@ -17,6 +17,25 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
 , mLooper() {
   UNUSED(savedState);     // we don't save and load state for now
   UNUSED(savedStateSize); // --/--
+
+  activity->callbacks->onDestroy               = &AndroidApplication::onDestroy;
+  activity->callbacks->onStart                 = &AndroidApplication::onStart;
+  activity->callbacks->onResume                = &AndroidApplication::onResume;
+  activity->callbacks->onSaveInstanceState     = &AndroidApplication::onSaveInstanceState;
+  activity->callbacks->onPause                 = &AndroidApplication::onPause;
+  activity->callbacks->onStop                  = &AndroidApplication::onStop;
+  activity->callbacks->onConfigurationChanged  = &AndroidApplication::onConfigurationChanged;
+  activity->callbacks->onLowMemory             = &AndroidApplication::onLowMemory;
+  activity->callbacks->onWindowFocusChanged    = &AndroidApplication::onWindowFocusChanged;
+  activity->callbacks->onNativeWindowCreated   = &AndroidApplication::onNativeWindowCreated;
+  activity->callbacks->onNativeWindowDestroyed = &AndroidApplication::onNativeWindowDestroyed;
+  activity->callbacks->onInputQueueCreated     = &AndroidApplication::onInputQueueCreated;
+  activity->callbacks->onInputQueueDestroyed   = &AndroidApplication::onInputQueueDestroyed;
+}
+
+AndroidApplication::~AndroidApplication() {
+  // this destructor intentionally left blank and moved to `.cpp` file
+  Log::i(TAG, "Deleted! \n"); // delete this line when app is done
 }
 
 void AndroidApplication::waitForStarted() {
@@ -58,7 +77,7 @@ void AndroidApplication::exec() {
   }
 
   main();
-  
+
   deinitialize();
 }
 
@@ -93,6 +112,97 @@ void AndroidApplication::deinitialize() {
   CAUTION("If you `unlock` mutex, you can't touch `this` object");
 }
 
-void AndroidApplication::main() {
+void AndroidApplication::onDestroy(ANativeActivity* activity) {
 
+  Log::i(TAG, "Destroy: %p\n", activity);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  application->requestDestruction();
+
+  delete application;
+}
+
+void AndroidApplication::onStart(ANativeActivity* activity) {
+
+  Log::i(TAG, "Start: %p\n", activity);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+}
+
+void AndroidApplication::onResume(ANativeActivity* activity) {
+
+  Log::i(TAG, "Resume: %p\n", activity);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+}
+
+void* AndroidApplication::onSaveInstanceState(ANativeActivity* activity, size_t* outLen) {
+
+  Log::i(TAG, "SaveInstanceState: %p\n", activity);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  return nullptr;
+}
+
+void AndroidApplication::onPause(ANativeActivity* activity) {
+
+  Log::i(TAG, "Pause: %p\n", activity);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+}
+
+void AndroidApplication::onStop(ANativeActivity* activity) {
+
+  Log::i(TAG, "Stop: %p\n", activity);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+}
+
+void AndroidApplication::onConfigurationChanged(ANativeActivity* activity) {
+
+  Log::i(TAG, "ConfigurationChanged: %p\n", activity);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+}
+
+void AndroidApplication::onLowMemory(ANativeActivity* activity) {
+
+  Log::i(TAG, "LowMemory: %p\n", activity);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+}
+
+void AndroidApplication::onWindowFocusChanged(ANativeActivity* activity, int focused) {
+
+  Log::i(TAG, "WindowFocusChanged: %p -- %d\n", activity, focused);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+}
+
+void AndroidApplication::onNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window) {
+
+  Log::i(TAG, "NativeWindowCreated: %p -- %p\n", activity, window);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+}
+
+void AndroidApplication::onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window) {
+
+  Log::i(TAG, "NativeWindowDestroyed: %p -- %p\n", activity, window);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+}
+
+void AndroidApplication::onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue) {
+
+  Log::i(TAG, "InputQueueCreated: %p -- %p\n", activity, queue);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+}
+
+void AndroidApplication::onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue) {
+
+  Log::i(TAG, "InputQueueDestroyed: %p -- %p\n", activity, queue);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
 }

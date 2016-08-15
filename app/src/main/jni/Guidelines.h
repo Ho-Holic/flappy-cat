@@ -33,7 +33,8 @@
 #define forever() for(;;)
 
 /**
- * @def CAUTION - document critical sections of code
+ * @def CAUTION(message) - document critical sections of code
+ * This macro do noting. This is like a comment, but bring extra attention to it's message
  */
 #define CAUTION(message) (void)(message); do {} while(0)
 

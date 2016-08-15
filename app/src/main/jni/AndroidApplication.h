@@ -25,6 +25,8 @@ public:
   AndroidApplication(ANativeActivity* activity,
                      void* savedState,
                      size_t savedStateSize);
+  virtual ~AndroidApplication();
+
 public:
   void waitForStarted();
   void requestDestruction();
@@ -32,12 +34,27 @@ public:
   bool isDestroyed() const;
   void exec();
 
-public:
-  void main();
-
 private:
   void initialize();
   void deinitialize();
+
+private:
+  virtual void main() = 0; // private because launched from `exec` function
+
+private: // android `C` callbacks
+  static void onDestroy(ANativeActivity* activity);
+  static void onStart(ANativeActivity* activity);
+  static void onResume(ANativeActivity* activity);
+  static void* onSaveInstanceState(ANativeActivity* activity, size_t* outLen);
+  static void onPause(ANativeActivity* activity);
+  static void onStop(ANativeActivity* activity);
+  static void onConfigurationChanged(ANativeActivity* activity);
+  static void onLowMemory(ANativeActivity* activity);
+  static void onWindowFocusChanged(ANativeActivity* activity, int focused);
+  static void onNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window);
+  static void onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window);
+  static void onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue);
+  static void onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue);
 
 private:
   ANativeActivity* mActivity;
@@ -48,6 +65,4 @@ private:
   AndroidConfiguration mConfiguration;
   AndroidLooper mLooper;
 };
-
-
 #endif //FLAPPY_CAT_ANDROIDAPPLICATION_H
