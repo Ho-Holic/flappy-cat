@@ -32,6 +32,7 @@ public:
   void requestDestruction();
   bool isRunning() const;
   bool isDestroyed() const;
+  bool isDestroyRequested() const;
   void exec();
 
 private:

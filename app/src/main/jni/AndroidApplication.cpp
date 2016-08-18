@@ -206,3 +206,8 @@ void AndroidApplication::onInputQueueDestroyed(ANativeActivity* activity, AInput
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
 }
+
+bool AndroidApplication::isDestroyRequested() const {
+#warning write code here
+  return false;
+}
