@@ -16,10 +16,11 @@ void FlappyCatApplication::main() {
   forever() {
 
     AndroidEvent event;
-    while (pollEvent(event)) {
+    while (looper().pollEvent(event)) {
 
       // check if we exiting
-      if (this->isDestroyRequested()) {
+      // TODO: replace `forever` loop with `while( ! isDestroyRequested())`
+      if (isDestroyRequested()) {
         return;
       }
     }

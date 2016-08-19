@@ -4,9 +4,7 @@
 
 AndroidLooper::AndroidLooper()
 : mLooper(nullptr)
-, mPipe()
-, mMainPollSource()
-, mInputQueuePollSource() {
+, mPipe() {
   //
 }
 
@@ -15,12 +13,31 @@ void AndroidLooper::prepare() {
 
   REQUIRE(TAG, mLooper == nullptr, "must prepare looper once");
 
-#warning initialize mMainPollSource
-#warning initialize mInputQueuePollSource
-
   mLooper = ALooper_prepare(ALOOPER_PREPARE_ALLOW_NON_CALLBACKS);
 
   ALooper_addFd(mLooper, mPipe.readEnd(),
                 AndroidLooper::MainId, ALOOPER_EVENT_INPUT,
-                nullptr, &mMainPollSource);
+                nullptr, nullptr);
+}
+
+
+bool AndroidLooper::pollEvent(AndroidEvent& event) {
+
+  int id = ALooper_pollAll(ImmediatelyWithoutBlockingTimeout,
+                           nullptr, nullptr, nullptr);
+
+  switch (id) {
+    case MainId:       break;
+    case InputQueueId: break;
+    default: unexpectedIdentifier(id); break;
+  }
+
+
+  bool hasAnyEvents = (id >= 0);
+  return hasAnyEvents;
+}
+
+void AndroidLooper::unexpectedIdentifier(int id) {
+
+  Log::i(TAG, "Unexpected identifier in pollEvent = %d", id);
 }

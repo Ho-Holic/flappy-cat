@@ -35,6 +35,9 @@ public:
   bool isDestroyRequested() const;
   void exec();
 
+public:
+  AndroidLooper& looper();
+
 private:
   void initialize();
   void deinitialize();

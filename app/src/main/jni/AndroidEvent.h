@@ -1,0 +1,10 @@
+#ifndef FLAPPY_CAT_ANDROIDEVENT_H
+#define FLAPPY_CAT_ANDROIDEVENT_H
+
+
+class AndroidEvent {
+
+};
+
+
+#endif //FLAPPY_CAT_ANDROIDEVENT_H

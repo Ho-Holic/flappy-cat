@@ -7,22 +7,23 @@
 // self
 #include "Guidelines.h"
 #include "AndroidPipe.h"
+#include "AndroidEvent.h"
 
 
 class AndroidLooper {
   DISABLE_COPY(AndroidLooper)
 
 public:
-  // TODO: forward declare this class later
-  struct PollSource {
-    // meh, nothing here for now
-  };
 
-public:
   enum Id : int {
     ReservedId,
     MainId,
     InputQueueId,
+  };
+
+  enum Timeout : int {
+    IndefinitelyUntilEventAppearsTimeout = -1,
+    ImmediatelyWithoutBlockingTimeout = 0,
   };
 
 public:
@@ -30,12 +31,14 @@ public:
 
 public:
   void prepare();
+  bool pollEvent(AndroidEvent& event);
+
+private:
+  void unexpectedIdentifier(int id);
 
 private:
   ALooper* mLooper;
   AndroidPipe mPipe;
-  PollSource mMainPollSource;
-  PollSource mInputQueuePollSource;
 };
 
 
