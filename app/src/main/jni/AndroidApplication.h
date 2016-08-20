@@ -19,6 +19,9 @@ private:
   using ConfigurationDeleter = void (*)(AConfiguration*);
 
 private:
+  enum ActivityState : int8_t;
+
+private:
   DISABLE_COPY(AndroidApplication)
 
 public:
@@ -33,12 +36,15 @@ public:
   bool isRunning() const;
   bool isDestroyed() const;
   bool isDestroyRequested() const;
+  ActivityState activityState() const;
   void exec();
   bool pollEvent(AndroidEvent& event);
 
 private:
   void initialize();
   void deinitialize();
+  void changeActivityStateTo(ActivityState activityState);
+
 
 private:
   virtual void main() = 0; // private because launched from `exec` function
@@ -60,6 +66,7 @@ private: // android `C` callbacks
 
 private:
   ANativeActivity* mActivity;
+  ActivityState mActivityState;
   std::mutex mMutex;
   std::condition_variable mConditionVariable;
   bool mIsRunning;
@@ -67,4 +74,16 @@ private:
   AndroidConfiguration mConfiguration;
   AndroidLooper mLooper;
 };
+
+// enums
+
+enum AndroidApplication::ActivityState : int8_t {
+  InitializationActivityState,
+  StartActivityState,
+  ResumeActivityState,
+  PauseActivityState,
+  StopActivityState,
+
+};
+
 #endif //FLAPPY_CAT_ANDROIDAPPLICATION_H

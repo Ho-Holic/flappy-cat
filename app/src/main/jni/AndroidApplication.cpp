@@ -9,6 +9,7 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
                                        void* savedState,
                                        size_t savedStateSize)
 : mActivity(activity)
+, mActivityState(InitializationActivityState)
 , mMutex()
 , mConditionVariable()
 , mIsRunning(false)
@@ -63,6 +64,7 @@ void AndroidApplication::onStart(ANativeActivity* activity) {
   Log::i(TAG, "Start: %p\n", activity);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  application->changeActivityStateTo(StartActivityState);
 }
 
 void AndroidApplication::onResume(ANativeActivity* activity) {
@@ -70,6 +72,7 @@ void AndroidApplication::onResume(ANativeActivity* activity) {
   Log::i(TAG, "Resume: %p\n", activity);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  application->changeActivityStateTo(ResumeActivityState);
 }
 
 void* AndroidApplication::onSaveInstanceState(ANativeActivity* activity, size_t* outLen) {
@@ -85,6 +88,7 @@ void AndroidApplication::onPause(ANativeActivity* activity) {
   Log::i(TAG, "Pause: %p\n", activity);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  application->changeActivityStateTo(PauseActivityState);
 }
 
 void AndroidApplication::onStop(ANativeActivity* activity) {
@@ -92,6 +96,7 @@ void AndroidApplication::onStop(ANativeActivity* activity) {
   Log::i(TAG, "Stop: %p\n", activity);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  application->changeActivityStateTo(StopActivityState);
 }
 
 void AndroidApplication::onConfigurationChanged(ANativeActivity* activity) {
@@ -172,6 +177,15 @@ bool AndroidApplication::isDestroyed() const {
   return mIsDestroyed;
 }
 
+bool AndroidApplication::isDestroyRequested() const {
+#warning write code here
+  return false;
+}
+
+AndroidApplication::ActivityState AndroidApplication::activityState() const {
+  return mActivityState;
+}
+
 void AndroidApplication::exec() {
 
   initialize();
@@ -219,12 +233,42 @@ void AndroidApplication::deinitialize() {
   CAUTION("If you `unlock` mutex, you can't touch `this` object");
 }
 
-bool AndroidApplication::isDestroyRequested() const {
-#warning write code here
-  return false;
-}
+
 
 bool AndroidApplication::pollEvent(AndroidEvent& event) {
+
+  //if (event.eventType() == EmptyEvent) {
+  //  postProcessOfPreviousEvent(event);
+  //}
+
   bool hasAnyEvents = mLooper.pollEvent(event);
+  //preProcessEvent(event);
   return hasAnyEvents;
 }
+
+void AndroidApplication::changeActivityStateTo(AndroidApplication::ActivityState activityState) {
+
+  // function for checking when state of activity changed
+  auto isInState = [&activityState, this]() -> bool {
+
+    return this->activityState() == activityState;
+  };
+
+
+  std::unique_lock<std::mutex> lock(mMutex);
+
+  // One can try to remove `mLooper.postEvent` duplicated code but would
+  // produce less readable code
+  switch (activityState) {
+    case StartActivityState:  mLooper.postEvent(ActivityStartEvent);  break;
+    case ResumeActivityState: mLooper.postEvent(ActivityResumeEvent); break;
+    case PauseActivityState:  mLooper.postEvent(ActivityPauseEvent);  break;
+    case StopActivityState:   mLooper.postEvent(ActivityStopEvent);   break;
+    default: break;
+  }
+
+  mConditionVariable.wait(lock, isInState);
+  mMutex.unlock();
+}
+
+

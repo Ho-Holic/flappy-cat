@@ -2,9 +2,6 @@
 #include "AndroidPipe.h"
 #include "Log.h"
 
-// stl
-#include <cstring>
-
 AndroidPipe::AndroidPipe()
 : mReadEnd()
 , mWriteEnd() {

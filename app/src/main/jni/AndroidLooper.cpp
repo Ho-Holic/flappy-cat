@@ -44,9 +44,9 @@ void AndroidLooper::unexpectedIdentifier(int id) {
 
 void AndroidLooper::pollFromAndroidCallbacks(AndroidEvent& event) {
 
-  Command command = mPipe.readEnum<Command, NoDataAvailableCommand>();
+  EventType eventType = mPipe.readEnum<EventType, NoDataAvailableEvent>();
 
-  switch (command) {
+  switch (eventType) {
     //
   }
 }
@@ -54,4 +54,9 @@ void AndroidLooper::pollFromAndroidCallbacks(AndroidEvent& event) {
 void AndroidLooper::pollFromInputQueue(AndroidEvent& event) {
   //
 
+}
+
+void AndroidLooper::postEvent(EventType eventType) {
+
+  mPipe.writeEnum<EventType>(eventType);
 }

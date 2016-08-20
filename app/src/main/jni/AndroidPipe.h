@@ -4,6 +4,9 @@
 // self
 #include "Guidelines.h"
 
+// stl
+#include <cstring>
+
 // posix
 #include <unistd.h>
 
@@ -20,17 +23,16 @@ public:
   int writeEnd() const;
 
   /**
-   * readEnum - Read bytes enough to fill `EnumType`
-   *
+   * Read bytes enough to fill `EnumType`
    * If read fails `defaultValue` is returned
    */
-  template <typename EnumType, EnumType defaultValue>
-  EnumType readEnum();
+  template <typename EnumType, EnumType defaultValue> EnumType readEnum();
 
-  template <typename EnumType>
-  ssize_t writeEnum(EnumType buf);
-
-
+  /**
+   * Write `value` to pipe
+   * Returns `true` if write is successful
+   */
+  template <typename EnumType> bool writeEnum(EnumType value);
 
 private:
   int mReadEnd;
@@ -47,14 +49,25 @@ EnumType AndroidPipe::readEnum() {
 
   EnumType data;
   ssize_t bytesRead = ::read(mReadEnd, &data, sizeof(data));
+
   return bytesRead == sizeof(data) ? data
                                    : defaultValue;
 }
 
 template <typename EnumType>
-ssize_t AndroidPipe::writeEnum(EnumType buf) {
-  ssize_t bytesWritten = ::write(mWriteEnd, &buf, sizeof(buf));
-  return bytesWritten;
+bool AndroidPipe::writeEnum(EnumType value) {
+
+  REQUIRE(TAG, sizeof(EnumType) <= sizeof(ssize_t),
+          "Must fit to `ssize_t`");
+
+  ssize_t bytesWritten = ::write(mWriteEnd, &value, sizeof(value));
+
+  bool isOk = (bytesWritten == sizeof(value));
+  if ( ! isOk) {
+    Log::i("Failure writing to pipe: %s\n", std::strerror(errno));
+  }
+
+  return isOk;
 }
 
 
