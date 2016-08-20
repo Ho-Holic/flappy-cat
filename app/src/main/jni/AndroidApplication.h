@@ -34,9 +34,7 @@ public:
   bool isDestroyed() const;
   bool isDestroyRequested() const;
   void exec();
-
-public:
-  AndroidLooper& looper();
+  bool pollEvent(AndroidEvent& event);
 
 private:
   void initialize();

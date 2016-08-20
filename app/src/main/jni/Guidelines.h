@@ -1,6 +1,9 @@
 #ifndef FLAPPY_CAT_GUIDELINES_H
 #define FLAPPY_CAT_GUIDELINES_H
 
+// self
+#include "Log.h"
+
 /**
  * @def UNUSED - document that variable is unused and programmer know this
  */
@@ -20,7 +23,7 @@
   Class &operator=(const Class &) = delete;
 
 /**
- * @def forever - endless loop in more readable format
+ * @def loop - endless loop in more readable format
  *
  * Avoid common warnings and static analyzer false positives.
  *
@@ -29,8 +32,10 @@
  * static analyzers would have a lot of false positive on this issue
  * along with real ones like typo `while(i = 1)` when programmer
  * intended to write `while(i == 1)`.
+ *
+ * ... and inspired by Rust language
  */
-#define forever() for(;;)
+#define loop() for(;;)
 
 /**
  * @def CAUTION(message) - document critical sections of code

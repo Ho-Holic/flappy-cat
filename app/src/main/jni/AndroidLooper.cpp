@@ -16,7 +16,7 @@ void AndroidLooper::prepare() {
   mLooper = ALooper_prepare(ALOOPER_PREPARE_ALLOW_NON_CALLBACKS);
 
   ALooper_addFd(mLooper, mPipe.readEnd(),
-                AndroidLooper::MainId, ALOOPER_EVENT_INPUT,
+                AndroidCallbackId, ALOOPER_EVENT_INPUT,
                 nullptr, nullptr);
 }
 
@@ -27,9 +27,9 @@ bool AndroidLooper::pollEvent(AndroidEvent& event) {
                            nullptr, nullptr, nullptr);
 
   switch (id) {
-    case MainId:       break;
-    case InputQueueId: break;
-    default: unexpectedIdentifier(id); break;
+    case AndroidCallbackId:  pollFromAndroidCallbacks(event); break;
+    case InputQueueId:       pollFromInputQueue(event);       break;
+    default:                 unexpectedIdentifier(id);        break;
   }
 
 
@@ -40,4 +40,18 @@ bool AndroidLooper::pollEvent(AndroidEvent& event) {
 void AndroidLooper::unexpectedIdentifier(int id) {
 
   Log::i(TAG, "Unexpected identifier in pollEvent = %d", id);
+}
+
+void AndroidLooper::pollFromAndroidCallbacks(AndroidEvent& event) {
+
+  Command command = mPipe.readEnum<Command, NoDataAvailableCommand>();
+
+  switch (command) {
+    //
+  }
+}
+
+void AndroidLooper::pollFromInputQueue(AndroidEvent& event) {
+  //
+
 }

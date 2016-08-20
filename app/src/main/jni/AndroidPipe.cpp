@@ -5,9 +5,6 @@
 // stl
 #include <cstring>
 
-// posix
-#include <unistd.h>
-
 AndroidPipe::AndroidPipe()
 : mReadEnd()
 , mWriteEnd() {

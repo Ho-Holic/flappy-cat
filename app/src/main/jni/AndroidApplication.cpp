@@ -31,6 +31,14 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
   activity->callbacks->onNativeWindowDestroyed = &AndroidApplication::onNativeWindowDestroyed;
   activity->callbacks->onInputQueueCreated     = &AndroidApplication::onInputQueueCreated;
   activity->callbacks->onInputQueueDestroyed   = &AndroidApplication::onInputQueueDestroyed;
+
+  CAUTION("Memory allocated before constructor so we can assign `this` here, but if you"
+          "want to move this code from constructor and assign to pointer of class that extends"
+          "AndroidApplication, you must cast to AndroidApplication, because callbacks would"
+          "downcast from `void*` and you would get problems under virtual inheritance."
+          "You would get wrong address, so do this please:"
+          "`activity->instance = static_cast<AndroidApplication*>(derivedPointer)`");
+  activity->instance = this;
 }
 
 AndroidApplication::~AndroidApplication() {
@@ -216,6 +224,7 @@ bool AndroidApplication::isDestroyRequested() const {
   return false;
 }
 
-AndroidLooper& AndroidApplication::looper() {
-  return mLooper;
+bool AndroidApplication::pollEvent(AndroidEvent& event) {
+  bool hasAnyEvents = mLooper.pollEvent(event);
+  return hasAnyEvents;
 }

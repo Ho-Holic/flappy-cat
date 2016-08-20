@@ -9,22 +9,17 @@
 #include "AndroidPipe.h"
 #include "AndroidEvent.h"
 
+// stl
+#include <cstdint>
+
 
 class AndroidLooper {
   DISABLE_COPY(AndroidLooper)
 
 public:
-
-  enum Id : int {
-    ReservedId,
-    MainId,
-    InputQueueId,
-  };
-
-  enum Timeout : int {
-    IndefinitelyUntilEventAppearsTimeout = -1,
-    ImmediatelyWithoutBlockingTimeout = 0,
-  };
+  enum Id      : int;
+  enum Timeout : int;
+  enum Command : int8_t;
 
 public:
   AndroidLooper();
@@ -34,11 +29,31 @@ public:
   bool pollEvent(AndroidEvent& event);
 
 private:
+  void pollFromAndroidCallbacks(AndroidEvent& event);
+  void pollFromInputQueue(AndroidEvent& event);
   void unexpectedIdentifier(int id);
 
 private:
   ALooper* mLooper;
   AndroidPipe mPipe;
+};
+
+// enums
+
+enum AndroidLooper::Id : int {
+  ReservedId,
+  AndroidCallbackId,
+  InputQueueId,
+};
+
+enum AndroidLooper::Timeout : int {
+  IndefinitelyUntilEventAppearsTimeout = -1,
+  ImmediatelyWithoutBlockingTimeout    = 0,
+};
+
+enum AndroidLooper::Command : int8_t {
+  NoDataAvailableCommand = -1,
+  FirstCommand = 0,
 };
 
 

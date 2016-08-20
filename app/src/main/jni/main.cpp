@@ -46,22 +46,16 @@ extern "C" {
 
     FlappyCatApplication* application = new FlappyCatApplication(activity,
                                                                  savedState, savedStateSize);
-
-    CAUTION("Don't remove `static_cast`! Callbacks would downcast from `void` and"
-            "this could lead to various problems if `FlappyCatApplication` would use"
-            "multiple and/or virtual inheritance");
-    activity->instance = static_cast<AndroidApplication*>(application);
-
     // Create `event handler` thread
     //   - don't capture `application` pointer, this would produce less readable code
-    auto eventHandlerTask = [](FlappyCatApplication* application) -> void {
+    auto eventLoopWorker = [](FlappyCatApplication* application) -> void {
       application->exec();
     };
 
-    std::thread eventHandlerThread(std::ref(eventHandlerTask), std::ref(application));
-    eventHandlerThread.detach();
+    std::thread eventLoopThread(std::ref(eventLoopWorker), std::ref(application));
+    eventLoopThread.detach();
 
-    // Wait until `eventHandlerTask` properly lunch the event loop
+    // Wait until `eventLoopWorker` properly lunch the event loop
     application->waitForStarted();
   }
 }
