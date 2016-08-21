@@ -19,15 +19,14 @@ class AndroidLooper {
 public:
   enum Id        : int;
   enum Timeout   : int;
-  enum EventType : int8_t;
 
 public:
   AndroidLooper();
 
 public:
   void prepare();
+  void postEvent(const AndroidEvent& event);
   bool pollEvent(AndroidEvent& event);
-  void postEvent(EventType eventType);
 
 private:
   void pollFromAndroidCallbacks(AndroidEvent& event);
@@ -52,13 +51,7 @@ enum AndroidLooper::Timeout : int {
   ImmediatelyWithoutBlockingTimeout    = 0,
 };
 
-enum AndroidLooper::EventType : int8_t {
-  NoDataAvailableEvent = -1,
-  ActivityStartEvent   = 0,
-  ActivityResumeEvent,
-  ActivityPauseEvent,
-  ActivityStopEvent,
-};
+
 
 
 #endif //FLAPPY_CAT_ANDROIDLOOPER_H

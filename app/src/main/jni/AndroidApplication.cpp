@@ -191,14 +191,18 @@ void AndroidApplication::exec() {
   initialize();
 
   SCOPE("application is initialized now") {
+
     std::lock_guard<std::mutex> lock(mMutex);
-    UNUSED(lock); // unlocks when goes out of a scope
     mIsRunning = true;
     mConditionVariable.notify_all();
+
+    UNUSED(lock); // unlocks when goes out of a scope
   }
 
+  // start event loop
   main();
 
+  // clean up after event loop
   deinitialize();
 }
 
@@ -220,7 +224,6 @@ void AndroidApplication::deinitialize() {
 #warning free saved state
 
   std::lock_guard<std::mutex> lock(mMutex);
-  UNUSED(lock); // unlocks when goes out of a scope
 
 #warning detach looper from event queue
 
@@ -230,45 +233,66 @@ void AndroidApplication::deinitialize() {
 
   mConditionVariable.notify_all();
 
+  UNUSED(lock); // unlocks when goes out of a scope
+
   CAUTION("If you `unlock` mutex, you can't touch `this` object");
 }
 
-
-
 bool AndroidApplication::pollEvent(AndroidEvent& event) {
 
-  //if (event.eventType() == EmptyEvent) {
-  //  postProcessOfPreviousEvent(event);
-  //}
-
   bool hasAnyEvents = mLooper.pollEvent(event);
-  //preProcessEvent(event);
+
+  if (hasAnyEvents) {
+    processEvent(event);
+  }
+
   return hasAnyEvents;
+}
+
+void AndroidApplication::processEvent(AndroidEvent& event) {
+
+  switch (event.type()) {
+    case ActivityStartEventType:  setActivityState(StartActivityState);  break;
+    case ActivityResumeEventType: setActivityState(ResumeActivityState); break;
+    case ActivityPauseEventType:  setActivityState(PauseActivityState);  break;
+    case ActivityStopEventType:   setActivityState(StopActivityState);   break;
+  }
 }
 
 void AndroidApplication::changeActivityStateTo(AndroidApplication::ActivityState activityState) {
 
-  // function for checking when state of activity changed
+  // create event
+  AndroidEvent event;
+  switch (activityState) {
+    case StartActivityState:  event.setEventType(ActivityStartEventType);  break;
+    case ResumeActivityState: event.setEventType(ActivityResumeEventType); break;
+    case PauseActivityState:  event.setEventType(ActivityPauseEventType);  break;
+    case StopActivityState:   event.setEventType(ActivityStopEventType);   break;
+    default: break;
+  }
+
   auto isInState = [&activityState, this]() -> bool {
 
     return this->activityState() == activityState;
   };
 
-
+  // wait for state to change
   std::unique_lock<std::mutex> lock(mMutex);
-
-  // One can try to remove `mLooper.postEvent` duplicated code but would
-  // produce less readable code
-  switch (activityState) {
-    case StartActivityState:  mLooper.postEvent(ActivityStartEvent);  break;
-    case ResumeActivityState: mLooper.postEvent(ActivityResumeEvent); break;
-    case PauseActivityState:  mLooper.postEvent(ActivityPauseEvent);  break;
-    case StopActivityState:   mLooper.postEvent(ActivityStopEvent);   break;
-    default: break;
-  }
-
+  mLooper.postEvent(event);
   mConditionVariable.wait(lock, isInState);
   mMutex.unlock();
 }
 
 
+void AndroidApplication::setActivityState(AndroidApplication::ActivityState activityState) {
+
+  Log::i(TAG, "activityState = %d\n", activityState);
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  mActivityState = activityState;
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
+}

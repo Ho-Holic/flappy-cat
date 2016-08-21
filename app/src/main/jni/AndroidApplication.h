@@ -43,7 +43,9 @@ public:
 private:
   void initialize();
   void deinitialize();
+  void setActivityState(ActivityState activityState);
   void changeActivityStateTo(ActivityState activityState);
+  void processEvent(AndroidEvent& event);
 
 
 private:

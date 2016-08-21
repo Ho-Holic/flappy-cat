@@ -8,7 +8,6 @@ AndroidLooper::AndroidLooper()
   //
 }
 
-
 void AndroidLooper::prepare() {
 
   REQUIRE(TAG, mLooper == nullptr, "must prepare looper once");
@@ -20,32 +19,29 @@ void AndroidLooper::prepare() {
                 nullptr, nullptr);
 }
 
+void AndroidLooper::postEvent(const AndroidEvent& event) {
+
+  mPipe.writeEnum<AndroidEvent::EventType>(event.type());
+}
 
 bool AndroidLooper::pollEvent(AndroidEvent& event) {
 
   int id = ALooper_pollAll(ImmediatelyWithoutBlockingTimeout,
                            nullptr, nullptr, nullptr);
-
   switch (id) {
     case AndroidCallbackId:  pollFromAndroidCallbacks(event); break;
     case InputQueueId:       pollFromInputQueue(event);       break;
     default:                 unexpectedIdentifier(id);        break;
   }
 
-
   bool hasAnyEvents = (id >= 0);
   return hasAnyEvents;
 }
 
-void AndroidLooper::unexpectedIdentifier(int id) {
-
-  Log::i(TAG, "Unexpected identifier in pollEvent = %d", id);
-}
-
 void AndroidLooper::pollFromAndroidCallbacks(AndroidEvent& event) {
 
-  EventType eventType = mPipe.readEnum<EventType, NoDataAvailableEvent>();
-
+  AndroidEvent::EventType eventType = mPipe.readEnum<AndroidEvent::EventType,
+                                                     NoDataAvailableEventType>();
   switch (eventType) {
     //
   }
@@ -56,7 +52,9 @@ void AndroidLooper::pollFromInputQueue(AndroidEvent& event) {
 
 }
 
-void AndroidLooper::postEvent(EventType eventType) {
+void AndroidLooper::unexpectedIdentifier(int id) {
 
-  mPipe.writeEnum<EventType>(eventType);
+  Log::i(TAG, "Unexpected identifier in pollEvent = %d", id);
 }
+
+
