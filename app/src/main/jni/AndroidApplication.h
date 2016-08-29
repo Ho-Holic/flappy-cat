@@ -8,6 +8,7 @@
 // std
 #include <mutex>
 #include <condition_variable>
+#include <queue>
 
 // self
 #include "Guidelines.h"
@@ -15,8 +16,6 @@
 #include "AndroidLooper.h"
 
 class AndroidApplication {
-private:
-  using ConfigurationDeleter = void (*)(AConfiguration*);
 
 private:
   enum ActivityState : int8_t;
@@ -39,6 +38,7 @@ public:
   ActivityState activityState() const;
   void exec();
   bool pollEvent(AndroidEvent& event);
+  void postEvent(const AndroidEvent& event);
 
 private:
   void initialize();
@@ -75,6 +75,7 @@ private:
   bool mIsDestroyed;
   AndroidConfiguration mConfiguration;
   AndroidLooper mLooper;
+  std::queue<AndroidEvent> mEvents;
 };
 
 // enums

@@ -4,15 +4,16 @@
 // stl
 #include <sstream>
 
-AndroidConfiguration::AndroidConfiguration()
-: mConfiguration(AConfiguration_new(), &AConfiguration_delete)
+AndroidConfiguration::AndroidConfiguration(AAssetManager* manager)
+: mManager(manager)
+, mConfiguration(AConfiguration_new(), &AConfiguration_delete)
 , mCacheForToString() {
   mCacheForToString.reserve(AproximateToStringLength);
 }
 
-void AndroidConfiguration::reloadFrom(AAssetManager* manager) {
+void AndroidConfiguration::reload() {
 
-  AConfiguration_fromAssetManager(mConfiguration.get(), manager);
+  AConfiguration_fromAssetManager(mConfiguration.get(), mManager);
   reloadCacheForToString();
 }
 

@@ -3,6 +3,7 @@
 
 // ndk
 #include <android/looper.h>
+#include <android/input.h>
 
 // self
 #include "Guidelines.h"
@@ -11,6 +12,7 @@
 
 // stl
 #include <cstdint>
+#include <memory>
 
 
 class AndroidLooper {
@@ -21,12 +23,16 @@ public:
   enum Timeout   : int;
 
 public:
+  using DetachLooperDeleter = void (*)(AInputQueue*);
+
+public:
   AndroidLooper();
 
 public:
   void prepare();
   void postEvent(const AndroidEvent& event);
   bool pollEvent(AndroidEvent& event);
+  void setInputQueue(AInputQueue* inputQueue);
 
 private:
   void pollFromAndroidCallbacks(AndroidEvent& event);
@@ -35,6 +41,7 @@ private:
 
 private:
   ALooper* mLooper;
+  std::unique_ptr<AInputQueue, DetachLooperDeleter> mInputQueue;
   AndroidPipe mPipe;
 };
 

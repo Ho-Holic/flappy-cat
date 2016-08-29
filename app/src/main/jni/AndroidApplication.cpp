@@ -14,8 +14,9 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
 , mConditionVariable()
 , mIsRunning(false)
 , mIsDestroyed(false)
-, mConfiguration()
-, mLooper() {
+, mConfiguration(activity->assetManager)
+, mLooper()
+, mEvents() {
   UNUSED(savedState);     // we don't save and load state for now
   UNUSED(savedStateSize); // --/--
 
@@ -139,6 +140,8 @@ void AndroidApplication::onInputQueueCreated(ANativeActivity* activity, AInputQu
   Log::i(TAG, "InputQueueCreated: %p -- %p\n", activity, queue);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  // lock
+  //application->mLooper.setInputQueue(queue);
 }
 
 void AndroidApplication::onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue) {
@@ -146,6 +149,9 @@ void AndroidApplication::onInputQueueDestroyed(ANativeActivity* activity, AInput
   Log::i(TAG, "InputQueueDestroyed: %p -- %p\n", activity, queue);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  // lock
+  //application->mLooper.setInputQueue(nullptr);
+
 }
 
 // main code
@@ -209,7 +215,7 @@ void AndroidApplication::exec() {
 void AndroidApplication::initialize() {
 
   // load configuration
-  mConfiguration.reloadFrom(mActivity->assetManager);
+  mConfiguration.reload();
   Log::i(TAG, mConfiguration.toString());
 
   // prepare looper for this thread to read events
@@ -240,13 +246,22 @@ void AndroidApplication::deinitialize() {
 
 bool AndroidApplication::pollEvent(AndroidEvent& event) {
 
-  bool hasAnyEvents = mLooper.pollEvent(event);
+  if ( ! mEvents.empty()) {
 
-  if (hasAnyEvents) {
+    event = mEvents.front();
+    mEvents.pop();
+
     processEvent(event);
+
+    return true;
   }
 
-  return hasAnyEvents;
+  return false;
+}
+
+void AndroidApplication::postEvent(const AndroidEvent& event) {
+
+  mEvents.push(event);
 }
 
 void AndroidApplication::processEvent(AndroidEvent& event) {
@@ -278,7 +293,9 @@ void AndroidApplication::changeActivityStateTo(AndroidApplication::ActivityState
 
   // wait for state to change
   std::unique_lock<std::mutex> lock(mMutex);
-  mLooper.postEvent(event);
+
+  this->postEvent(event);
+
   mConditionVariable.wait(lock, isInState);
   mMutex.unlock();
 }
@@ -296,3 +313,4 @@ void AndroidApplication::setActivityState(AndroidApplication::ActivityState acti
 
   UNUSED(lock); // unlocks when goes out of a scope
 }
+

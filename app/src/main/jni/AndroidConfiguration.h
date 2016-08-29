@@ -20,17 +20,18 @@ private:
   DISABLE_COPY(AndroidConfiguration)
 
 public:
-  AndroidConfiguration();
+  AndroidConfiguration(AAssetManager* manager);
 
 public:
   std::string toString() const;
-  void reloadFrom(AAssetManager* manager);
+  void reload();
   void reset();
 
 private:
   void reloadCacheForToString();
 
 private:
+  AAssetManager* mManager;
   std::unique_ptr<AConfiguration, ConfigurationDeleter> mConfiguration;
   std::string mCacheForToString;
 };

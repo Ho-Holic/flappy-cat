@@ -8,9 +8,6 @@
 #include "Guidelines.h"
 
 class AndroidEvent {
-private:
-  DISABLE_COPY(AndroidEvent)
-
 public:
   enum EventType : int8_t;
 
