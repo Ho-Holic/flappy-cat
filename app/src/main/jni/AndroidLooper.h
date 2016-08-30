@@ -7,7 +7,6 @@
 
 // self
 #include "Guidelines.h"
-#include "AndroidPipe.h"
 #include "AndroidEvent.h"
 
 // stl
@@ -30,26 +29,22 @@ public:
 
 public:
   void prepare();
-  void postEvent(const AndroidEvent& event);
   bool pollEvent(AndroidEvent& event);
   void setInputQueue(AInputQueue* inputQueue);
 
 private:
-  void pollFromAndroidCallbacks(AndroidEvent& event);
   void pollFromInputQueue(AndroidEvent& event);
   void unexpectedIdentifier(int id);
 
 private:
   ALooper* mLooper;
   std::unique_ptr<AInputQueue, DetachLooperDeleter> mInputQueue;
-  AndroidPipe mPipe;
 };
 
 // enums
 
 enum AndroidLooper::Id : int {
   ReservedId,
-  AndroidCallbackId,
   InputQueueId,
 };
 

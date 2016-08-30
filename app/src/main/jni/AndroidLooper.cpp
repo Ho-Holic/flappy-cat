@@ -4,8 +4,7 @@
 
 AndroidLooper::AndroidLooper()
 : mLooper(nullptr)
-, mInputQueue(nullptr, &AInputQueue_detachLooper)
-, mPipe() {
+, mInputQueue(nullptr, &AInputQueue_detachLooper) {
   //
 }
 
@@ -16,9 +15,6 @@ void AndroidLooper::prepare() {
   // don't move it to constructor
   mLooper = ALooper_prepare(ALOOPER_PREPARE_ALLOW_NON_CALLBACKS);
 
-  ALooper_addFd(mLooper, mPipe.readEnd(),
-                AndroidCallbackId, ALOOPER_EVENT_INPUT,
-                nullptr, nullptr);
 }
 
 void AndroidLooper::setInputQueue(AInputQueue* inputQueue) {
@@ -32,32 +28,17 @@ void AndroidLooper::setInputQueue(AInputQueue* inputQueue) {
   }
 }
 
-void AndroidLooper::postEvent(const AndroidEvent& event) {
-
-  mPipe.writeEnum<AndroidEvent::EventType>(event.type());
-}
-
 bool AndroidLooper::pollEvent(AndroidEvent& event) {
 
   int id = ALooper_pollAll(ImmediatelyWithoutBlockingTimeout,
                            nullptr, nullptr, nullptr);
   switch (id) {
-    case AndroidCallbackId:  pollFromAndroidCallbacks(event); break;
     case InputQueueId:       pollFromInputQueue(event);       break;
     default:                 unexpectedIdentifier(id);        break;
   }
 
   bool hasAnyEvents = (id >= 0);
   return hasAnyEvents;
-}
-
-void AndroidLooper::pollFromAndroidCallbacks(AndroidEvent& event) {
-
-  AndroidEvent::EventType eventType = mPipe.readEnum<AndroidEvent::EventType,
-                                                     NoDataAvailableEventType>();
-  switch (eventType) {
-    //
-  }
 }
 
 void AndroidLooper::pollFromInputQueue(AndroidEvent& event) {

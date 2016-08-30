@@ -81,6 +81,7 @@ void* AndroidApplication::onSaveInstanceState(ANativeActivity* activity, size_t*
   Log::i(TAG, "SaveInstanceState: %p\n", activity);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  UNUSED(application); // not needed
   return nullptr;
 }
 
@@ -105,6 +106,7 @@ void AndroidApplication::onConfigurationChanged(ANativeActivity* activity) {
   Log::i(TAG, "ConfigurationChanged: %p\n", activity);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  application->reloadConfiguration();
 }
 
 void AndroidApplication::onLowMemory(ANativeActivity* activity) {
@@ -112,6 +114,7 @@ void AndroidApplication::onLowMemory(ANativeActivity* activity) {
   Log::i(TAG, "LowMemory: %p\n", activity);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  UNUSED(application); // not needed
 }
 
 void AndroidApplication::onWindowFocusChanged(ANativeActivity* activity, int focused) {
@@ -126,6 +129,7 @@ void AndroidApplication::onNativeWindowCreated(ANativeActivity* activity, ANativ
   Log::i(TAG, "NativeWindowCreated: %p -- %p\n", activity, window);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  application->setNativeWindow(window);
 }
 
 void AndroidApplication::onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window) {
@@ -133,6 +137,7 @@ void AndroidApplication::onNativeWindowDestroyed(ANativeActivity* activity, ANat
   Log::i(TAG, "NativeWindowDestroyed: %p -- %p\n", activity, window);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  application->setNativeWindow(nullptr);
 }
 
 void AndroidApplication::onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue) {
@@ -140,8 +145,7 @@ void AndroidApplication::onInputQueueCreated(ANativeActivity* activity, AInputQu
   Log::i(TAG, "InputQueueCreated: %p -- %p\n", activity, queue);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
-  // lock
-  //application->mLooper.setInputQueue(queue);
+  application->setInputQueue(queue);
 }
 
 void AndroidApplication::onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue) {
@@ -149,9 +153,7 @@ void AndroidApplication::onInputQueueDestroyed(ANativeActivity* activity, AInput
   Log::i(TAG, "InputQueueDestroyed: %p -- %p\n", activity, queue);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
-  // lock
-  //application->mLooper.setInputQueue(nullptr);
-
+  application->setInputQueue(nullptr);
 }
 
 // main code
@@ -246,6 +248,12 @@ void AndroidApplication::deinitialize() {
 
 bool AndroidApplication::pollEvent(AndroidEvent& event) {
 
+  bool hasEventsInLooper = mLooper.pollEvent(event);
+
+  if (hasEventsInLooper) {
+    postEvent(event);
+  }
+
   if ( ! mEvents.empty()) {
 
     event = mEvents.front();
@@ -314,3 +322,37 @@ void AndroidApplication::setActivityState(AndroidApplication::ActivityState acti
   UNUSED(lock); // unlocks when goes out of a scope
 }
 
+void AndroidApplication::setInputQueue(AInputQueue* queue) {
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  mLooper.setInputQueue(queue);
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
+}
+
+void AndroidApplication::setNativeWindow(ANativeWindow* window) {
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  // mWindow = window
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
+
+}
+
+void AndroidApplication::reloadConfiguration() {
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  mConfiguration.reload();
+  Log::i(TAG, mConfiguration.toString());
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
+}

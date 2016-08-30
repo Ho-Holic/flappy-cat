@@ -46,6 +46,9 @@ private:
   void setActivityState(ActivityState activityState);
   void changeActivityStateTo(ActivityState activityState);
   void processEvent(AndroidEvent& event);
+  void setInputQueue(AInputQueue* queue);
+  void setNativeWindow(ANativeWindow* window);
+  void reloadConfiguration();
 
 
 private:
