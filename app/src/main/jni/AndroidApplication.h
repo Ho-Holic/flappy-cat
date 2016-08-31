@@ -19,6 +19,7 @@ class AndroidApplication {
 
 private:
   enum ActivityState : int8_t;
+  enum Focus: int;
 
 private:
   DISABLE_COPY(AndroidApplication)
@@ -45,6 +46,7 @@ private:
   void deinitialize();
   void setActivityState(ActivityState activityState);
   void changeActivityStateTo(ActivityState activityState);
+  void changeFocus(Focus focus);
   void processEvent(AndroidEvent& event);
   void setInputQueue(AInputQueue* queue);
   void setNativeWindow(ANativeWindow* window);
@@ -63,11 +65,14 @@ private: // android `C` callbacks
   static void onStop(ANativeActivity* activity);
   static void onConfigurationChanged(ANativeActivity* activity);
   static void onLowMemory(ANativeActivity* activity);
-  static void onWindowFocusChanged(ANativeActivity* activity, int focused);
+  static void onWindowFocusChanged(ANativeActivity* activity, int hasFocus);
   static void onNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window);
+  static void onNativeWindowResized(ANativeActivity* activity, ANativeWindow* window);
+  static void onNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window);
   static void onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window);
   static void onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue);
   static void onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue);
+  static void onContentRectChanged(ANativeActivity* activity, const ARect* rect);
 
 private:
   ANativeActivity* mActivity;
@@ -76,6 +81,7 @@ private:
   std::condition_variable mConditionVariable;
   bool mIsRunning;
   bool mIsDestroyed;
+  bool mIsDestroyRequested;
   AndroidConfiguration mConfiguration;
   AndroidLooper mLooper;
   std::queue<AndroidEvent> mEvents;
@@ -90,6 +96,11 @@ enum AndroidApplication::ActivityState : int8_t {
   PauseActivityState,
   StopActivityState,
 
+};
+
+enum AndroidApplication::Focus: int {
+  GainFocus,
+  LostFocus
 };
 
 #endif //FLAPPY_CAT_ANDROIDAPPLICATION_H

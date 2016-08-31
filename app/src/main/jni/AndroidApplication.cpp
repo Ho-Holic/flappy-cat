@@ -14,6 +14,7 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
 , mConditionVariable()
 , mIsRunning(false)
 , mIsDestroyed(false)
+, mIsDestroyRequested(false)
 , mConfiguration(activity->assetManager)
 , mLooper()
 , mEvents() {
@@ -30,9 +31,12 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
   activity->callbacks->onLowMemory             = &AndroidApplication::onLowMemory;
   activity->callbacks->onWindowFocusChanged    = &AndroidApplication::onWindowFocusChanged;
   activity->callbacks->onNativeWindowCreated   = &AndroidApplication::onNativeWindowCreated;
+  activity->callbacks->onNativeWindowResized   = &AndroidApplication::onNativeWindowResized;
+  activity->callbacks->onNativeWindowRedrawNeeded = &AndroidApplication::onNativeWindowRedrawNeeded;
   activity->callbacks->onNativeWindowDestroyed = &AndroidApplication::onNativeWindowDestroyed;
   activity->callbacks->onInputQueueCreated     = &AndroidApplication::onInputQueueCreated;
   activity->callbacks->onInputQueueDestroyed   = &AndroidApplication::onInputQueueDestroyed;
+  activity->callbacks->onContentRectChanged    = &AndroidApplication::onContentRectChanged;
 
   CAUTION("Memory allocated before constructor so we can assign `this` here, but if you"
           "want to move this code from constructor and assign to pointer of class that extends"
@@ -117,11 +121,12 @@ void AndroidApplication::onLowMemory(ANativeActivity* activity) {
   UNUSED(application); // not needed
 }
 
-void AndroidApplication::onWindowFocusChanged(ANativeActivity* activity, int focused) {
+void AndroidApplication::onWindowFocusChanged(ANativeActivity* activity, int hasFocus) {
 
-  Log::i(TAG, "WindowFocusChanged: %p -- %d\n", activity, focused);
+  Log::i(TAG, "WindowFocusChanged: %p -- %d\n", activity, hasFocus);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  application->changeFocus(hasFocus ? GainFocus : LostFocus);
 }
 
 void AndroidApplication::onNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window) {
@@ -130,6 +135,21 @@ void AndroidApplication::onNativeWindowCreated(ANativeActivity* activity, ANativ
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
   application->setNativeWindow(window);
+}
+
+void AndroidApplication::onNativeWindowResized(ANativeActivity* activity, ANativeWindow* window) {
+  Log::i(TAG, "NativeWindowResized: %p -- %p\n", activity, window);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+}
+
+void AndroidApplication::onNativeWindowRedrawNeeded(ANativeActivity* activity,
+                                                    ANativeWindow* window) {
+
+  Log::i(TAG, "NativeWindowRedrawNeeded: %p -- %p\n", activity, window);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+
 }
 
 void AndroidApplication::onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window) {
@@ -156,6 +176,14 @@ void AndroidApplication::onInputQueueDestroyed(ANativeActivity* activity, AInput
   application->setInputQueue(nullptr);
 }
 
+void AndroidApplication::onContentRectChanged(ANativeActivity* activity, const ARect* rect) {
+
+  Log::i(TAG, "ContentRectChanged: %p -- %d %d %d %d\n", activity,
+         rect->left, rect->top, rect->right, rect->bottom);
+
+  AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+}
+
 // main code
 
 void AndroidApplication::waitForStarted() {
@@ -169,7 +197,7 @@ void AndroidApplication::requestDestruction() {
 
   std::unique_lock<std::mutex> lock(mMutex);
 
-#warning write command to break an event loop
+  mIsDestroyRequested = true;
 
   mConditionVariable.wait(lock, std::bind(&AndroidApplication::isDestroyed, std::ref(*this)));
   mMutex.unlock();
@@ -186,8 +214,8 @@ bool AndroidApplication::isDestroyed() const {
 }
 
 bool AndroidApplication::isDestroyRequested() const {
-#warning write code here
-  return false;
+
+  return mIsDestroyRequested;
 }
 
 AndroidApplication::ActivityState AndroidApplication::activityState() const {
@@ -284,7 +312,6 @@ void AndroidApplication::processEvent(AndroidEvent& event) {
 
 void AndroidApplication::changeActivityStateTo(AndroidApplication::ActivityState activityState) {
 
-  // create event
   AndroidEvent event;
   switch (activityState) {
     case StartActivityState:  event.setEventType(ActivityStartEventType);  break;
@@ -356,3 +383,23 @@ void AndroidApplication::reloadConfiguration() {
 
   UNUSED(lock); // unlocks when goes out of a scope
 }
+
+void AndroidApplication::changeFocus(AndroidApplication::Focus focus) {
+
+  AndroidEvent event;
+  switch (focus) {
+    case GainFocus: event.setEventType(GainFocusEventType);  break;
+    case LostFocus: event.setEventType(LostFocusEventType);  break;
+    default: break;
+  }
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  this->postEvent(event);
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
+}
+
+

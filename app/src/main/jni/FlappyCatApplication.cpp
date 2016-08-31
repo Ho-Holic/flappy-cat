@@ -13,19 +13,15 @@ FlappyCatApplication::FlappyCatApplication(ANativeActivity* activity,
 void FlappyCatApplication::main() {
 
   // game loop
-  loop() {
+  while( ! isDestroyRequested()) {
 
     AndroidEvent event;
     while (pollEvent(event)) {
-
-      // Check if we are exiting
-      //   - not written as `while( ! isDestroyRequested())`
-      //     in a main loop because we don't need to check
-      //     every iteration, only when some event arrived
-      if (isDestroyRequested()) {
-        return;
-      }
+      // process me
     }
+
+    // update
+    // render
   }
 
 }

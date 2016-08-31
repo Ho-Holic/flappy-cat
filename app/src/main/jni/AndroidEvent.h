@@ -28,10 +28,14 @@ private:
 enum AndroidEvent::EventType : int8_t {
   NoDataAvailableEventType = -1,
   EmptyEventType           = 0,
+
   ActivityStartEventType,
   ActivityResumeEventType,
   ActivityPauseEventType,
   ActivityStopEventType,
+
+  GainFocusEventType,
+  LostFocusEventType,
 };
 
 #endif //FLAPPY_CAT_ANDROIDEVENT_H
