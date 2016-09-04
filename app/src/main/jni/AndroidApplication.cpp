@@ -17,6 +17,7 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
 , mIsDestroyRequested(false)
 , mConfiguration(activity->assetManager)
 , mLooper()
+, mWindow()
 , mEvents() {
   UNUSED(savedState);     // we don't save and load state for now
   UNUSED(savedStateSize); // --/--
@@ -86,6 +87,8 @@ void* AndroidApplication::onSaveInstanceState(ANativeActivity* activity, size_t*
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
   UNUSED(application); // not needed
+
+  *outLen = 0;
   return nullptr;
 }
 
@@ -219,6 +222,7 @@ bool AndroidApplication::isDestroyRequested() const {
 }
 
 AndroidApplication::ActivityState AndroidApplication::activityState() const {
+
   return mActivityState;
 }
 
@@ -235,11 +239,28 @@ void AndroidApplication::exec() {
     UNUSED(lock); // unlocks when goes out of a scope
   }
 
-  // start event loop
-  main();
+  // start `system event loop`
+
+  // if native window is not ready wait for appropriate event
+  // then enter user `main`, if window is not ready again fall back to
+  // system event loop and wait for appropriate event again
+
+  while ( ! isDestroyRequested()) {
+
+    AndroidEvent event;
+    while (pollEvent(event)) {
+      processEvent(event);
+    }
+
+    if (mWindow.isReady()) {
+
+      // start `user event loop`
+      main();
+    }
+  }
 
   // clean up after event loop
-  deinitialize();
+  terminate();
 }
 
 void AndroidApplication::initialize() {
@@ -251,27 +272,6 @@ void AndroidApplication::initialize() {
   // prepare looper for this thread to read events
   mLooper.prepare();
 
-}
-
-void AndroidApplication::deinitialize() {
-
-  Log::i(TAG, "android_app_destroy!");
-
-#warning free saved state
-
-  std::lock_guard<std::mutex> lock(mMutex);
-
-#warning detach looper from event queue
-
-  mConfiguration.reset();
-
-  mIsDestroyed = true;
-
-  mConditionVariable.notify_all();
-
-  UNUSED(lock); // unlocks when goes out of a scope
-
-  CAUTION("If you `unlock` mutex, you can't touch `this` object");
 }
 
 bool AndroidApplication::pollEvent(AndroidEvent& event) {
@@ -302,12 +302,22 @@ void AndroidApplication::postEvent(const AndroidEvent& event) {
 
 void AndroidApplication::processEvent(AndroidEvent& event) {
 
+  CAUTION("Don't forget to lock mutex when you add new processing parts here"
+          "If you touch class members of course");
+
   switch (event.type()) {
+
     case ActivityStartEventType:  setActivityState(StartActivityState);  break;
     case ActivityResumeEventType: setActivityState(ResumeActivityState); break;
     case ActivityPauseEventType:  setActivityState(PauseActivityState);  break;
     case ActivityStopEventType:   setActivityState(StopActivityState);   break;
+
+    case NativeWindowCreatedEventType:   mWindow.initialize(); break;
+    case NativeWindowDestroyedEventType: mWindow.terminate();  break;
+
+    case EmptyEventType: break;
   }
+
 }
 
 void AndroidApplication::changeActivityStateTo(AndroidApplication::ActivityState activityState) {
@@ -364,7 +374,11 @@ void AndroidApplication::setNativeWindow(ANativeWindow* window) {
 
   std::lock_guard<std::mutex> lock(mMutex);
 
-  // mWindow = window
+  mWindow.setNativeWindow(window);
+
+  AndroidEvent event(window ? NativeWindowCreatedEventType
+                            : NativeWindowDestroyedEventType);
+  this->postEvent(event);
 
   mConditionVariable.notify_all();
 
@@ -400,6 +414,23 @@ void AndroidApplication::changeFocus(AndroidApplication::Focus focus) {
   mConditionVariable.notify_all();
 
   UNUSED(lock); // unlocks when goes out of a scope
+}
+
+void AndroidApplication::terminate() {
+
+  Log::i(TAG, "android_app_destroy!");
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  mConfiguration.reset();
+
+  mIsDestroyed = true;
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
+
+  CAUTION("If you `unlock` mutex, you can't touch `this` object");
 }
 
 

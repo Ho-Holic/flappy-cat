@@ -14,6 +14,7 @@
 #include "Guidelines.h"
 #include "AndroidConfiguration.h"
 #include "AndroidLooper.h"
+#include "AndroidWindow.h"
 
 class AndroidApplication {
 
@@ -43,7 +44,6 @@ public:
 
 private:
   void initialize();
-  void deinitialize();
   void setActivityState(ActivityState activityState);
   void changeActivityStateTo(ActivityState activityState);
   void changeFocus(Focus focus);
@@ -51,7 +51,7 @@ private:
   void setInputQueue(AInputQueue* queue);
   void setNativeWindow(ANativeWindow* window);
   void reloadConfiguration();
-
+  void terminate();
 
 private:
   virtual void main() = 0; // private because launched from `exec` function
@@ -84,6 +84,7 @@ private:
   bool mIsDestroyRequested;
   AndroidConfiguration mConfiguration;
   AndroidLooper mLooper;
+  AndroidWindow mWindow;
   std::queue<AndroidEvent> mEvents;
 };
 
@@ -95,12 +96,11 @@ enum AndroidApplication::ActivityState : int8_t {
   ResumeActivityState,
   PauseActivityState,
   StopActivityState,
-
 };
 
 enum AndroidApplication::Focus: int {
   GainFocus,
-  LostFocus
+  LostFocus,
 };
 
 #endif //FLAPPY_CAT_ANDROIDAPPLICATION_H
