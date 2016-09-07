@@ -50,6 +50,8 @@ private:
   void processEvent(AndroidEvent& event);
   void setInputQueue(AInputQueue* queue);
   void setNativeWindow(ANativeWindow* window);
+  void initializeNativeWindow();
+  void terminateNativeWindow();
   void reloadConfiguration();
   void terminate();
 

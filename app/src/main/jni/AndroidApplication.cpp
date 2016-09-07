@@ -312,8 +312,8 @@ void AndroidApplication::processEvent(AndroidEvent& event) {
     case ActivityPauseEventType:  setActivityState(PauseActivityState);  break;
     case ActivityStopEventType:   setActivityState(StopActivityState);   break;
 
-    case NativeWindowCreatedEventType:   mWindow.initialize(); break;
-    case NativeWindowDestroyedEventType: mWindow.terminate();  break;
+    case NativeWindowCreatedEventType:   initializeNativeWindow(); break;
+    case NativeWindowDestroyedEventType: terminateNativeWindow(); break;
 
     case EmptyEventType: break;
   }
@@ -372,18 +372,40 @@ void AndroidApplication::setInputQueue(AInputQueue* queue) {
 
 void AndroidApplication::setNativeWindow(ANativeWindow* window) {
 
+  AndroidEvent event(window ? NativeWindowCreatedEventType
+                            : NativeWindowDestroyedEventType);
+
   std::lock_guard<std::mutex> lock(mMutex);
 
   mWindow.setNativeWindow(window);
-
-  AndroidEvent event(window ? NativeWindowCreatedEventType
-                            : NativeWindowDestroyedEventType);
   this->postEvent(event);
 
   mConditionVariable.notify_all();
 
   UNUSED(lock); // unlocks when goes out of a scope
 
+}
+
+void AndroidApplication::initializeNativeWindow() {
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  mWindow.initialize();
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
+}
+
+void AndroidApplication::terminateNativeWindow() {
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  mWindow.terminate();
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
 }
 
 void AndroidApplication::reloadConfiguration() {
@@ -432,5 +454,6 @@ void AndroidApplication::terminate() {
 
   CAUTION("If you `unlock` mutex, you can't touch `this` object");
 }
+
 
 

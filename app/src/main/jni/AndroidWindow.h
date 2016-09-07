@@ -7,6 +7,9 @@
 // ndk
 #include <android/native_window.h>
 
+// egl
+#include <EGL/egl.h>
+
 class AndroidWindow {
 private:
   DISABLE_COPY(AndroidWindow)
@@ -19,6 +22,9 @@ public:
   void terminate();
 private:
   ANativeWindow* mWindow;
+  EGLDisplay mDisplay;
+  EGLContext mContext;
+  EGLSurface mSurface;
 };
 
 
