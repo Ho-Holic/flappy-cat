@@ -41,6 +41,7 @@ public:
   void exec();
   bool pollEvent(AndroidEvent& event);
   void postEvent(const AndroidEvent& event);
+  const AndroidWindow& window() const;
 
 private:
   void initialize();

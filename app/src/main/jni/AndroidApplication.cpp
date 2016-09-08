@@ -456,4 +456,6 @@ void AndroidApplication::terminate() {
 }
 
 
-
+const AndroidWindow& AndroidApplication::window() const {
+  return mWindow;
+}

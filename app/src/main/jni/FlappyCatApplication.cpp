@@ -21,7 +21,7 @@ void FlappyCatApplication::main() {
     }
 
     // update
-    // render
+    window().draw();
   }
 
 }

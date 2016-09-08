@@ -20,11 +20,14 @@ public:
   bool isReady() const;
   void initialize();
   void terminate();
+  void draw() const;
 private:
   ANativeWindow* mWindow;
   EGLDisplay mDisplay;
   EGLContext mContext;
   EGLSurface mSurface;
+  EGLint mWidth;
+  EGLint mHeight;
 };
 
 
