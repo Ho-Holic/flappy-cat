@@ -33,8 +33,9 @@ bool AndroidLooper::pollEvent(AndroidEvent& event) {
   int id = ALooper_pollAll(ImmediatelyWithoutBlockingTimeout,
                            nullptr, nullptr, nullptr);
   switch (id) {
-    case InputQueueId:       pollFromInputQueue(event);       break;
-    default:                 unexpectedIdentifier(id);        break;
+    case InputQueueId: pollFromInputQueue(event); break;
+    case ALOOPER_POLL_TIMEOUT: break;
+    default: unexpectedIdentifier(id); break;
   }
 
   bool hasAnyEvents = (id >= 0);

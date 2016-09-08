@@ -4,7 +4,12 @@
 // stl
 #include <memory>
 
-#include <GLES2/gl2.h>
+// tmp
+#include <random>
+
+// opengl
+#include <GLES/gl.h>
+//#include <GLES2/gl2.h>
 
 AndroidWindow::AndroidWindow()
 : mWindow(nullptr)
@@ -47,11 +52,11 @@ void AndroidWindow::initialize() {
     // can create window surfaces
     EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
     // 32 bit color
-    EGL_BLUE_SIZE, 8,
+    EGL_BLUE_SIZE,  8,
     EGL_GREEN_SIZE, 8,
-    EGL_RED_SIZE, 8,
+    EGL_RED_SIZE,   8,
     // enable opengl es2
-    EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+    //EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
     // terminating symbol
     EGL_NONE
   };
@@ -142,8 +147,8 @@ void AndroidWindow::initialize() {
 
   // https://www.opengl.org/discussion_boards/showthread.php/179138-glShadeModel-is-depreciated-So-how-exactly-do-we-do-flat-shading-now
   // TODO: replace two lines below
-  //glShadeModel(GL_SMOOTH);
-  //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+  glShadeModel(GL_SMOOTH);
+  glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
 
   // when all done
   mDisplay = display;
@@ -181,8 +186,18 @@ void AndroidWindow::draw() const {
     return;
   }
 
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> dis(0, 255);
+
+  GLclampf r = static_cast<GLclampf>(dis(gen)) / 255.f;
+  GLclampf g = static_cast<GLclampf>(dis(gen)) / 255.f;
+  GLclampf b = static_cast<GLclampf>(dis(gen)) / 255.f;
+
+
+
   // Just fill the screen with a color.
-  glClearColor(0.5f, 0.5f, 0.5f, 1);
+  glClearColor(r, g, b, 1);
   glClear(GL_COLOR_BUFFER_BIT);
 
   eglSwapBuffers(mDisplay, mSurface);

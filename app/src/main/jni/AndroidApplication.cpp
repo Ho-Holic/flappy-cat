@@ -248,9 +248,7 @@ void AndroidApplication::exec() {
   while ( ! isDestroyRequested()) {
 
     AndroidEvent event;
-    while (pollEvent(event)) {
-      processEvent(event);
-    }
+    pollEvent(event); // we call `pollEvent` to run `processEvent` function
 
     if (mWindow.isReady()) {
 
@@ -276,10 +274,14 @@ void AndroidApplication::initialize() {
 
 bool AndroidApplication::pollEvent(AndroidEvent& event) {
 
-  bool hasEventsInLooper = mLooper.pollEvent(event);
+  SCOPE("looper event") {
 
-  if (hasEventsInLooper) {
-    postEvent(event);
+    AndroidEvent looperEvent;
+    bool hasEventsInLooper = mLooper.pollEvent(looperEvent);
+
+    if (hasEventsInLooper) {
+      postEvent(looperEvent);
+    }
   }
 
   if ( ! mEvents.empty()) {
@@ -300,7 +302,7 @@ void AndroidApplication::postEvent(const AndroidEvent& event) {
   mEvents.push(event);
 }
 
-void AndroidApplication::processEvent(AndroidEvent& event) {
+void AndroidApplication::processEvent(const AndroidEvent& event) {
 
   CAUTION("Don't forget to lock mutex when you add new processing parts here"
           "If you touch class members of course");
@@ -388,6 +390,8 @@ void AndroidApplication::setNativeWindow(ANativeWindow* window) {
 
 void AndroidApplication::initializeNativeWindow() {
 
+  Log::i(TAG, "Initialize native window\n");
+
   std::lock_guard<std::mutex> lock(mMutex);
 
   mWindow.initialize();
@@ -398,6 +402,8 @@ void AndroidApplication::initializeNativeWindow() {
 }
 
 void AndroidApplication::terminateNativeWindow() {
+
+  Log::i(TAG, "Terminate native window\n");
 
   std::lock_guard<std::mutex> lock(mMutex);
 

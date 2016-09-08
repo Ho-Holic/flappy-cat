@@ -48,7 +48,7 @@ private:
   void setActivityState(ActivityState activityState);
   void changeActivityStateTo(ActivityState activityState);
   void changeFocus(Focus focus);
-  void processEvent(AndroidEvent& event);
+  void processEvent(const AndroidEvent& event);
   void setInputQueue(AInputQueue* queue);
   void setNativeWindow(ANativeWindow* window);
   void initializeNativeWindow();

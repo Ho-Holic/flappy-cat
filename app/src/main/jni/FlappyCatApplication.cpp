@@ -15,10 +15,10 @@ void FlappyCatApplication::main() {
   // game loop
   while( ! isDestroyRequested()) {
 
-    AndroidEvent event;
-    while (pollEvent(event)) {
+    //AndroidEvent event;
+    //while (pollEvent(event)) {
       // process me
-    }
+    //}
 
     // update
     window().draw();
