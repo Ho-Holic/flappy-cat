@@ -8,8 +8,7 @@
 #include <random>
 
 // opengl
-#include <GLES/gl.h>
-//#include <GLES2/gl2.h>
+#include <GLES2/gl2.h>
 
 AndroidWindow::AndroidWindow()
 : mWindow(nullptr)
@@ -48,7 +47,7 @@ void AndroidWindow::initialize() {
 
   // choose configuration
 
-  const EGLint attribs[] = {
+  const EGLint configAttribs[] = {
     // can create window surfaces
     EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
     // 32 bit color
@@ -56,7 +55,7 @@ void AndroidWindow::initialize() {
     EGL_GREEN_SIZE, 8,
     EGL_RED_SIZE,   8,
     // enable opengl es2
-    //EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+    EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
     // terminating symbol
     EGL_NONE
   };
@@ -64,7 +63,7 @@ void AndroidWindow::initialize() {
   EGLint numConfigs = 0; // number of frame buffer configurations
 
   // first we get size of all configurations
-  EGLBoolean chooseConfigState = eglChooseConfig(display, attribs,
+  EGLBoolean chooseConfigState = eglChooseConfig(display, configAttribs,
                                                  nullptr, 0,
                                                  &numConfigs);
 
@@ -74,13 +73,13 @@ void AndroidWindow::initialize() {
   std::unique_ptr<EGLConfig[]> supportedConfigs(new EGLConfig[numConfigs]);
 
   // and load them
-  chooseConfigState = eglChooseConfig(display, attribs,
+  chooseConfigState = eglChooseConfig(display, configAttribs,
                                       supportedConfigs.get(), numConfigs,
                                       &numConfigs);
 
   REQUIRE(TAG, numConfigs != 0, "Value of `numConfigs` must be positive");
 
-  // match required configuration by `attribs`
+  // match required configuration by `configAttribs`
   EGLConfig config = nullptr;
 
   EGLint configIndex = 0;
@@ -124,7 +123,14 @@ void AndroidWindow::initialize() {
 
   EGLSurface surface = eglCreateWindowSurface(display, config, mWindow, nullptr);
 
-  EGLContext context = eglCreateContext(display, config, nullptr, nullptr);
+  // context configuration
+  EGLint contextAttribs[] = {
+    // GLESv2 compatible context
+    EGL_CONTEXT_CLIENT_VERSION, 2,
+    EGL_NONE
+  };
+
+  EGLContext context = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
 
   EGLBoolean isCurrent = eglMakeCurrent(display, surface, surface, context);
 
@@ -147,8 +153,8 @@ void AndroidWindow::initialize() {
 
   // https://www.opengl.org/discussion_boards/showthread.php/179138-glShadeModel-is-depreciated-So-how-exactly-do-we-do-flat-shading-now
   // TODO: replace two lines below
-  glShadeModel(GL_SMOOTH);
-  glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+  //glShadeModel(GL_SMOOTH);
+  //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
 
   // when all done
   mDisplay = display;
