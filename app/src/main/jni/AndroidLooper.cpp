@@ -52,23 +52,28 @@ void AndroidLooper::pollFromInputQueue(AndroidEvent& event) {
 
   if (nextEvent >= 0) {
 
-    Log::i(TAG, "New input event: type = %d\n", AInputEvent_getType(inputEvent));
-
     if (AInputQueue_preDispatchEvent(queue, inputEvent)) {
       return;
     }
 
     int32_t handled = 0;
 
-    // user code
-    //if (app->onInputEvent != NULL) handled = app->onInputEvent(app, event);
+    int32_t type = AInputEvent_getType(inputEvent);
+
+    if (type == AINPUT_EVENT_TYPE_MOTION) {
+
+      int32_t action = AMotionEvent_getAction(inputEvent);
+
+      switch (action & AMOTION_EVENT_ACTION_MASK) {
+      case AMOTION_EVENT_ACTION_MOVE: handled = pollMotionMove(inputEvent, event); break;
+
+
+      }
+
+    }
 
     AInputQueue_finishEvent(queue, inputEvent, handled);
 
-  }
-  else {
-
-    Log::i(TAG, "Failure reading next input event: %s\n", strerror(errno));
   }
 
 }
@@ -79,4 +84,7 @@ void AndroidLooper::unexpectedIdentifier(int id) {
 }
 
 
-
+int32_t AndroidLooper::pollMotionMove(AInputEvent* inputEvent, AndroidEvent& event) {
+  
+  return 0;
+}

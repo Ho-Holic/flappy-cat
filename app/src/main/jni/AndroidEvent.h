@@ -12,6 +12,16 @@ public:
   enum EventType : int8_t;
 
 public:
+  struct MoveEvent {
+
+  };
+
+public:
+  union {
+    MoveEvent moveEvent;
+  };
+
+public:
   AndroidEvent();
   AndroidEvent(EventType eventType);
 

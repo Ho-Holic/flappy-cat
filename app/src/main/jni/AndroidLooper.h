@@ -37,6 +37,9 @@ private:
   void unexpectedIdentifier(int id);
 
 private:
+  int32_t pollMotionMove(AInputEvent* inputEvent, AndroidEvent& event);
+
+private:
   ALooper* mLooper;
   std::unique_ptr<AInputQueue, DetachLooperDeleter> mInputQueue;
 };
