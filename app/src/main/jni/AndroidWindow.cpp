@@ -186,25 +186,19 @@ void AndroidWindow::terminate() {
   mSurface = EGL_NO_SURFACE;
 }
 
-void AndroidWindow::draw() const {
+void AndroidWindow::display() const {
 
   if ( ! isReady()) {
     return;
   }
 
-  std::random_device rd;
-  std::mt19937 gen(rd());
-  std::uniform_int_distribution<> dis(0, 255);
-
-  GLclampf r = static_cast<GLclampf>(dis(gen)) / 255.f;
-  GLclampf g = static_cast<GLclampf>(dis(gen)) / 255.f;
-  GLclampf b = static_cast<GLclampf>(dis(gen)) / 255.f;
-
-
-
-  // Just fill the screen with a color.
-  glClearColor(r, g, b, 1);
-  glClear(GL_COLOR_BUFFER_BIT);
-
   eglSwapBuffers(mDisplay, mSurface);
+}
+
+int32_t AndroidWindow::width() const {
+  return mWidth;
+}
+
+int32_t AndroidWindow::height() const {
+  return mHeight;
 }

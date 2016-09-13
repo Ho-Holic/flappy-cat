@@ -5,21 +5,12 @@
 #include <cstdint>
 
 // self
+#include "AndroidEventData.h"
 #include "Guidelines.h"
 
 class AndroidEvent {
 public:
   enum EventType : int8_t;
-
-public:
-  struct MoveEvent {
-
-  };
-
-public:
-  union {
-    MoveEvent moveEvent;
-  };
 
 public:
   AndroidEvent();
@@ -29,8 +20,15 @@ public:
   EventType type() const;
   void setEventType(EventType eventType);
 
+public:
+  void setMotionEventData(float x, float y);
+
+public:
+  const AndroidMotionEvent& motionEvent() const;
+
 private:
   EventType mEventType;
+  AndroidEventData mEventData;
 };
 
 // enums
@@ -48,6 +46,9 @@ enum AndroidEvent::EventType : int8_t {
 
   NativeWindowCreatedEventType,
   NativeWindowDestroyedEventType,
+
+  MotionEventType,
 };
+
 
 #endif //FLAPPY_CAT_ANDROIDEVENT_H

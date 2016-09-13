@@ -37,7 +37,9 @@ private:
   void unexpectedIdentifier(int id);
 
 private:
-  int32_t pollMotionMove(AInputEvent* inputEvent, AndroidEvent& event);
+  int32_t dispatchEvent(AInputEvent* inputEvent, AndroidEvent& event);
+  int32_t dispatchMotionEvent(AInputEvent* inputEvent, AndroidEvent& event);
+  int32_t dispatchKeyEvent(AInputEvent* inputEvent, AndroidEvent& event);
 
 private:
   ALooper* mLooper;

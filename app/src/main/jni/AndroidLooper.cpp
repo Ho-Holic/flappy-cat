@@ -56,21 +56,7 @@ void AndroidLooper::pollFromInputQueue(AndroidEvent& event) {
       return;
     }
 
-    int32_t handled = 0;
-
-    int32_t type = AInputEvent_getType(inputEvent);
-
-    if (type == AINPUT_EVENT_TYPE_MOTION) {
-
-      int32_t action = AMotionEvent_getAction(inputEvent);
-
-      switch (action & AMOTION_EVENT_ACTION_MASK) {
-      case AMOTION_EVENT_ACTION_MOVE: handled = pollMotionMove(inputEvent, event); break;
-
-
-      }
-
-    }
+    int32_t handled = dispatchEvent(inputEvent, event);
 
     AInputQueue_finishEvent(queue, inputEvent, handled);
 
@@ -78,13 +64,43 @@ void AndroidLooper::pollFromInputQueue(AndroidEvent& event) {
 
 }
 
+int32_t AndroidLooper::dispatchEvent(AInputEvent* inputEvent, AndroidEvent& event) {
+
+  int32_t type = AInputEvent_getType(inputEvent);
+
+  switch (type) {
+    case AINPUT_EVENT_TYPE_MOTION: return dispatchMotionEvent(inputEvent, event); break;
+    case AINPUT_EVENT_TYPE_KEY:    return dispatchKeyEvent(inputEvent, event);    break;
+  }
+
+  return 0;
+}
+
+int32_t AndroidLooper::dispatchMotionEvent(AInputEvent* inputEvent, AndroidEvent& event) {
+
+  float x = AMotionEvent_getX(inputEvent, 0);
+  float y = AMotionEvent_getY(inputEvent, 0);
+
+  event.setEventType(MotionEventType);
+  event.setMotionEventData(x, y);
+
+  return 1;
+}
+
+int32_t AndroidLooper::dispatchKeyEvent(AInputEvent* inputEvent, AndroidEvent& event) {
+
+  UNUSED(inputEvent); // for later usage
+  UNUSED(event);      // for later usage
+
+  Log::i(TAG, "Key event");
+
+  return 0;
+}
+
+
 void AndroidLooper::unexpectedIdentifier(int id) {
 
   Log::i(TAG, "Unexpected identifier in pollEvent = %d", id);
 }
 
 
-int32_t AndroidLooper::pollMotionMove(AInputEvent* inputEvent, AndroidEvent& event) {
-  
-  return 0;
-}

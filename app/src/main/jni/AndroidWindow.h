@@ -20,7 +20,9 @@ public:
   bool isReady() const;
   void initialize();
   void terminate();
-  void draw() const;
+  void display() const;
+  int32_t width() const;
+  int32_t height() const;
 private:
   ANativeWindow* mWindow;
   EGLDisplay mDisplay;

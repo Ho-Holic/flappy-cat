@@ -22,3 +22,17 @@ void AndroidEvent::setEventType(EventType eventType) {
 }
 
 
+void AndroidEvent::setMotionEventData(float x, float y) {
+
+  REQUIRE(TAG, mEventType == MotionEventType, "Must be `MotionEventType`");
+
+  mEventData.motionEvent.x = x;
+  mEventData.motionEvent.y = y;
+}
+
+const AndroidMotionEvent& AndroidEvent::motionEvent() const {
+
+  REQUIRE(TAG, mEventType == MotionEventType, "Must be `MotionEventType`");
+
+  return mEventData.motionEvent;
+}
