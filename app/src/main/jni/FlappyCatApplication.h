@@ -12,6 +12,14 @@ public:
 
 private:
   virtual void main();
+
+private:
+  void processEvents();
+  void render();
+
+private:
+  float mSaturation;
+  float mBrightness;
 };
 
 
