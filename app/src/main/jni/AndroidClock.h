@@ -1,0 +1,8 @@
+//
+// Created by Nine on 15.09.2016.
+//
+
+#ifndef FLAPPY_CAT_ANDROIDCLOCK_H
+#define FLAPPY_CAT_ANDROIDCLOCK_H
+
+#endif //FLAPPY_CAT_ANDROIDCLOCK_H
