@@ -74,11 +74,20 @@ void FlappyCatApplication::render() {
 
   std::random_device rd;
   std::mt19937 gen(rd());
-  std::uniform_int_distribution<> dis(0, 255);
+  //-------------------------------   0    2^24
+  std::uniform_int_distribution<> dis(0, 16777215);
 
-  GLclampf r = static_cast<GLclampf>(dis(gen)) / 255.f;
-  GLclampf g = static_cast<GLclampf>(dis(gen)) / 255.f;
-  GLclampf b = static_cast<GLclampf>(dis(gen)) / 255.f;
+  int fullColor = dis(gen);
+
+  int mask = 0x0000ff;
+  int splitR = ((fullColor >> 16) & mask);
+  int splitG = ((fullColor >> 8 ) & mask);
+  int splitB = ((fullColor >> 0 ) & mask);
+
+
+  GLclampf r = static_cast<GLclampf>(splitR) / 255.f;
+  GLclampf g = static_cast<GLclampf>(splitG) / 255.f;
+  GLclampf b = static_cast<GLclampf>(splitB) / 255.f;
 
   GLclampf mid = (r + g + b) / 3.f;
 
