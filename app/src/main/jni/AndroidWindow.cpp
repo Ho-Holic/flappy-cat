@@ -202,3 +202,12 @@ int32_t AndroidWindow::width() const {
 int32_t AndroidWindow::height() const {
   return mHeight;
 }
+
+void AndroidWindow::drawRect() const {
+  //
+}
+
+void AndroidWindow::clear() const {
+  //glClearColor(r, g, b, 1);
+  //glClear(GL_COLOR_BUFFER_BIT);
+}

@@ -13,16 +13,23 @@
 class AndroidWindow {
 private:
   DISABLE_COPY(AndroidWindow)
+
 public:
   AndroidWindow();
+
 public:
   void setNativeWindow(ANativeWindow* window);
   bool isReady() const;
   void initialize();
   void terminate();
+
+public:
   void display() const;
   int32_t width() const;
   int32_t height() const;
+  void drawRect() const;
+  void clear() const;
+
 private:
   ANativeWindow* mWindow;
   EGLDisplay mDisplay;
