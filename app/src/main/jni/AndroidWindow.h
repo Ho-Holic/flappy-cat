@@ -3,6 +3,7 @@
 
 // self
 #include "Guidelines.h"
+#include "AndroidColor.h"
 
 // ndk
 #include <android/native_window.h>
@@ -28,7 +29,7 @@ public:
   int32_t width() const;
   int32_t height() const;
   void drawRect() const;
-  void clear() const;
+  void clear(const AndroidColor& color) const;
 
 private:
   ANativeWindow* mWindow;

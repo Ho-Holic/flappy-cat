@@ -80,9 +80,9 @@ void FlappyCatApplication::render() {
 //  int fullColor = dis(gen);
 //
 //  int mask = 0x0000ff;
-//  int splitR = ((fullColor >> 16) & mask);
-//  int splitG = ((fullColor >> 8 ) & mask);
-//  int splitB = ((fullColor >> 0 ) & mask);
+//  int splitR = ((fullColor >> 24) & mask);
+//  int splitG = ((fullColor >> 16 ) & mask);
+//  int splitB = ((fullColor >> 8 ) & mask);
 //
 //
 //  GLclampf r = static_cast<GLclampf>(splitR) / 255.f;

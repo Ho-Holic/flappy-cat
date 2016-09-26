@@ -1,0 +1,34 @@
+// self
+#include "AndroidColor.h"
+
+AndroidColor::AndroidColor()
+: mRed(0)
+, mGreen(0)
+, mBlue(0)
+, mAlpha(255) {
+  //
+}
+
+AndroidColor::AndroidColor(uint32_t rgbaColor)
+: mRed  (static_cast<uint8_t>((rgbaColor & 0xFF000000) >> 24))
+, mGreen(static_cast<uint8_t>((rgbaColor & 0x00FF0000) >> 16))
+, mBlue (static_cast<uint8_t>((rgbaColor & 0x0000FF00) >> 8))
+, mAlpha(static_cast<uint8_t>((rgbaColor & 0x000000FF) >> 0)) {
+  //
+}
+
+uint8_t AndroidColor::r() const {
+  return mRed;
+}
+
+uint8_t AndroidColor::g() const {
+  return mGreen;
+}
+
+uint8_t AndroidColor::b() const {
+  return mBlue;
+}
+
+uint8_t AndroidColor::alpha() const {
+  return mAlpha;
+}

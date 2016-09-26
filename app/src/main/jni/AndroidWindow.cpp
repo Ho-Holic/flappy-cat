@@ -207,7 +207,13 @@ void AndroidWindow::drawRect() const {
   //
 }
 
-void AndroidWindow::clear() const {
-  //glClearColor(r, g, b, 1);
-  //glClear(GL_COLOR_BUFFER_BIT);
+void AndroidWindow::clear(const AndroidColor& color) const {
+
+  glClearColor(color.r() / 255,
+               color.g() / 255,
+               color.b() / 255,
+               color.alpha() / 255);
+
+  glClear(GL_COLOR_BUFFER_BIT);
+  
 }
