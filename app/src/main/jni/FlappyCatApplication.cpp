@@ -108,6 +108,8 @@ void FlappyCatApplication::render() {
 
   // clear screen
 
+  window().clear(0xffffffff);
+
 //  glViewport(0, 0, window().width(), window().height());
 //
 //  glClearColor(1.f, 1.f, 1.f, 1);
