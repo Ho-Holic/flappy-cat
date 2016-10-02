@@ -72,43 +72,44 @@ void FlappyCatApplication::processEvents() {
 
 void FlappyCatApplication::render() {
 
-//  std::random_device rd;
-//  std::mt19937 gen(rd());
-//  //-------------------------------   0    2^24
-//  std::uniform_int_distribution<> dis(0, 16777215);
-//
-//  int fullColor = dis(gen);
-//
-//  int mask = 0x0000ff;
-//  int splitR = ((fullColor >> 24) & mask);
-//  int splitG = ((fullColor >> 16 ) & mask);
-//  int splitB = ((fullColor >> 8 ) & mask);
-//
-//
-//  GLclampf r = static_cast<GLclampf>(splitR) / 255.f;
-//  GLclampf g = static_cast<GLclampf>(splitG) / 255.f;
-//  GLclampf b = static_cast<GLclampf>(splitB) / 255.f;
-//
-//  GLclampf mid = (r + g + b) / 3.f;
-//
-//  // set saturation
-//  r = mid + (r - mid) * (mSaturation / (1.f - mSaturation));
-//  g = mid + (g - mid) * (mSaturation / (1.f - mSaturation));
-//  b = mid + (b - mid) * (mSaturation / (1.f - mSaturation));
-//
-//  // set brightness
-//  r *= mBrightness;
-//  g *= mBrightness;
-//  b *= mBrightness;
-//
-//  // Just fill the screen with a color.
-//  glClearColor(r, g, b, 1);
-//  glClear(GL_COLOR_BUFFER_BIT);
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  //-------------------------------   0    2^24
+  std::uniform_int_distribution<> dis(0, 16777215);
+
+  int fullColor = dis(gen);
+
+  int mask = 0x0000ff;
+  int splitR = ((fullColor >> 24) & mask);
+  int splitG = ((fullColor >> 16 ) & mask);
+  int splitB = ((fullColor >> 8 ) & mask);
+
+
+  GLclampf r = static_cast<GLclampf>(splitR) / 255.f;
+  GLclampf g = static_cast<GLclampf>(splitG) / 255.f;
+  GLclampf b = static_cast<GLclampf>(splitB) / 255.f;
+
+  GLclampf mid = (r + g + b) / 3.f;
+
+  // set saturation
+  r = mid + (r - mid) * (mSaturation / (1.f - mSaturation));
+  g = mid + (g - mid) * (mSaturation / (1.f - mSaturation));
+  b = mid + (b - mid) * (mSaturation / (1.f - mSaturation));
+
+  // set brightness
+  r *= mBrightness;
+  g *= mBrightness;
+  b *= mBrightness;
+
+  // Just fill the screen with a color.
+  glClearColor(r, g, b, 1);
+  glClear(GL_COLOR_BUFFER_BIT);
 
 
   // clear screen
 
-  window().clear(0xffffffff);
+  //window().clear(0xffffffff);
+  window().drawRect();
 
 //  // onresize // glViewport(0, 0, window().width(), window().height());
 //

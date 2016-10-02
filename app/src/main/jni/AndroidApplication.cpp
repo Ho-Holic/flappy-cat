@@ -144,6 +144,9 @@ void AndroidApplication::onNativeWindowResized(ANativeActivity* activity, ANativ
   Log::i(TAG, "NativeWindowResized: %p -- %p\n", activity, window);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+
+  application->setNativeWindowSize(ANativeWindow_getWidth(window),
+                                   ANativeWindow_getHeight(window));
 }
 
 void AndroidApplication::onNativeWindowRedrawNeeded(ANativeActivity* activity,
@@ -185,6 +188,7 @@ void AndroidApplication::onContentRectChanged(ANativeActivity* activity, const A
          rect->left, rect->top, rect->right, rect->bottom);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+
 }
 
 // main code
@@ -388,6 +392,18 @@ void AndroidApplication::setNativeWindow(ANativeWindow* window) {
 
 }
 
+void AndroidApplication::setNativeWindowSize(int32_t width, int32_t height) {
+
+  AndroidEvent event(ResizedEventType);
+  event.setResizeEventData(width, height);
+
+  std::lock_guard<std::mutex> lock(mMutex);
+  this->postEvent(event);
+
+  UNUSED(lock); // unlocks when goes out of a scope
+
+}
+
 void AndroidApplication::initializeNativeWindow() {
 
   Log::i(TAG, "Initialize native window\n");
@@ -465,3 +481,5 @@ void AndroidApplication::terminate() {
 const AndroidWindow& AndroidApplication::window() const {
   return mWindow;
 }
+
+

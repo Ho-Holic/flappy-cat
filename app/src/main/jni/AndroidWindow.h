@@ -40,7 +40,7 @@ public:
 private:
   void initializeOpengl();
   void initializeProgram();
-  GLuint createShader(GLenum eShaderType, const std::string &strShaderFile);
+  GLuint createShader(GLenum shaderType, const std::string& shaderString);
   GLuint createProgram(const std::vector<GLuint> &shaderList);
 
 

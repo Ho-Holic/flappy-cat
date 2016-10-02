@@ -27,12 +27,12 @@ namespace {
 
   template<typename... Args>
   inline int android_log_print(int priority,
-                               const char *tag, Args... args) {
+                               const char* tag, Args... args) {
 
     return __android_log_print(priority, tag, args...);
   }
 
-  inline int android_log_print(int priority, const char* tag, const std::string &message) {
+  inline int android_log_print(int priority, const char* tag, const std::string& message) {
 
     return android_log_print(priority, tag, "%s", message.data());
   }

@@ -175,7 +175,8 @@ void AndroidWindow::initializeOpengl() {
   auto opengl_info = { GL_VENDOR, GL_RENDERER, GL_VERSION, GL_EXTENSIONS };
 
   for (auto name : opengl_info) {
-    auto info = glGetString(name);
+
+    const GLubyte* info = glGetString(name);
     Log::i(TAG, "OpenGL Info: %s", info);
   }
 
@@ -193,23 +194,39 @@ void AndroidWindow::initializeOpengl() {
 
 void AndroidWindow::initializeProgram() {
 
-  std::string strVertexShader(
-    "#version 330\n"
-    "layout(location = 0) in vec4 position;\n"
-    "void main()\n"
-    "{\n"
-    "  gl_Position = position;\n"
-    "}\n"
-  );
+//  std::string strVertexShader(
+//    "#version 330                           \n"
+//    "layout(location = 0) in vec4 position; \n"
+//    "void main()                            \n"
+//    "{                                      \n"
+//    "  gl_Position = position;              \n"
+//    "}                                      \n"
+//  );
+//
+//  std::string strFragmentShader(
+//    "#version 330                                  \n"
+//    "out vec4 outputColor;                         \n"
+//    "void main()                                   \n"
+//    "{                                             \n"
+//    "  outputColor = vec4(1.0f, 1.0f, 1.0f, 1.0f); \n"
+//    "}                                             \n"
+//  );
 
-  std::string strFragmentShader(
-    "#version 330\n"
-    "out vec4 outputColor;\n"
-    "void main()\n"
-    "{\n"
-    "  outputColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n"
-    "}\n"
-  );
+    std::string strVertexShader(
+      "attribute vec4 vPosition;   \n"
+      "void main()                 \n"
+      "{                           \n"
+      "   gl_Position = vPosition; \n"
+      "}                           \n"
+    );
+
+    std::string strFragmentShader(
+      "precision mediump float;                   \n"
+      "void main()                                \n"
+      "{                                          \n"
+      "  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0); \n"
+      "}                                          \n"
+    );
 
 
   std::vector<GLuint> shaderList = {
@@ -222,60 +239,66 @@ void AndroidWindow::initializeProgram() {
   std::for_each(shaderList.begin(), shaderList.end(), glDeleteShader);
 }
 
-GLuint AndroidWindow::createShader(GLenum eShaderType, const std::string &strShaderFile) {
-  GLuint shader = glCreateShader(eShaderType);
-  const char *strFileData = strShaderFile.c_str();
-  glShaderSource(shader, 1, &strFileData, NULL);
+GLuint AndroidWindow::createShader(GLenum shaderType, const std::string& shaderString) {
 
+  GLuint shader = glCreateShader(shaderType);
+
+  const char* shaderStringData = shaderString.c_str();
+  glShaderSource(shader, 1, &shaderStringData, nullptr);
   glCompileShader(shader);
 
-  GLint status;
-  glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-  if (status == GL_FALSE)
-  {
-    GLint infoLogLength;
+  GLint compiled = GL_FALSE;
+  glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
+
+  if (compiled == GL_FALSE) {
+
+    GLint infoLogLength = 0;
     glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
 
-    GLchar *strInfoLog = new GLchar[infoLogLength + 1];
-    glGetShaderInfoLog(shader, infoLogLength, NULL, strInfoLog);
+    if (infoLogLength > 1) {
 
-    const char *strShaderType = NULL;
-    switch(eShaderType)
-    {
-      case GL_VERTEX_SHADER: strShaderType = "vertex"; break;
-      case GL_FRAGMENT_SHADER: strShaderType = "fragment"; break;
+      std::unique_ptr<GLchar[]> infoLogString(new GLchar[infoLogLength]);
+      glGetShaderInfoLog(shader, infoLogLength, nullptr, infoLogString.get());
+
+      Log::i(TAG, "Error compiling shader:\n%s\n", infoLogString.get());
     }
-
-    fprintf(stderr, "Compile failure in %s shader:\n%s\n", strShaderType, strInfoLog);
-    delete[] strInfoLog;
   }
 
   return shader;
 }
 
 GLuint AndroidWindow::createProgram(const std::vector<GLuint>& shaderList) {
+
   GLuint program = glCreateProgram();
 
-  for(size_t iLoop = 0; iLoop < shaderList.size(); iLoop++)
-    glAttachShader(program, shaderList[iLoop]);
+  for (GLuint shader : shaderList) {
+
+    glAttachShader(program, shader);
+  }
 
   glLinkProgram(program);
 
-  GLint status;
-  glGetProgramiv (program, GL_LINK_STATUS, &status);
-  if (status == GL_FALSE)
-  {
-    GLint infoLogLength;
+  GLint linked = GL_FALSE;
+  glGetProgramiv (program, GL_LINK_STATUS, &linked);
+
+  if (linked == GL_FALSE) {
+
+    GLint infoLogLength = 0;
     glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLength);
 
-    GLchar *strInfoLog = new GLchar[infoLogLength + 1];
-    glGetProgramInfoLog(program, infoLogLength, NULL, strInfoLog);
-    fprintf(stderr, "Linker failure: %s\n", strInfoLog);
-    delete[] strInfoLog;
+    if (infoLogLength > 1) {
+
+      std::unique_ptr<GLchar[]> infoLogString(new GLchar[infoLogLength]);
+      glGetProgramInfoLog(program, infoLogLength, NULL, infoLogString.get());
+
+      Log::i(TAG, "Linker failure: %s\n", infoLogString.get());
+    }
   }
 
-  for(size_t iLoop = 0; iLoop < shaderList.size(); iLoop++)
-    glDetachShader(program, shaderList[iLoop]);
+  for (GLuint shader : shaderList) {
+
+    glDetachShader(program, shader);
+  }
 
   return program;
 }
@@ -298,7 +321,25 @@ int32_t AndroidWindow::height() const {
 }
 
 void AndroidWindow::drawRect() const {
-  //
+
+  // need call once
+  glBindAttribLocation(mProgram, 0, "vPosition");
+
+  // Set the viewport
+  //glViewport(0, 0, mWidth, mHeight);
+
+  // draw code
+  GLfloat vVertices[] = {0.0f,  0.5f, 0.0f,
+                         -0.5f, -0.5f, 0.0f,
+                         0.5f, -0.5f,  0.0f};
+
+  // Use the program object
+  glUseProgram(mProgram);
+  // Load the vertex data
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vVertices);
+  glEnableVertexAttribArray(0);
+  glDrawArrays(GL_TRIANGLES, 0, 3);
+
 }
 
 void AndroidWindow::clear(const AndroidColor& color) const {

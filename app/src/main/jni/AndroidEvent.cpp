@@ -36,3 +36,23 @@ const AndroidMotionEvent& AndroidEvent::motionEvent() const {
 
   return mEventData.motionEvent;
 }
+
+void AndroidEvent::setResizeEventData(int32_t width, int32_t height) {
+
+  REQUIRE(TAG, mEventType == ResizedEventType, "Must be `ResizedEventType`");
+
+  mEventData.resizeEvent.width  = width;
+  mEventData.resizeEvent.height = height;
+
+}
+
+const AndroidResizeEvent& AndroidEvent::resizeEvent() const {
+
+  REQUIRE(TAG, mEventType == ResizedEventType, "Must be `ResizedEventType`");
+
+  return mEventData.resizeEvent;
+}
+
+
+
+

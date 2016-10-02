@@ -51,6 +51,7 @@ private:
   void processEvent(const AndroidEvent& event);
   void setInputQueue(AInputQueue* queue);
   void setNativeWindow(ANativeWindow* window);
+  void setNativeWindowSize(int32_t width, int32_t height);
   void initializeNativeWindow();
   void terminateNativeWindow();
   void reloadConfiguration();
