@@ -110,13 +110,14 @@ void FlappyCatApplication::render() {
 
   window().clear(0xffffffff);
 
-//  glViewport(0, 0, window().width(), window().height());
+//  // onresize // glViewport(0, 0, window().width(), window().height());
 //
 //  glClearColor(1.f, 1.f, 1.f, 1);
 //  glClear(GL_COLOR_BUFFER_BIT);
 //
 //  // draw some rect
 //
+//  glUseProgram(mProgram);
 //  GLuint positionBufferObject;
 //
 //  const float vertexPositions[] = {
@@ -138,6 +139,7 @@ void FlappyCatApplication::render() {
 //  glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
 //  glDrawArrays(GL_TRIANGLES, 0, 3);
 //  glDisableVertexAttribArray(0);
+//  glUseProgram(0);
 
   // display
   window().display();

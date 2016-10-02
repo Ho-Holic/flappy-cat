@@ -3,12 +3,7 @@
 
 // stl
 #include <memory>
-
-// tmp
-#include <random>
-
-// opengl
-#include <GLES2/gl2.h>
+#include <algorithm>
 
 AndroidWindow::AndroidWindow()
 : mWindow(nullptr)
@@ -16,7 +11,8 @@ AndroidWindow::AndroidWindow()
 , mContext(EGL_NO_CONTEXT)
 , mSurface(EGL_NO_SURFACE)
 , mWidth(0)
-, mHeight(0) {
+, mHeight(0)
+, mProgram(0) {
   //
 }
 
@@ -139,29 +135,16 @@ void AndroidWindow::initialize() {
   eglQuerySurface(display, surface, EGL_WIDTH, &width);
   eglQuerySurface(display, surface, EGL_HEIGHT, &height);
 
-  // setup opengl
-  // Check openGL on the system
-  auto opengl_info = { GL_VENDOR, GL_RENDERER, GL_VERSION, GL_EXTENSIONS };
-  for (auto name : opengl_info) {
-    auto info = glGetString(name);
-    Log::i(TAG, "OpenGL Info: %s", info);
-  }
-
-  // Initialize GL state.
-  glEnable(GL_CULL_FACE);
-  glDisable(GL_DEPTH_TEST);
-
-  // https://www.opengl.org/discussion_boards/showthread.php/179138-glShadeModel-is-depreciated-So-how-exactly-do-we-do-flat-shading-now
-  // TODO: replace two lines below
-  //glShadeModel(GL_SMOOTH);
-  //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-
   // when all done
   mDisplay = display;
   mContext = context;
   mSurface = surface;
   mWidth   = width;
   mHeight  = height;
+
+  // deal with opengl now
+  initializeOpengl();
+
 }
 
 void AndroidWindow::terminate() {
@@ -184,6 +167,117 @@ void AndroidWindow::terminate() {
   mDisplay = EGL_NO_DISPLAY;
   mContext = EGL_NO_CONTEXT;
   mSurface = EGL_NO_SURFACE;
+}
+
+void AndroidWindow::initializeOpengl() {
+
+  // Check openGL on the system
+  auto opengl_info = { GL_VENDOR, GL_RENDERER, GL_VERSION, GL_EXTENSIONS };
+
+  for (auto name : opengl_info) {
+    auto info = glGetString(name);
+    Log::i(TAG, "OpenGL Info: %s", info);
+  }
+
+  // Initialize GL state.
+  glEnable(GL_CULL_FACE);
+  glDisable(GL_DEPTH_TEST);
+
+  // https://www.opengl.org/discussion_boards/showthread.php/179138-glShadeModel-is-depreciated-So-how-exactly-do-we-do-flat-shading-now
+  // TODO: replace two lines below
+  //glShadeModel(GL_SMOOTH);
+  //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+
+  initializeProgram();
+}
+
+void AndroidWindow::initializeProgram() {
+
+  std::string strVertexShader(
+    "#version 330\n"
+    "layout(location = 0) in vec4 position;\n"
+    "void main()\n"
+    "{\n"
+    "  gl_Position = position;\n"
+    "}\n"
+  );
+
+  std::string strFragmentShader(
+    "#version 330\n"
+    "out vec4 outputColor;\n"
+    "void main()\n"
+    "{\n"
+    "  outputColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n"
+    "}\n"
+  );
+
+
+  std::vector<GLuint> shaderList = {
+    createShader(GL_VERTEX_SHADER, strVertexShader),
+    createShader(GL_FRAGMENT_SHADER, strFragmentShader)
+  };
+
+  mProgram = createProgram(shaderList);
+
+  std::for_each(shaderList.begin(), shaderList.end(), glDeleteShader);
+}
+
+GLuint AndroidWindow::createShader(GLenum eShaderType, const std::string &strShaderFile) {
+  GLuint shader = glCreateShader(eShaderType);
+  const char *strFileData = strShaderFile.c_str();
+  glShaderSource(shader, 1, &strFileData, NULL);
+
+  glCompileShader(shader);
+
+  GLint status;
+  glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+  if (status == GL_FALSE)
+  {
+    GLint infoLogLength;
+    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+    GLchar *strInfoLog = new GLchar[infoLogLength + 1];
+    glGetShaderInfoLog(shader, infoLogLength, NULL, strInfoLog);
+
+    const char *strShaderType = NULL;
+    switch(eShaderType)
+    {
+      case GL_VERTEX_SHADER: strShaderType = "vertex"; break;
+      case GL_FRAGMENT_SHADER: strShaderType = "fragment"; break;
+    }
+
+    fprintf(stderr, "Compile failure in %s shader:\n%s\n", strShaderType, strInfoLog);
+    delete[] strInfoLog;
+  }
+
+  return shader;
+}
+
+GLuint AndroidWindow::createProgram(const std::vector<GLuint>& shaderList) {
+  GLuint program = glCreateProgram();
+
+  for(size_t iLoop = 0; iLoop < shaderList.size(); iLoop++)
+    glAttachShader(program, shaderList[iLoop]);
+
+  glLinkProgram(program);
+
+  GLint status;
+  glGetProgramiv (program, GL_LINK_STATUS, &status);
+  if (status == GL_FALSE)
+  {
+    GLint infoLogLength;
+    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+    GLchar *strInfoLog = new GLchar[infoLogLength + 1];
+    glGetProgramInfoLog(program, infoLogLength, NULL, strInfoLog);
+    fprintf(stderr, "Linker failure: %s\n", strInfoLog);
+    delete[] strInfoLog;
+  }
+
+  for(size_t iLoop = 0; iLoop < shaderList.size(); iLoop++)
+    glDetachShader(program, shaderList[iLoop]);
+
+  return program;
 }
 
 void AndroidWindow::display() const {
@@ -217,3 +311,7 @@ void AndroidWindow::clear(const AndroidColor& color) const {
   glClear(GL_COLOR_BUFFER_BIT);
 
 }
+
+
+
+

@@ -11,6 +11,12 @@
 // egl
 #include <EGL/egl.h>
 
+// opengl
+#include <GLES2/gl2.h>
+
+// stl
+#include <vector>
+
 class AndroidWindow {
 private:
   DISABLE_COPY(AndroidWindow)
@@ -32,12 +38,20 @@ public:
   void clear(const AndroidColor& color) const;
 
 private:
+  void initializeOpengl();
+  void initializeProgram();
+  GLuint createShader(GLenum eShaderType, const std::string &strShaderFile);
+  GLuint createProgram(const std::vector<GLuint> &shaderList);
+
+
+private:
   ANativeWindow* mWindow;
   EGLDisplay mDisplay;
   EGLContext mContext;
   EGLSurface mSurface;
   EGLint mWidth;
   EGLint mHeight;
+  GLuint mProgram;
 };
 
 
