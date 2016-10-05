@@ -6,6 +6,9 @@
 
 class AndroidColor {
 public:
+  static AndroidColor random();
+
+public:
   AndroidColor();
   AndroidColor(uint32_t rgbaColor);
 

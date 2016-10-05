@@ -3,9 +3,6 @@
 #include "AndroidClock.h"
 #include "Log.h"
 
-// tmp
-#include <random>
-
 // opengl
 #include <GLES2/gl2.h>
 
@@ -72,22 +69,11 @@ void FlappyCatApplication::processEvents() {
 
 void FlappyCatApplication::render() {
 
-  std::random_device rd;
-  std::mt19937 gen(rd());
-  //-------------------------------   0    2^24
-  std::uniform_int_distribution<> dis(0, 16777215);
+  AndroidColor color(AndroidColor::random());
 
-  int fullColor = dis(gen);
-
-  int mask = 0x0000ff;
-  int splitR = ((fullColor >> 24) & mask);
-  int splitG = ((fullColor >> 16 ) & mask);
-  int splitB = ((fullColor >> 8 ) & mask);
-
-
-  GLclampf r = static_cast<GLclampf>(splitR) / 255.f;
-  GLclampf g = static_cast<GLclampf>(splitG) / 255.f;
-  GLclampf b = static_cast<GLclampf>(splitB) / 255.f;
+  GLclampf r = static_cast<GLclampf>(color.r()) / 255.f;
+  GLclampf g = static_cast<GLclampf>(color.g()) / 255.f;
+  GLclampf b = static_cast<GLclampf>(color.b()) / 255.f;
 
   GLclampf mid = (r + g + b) / 3.f;
 

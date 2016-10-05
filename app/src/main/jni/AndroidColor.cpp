@@ -1,6 +1,9 @@
 // self
 #include "AndroidColor.h"
 
+// stl
+#include <random>
+
 AndroidColor::AndroidColor()
 : mRed(0)
 , mGreen(0)
@@ -32,3 +35,16 @@ uint8_t AndroidColor::b() const {
 uint8_t AndroidColor::alpha() const {
   return mAlpha;
 }
+
+AndroidColor AndroidColor::random() {
+
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<uint32_t> dis; // from 0 to 2^32
+
+  uint32_t fullColor = dis(gen);
+
+  return AndroidColor(fullColor | 0xff); // set alpha channel to 255
+}
+
+
