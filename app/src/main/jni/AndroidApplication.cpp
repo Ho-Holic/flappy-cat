@@ -144,9 +144,7 @@ void AndroidApplication::onNativeWindowResized(ANativeActivity* activity, ANativ
   Log::i(TAG, "NativeWindowResized: %p -- %p\n", activity, window);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
-
-  application->setNativeWindowSize(ANativeWindow_getWidth(window),
-                                   ANativeWindow_getHeight(window));
+  application->updateNativeWindowSize();
 }
 
 void AndroidApplication::onNativeWindowRedrawNeeded(ANativeActivity* activity,
@@ -188,6 +186,7 @@ void AndroidApplication::onContentRectChanged(ANativeActivity* activity, const A
          rect->left, rect->top, rect->right, rect->bottom);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
+  application->updateNativeWindowSize();
 
 }
 
@@ -321,6 +320,8 @@ void AndroidApplication::processEvent(const AndroidEvent& event) {
     case NativeWindowCreatedEventType:   initializeNativeWindow(); break;
     case NativeWindowDestroyedEventType: terminateNativeWindow(); break;
 
+    case ResizedEventType: resizeNativeWindow(event); break;
+
     case EmptyEventType: break;
   }
 
@@ -392,12 +393,22 @@ void AndroidApplication::setNativeWindow(ANativeWindow* window) {
 
 }
 
-void AndroidApplication::setNativeWindowSize(int32_t width, int32_t height) {
-
-  AndroidEvent event(ResizedEventType);
-  event.setResizeEventData(width, height);
+void AndroidApplication::resizeNativeWindow(const AndroidEvent& event) {
 
   std::lock_guard<std::mutex> lock(mMutex);
+
+  mWindow.resize(event.resizeEvent().width, event.resizeEvent().height);
+
+  UNUSED(lock); // unlocks when goes out of a scope
+}
+
+void AndroidApplication::updateNativeWindowSize() {
+
+  AndroidEvent event(ResizedEventType);
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  event.setResizeEventData(window().requestWidth(), window().requestHeight());
   this->postEvent(event);
 
   UNUSED(lock); // unlocks when goes out of a scope
@@ -481,5 +492,7 @@ void AndroidApplication::terminate() {
 const AndroidWindow& AndroidApplication::window() const {
   return mWindow;
 }
+
+
 
 

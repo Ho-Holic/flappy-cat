@@ -36,6 +36,9 @@ public:
   int32_t height() const;
   void drawRect() const;
   void clear(const AndroidColor& color) const;
+  int32_t requestWidth() const;
+  int32_t requestHeight() const;
+  void resize(int32_t width, int32_t height);
 
 private:
   void initializeOpengl();

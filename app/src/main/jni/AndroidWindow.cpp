@@ -130,17 +130,14 @@ void AndroidWindow::initialize() {
 
   EGLBoolean isCurrent = eglMakeCurrent(display, surface, surface, context);
 
-  EGLint width = 0;
-  EGLint height = 0;
-  eglQuerySurface(display, surface, EGL_WIDTH, &width);
-  eglQuerySurface(display, surface, EGL_HEIGHT, &height);
-
   // when all done
   mDisplay = display;
   mContext = context;
   mSurface = surface;
-  mWidth   = width;
-  mHeight  = height;
+
+  // set window size
+  mWidth = requestWidth();
+  mHeight = requestHeight();
 
   // deal with opengl now
   initializeOpengl();
@@ -313,20 +310,29 @@ void AndroidWindow::display() const {
 }
 
 int32_t AndroidWindow::width() const {
+
   return mWidth;
 }
 
 int32_t AndroidWindow::height() const {
+
   return mHeight;
+}
+
+int32_t AndroidWindow::requestWidth() const {
+  
+  return ANativeWindow_getWidth(mWindow);
+}
+
+int32_t AndroidWindow::requestHeight() const {
+
+  return ANativeWindow_getHeight(mWindow);
 }
 
 void AndroidWindow::drawRect() const {
 
   // need call once
   glBindAttribLocation(mProgram, 0, "vPosition");
-
-  // Set the viewport
-  //glViewport(0, 0, mWidth, mHeight);
 
   // draw code
   GLfloat vVertices[] = {0.0f,  0.5f, 0.0f,
@@ -344,14 +350,34 @@ void AndroidWindow::drawRect() const {
 
 void AndroidWindow::clear(const AndroidColor& color) const {
 
-  glClearColor(color.r() / 255.f,
-               color.g() / 255.f,
-               color.b() / 255.f,
+  glClearColor(color.r()     / 255.f,
+               color.g()     / 255.f,
+               color.b()     / 255.f,
                color.alpha() / 255.f);
 
   glClear(GL_COLOR_BUFFER_BIT);
 
 }
+
+void AndroidWindow::resize(int32_t width, int32_t height) {
+
+  Log::i(TAG, "New size (%d - %d)\n", width, height);
+
+  mWidth = width;
+  mHeight = height;
+
+  // Set the viewport
+  glViewport(0, 0, mWidth, mHeight);
+}
+
+
+
+
+
+
+
+
+
 
 
 
