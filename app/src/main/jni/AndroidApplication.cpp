@@ -264,17 +264,6 @@ void AndroidApplication::exec() {
   terminate();
 }
 
-void AndroidApplication::initialize() {
-
-  // load configuration
-  mConfiguration.reload();
-  Log::i(TAG, mConfiguration.toString());
-
-  // prepare looper for this thread to read events
-  mLooper.prepare();
-
-}
-
 bool AndroidApplication::pollEvent(AndroidEvent& event) {
 
   SCOPE("looper event") {
@@ -305,25 +294,19 @@ void AndroidApplication::postEvent(const AndroidEvent& event) {
   mEvents.push(event);
 }
 
-void AndroidApplication::processEvent(const AndroidEvent& event) {
+const AndroidWindow& AndroidApplication::window() const {
 
-  CAUTION("Don't forget to lock mutex when you add new processing parts here"
-          "If you touch class members of course");
+  return mWindow;
+}
 
-  switch (event.type()) {
+void AndroidApplication::initialize() {
 
-    case ActivityStartEventType:  setActivityState(StartActivityState);  break;
-    case ActivityResumeEventType: setActivityState(ResumeActivityState); break;
-    case ActivityPauseEventType:  setActivityState(PauseActivityState);  break;
-    case ActivityStopEventType:   setActivityState(StopActivityState);   break;
+  // load configuration
+  mConfiguration.reload();
+  Log::i(TAG, mConfiguration.toString());
 
-    case NativeWindowCreatedEventType:   initializeNativeWindow(); break;
-    case NativeWindowDestroyedEventType: terminateNativeWindow(); break;
-
-    case ResizedEventType: resizeNativeWindow(event); break;
-
-    case EmptyEventType: break;
-  }
+  // prepare looper for this thread to read events
+  mLooper.prepare();
 
 }
 
@@ -352,14 +335,49 @@ void AndroidApplication::changeActivityStateTo(AndroidApplication::ActivityState
   mMutex.unlock();
 }
 
+void AndroidApplication::setNativeWindow(ANativeWindow* window) {
 
-void AndroidApplication::setActivityState(AndroidApplication::ActivityState activityState) {
-
-  Log::i(TAG, "activityState = %d\n", activityState);
+  AndroidEvent event(window ? NativeWindowCreatedEventType
+                            : NativeWindowDestroyedEventType);
 
   std::lock_guard<std::mutex> lock(mMutex);
 
-  mActivityState = activityState;
+  mWindow.setNativeWindow(window);
+  this->postEvent(event);
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
+
+}
+
+void AndroidApplication::updateNativeWindowSize() {
+
+  AndroidEvent event(ResizedEventType);
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  event.setResizeEventData(window().requestWidth(), window().requestHeight());
+  this->postEvent(event);
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
+
+}
+
+void AndroidApplication::changeFocus(AndroidApplication::Focus focus) {
+
+  AndroidEvent event;
+  switch (focus) {
+    case GainFocus: event.setEventType(GainFocusEventType);  break;
+    case LostFocus: event.setEventType(LostFocusEventType);  break;
+    default: break;
+  }
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  this->postEvent(event);
 
   mConditionVariable.notify_all();
 
@@ -377,42 +395,70 @@ void AndroidApplication::setInputQueue(AInputQueue* queue) {
   UNUSED(lock); // unlocks when goes out of a scope
 }
 
-void AndroidApplication::setNativeWindow(ANativeWindow* window) {
-
-  AndroidEvent event(window ? NativeWindowCreatedEventType
-                            : NativeWindowDestroyedEventType);
+void AndroidApplication::reloadConfiguration() {
 
   std::lock_guard<std::mutex> lock(mMutex);
 
-  mWindow.setNativeWindow(window);
-  this->postEvent(event);
+  mConfiguration.reload();
+  Log::i(TAG, mConfiguration.toString());
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
+}
+
+void AndroidApplication::terminate() {
+
+  Log::i(TAG, "android_app_destroy!");
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  mConfiguration.reset();
+
+  mIsDestroyed = true;
 
   mConditionVariable.notify_all();
 
   UNUSED(lock); // unlocks when goes out of a scope
 
+  CAUTION("If you `unlock` mutex, you can't touch `this` object");
 }
 
-void AndroidApplication::resizeNativeWindow(const AndroidEvent& event) {
+// from event handler thread
+
+void AndroidApplication::processEvent(const AndroidEvent& event) {
+
+  CAUTION("Don't forget to lock mutex when you add new processing parts here"
+          "If you touch class members of course");
+
+  switch (event.type()) {
+
+    case ActivityStartEventType:  setActivityState(StartActivityState);  break;
+    case ActivityResumeEventType: setActivityState(ResumeActivityState); break;
+    case ActivityPauseEventType:  setActivityState(PauseActivityState);  break;
+    case ActivityStopEventType:   setActivityState(StopActivityState);   break;
+
+    case NativeWindowCreatedEventType:   initializeNativeWindow(); break;
+    case NativeWindowDestroyedEventType: terminateNativeWindow(); break;
+
+    case ResizedEventType: resizeNativeWindow(event); break;
+
+    case EmptyEventType: break;
+  }
+
+}
+
+void AndroidApplication::setActivityState(AndroidApplication::ActivityState activityState) {
+
+  Log::i(TAG, "activityState = %d\n", activityState);
 
   std::lock_guard<std::mutex> lock(mMutex);
 
-  mWindow.resize(event.resizeEvent().width, event.resizeEvent().height);
+  mActivityState = activityState;
+
+  mConditionVariable.notify_all();
 
   UNUSED(lock); // unlocks when goes out of a scope
-}
-
-void AndroidApplication::updateNativeWindowSize() {
-
-  AndroidEvent event(ResizedEventType);
-
-  std::lock_guard<std::mutex> lock(mMutex);
-
-  event.setResizeEventData(window().requestWidth(), window().requestHeight());
-  this->postEvent(event);
-
-  UNUSED(lock); // unlocks when goes out of a scope
-
 }
 
 void AndroidApplication::initializeNativeWindow() {
@@ -441,58 +487,16 @@ void AndroidApplication::terminateNativeWindow() {
   UNUSED(lock); // unlocks when goes out of a scope
 }
 
-void AndroidApplication::reloadConfiguration() {
+void AndroidApplication::resizeNativeWindow(const AndroidEvent& event) {
 
   std::lock_guard<std::mutex> lock(mMutex);
 
-  mConfiguration.reload();
-  Log::i(TAG, mConfiguration.toString());
+  mWindow.resize(event.resizeEvent().width, event.resizeEvent().height);
 
   mConditionVariable.notify_all();
 
   UNUSED(lock); // unlocks when goes out of a scope
 }
-
-void AndroidApplication::changeFocus(AndroidApplication::Focus focus) {
-
-  AndroidEvent event;
-  switch (focus) {
-    case GainFocus: event.setEventType(GainFocusEventType);  break;
-    case LostFocus: event.setEventType(LostFocusEventType);  break;
-    default: break;
-  }
-
-  std::lock_guard<std::mutex> lock(mMutex);
-
-  this->postEvent(event);
-
-  mConditionVariable.notify_all();
-
-  UNUSED(lock); // unlocks when goes out of a scope
-}
-
-void AndroidApplication::terminate() {
-
-  Log::i(TAG, "android_app_destroy!");
-
-  std::lock_guard<std::mutex> lock(mMutex);
-
-  mConfiguration.reset();
-
-  mIsDestroyed = true;
-
-  mConditionVariable.notify_all();
-
-  UNUSED(lock); // unlocks when goes out of a scope
-
-  CAUTION("If you `unlock` mutex, you can't touch `this` object");
-}
-
-
-const AndroidWindow& AndroidApplication::window() const {
-  return mWindow;
-}
-
 
 
 

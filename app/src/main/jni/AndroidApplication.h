@@ -45,18 +45,22 @@ public:
 
 private:
   void initialize();
-  void setActivityState(ActivityState activityState);
+
   void changeActivityStateTo(ActivityState activityState);
-  void changeFocus(Focus focus);
-  void processEvent(const AndroidEvent& event);
-  void setInputQueue(AInputQueue* queue);
   void setNativeWindow(ANativeWindow* window);
-  void resizeNativeWindow(const AndroidEvent& event);
   void updateNativeWindowSize();
+  void changeFocus(Focus focus);
+  void setInputQueue(AInputQueue* queue);
+  void reloadConfiguration();
+
+  void terminate();
+
+private:
+  void processEvent(const AndroidEvent& event);
+  void setActivityState(ActivityState activityState);
+  void resizeNativeWindow(const AndroidEvent& event);
   void initializeNativeWindow();
   void terminateNativeWindow();
-  void reloadConfiguration();
-  void terminate();
 
 private:
   virtual void main() = 0; // private because launched from `exec` function
