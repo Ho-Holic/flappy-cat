@@ -71,63 +71,12 @@ void FlappyCatApplication::render() {
 
   AndroidColor color(AndroidColor::random());
 
-  GLclampf r = static_cast<GLclampf>(color.r()) / 255.f;
-  GLclampf g = static_cast<GLclampf>(color.g()) / 255.f;
-  GLclampf b = static_cast<GLclampf>(color.b()) / 255.f;
-
-  GLclampf mid = (r + g + b) / 3.f;
-
-  // set saturation
-  r = mid + (r - mid) * (mSaturation / (1.f - mSaturation));
-  g = mid + (g - mid) * (mSaturation / (1.f - mSaturation));
-  b = mid + (b - mid) * (mSaturation / (1.f - mSaturation));
-
-  // set brightness
-  r *= mBrightness;
-  g *= mBrightness;
-  b *= mBrightness;
-
-  // Just fill the screen with a color.
-  glClearColor(r, g, b, 1);
-  glClear(GL_COLOR_BUFFER_BIT);
+  AndroidColor gray(color.grayscale());
+  color = gray + (color - gray) * (mSaturation / (1.f - mSaturation));
+  color *= mBrightness;
 
 
-  // clear screen
-
-  //window().clear(0xffffffff);
+  window().clear(color);
   window().drawRect();
-
-//  // onresize // glViewport(0, 0, window().width(), window().height());
-//
-//  glClearColor(1.f, 1.f, 1.f, 1);
-//  glClear(GL_COLOR_BUFFER_BIT);
-//
-//  // draw some rect
-//
-//  glUseProgram(mProgram);
-//  GLuint positionBufferObject;
-//
-//  const float vertexPositions[] = {
-//    0.75f, 0.75f, 0.0f, 1.0f,
-//    0.75f, -0.75f, 0.0f, 1.0f,
-//    -0.75f, -0.75f, 0.0f, 1.0f,
-//  };
-//
-//  // allocate space
-//  glGenBuffers(1, &positionBufferObject);
-//
-//  glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
-//  glBufferData(GL_ARRAY_BUFFER, sizeof(vertexPositions), vertexPositions, GL_STATIC_DRAW);
-//  glBindBuffer(GL_ARRAY_BUFFER, 0);
-//
-//  // draw triangle
-//  glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
-//  glEnableVertexAttribArray(0);
-//  glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-//  glDrawArrays(GL_TRIANGLES, 0, 3);
-//  glDisableVertexAttribArray(0);
-//  glUseProgram(0);
-
-  // display
   window().display();
 }
