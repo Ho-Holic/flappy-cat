@@ -1,0 +1,10 @@
+#ifndef FLAPPY_CAT_ANDROIDSHAPE_H
+#define FLAPPY_CAT_ANDROIDSHAPE_H
+
+
+class AndroidShape {
+
+};
+
+
+#endif //FLAPPY_CAT_ANDROIDSHAPE_H

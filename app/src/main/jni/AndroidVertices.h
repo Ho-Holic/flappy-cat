@@ -1,0 +1,10 @@
+#ifndef FLAPPY_CAT_ANDROIDVERTICES_H
+#define FLAPPY_CAT_ANDROIDVERTICES_H
+
+
+class AndroidVertices {
+
+};
+
+
+#endif //FLAPPY_CAT_ANDROIDVERTICES_H

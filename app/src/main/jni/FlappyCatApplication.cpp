@@ -77,6 +77,6 @@ void FlappyCatApplication::render() {
 
 
   window().clear(color);
-  window().drawRect();
+  window().drawVertices(AndroidVertices());
   window().display();
 }

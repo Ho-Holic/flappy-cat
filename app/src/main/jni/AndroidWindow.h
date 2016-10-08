@@ -4,6 +4,7 @@
 // self
 #include "Guidelines.h"
 #include "AndroidColor.h"
+#include "AndroidVertices.h"
 
 // ndk
 #include <android/native_window.h>
@@ -34,7 +35,7 @@ public:
   void display() const;
   int32_t width() const;
   int32_t height() const;
-  void drawRect() const;
+  void drawVertices(const AndroidVertices& vertices) const;
   void clear(const AndroidColor& color) const;
   int32_t requestWidth() const;
   int32_t requestHeight() const;
@@ -43,8 +44,10 @@ public:
 private:
   void initializeOpengl();
   void initializeProgram();
-  GLuint createShader(GLenum shaderType, const std::string& shaderString);
-  GLuint createProgram(const std::vector<GLuint> &shaderList);
+
+private:
+  static GLuint createShader(GLenum shaderType, const std::string& shaderString);
+  static GLuint createProgram(const std::vector<GLuint> &shaderList);
 
 
 private:

@@ -5,6 +5,20 @@
 #include <memory>
 #include <algorithm>
 
+enum : GLuint {
+  VERTEX_POSITION_INDEX = 0,
+  VERTEX_COLOR_INDEX = 1,
+};
+
+enum : GLint {
+  VERTEX_POSITION_SIZE = 2,
+  VERTEX_COLOR_SIZE = 3,
+};
+
+enum : GLsizei {
+  VERTEX_SIZE = (VERTEX_POSITION_SIZE + VERTEX_COLOR_SIZE)
+};
+
 AndroidWindow::AndroidWindow()
 : mWindow(nullptr)
 , mDisplay(EGL_NO_DISPLAY)
@@ -169,7 +183,10 @@ void AndroidWindow::terminate() {
 void AndroidWindow::initializeOpengl() {
 
   // Check openGL on the system
-  auto opengl_info = { GL_VENDOR, GL_RENDERER, GL_VERSION, GL_EXTENSIONS };
+  auto opengl_info = {
+    GL_VENDOR, GL_RENDERER, GL_VERSION, GL_EXTENSIONS,
+    GL_SHADING_LANGUAGE_VERSION
+  };
 
   for (auto name : opengl_info) {
 
@@ -191,37 +208,21 @@ void AndroidWindow::initializeOpengl() {
 
 void AndroidWindow::initializeProgram() {
 
-//  std::string strVertexShader(
-//    "#version 330                           \n"
-//    "layout(location = 0) in vec4 position; \n"
-//    "void main()                            \n"
-//    "{                                      \n"
-//    "  gl_Position = position;              \n"
-//    "}                                      \n"
-//  );
-//
-//  std::string strFragmentShader(
-//    "#version 330                                  \n"
-//    "out vec4 outputColor;                         \n"
-//    "void main()                                   \n"
-//    "{                                             \n"
-//    "  outputColor = vec4(1.0f, 1.0f, 1.0f, 1.0f); \n"
-//    "}                                             \n"
-//  );
-
     std::string strVertexShader(
-      "attribute vec4 vPosition;   \n"
-      "void main()                 \n"
-      "{                           \n"
-      "   gl_Position = vPosition; \n"
-      "}                           \n"
+      "attribute vec4 a_position;   \n"
+      "attribute vec4 a_color;      \n"
+      "varying vec4 v_color;        \n"
+      "void main() {                \n"
+      "   v_color = a_color;        \n"
+      "   gl_Position = a_position; \n"
+      "}                            \n"
     );
 
     std::string strFragmentShader(
       "precision mediump float;                   \n"
-      "void main()                                \n"
-      "{                                          \n"
-      "  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0); \n"
+      "varying vec4 v_color;                      \n"
+      "void main() {                              \n"
+      "  gl_FragColor = v_color;                  \n"
       "}                                          \n"
     );
 
@@ -273,7 +274,16 @@ GLuint AndroidWindow::createProgram(const std::vector<GLuint>& shaderList) {
     glAttachShader(program, shader);
   }
 
+  glBindAttribLocation(program, VERTEX_POSITION_INDEX, "a_position");
+  glBindAttribLocation(program, VERTEX_COLOR_INDEX, "a_color");
+
   glLinkProgram(program);
+
+  REQUIRE(TAG, glGetAttribLocation(program, "a_position") == VERTEX_POSITION_INDEX,
+          "Must be correct");
+
+  REQUIRE(TAG, glGetAttribLocation(program, "a_color") == VERTEX_COLOR_INDEX,
+          "Must be correct");
 
   GLint linked = GL_FALSE;
   glGetProgramiv (program, GL_LINK_STATUS, &linked);
@@ -329,22 +339,33 @@ int32_t AndroidWindow::requestHeight() const {
   return ANativeWindow_getHeight(mWindow);
 }
 
-void AndroidWindow::drawRect() const {
+void AndroidWindow::drawVertices(const AndroidVertices& vertices) const {
 
-  // need call once
-  glBindAttribLocation(mProgram, 0, "vPosition");
+  GLfloat verticesData[] = {
 
-  // draw code
-  GLfloat vVertices[] = {0.0f,  0.5f, 0.0f,
-                         -0.5f, -0.5f, 0.0f,
-                         0.5f, -0.5f,  0.0f};
+    0.0f,  0.5f,     1.0f, 0.0f, 0.0f,
+    -0.5f, -0.5f,    0.0f, 1.0f, 0.0f,
+    0.5f, -0.5f,     0.0f, 0.0f, 1.0f,
 
-  // Use the program object
+  };
+
+  glVertexAttribPointer(VERTEX_POSITION_INDEX, VERTEX_POSITION_SIZE, GL_FLOAT, GL_FALSE,
+                        VERTEX_SIZE * sizeof(GLfloat), verticesData);
+
+  glVertexAttribPointer(VERTEX_COLOR_INDEX, VERTEX_COLOR_SIZE, GL_FLOAT, GL_FALSE,
+                        VERTEX_SIZE * sizeof(GLfloat), &verticesData[2]);
+
+  glEnableVertexAttribArray(VERTEX_POSITION_INDEX);
+  glEnableVertexAttribArray(VERTEX_COLOR_INDEX);
+  
   glUseProgram(mProgram);
-  // Load the vertex data
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vVertices);
-  glEnableVertexAttribArray(0);
+
   glDrawArrays(GL_TRIANGLES, 0, 3);
+
+  glDisableVertexAttribArray(VERTEX_POSITION_INDEX);
+  glDisableVertexAttribArray(VERTEX_COLOR_INDEX);
+
+  glUseProgram(0);
 
 }
 
