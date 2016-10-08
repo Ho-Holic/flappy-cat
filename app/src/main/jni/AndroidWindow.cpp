@@ -16,7 +16,12 @@ enum : GLint {
 };
 
 enum : GLsizei {
-  VERTEX_SIZE = (VERTEX_POSITION_SIZE + VERTEX_COLOR_SIZE)
+  VERTEX_X_INDEX,
+  VERTEX_Y_INDEX,
+  VERTEX_R_INDEX,
+  VERTEX_G_INDEX,
+  VERTEX_B_INDEX,
+  VERTEX_SIZE
 };
 
 AndroidWindow::AndroidWindow()
@@ -341,26 +346,34 @@ int32_t AndroidWindow::requestHeight() const {
 
 void AndroidWindow::drawVertices(const AndroidVertices& vertices) const {
 
-  GLfloat verticesData[] = {
+  std::size_t verticesDataSize = vertices.size() * VERTEX_SIZE;
 
-    0.0f,  0.5f,     1.0f, 0.0f, 0.0f,
-    -0.5f, -0.5f,    0.0f, 1.0f, 0.0f,
-    0.5f, -0.5f,     0.0f, 0.0f, 1.0f,
+  std::unique_ptr<GLfloat[]> verticesData(new GLfloat[verticesDataSize]);
 
-  };
+  for (std::size_t i = 0; i < vertices.size(); ++i) {
+
+    std::size_t stride = i * VERTEX_SIZE;
+
+    verticesData[VERTEX_X_INDEX + stride] = vertices[i].position().x();
+    verticesData[VERTEX_Y_INDEX + stride] = vertices[i].position().y();
+    verticesData[VERTEX_R_INDEX + stride] = vertices[i].color().r() / 255.f;
+    verticesData[VERTEX_G_INDEX + stride] = vertices[i].color().g() / 255.f;
+    verticesData[VERTEX_B_INDEX + stride] = vertices[i].color().b() / 255.f;
+  }
+
 
   glVertexAttribPointer(VERTEX_POSITION_INDEX, VERTEX_POSITION_SIZE, GL_FLOAT, GL_FALSE,
-                        VERTEX_SIZE * sizeof(GLfloat), verticesData);
+                        VERTEX_SIZE * sizeof(GLfloat), &verticesData[VERTEX_X_INDEX]);
 
   glVertexAttribPointer(VERTEX_COLOR_INDEX, VERTEX_COLOR_SIZE, GL_FLOAT, GL_FALSE,
-                        VERTEX_SIZE * sizeof(GLfloat), &verticesData[2]);
+                        VERTEX_SIZE * sizeof(GLfloat), &verticesData[VERTEX_R_INDEX]);
 
   glEnableVertexAttribArray(VERTEX_POSITION_INDEX);
   glEnableVertexAttribArray(VERTEX_COLOR_INDEX);
-  
+
   glUseProgram(mProgram);
 
-  glDrawArrays(GL_TRIANGLES, 0, 3);
+  glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 
   glDisableVertexAttribArray(VERTEX_POSITION_INDEX);
   glDisableVertexAttribArray(VERTEX_COLOR_INDEX);

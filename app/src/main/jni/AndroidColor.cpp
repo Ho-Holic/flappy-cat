@@ -12,6 +12,13 @@ AndroidColor::AndroidColor(uint8_t r, uint8_t g, uint8_t b, uint8_t alpha)
   //
 }
 
+AndroidColor::AndroidColor(uint8_t r, uint8_t g, uint8_t b)
+: AndroidColor(r, g, b, 255) {
+  //
+}
+
+
+
 AndroidColor::AndroidColor()
 : AndroidColor(0, 0, 0, 255) {
   //
@@ -113,6 +120,7 @@ AndroidColor operator*(const AndroidColor& left, float factor) {
 
   return AndroidColor(left) *= factor;
 }
+
 
 
 
