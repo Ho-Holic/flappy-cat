@@ -6,7 +6,7 @@
 
 class AndroidCircleShape : public AndroidShape {
 public:
-  AndroidCircleShape(const AndroidPosition& position, float radius);
+  AndroidCircleShape(const Position& position, float radius);
 };
 
 

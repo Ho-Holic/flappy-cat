@@ -1,7 +1,7 @@
 // self
 #include "AndroidCircleShape.h"
 
-AndroidCircleShape::AndroidCircleShape(const AndroidPosition& position, float radius)
+AndroidCircleShape::AndroidCircleShape(const Position& position, float radius)
 : AndroidShape() {
   //
 }

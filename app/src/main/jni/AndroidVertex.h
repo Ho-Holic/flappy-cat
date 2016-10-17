@@ -3,18 +3,18 @@
 
 // self
 #include "AndroidColor.h"
-#include "AndroidPosition.h"
+#include "core/Position.h"
 
 class AndroidVertex {
 public:
-  AndroidVertex(const AndroidPosition& position, const AndroidColor& color);
+  AndroidVertex(const Position& position, const AndroidColor& color);
 
 public:
-  const AndroidPosition& position() const;
+  const Position& position() const;
   const AndroidColor& color() const;
 
 private:
-  AndroidPosition mPosition;
+  Position mPosition;
   AndroidColor mColor;
 };
 

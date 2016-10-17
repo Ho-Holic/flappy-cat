@@ -84,9 +84,9 @@ void FlappyCatApplication::render() {
 //    << AndroidVertex(AndroidPosition(-0.5f, -0.5f), AndroidColor(0, 255, 0))
 //    << AndroidVertex(AndroidPosition(0.5f, -0.5f),  AndroidColor(0, 0, 255));
 
-  v << AndroidVertex(AndroidPosition(0.0f,  0.5f),  AndroidColor::random())
-  << AndroidVertex(AndroidPosition(-0.5f, -0.5f), AndroidColor::random())
-  << AndroidVertex(AndroidPosition(0.5f, -0.5f),  AndroidColor::random());
+  v << AndroidVertex(Position(0.0f,  0.5f),  AndroidColor::random())
+    << AndroidVertex(Position(-0.5f, -0.5f), AndroidColor::random())
+    << AndroidVertex(Position(0.5f, -0.5f),  AndroidColor::random());
 
   window().drawVertices(v);
   window().display();

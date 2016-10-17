@@ -1,14 +1,14 @@
 // self
 #include "AndroidVertex.h"
 
-AndroidVertex::AndroidVertex(const AndroidPosition& position,
+AndroidVertex::AndroidVertex(const Position& position,
                              const AndroidColor& color)
 : mPosition(position)
 , mColor(color) {
   //
 }
 
-const AndroidPosition& AndroidVertex::position() const {
+const Position& AndroidVertex::position() const {
 
   return mPosition;
 }

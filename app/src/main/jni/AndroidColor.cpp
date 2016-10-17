@@ -111,12 +111,12 @@ AndroidColor operator * (const AndroidColor& left, const AndroidColor& right)  {
                       uint8_t(int(left.mAlpha) * right.mAlpha / 255));
 }
 
-AndroidColor operator*(float factor, const AndroidColor& right) {
+AndroidColor operator * (float factor, const AndroidColor& right) {
 
   return AndroidColor(right) *= factor;
 }
 
-AndroidColor operator*(const AndroidColor& left, float factor) {
+AndroidColor operator * (const AndroidColor& left, float factor) {
 
   return AndroidColor(left) *= factor;
 }

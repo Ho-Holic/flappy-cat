@@ -6,7 +6,7 @@
 
 class AndroidRectangleShape : public AndroidShape {
 public:
- AndroidRectangleShape(const AndroidPosition& position, const AndroidPosition& size);
+ AndroidRectangleShape(const Position& position, const Position& size);
 
 private:
 
