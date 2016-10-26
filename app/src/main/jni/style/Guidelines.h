@@ -1,9 +1,6 @@
 #ifndef FLAPPY_CAT_GUIDELINES_H
 #define FLAPPY_CAT_GUIDELINES_H
 
-// self
-#include "Log.h"
-
 /**
  * @def UNUSED - document that variable is unused and programmer know this
  */

@@ -2,9 +2,9 @@
 #define FLAPPY_CAT_ANDROIDWINDOW_H
 
 // self
-#include "Guidelines.h"
-#include "AndroidColor.h"
-#include "AndroidVertices.h"
+#include "style/Guidelines.h"
+#include "core/Color.h"
+#include "core/Vertices.h"
 
 // ndk
 #include <android/native_window.h>
@@ -17,6 +17,7 @@
 
 // stl
 #include <vector>
+#include <string>
 
 class AndroidWindow {
 private:
@@ -35,8 +36,8 @@ public:
   void display() const;
   int32_t width() const;
   int32_t height() const;
-  void drawVertices(const AndroidVertices& vertices) const;
-  void clear(const AndroidColor& color) const;
+  void drawVertices(const Vertices& vertices) const;
+  void clear(const Color& color) const;
   int32_t requestWidth() const;
   int32_t requestHeight() const;
   void resize(int32_t width, int32_t height);

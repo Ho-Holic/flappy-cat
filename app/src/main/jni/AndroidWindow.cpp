@@ -1,5 +1,6 @@
 // self
 #include "AndroidWindow.h"
+#include "Log.h"
 
 // stl
 #include <memory>
@@ -344,7 +345,7 @@ int32_t AndroidWindow::requestHeight() const {
   return ANativeWindow_getHeight(mWindow);
 }
 
-void AndroidWindow::drawVertices(const AndroidVertices& vertices) const {
+void AndroidWindow::drawVertices(const Vertices& vertices) const {
 
   std::size_t verticesDataSize = vertices.size() * VERTEX_SIZE;
 
@@ -382,7 +383,7 @@ void AndroidWindow::drawVertices(const AndroidVertices& vertices) const {
 
 }
 
-void AndroidWindow::clear(const AndroidColor& color) const {
+void AndroidWindow::clear(const Color& color) const {
 
   glClearColor(color.r()     / 255.f,
                color.g()     / 255.f,

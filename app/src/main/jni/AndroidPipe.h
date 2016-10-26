@@ -2,7 +2,8 @@
 #define FLAPPY_CAT_ANDROIDPIPE_H
 
 // self
-#include "Guidelines.h"
+#include "style/Guidelines.h"
+#include "Log.h"
 
 // stl
 #include <cstring>

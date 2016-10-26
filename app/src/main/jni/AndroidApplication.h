@@ -11,7 +11,7 @@
 #include <queue>
 
 // self
-#include "Guidelines.h"
+#include "style/Guidelines.h"
 #include "AndroidConfiguration.h"
 #include "AndroidLooper.h"
 #include "AndroidWindow.h"

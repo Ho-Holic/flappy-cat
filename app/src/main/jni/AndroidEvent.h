@@ -6,7 +6,7 @@
 
 // self
 #include "AndroidEventData.h"
-#include "Guidelines.h"
+#include "style/Guidelines.h"
 
 class AndroidEvent {
 public:

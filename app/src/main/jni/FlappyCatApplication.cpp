@@ -1,6 +1,6 @@
 // self
 #include "FlappyCatApplication.h"
-#include "AndroidClock.h"
+#include "core/Clock.h"
 #include "Log.h"
 
 // opengl
@@ -21,15 +21,15 @@ FlappyCatApplication::FlappyCatApplication(ANativeActivity* activity,
 void FlappyCatApplication::main() {
 
 
-  constexpr AndroidFrameTime TimePerFrame = AndroidFrameTime(1);
+  constexpr FrameDuration TimePerFrame = FrameDuration(1);
 
-  auto startTime = AndroidClock::now();
-  auto timeSinceLastUpdate = AndroidClockDuration(0);
+  auto startTime = Clock::now();
+  auto timeSinceLastUpdate = ClockDuration(0);
 
   // game loop
   while( ! isDestroyRequested()) {
 
-    auto now = AndroidClock::now();
+    auto now = Clock::now();
     auto elapsedTime = now - startTime;
     startTime = now;
 
@@ -38,7 +38,7 @@ void FlappyCatApplication::main() {
     while (timeSinceLastUpdate > TimePerFrame) {
 
       using std::chrono::duration_cast;
-      timeSinceLastUpdate = timeSinceLastUpdate - duration_cast<AndroidClockDuration>(TimePerFrame);
+      timeSinceLastUpdate = timeSinceLastUpdate - duration_cast<ClockDuration>(TimePerFrame);
 
       processEvents();
       //update(TimePerFrame);
@@ -69,24 +69,24 @@ void FlappyCatApplication::processEvents() {
 
 void FlappyCatApplication::render() {
 
-  AndroidColor color(AndroidColor::random());
+  Color color(Color::random());
 
-  AndroidColor gray(color.grayscale());
+  Color gray(color.grayscale());
   color = gray + (color - gray) * (mSaturation / (1.f - mSaturation));
   color *= mBrightness;
 
 
   window().clear(color);
 
-  AndroidVertices v;
+  Vertices v;
 
-//  v << AndroidVertex(AndroidPosition(0.0f,  0.5f),  AndroidColor(255, 0, 0))
-//    << AndroidVertex(AndroidPosition(-0.5f, -0.5f), AndroidColor(0, 255, 0))
-//    << AndroidVertex(AndroidPosition(0.5f, -0.5f),  AndroidColor(0, 0, 255));
+//  v << Vertex(AndroidPosition(0.0f,  0.5f),  Color(255, 0, 0))
+//    << Vertex(AndroidPosition(-0.5f, -0.5f), Color(0, 255, 0))
+//    << Vertex(AndroidPosition(0.5f, -0.5f),  Color(0, 0, 255));
 
-  v << AndroidVertex(Position(0.0f,  0.5f),  AndroidColor::random())
-    << AndroidVertex(Position(-0.5f, -0.5f), AndroidColor::random())
-    << AndroidVertex(Position(0.5f, -0.5f),  AndroidColor::random());
+  v << Vertex(Position(0.0f,  0.5f),  Color::random())
+    << Vertex(Position(-0.5f, -0.5f), Color::random())
+    << Vertex(Position(0.5f, -0.5f),  Color::random());
 
   window().drawVertices(v);
   window().display();

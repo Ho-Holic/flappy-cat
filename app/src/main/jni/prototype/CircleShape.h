@@ -2,11 +2,11 @@
 #define FLAPPY_CAT_ANDROIDCIRCLESHAPE_H
 
 // self
-#include "AndroidShape.h"
+#include <core/Shape.h>
 
-class AndroidCircleShape : public AndroidShape {
+class CircleShape : public Shape {
 public:
-  AndroidCircleShape(const Position& position, float radius);
+  CircleShape(const Position& position, float radius);
 };
 
 

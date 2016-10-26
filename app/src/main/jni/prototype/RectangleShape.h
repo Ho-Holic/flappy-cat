@@ -2,11 +2,11 @@
 #define FLAPPY_CAT_ANDROIDRECTANGLESHAPE_H
 
 // self
-#include "AndroidShape.h"
+#include <core/Shape.h>
 
-class AndroidRectangleShape : public AndroidShape {
+class RectangleShape : public Shape {
 public:
- AndroidRectangleShape(const Position& position, const Position& size);
+ RectangleShape(const Position& position, const Position& size);
 
 private:
 

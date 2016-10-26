@@ -2,13 +2,13 @@
 #define FLAPPY_CAT_ANDROIDSHAPE_H
 
 // self
-#include "AndroidVertices.h"
+#include "Vertices.h"
 
-class AndroidShape {
+class Shape {
 public:
-  AndroidShape();
+  Shape();
 private:
-  AndroidVertices mVertices;
+  Vertices mVertices;
 };
 
 

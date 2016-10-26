@@ -6,7 +6,7 @@
 #include <android/input.h>
 
 // self
-#include "Guidelines.h"
+#include "style/Guidelines.h"
 #include "AndroidEvent.h"
 
 // stl
