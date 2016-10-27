@@ -7,7 +7,7 @@ model {
         buildToolsVersion "23.0.3"
 
         defaultConfig {
-            applicationId "com.thecat.nine.flappycat"
+            applicationId "com.nyantech.flappycat"
             minSdkVersion.apiLevel 15
             targetSdkVersion.apiLevel 23
             versionCode 1

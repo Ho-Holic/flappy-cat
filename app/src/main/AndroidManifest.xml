@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.thecat.nine.flappycat">
+          package="com.nyantech.flappycat">
 
     <application
         android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"

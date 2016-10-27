@@ -2,7 +2,7 @@
 #define FLAPPY_CAT_FLAPPYCATAPPLICATION_H
 
 // self
-#include "AndroidApplication.h"
+#include <android/AndroidApplication.h>
 
 class FlappyCatApplication : public AndroidApplication {
 public:
