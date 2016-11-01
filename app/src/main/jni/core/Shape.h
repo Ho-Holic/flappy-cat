@@ -3,12 +3,17 @@
 
 // self
 #include "Vertices.h"
+#include "Geometry.h"
+#include "Transform.h"
 
 class Shape {
 public:
   Shape();
-private:
-  Vertices mVertices;
+  ~Shape() = default;
+
+public:
+  virtual const Geometry& geometry() const = 0;
+  virtual const Transform& transform() const = 0;
 };
 
 

@@ -10,6 +10,7 @@
 class Geometry {
 public:
   typedef std::size_t size_type;
+
 public:
   virtual ~Geometry() = default;
 
