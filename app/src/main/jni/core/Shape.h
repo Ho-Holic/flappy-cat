@@ -5,6 +5,7 @@
 #include "Vertices.h"
 #include "Geometry.h"
 #include "Transform.h"
+#include "Render.h"
 
 class Shape {
 public:
@@ -14,6 +15,7 @@ public:
 public:
   virtual const Geometry& geometry() const = 0;
   virtual const Transform& transform() const = 0;
+  virtual const Render& render() const = 0;
 };
 
 

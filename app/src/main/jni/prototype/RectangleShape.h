@@ -3,13 +3,23 @@
 
 // self
 #include <core/Shape.h>
+#include <prototype/RectangleGeometry.h>
+#include <prototype/FlatTransform.h>
+#include <prototype/VertexBasedRender.h>
 
 class RectangleShape : public Shape {
 public:
  RectangleShape(const Position& position, const Position& size);
 
-private:
+public:
+  virtual const Geometry& geometry() const;
+  virtual const Transform& transform() const;
+  virtual const Render& render() const;
 
+private:
+  FlatTransform mTransform;
+  RectangleGeometry mGeometry;
+  VertexBasedRender mRender;
 };
 
 

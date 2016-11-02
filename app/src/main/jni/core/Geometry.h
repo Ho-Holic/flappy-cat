@@ -15,7 +15,7 @@ public:
   virtual ~Geometry() = default;
 
 public:
-  virtual size_type pointSize() const = 0;
+  virtual size_type points() const = 0;
   virtual Position pointAt(size_type index) const = 0;
 };
 

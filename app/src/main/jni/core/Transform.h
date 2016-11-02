@@ -10,8 +10,6 @@ public:
 
 public:
   virtual void setPosition(const Position& position) = 0;
-
-public:
   virtual const Position& getPosition() const = 0;
 };
 
