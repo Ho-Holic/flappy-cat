@@ -405,6 +405,12 @@ void AndroidWindow::resize(int32_t width, int32_t height) {
   glViewport(0, 0, mWidth, mHeight);
 }
 
+void AndroidWindow::draw(const Shape& shape) const {
+  //
+}
+
+
+
 
 
 

@@ -45,4 +45,25 @@
  */
 #define REQUIRE(tag, condition, ...) Log::assert(condition, #condition, tag, __VA_ARGS__)
 
+/**
+ * @def UNEXPECTED_SWITCH - Mark switch branch that must be unreachable
+ *
+ * This is used when some code permutations lead to code that compile but works wrong,
+ * like adding new enum value and not handle this in a switch
+ */
+#define UNEXPECTED_SWITCH                                            \
+  default: {                                                         \
+    throw std::logic_error("ASSERT: this code must be unreachable"); \
+  }
+
+/**
+ * @def UNEXPECTED_RETURN - Mark switch branch that must be unreachable
+ *
+ * This is used for switch constructions when all brunches return from a function
+ * but you need to be shure that code does not leave the switch statement
+ */
+#define UNEXPECTED_RETURN(RETURN_VALUE)                            \
+  throw std::logic_error("ASSERT: this code must be unreachable"); \
+  return RETURN_VALUE;
+
 #endif //FLAPPY_CAT_GUIDELINES_H

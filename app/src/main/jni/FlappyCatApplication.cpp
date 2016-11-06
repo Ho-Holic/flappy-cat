@@ -1,10 +1,11 @@
 // self
 #include "FlappyCatApplication.h"
-#include "core/Clock.h"
+#include <core/Clock.h>
+#include <prototype/RectangleShape.h>
+
 #include "Log.h"
 
-// opengl
-#include <GLES2/gl2.h>
+
 
 
 
@@ -79,15 +80,15 @@ void FlappyCatApplication::render() {
   window().clear(color);
 
   Vertices v;
-
-//  v << Vertex(AndroidPosition(0.0f,  0.5f),  Color(255, 0, 0))
-//    << Vertex(AndroidPosition(-0.5f, -0.5f), Color(0, 255, 0))
-//    << Vertex(AndroidPosition(0.5f, -0.5f),  Color(0, 0, 255));
-
   v << Vertex(Position(0.0f,  0.5f),  Color::random())
     << Vertex(Position(-0.5f, -0.5f), Color::random())
     << Vertex(Position(0.5f, -0.5f),  Color::random());
 
   window().drawVertices(v);
+
+  RectangleShape rect(Position(0, 0), Position(50, 50));
+
+  window().draw(rect);
+
   window().display();
 }
