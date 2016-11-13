@@ -26,7 +26,8 @@ enum : GLsizei {
 };
 
 AndroidWindow::AndroidWindow()
-: mWindow(nullptr)
+: Window()
+, mWindow(nullptr)
 , mDisplay(EGL_NO_DISPLAY)
 , mContext(EGL_NO_CONTEXT)
 , mSurface(EGL_NO_SURFACE)
@@ -406,7 +407,8 @@ void AndroidWindow::resize(int32_t width, int32_t height) {
 }
 
 void AndroidWindow::draw(const Shape& shape) const {
-  //
+
+  shape.render().drawOn(*this);
 }
 
 

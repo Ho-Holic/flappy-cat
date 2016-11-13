@@ -6,6 +6,7 @@
 #include <core/Color.h>
 #include <core/Vertices.h>
 #include <core/Shape.h>
+#include <core/Window.h>
 
 // ndk
 #include <android/native_window.h>
@@ -20,7 +21,7 @@
 #include <vector>
 #include <string>
 
-class AndroidWindow {
+class AndroidWindow : public Window {
 private:
   DISABLE_COPY(AndroidWindow)
 
@@ -28,18 +29,21 @@ public:
   AndroidWindow();
 
 public:
+  virtual void clear(const Color& color) const override;
+  virtual void draw(const Shape& shape) const override;
+  virtual void drawVertices(const Vertices& vertices) const override;
+public:
   void setNativeWindow(ANativeWindow* window);
   bool isReady() const;
   void initialize();
-  void terminate();
 
+  void terminate();
 public:
   void display() const;
   int32_t width() const;
   int32_t height() const;
-  void drawVertices(const Vertices& vertices) const;
-  void draw(const Shape& shape) const;
-  void clear(const Color& color) const;
+
+
   int32_t requestWidth() const;
   int32_t requestHeight() const;
   void resize(int32_t width, int32_t height);

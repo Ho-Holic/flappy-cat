@@ -2,10 +2,12 @@
 #define FLAPPY_CAT_ANDROIDSHAPE_H
 
 // self
-#include "Vertices.h"
-#include "Geometry.h"
-#include "Transform.h"
-#include "Render.h"
+#include <core/Vertices.h>
+#include <core/Geometry.h>
+#include <core/Transform.h>
+#include <core/Render.h>
+
+
 
 class Shape {
 public:

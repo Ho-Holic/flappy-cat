@@ -12,9 +12,9 @@ public:
  RectangleShape(const Position& position, const Position& size);
 
 public:
-  virtual const Geometry& geometry() const;
-  virtual const Transform& transform() const;
-  virtual const Render& render() const;
+  virtual const Geometry& geometry() const override;
+  virtual const Transform& transform() const override;
+  virtual const Render& render() const override;
 
 private:
   FlatTransform mTransform;

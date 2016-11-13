@@ -8,6 +8,10 @@
 class VertexBasedRender : public Render {
 public:
   VertexBasedRender();
+public:
+  virtual void update(const Shape& shape) override;
+  virtual void drawOn(const Window& window) const override;
+
 private:
   Vertices mVertices;
 };
