@@ -86,9 +86,13 @@ void FlappyCatApplication::render() {
 
   window().drawVertices(v);
 
-  RectangleShape rect(Position(0, 0), Position(50, 50));
-
+  RectangleShape rect(Position(0, 0), Position(0.5, 0.5));
+  rect.render().update(rect);
   window().draw(rect);
+
+  RectangleShape rect2(Position(0, 0), Position(-0.5, -0.5));
+  rect2.render().update(rect2);
+  window().draw(rect2);
 
   window().display();
 }

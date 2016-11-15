@@ -14,6 +14,7 @@ public:
   virtual void clear(const Color& color) const = 0;
   virtual void draw(const Shape& shape) const = 0;
   virtual void drawVertices(const Vertices& vertices) const = 0;
+  virtual void display() const = 0;
 };
 
 

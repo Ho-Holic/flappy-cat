@@ -10,6 +10,18 @@ RectangleShape::RectangleShape(const Position& position, const Position& size)
   //
 }
 
+Geometry& RectangleShape::geometry() {
+  return mGeometry;
+}
+
+Transform& RectangleShape::transform() {
+  return mTransform;
+}
+
+Render& RectangleShape::render() {
+  return mRender;
+}
+
 const Geometry& RectangleShape::geometry() const {
   return mGeometry;
 }
@@ -21,6 +33,12 @@ const Transform& RectangleShape::transform() const {
 const Render& RectangleShape::render() const {
   return mRender;
 }
+
+
+
+
+
+
 
 
 

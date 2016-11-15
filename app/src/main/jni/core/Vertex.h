@@ -8,6 +8,7 @@
 class Vertex {
 public:
   Vertex(const Position& position, const Color& color);
+  Vertex();
 
 public:
   const Position& position() const;

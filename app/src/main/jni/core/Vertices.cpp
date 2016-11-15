@@ -22,6 +22,12 @@ Vertices& Vertices::operator << (const Vertex& vertex) {
   return *this;
 }
 
+void Vertices::reset() {
+  mVertices.resize(0);
+}
+
+
+
 
 
 

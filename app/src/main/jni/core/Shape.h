@@ -15,6 +15,10 @@ public:
   ~Shape() = default;
 
 public:
+  virtual Geometry& geometry() = 0;
+  virtual Transform& transform() = 0;
+  virtual Render& render() = 0;
+
   virtual const Geometry& geometry() const = 0;
   virtual const Transform& transform() const = 0;
   virtual const Render& render() const = 0;

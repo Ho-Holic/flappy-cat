@@ -375,7 +375,9 @@ void AndroidWindow::drawVertices(const Vertices& vertices) const {
 
   glUseProgram(mProgram);
 
-  glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+  //glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+  glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size());
+
 
   glDisableVertexAttribArray(VERTEX_POSITION_INDEX);
   glDisableVertexAttribArray(VERTEX_COLOR_INDEX);

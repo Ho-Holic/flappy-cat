@@ -19,6 +19,7 @@ public:
 
 public:
   size_t size() const;
+  void reset();
 
 private:
   std::vector<Vertex> mVertices;

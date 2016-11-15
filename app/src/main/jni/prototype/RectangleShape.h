@@ -12,6 +12,10 @@ public:
  RectangleShape(const Position& position, const Position& size);
 
 public:
+  virtual Geometry& geometry() override;
+  virtual Transform& transform() override;
+  virtual Render& render() override;
+
   virtual const Geometry& geometry() const override;
   virtual const Transform& transform() const override;
   virtual const Render& render() const override;

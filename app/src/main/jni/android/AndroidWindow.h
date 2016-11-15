@@ -32,14 +32,14 @@ public:
   virtual void clear(const Color& color) const override;
   virtual void draw(const Shape& shape) const override;
   virtual void drawVertices(const Vertices& vertices) const override;
+  virtual void display() const;
 public:
   void setNativeWindow(ANativeWindow* window);
   bool isReady() const;
   void initialize();
-
   void terminate();
 public:
-  void display() const;
+
   int32_t width() const;
   int32_t height() const;
 
