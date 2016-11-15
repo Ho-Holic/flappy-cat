@@ -2,6 +2,7 @@
 #include "FlappyCatApplication.h"
 #include <core/Clock.h>
 #include <prototype/RectangleShape.h>
+#include <prototype/CircleShape.h>
 
 #include "Log.h"
 
@@ -93,6 +94,10 @@ void FlappyCatApplication::render() {
   RectangleShape rect2(Position(0, 0), Position(-0.5, -0.5));
   rect2.render().update(rect2);
   window().draw(rect2);
+
+  CircleShape circle(Position(0, 0), 0.5f, 32);
+  circle.render().update(circle);
+  window().draw(circle);
 
   window().display();
 }
