@@ -12,13 +12,16 @@ public:
   CircleShape(const Position& position, float radius, std::size_t resolution);
 
 public:
-  virtual Geometry& geometry() override;
-  virtual Transform& transform() override;
-  virtual Render& render() override;
+  virtual CircleGeometry& geometry() override;
+  virtual FlatTransform& transform() override;
+  virtual VertexBasedRender& render() override;
 
-  virtual const Geometry& geometry() const override;
-  virtual const Transform& transform() const override;
-  virtual const Render& render() const override;
+  virtual const CircleGeometry& geometry() const override;
+  virtual const FlatTransform& transform() const override;
+  virtual const VertexBasedRender& render() const override;
+
+private:
+  void update();
 
 private:
   FlatTransform mTransform;

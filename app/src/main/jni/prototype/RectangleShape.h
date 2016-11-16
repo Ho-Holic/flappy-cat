@@ -12,13 +12,16 @@ public:
  RectangleShape(const Position& position, const Position& size);
 
 public:
-  virtual Geometry& geometry() override;
-  virtual Transform& transform() override;
-  virtual Render& render() override;
+  virtual RectangleGeometry& geometry() override;
+  virtual FlatTransform& transform() override;
+  virtual VertexBasedRender& render() override;
 
-  virtual const Geometry& geometry() const override;
-  virtual const Transform& transform() const override;
-  virtual const Render& render() const override;
+  virtual const RectangleGeometry& geometry() const override;
+  virtual const FlatTransform& transform() const override;
+  virtual const VertexBasedRender& render() const override;
+
+private:
+  void update();
 
 private:
   FlatTransform mTransform;

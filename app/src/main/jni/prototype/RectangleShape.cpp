@@ -1,38 +1,49 @@
 
 // self
 #include "RectangleShape.h"
+#include "Log.h"
+
+// stl
+#include <functional>
 
 RectangleShape::RectangleShape(const Position& position, const Position& size)
 : Shape()
 , mTransform(position)
 , mGeometry(size)
 , mRender() {
-  //
+  mGeometry.onUpdate().connect(std::bind(&RectangleShape::update, this));
+  update();
 }
 
-Geometry& RectangleShape::geometry() {
+RectangleGeometry& RectangleShape::geometry() {
   return mGeometry;
 }
 
-Transform& RectangleShape::transform() {
+FlatTransform& RectangleShape::transform() {
   return mTransform;
 }
 
-Render& RectangleShape::render() {
+VertexBasedRender& RectangleShape::render() {
   return mRender;
 }
 
-const Geometry& RectangleShape::geometry() const {
+const RectangleGeometry& RectangleShape::geometry() const {
   return mGeometry;
 }
 
-const Transform& RectangleShape::transform() const {
+const FlatTransform& RectangleShape::transform() const {
   return mTransform;
 }
 
-const Render& RectangleShape::render() const {
+const VertexBasedRender& RectangleShape::render() const {
   return mRender;
 }
+
+void RectangleShape::update() {
+  render().update(*this);
+}
+
+
 
 
 

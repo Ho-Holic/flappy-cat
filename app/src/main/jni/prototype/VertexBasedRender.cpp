@@ -18,9 +18,11 @@ void VertexBasedRender::update(const Shape& shape) {
 
   Geometry::size_type points = shape.geometry().points();
 
+  // TODO: not optimal, create more clever approach later
+  mVertices.reset();
+
   // if not at least a triangle, reset and exit
   if (points < 3) {
-    mVertices.reset();
     return;
   }
 

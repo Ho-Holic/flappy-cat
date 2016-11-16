@@ -1,14 +1,5 @@
 // self
 #include "FlappyCatApplication.h"
-#include <core/Clock.h>
-#include <prototype/RectangleShape.h>
-#include <prototype/CircleShape.h>
-
-#include "Log.h"
-
-
-
-
 
 FlappyCatApplication::FlappyCatApplication(ANativeActivity* activity,
                                            void* savedState,
@@ -16,7 +7,10 @@ FlappyCatApplication::FlappyCatApplication(ANativeActivity* activity,
 
 : AndroidApplication(activity, savedState, savedStateSize)
 , mSaturation(0.f)
-, mBrightness(0.f) {
+, mBrightness(0.f)
+, mSizeFactor(0)
+, mRect(Position(0, 0), Position(-0.5, -0.5))
+, mCircle(Position(0, 0), 0.5f, 4) {
   //
 }
 
@@ -43,7 +37,7 @@ void FlappyCatApplication::main() {
       timeSinceLastUpdate = timeSinceLastUpdate - duration_cast<ClockDuration>(TimePerFrame);
 
       processEvents();
-      //update(TimePerFrame);
+      update(TimePerFrame);
     }
     render();
   }
@@ -69,6 +63,25 @@ void FlappyCatApplication::processEvents() {
   }
 }
 
+void FlappyCatApplication::update(const FrameDuration &time) {
+  mSizeFactor = (mSizeFactor + 1) % 8;
+
+  std::size_t x2 = ((mSizeFactor % 2) != 0) ? 1 : 2;
+
+  mRect.geometry().resize(Position(-0.5 * x2, -0.5 * x2));
+  mCircle.geometry().setRadius(0.5 / x2);
+
+  size_t res = 4;
+
+  for(size_t i = 0; i < mSizeFactor; ++i) {
+    res *= 2;
+  }
+
+  mCircle.geometry().setResolution(res);
+
+}
+
+
 void FlappyCatApplication::render() {
 
   Color color(Color::random());
@@ -87,17 +100,9 @@ void FlappyCatApplication::render() {
 
   window().drawVertices(v);
 
-  RectangleShape rect(Position(0, 0), Position(0.5, 0.5));
-  rect.render().update(rect);
-  window().draw(rect);
-
-  RectangleShape rect2(Position(0, 0), Position(-0.5, -0.5));
-  rect2.render().update(rect2);
-  window().draw(rect2);
-
-  CircleShape circle(Position(0, 0), 0.5f, 32);
-  circle.render().update(circle);
-  window().draw(circle);
-
+  window().draw(mRect);
+  window().draw(mCircle);
   window().display();
 }
+
+
