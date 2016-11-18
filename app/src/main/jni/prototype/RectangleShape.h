@@ -24,7 +24,7 @@ private:
   void update();
 
 private:
-  FlatTransformation mTransform;
+  FlatTransformation mTransformation;
   RectangleGeometry mGeometry;
   VertexBasedRender mRender;
 };

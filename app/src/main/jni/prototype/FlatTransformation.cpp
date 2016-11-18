@@ -4,7 +4,8 @@
 
 FlatTransformation::FlatTransformation(const Position& position)
 : Transformation()
-, mPosition(position) {
+, mPosition(position)
+, mOnUpdate() {
   //
 }
 
@@ -16,12 +17,19 @@ FlatTransformation::FlatTransformation()
 void FlatTransformation::setPosition(const Position& position) {
 
   mPosition = position;
+  mOnUpdate.emit();
 }
 
 const Position& FlatTransformation::getPosition() const {
 
   return mPosition;
 }
+
+FlatTransformation::OnUpdateSignal& FlatTransformation::onUpdate() {
+  return mOnUpdate;
+}
+
+
 
 
 

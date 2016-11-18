@@ -24,7 +24,7 @@ private:
   void update();
 
 private:
-  FlatTransformation mTransform;
+  FlatTransformation mTransformation;
   CircleGeometry mGeometry;
   VertexBasedRender mRender;
 };

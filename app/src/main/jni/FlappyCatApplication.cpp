@@ -9,8 +9,8 @@ FlappyCatApplication::FlappyCatApplication(ANativeActivity* activity,
 , mSaturation(0.f)
 , mBrightness(0.f)
 , mSizeFactor(0)
-, mRect(Position(0.f, 0.f), Position(-0.5, -0.5))
-, mCircle(Position(0.f, -1.f), 0.5f, 4) {
+, mRect(Position(0.f, 0.f), Position(0.5f, 0.5f))
+, mCircle(Position(0.f, 0.f), 0.25f, 4) {
   //
 }
 
@@ -37,7 +37,7 @@ void FlappyCatApplication::main() {
       timeSinceLastUpdate = timeSinceLastUpdate - duration_cast<ClockDuration>(TimePerFrame);
 
       processEvents();
-      //update(TimePerFrame);
+      update(TimePerFrame);
     }
     render();
   }
@@ -64,21 +64,15 @@ void FlappyCatApplication::processEvents() {
 }
 
 void FlappyCatApplication::update(const FrameDuration &time) {
-  mSizeFactor = (mSizeFactor + 1) % 8;
 
-  std::size_t x2 = ((mSizeFactor % 2) != 0) ? 1 : 2;
+  float pos[9] = {-1.f, -0.75f, -0.5f, -0.25f, 0.f, 0.25f, 0.5f, 0.75f, 1.f};
 
-  mRect.geometry().resize(Position(-0.5 * x2, -0.5 * x2));
-  mCircle.geometry().setRadius(0.5 / x2);
+  mRect.transformation().setPosition(Position(0.f, pos[mSizeFactor]));
+  mCircle.transformation().setPosition(Position(pos[mSizeFactor], 0.f));
 
-  size_t res = 4;
+  mCircle.geometry().setResolution((mSizeFactor % 2 == 0) ? 4 : 8);
 
-  for(size_t i = 0; i < mSizeFactor; ++i) {
-    res *= 2;
-  }
-
-  mCircle.geometry().setResolution(res);
-
+  mSizeFactor = (mSizeFactor + 1) % 9;
 }
 
 

@@ -8,10 +8,11 @@
 
 RectangleShape::RectangleShape(const Position& position, const Position& size)
 : Shape()
-, mTransform(position)
+, mTransformation(position)
 , mGeometry(size)
 , mRender() {
   mGeometry.onUpdate().connect(std::bind(&RectangleShape::update, this));
+  mTransformation.onUpdate().connect(std::bind(&RectangleShape::update, this));
   update();
 }
 
@@ -20,7 +21,7 @@ RectangleGeometry& RectangleShape::geometry() {
 }
 
 FlatTransformation& RectangleShape::transformation() {
-  return mTransform;
+  return mTransformation;
 }
 
 VertexBasedRender& RectangleShape::render() {
@@ -32,7 +33,7 @@ const RectangleGeometry& RectangleShape::geometry() const {
 }
 
 const FlatTransformation& RectangleShape::transformation() const {
-  return mTransform;
+  return mTransformation;
 }
 
 const VertexBasedRender& RectangleShape::render() const {

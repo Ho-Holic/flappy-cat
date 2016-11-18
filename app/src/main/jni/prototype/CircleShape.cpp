@@ -3,10 +3,11 @@
 
 CircleShape::CircleShape(const Position& position, float radius, std::size_t resolution)
 : Shape()
-, mTransform(position)
+, mTransformation(position)
 , mGeometry(radius, resolution)
 , mRender() {
   mGeometry.onUpdate().connect(std::bind(&CircleShape::update, this));
+  mTransformation.onUpdate().connect(std::bind(&CircleShape::update, this));
   update();
 }
 
@@ -15,7 +16,7 @@ CircleGeometry& CircleShape::geometry() {
 }
 
 FlatTransformation& CircleShape::transformation() {
-  return mTransform;
+  return mTransformation;
 }
 
 VertexBasedRender& CircleShape::render() {
@@ -27,7 +28,7 @@ const CircleGeometry& CircleShape::geometry() const {
 }
 
 const FlatTransformation& CircleShape::transformation() const {
-  return mTransform;
+  return mTransformation;
 }
 
 const VertexBasedRender& CircleShape::render() const {
