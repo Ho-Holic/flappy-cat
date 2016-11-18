@@ -4,7 +4,7 @@
 // self
 #include <core/Shape.h>
 #include <prototype/RectangleGeometry.h>
-#include <prototype/FlatTransform.h>
+#include <prototype/FlatTransformation.h>
 #include <prototype/VertexBasedRender.h>
 
 class RectangleShape : public Shape {
@@ -13,18 +13,18 @@ public:
 
 public:
   virtual RectangleGeometry& geometry() override;
-  virtual FlatTransform& transform() override;
+  virtual FlatTransformation& transform() override;
   virtual VertexBasedRender& render() override;
 
   virtual const RectangleGeometry& geometry() const override;
-  virtual const FlatTransform& transform() const override;
+  virtual const FlatTransformation& transform() const override;
   virtual const VertexBasedRender& render() const override;
 
 private:
   void update();
 
 private:
-  FlatTransform mTransform;
+  FlatTransformation mTransform;
   RectangleGeometry mGeometry;
   VertexBasedRender mRender;
 };

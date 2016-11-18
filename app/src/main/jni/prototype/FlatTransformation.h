@@ -2,11 +2,11 @@
 #define FLAPPY_CAT_FLATTRANSFROM_H
 
 // self
-#include <core/Transform.h>
+#include <core/Transformation.h>
 
-class FlatTransform : public Transform {
+class FlatTransformation : public Transformation {
 public:
-  FlatTransform(const Position& position);
+  FlatTransformation(const Position& position);
 public:
   virtual void setPosition(const Position& position) override;
   virtual const Position& getPosition() const override;

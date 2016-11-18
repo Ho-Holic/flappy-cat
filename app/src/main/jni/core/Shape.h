@@ -4,7 +4,7 @@
 // self
 #include <core/Vertices.h>
 #include <core/Geometry.h>
-#include <core/Transform.h>
+#include <core/Transformation.h>
 #include <core/Render.h>
 
 
@@ -16,11 +16,11 @@ public:
 
 public:
   virtual Geometry& geometry() = 0;
-  virtual Transform& transform() = 0;
+  virtual Transformation& transform() = 0;
   virtual Render& render() = 0;
 
   virtual const Geometry& geometry() const = 0;
-  virtual const Transform& transform() const = 0;
+  virtual const Transformation& transform() const = 0;
   virtual const Render& render() const = 0;
 };
 

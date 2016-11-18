@@ -19,7 +19,7 @@ RectangleGeometry& RectangleShape::geometry() {
   return mGeometry;
 }
 
-FlatTransform& RectangleShape::transform() {
+FlatTransformation& RectangleShape::transform() {
   return mTransform;
 }
 
@@ -31,7 +31,7 @@ const RectangleGeometry& RectangleShape::geometry() const {
   return mGeometry;
 }
 
-const FlatTransform& RectangleShape::transform() const {
+const FlatTransformation& RectangleShape::transform() const {
   return mTransform;
 }
 
