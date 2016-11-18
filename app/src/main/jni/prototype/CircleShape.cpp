@@ -14,7 +14,7 @@ CircleGeometry& CircleShape::geometry() {
   return mGeometry;
 }
 
-FlatTransformation& CircleShape::transform() {
+FlatTransformation& CircleShape::transformation() {
   return mTransform;
 }
 
@@ -26,7 +26,7 @@ const CircleGeometry& CircleShape::geometry() const {
   return mGeometry;
 }
 
-const FlatTransformation& CircleShape::transform() const {
+const FlatTransformation& CircleShape::transformation() const {
   return mTransform;
 }
 

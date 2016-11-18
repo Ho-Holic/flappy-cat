@@ -13,11 +13,11 @@ public:
 
 public:
   virtual RectangleGeometry& geometry() override;
-  virtual FlatTransformation& transform() override;
+  virtual FlatTransformation& transformation() override;
   virtual VertexBasedRender& render() override;
 
   virtual const RectangleGeometry& geometry() const override;
-  virtual const FlatTransformation& transform() const override;
+  virtual const FlatTransformation& transformation() const override;
   virtual const VertexBasedRender& render() const override;
 
 private:

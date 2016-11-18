@@ -10,7 +10,7 @@ public:
   VertexBasedRender();
 public:
   virtual void update(const Shape& shape) override;
-  virtual void drawOn(const Window& window) const override;
+  virtual void drawOn(const Window& window, const Transformation& transformation) const override;
 
 private:
   Vertices mVertices;

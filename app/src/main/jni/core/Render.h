@@ -1,6 +1,8 @@
 #ifndef FLAPPY_CAT_RENDER_H
 #define FLAPPY_CAT_RENDER_H
 
+#include "Transformation.h"
+
 class Window;
 class Shape;
 
@@ -11,7 +13,7 @@ public:
 
 public:
   virtual void update(const Shape& shape) = 0;
-  virtual void drawOn(const Window& window) const = 0;
+  virtual void drawOn(const Window& window, const Transformation& transformation) const = 0;
 };
 
 

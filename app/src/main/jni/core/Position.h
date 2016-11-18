@@ -18,5 +18,11 @@ private:
 
 };
 
+inline Position operator +(const Position& left, const Position& right) {
+
+  return Position(left.x() + right.x(),
+                  left.y() + right.y());
+}
+
 
 #endif //FLAPPY_CAT_POSITION_H

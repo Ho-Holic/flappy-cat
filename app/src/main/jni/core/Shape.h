@@ -16,11 +16,11 @@ public:
 
 public:
   virtual Geometry& geometry() = 0;
-  virtual Transformation& transform() = 0;
+  virtual Transformation& transformation() = 0;
   virtual Render& render() = 0;
 
   virtual const Geometry& geometry() const = 0;
-  virtual const Transformation& transform() const = 0;
+  virtual const Transformation& transformation() const = 0;
   virtual const Render& render() const = 0;
 };
 

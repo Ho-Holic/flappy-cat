@@ -9,9 +9,9 @@ VertexBasedRender::VertexBasedRender()
   //
 }
 
-void VertexBasedRender::drawOn(const Window& window) const {
+void VertexBasedRender::drawOn(const Window& window, const Transformation& transformation) const {
 
-  window.drawVertices(mVertices);
+  window.drawVertices(mVertices, transformation);
 }
 
 void VertexBasedRender::update(const Shape& shape) {
@@ -28,7 +28,8 @@ void VertexBasedRender::update(const Shape& shape) {
 
   for (Geometry::size_type index = 0; index < points; ++index) {
 
-    mVertices << Vertex(shape.geometry().pointAt(index), Color(255, 0, 0));
+    mVertices << Vertex(shape.transformation().getPosition() + shape.geometry().pointAt(index),
+                        Color(255, 0, 0));
   }
 
 }

@@ -9,8 +9,8 @@ FlappyCatApplication::FlappyCatApplication(ANativeActivity* activity,
 , mSaturation(0.f)
 , mBrightness(0.f)
 , mSizeFactor(0)
-, mRect(Position(0, 0), Position(-0.5, -0.5))
-, mCircle(Position(0, 0), 0.5f, 4) {
+, mRect(Position(0.f, 0.f), Position(-0.5, -0.5))
+, mCircle(Position(0.f, -1.f), 0.5f, 4) {
   //
 }
 
@@ -37,7 +37,7 @@ void FlappyCatApplication::main() {
       timeSinceLastUpdate = timeSinceLastUpdate - duration_cast<ClockDuration>(TimePerFrame);
 
       processEvents();
-      update(TimePerFrame);
+      //update(TimePerFrame);
     }
     render();
   }
@@ -98,7 +98,8 @@ void FlappyCatApplication::render() {
     << Vertex(Position(-0.5f, -0.5f), Color::random())
     << Vertex(Position(0.5f, -0.5f),  Color::random());
 
-  window().drawVertices(v);
+  FlatTransformation flatTransformation;
+  window().drawVertices(v, flatTransformation);
 
   window().draw(mRect);
   window().draw(mCircle);

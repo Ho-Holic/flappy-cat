@@ -1,6 +1,7 @@
 // self
 #include "AndroidWindow.h"
 #include "Log.h"
+#include <prototype/FlatTransformation.h>
 
 // stl
 #include <memory>
@@ -346,7 +347,8 @@ int32_t AndroidWindow::requestHeight() const {
   return ANativeWindow_getHeight(mWindow);
 }
 
-void AndroidWindow::drawVertices(const Vertices& vertices) const {
+void AndroidWindow::drawVertices(const Vertices& vertices,
+                                 const Transformation& transformation) const {
 
   std::size_t verticesDataSize = vertices.size() * VERTEX_SIZE;
 
@@ -410,7 +412,9 @@ void AndroidWindow::resize(int32_t width, int32_t height) {
 
 void AndroidWindow::draw(const Shape& shape) const {
 
-  shape.render().drawOn(*this);
+  FlatTransformation giveMeNameTransformation;
+
+  shape.render().drawOn(*this, giveMeNameTransformation);
 }
 
 
