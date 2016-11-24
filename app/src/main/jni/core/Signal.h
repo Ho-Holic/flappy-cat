@@ -14,20 +14,31 @@ public:
   Signal();
 public:
   void connect(const std::function<SlotFunction>& slot);
-  std::function<SlotFunction> emit;
+  template <typename... Args>
+  void emit(Args... args);
+  std::function<SlotFunction> mEmit;
 };
 
 // implementation
 
 template <typename SlotFunction>
 Signal<SlotFunction>::Signal()
-: emit(nullptr) {
+: mEmit(nullptr) {
   //
 }
 
 template <typename SlotFunction>
 void Signal<SlotFunction>::connect(const std::function<SlotFunction>& slot) {
-  emit = slot;
+  mEmit = slot;
+}
+
+template <typename SlotFunction>
+template <typename... Args>
+void Signal<SlotFunction>::emit(Args... args) {
+  
+  if (mEmit != nullptr) {
+    mEmit(args...);
+  }
 }
 
 
