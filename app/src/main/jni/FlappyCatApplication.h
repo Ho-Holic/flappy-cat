@@ -6,6 +6,7 @@
 #include <core/Clock.h>
 #include <prototype/RectangleShape.h>
 #include <prototype/CircleShape.h>
+#include "FlappyCatGame.h"
 
 class FlappyCatApplication : public AndroidApplication {
 public:
@@ -17,16 +18,7 @@ private:
   virtual void main();
 
 private:
-  void processEvents();
-  void update(const FrameDuration& time);
-  void render();
-
-private:
-  float mSaturation;
-  float mBrightness;
-  std::size_t mSizeFactor;
-  RectangleShape mRect;
-  CircleShape mCircle;
+  FlappyCatGame mGame;
 };
 
 
