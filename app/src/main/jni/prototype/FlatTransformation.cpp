@@ -5,6 +5,7 @@
 FlatTransformation::FlatTransformation(const Position& position)
 : Transformation()
 , mPosition(position)
+, mOrigin(0.f, 0.f)
 , mOnUpdate() {
   //
 }
@@ -28,6 +29,18 @@ const Position& FlatTransformation::getPosition() const {
 FlatTransformation::OnUpdateSignal& FlatTransformation::onUpdate() {
   return mOnUpdate;
 }
+
+void FlatTransformation::setOrigin(const Position& origin) {
+  mOrigin = origin;
+}
+
+const Position& FlatTransformation::origin() const {
+  return mOrigin;
+}
+
+
+
+
 
 
 

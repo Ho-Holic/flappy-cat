@@ -9,6 +9,8 @@ public:
   virtual ~Transformation() = default;
 
 public:
+  virtual void setOrigin(const Position& position) = 0;
+  virtual const Position& origin() const = 0;
   virtual void setPosition(const Position& position) = 0;
   virtual const Position& getPosition() const = 0;
 };

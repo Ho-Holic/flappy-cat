@@ -6,7 +6,6 @@
 
 // simple signal slot system with one slot per signal
 // without collecting return values
-// and possible nullptr call
 
 template <typename SlotFunction>
 class Signal {
@@ -35,7 +34,7 @@ void Signal<SlotFunction>::connect(const std::function<SlotFunction>& slot) {
 template <typename SlotFunction>
 template <typename... Args>
 void Signal<SlotFunction>::emit(Args... args) {
-  
+
   if (mEmit != nullptr) {
     mEmit(args...);
   }
