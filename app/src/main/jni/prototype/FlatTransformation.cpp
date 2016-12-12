@@ -21,7 +21,7 @@ void FlatTransformation::setPosition(const Position& position) {
   mOnUpdate.emit();
 }
 
-const Position& FlatTransformation::getPosition() const {
+const Position& FlatTransformation::position() const {
 
   return mPosition;
 }

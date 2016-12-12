@@ -7,6 +7,7 @@
 #include <core/Vertices.h>
 #include <core/Shape.h>
 #include <core/Window.h>
+#include <core/View.h>
 
 // ndk
 #include <android/native_window.h>
@@ -20,6 +21,7 @@
 // stl
 #include <vector>
 #include <string>
+#include <core/View.h>
 
 class AndroidWindow : public Window {
 private:
@@ -66,6 +68,9 @@ private:
   EGLint mWidth;
   EGLint mHeight;
   GLuint mProgram;
+
+private:
+  View mView;
 };
 
 

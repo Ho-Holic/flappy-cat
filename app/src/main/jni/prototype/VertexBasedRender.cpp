@@ -21,14 +21,13 @@ void VertexBasedRender::update(const Shape& shape) {
   // TODO: not optimal, create more clever approach later
   mVertices.reset();
 
-  // if not at least a triangle, reset and exit
   if (points < 3) {
     return;
   }
 
   for (Geometry::size_type index = 0; index < points; ++index) {
 
-    mVertices << Vertex(shape.transformation().getPosition() + shape.geometry().pointAt(index),
+    mVertices << Vertex(shape.transformation().position() + shape.geometry().pointAt(index),
                         Color(255, 0, 0));
   }
 

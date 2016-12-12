@@ -20,6 +20,8 @@ void View::setPosition(const Position& position) {
   mSize = position;
 }
 
-const Position& View::getPosition() const {
+const Position& View::position() const {
   return mSize;
 }
+
+

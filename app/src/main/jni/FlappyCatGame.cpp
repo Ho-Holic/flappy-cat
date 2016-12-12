@@ -5,7 +5,7 @@ FlappyCatGame::FlappyCatGame()
     : mSaturation(0.f)
     , mBrightness(0.f)
     , mSizeFactor(0)
-    , mRect(Position(0.f, 0.f), Position(0.5f, 0.5f))
+    , mRect(Position(0, 0), Position(100.f, 100.f))
     , mCircle(Position(0.f, 0.f), 0.25f, 4){
   //
 }
@@ -17,6 +17,8 @@ void FlappyCatGame::processEvent(const AndroidEvent& event) {
     float x = event.motionEvent().x;
     float y = event.motionEvent().y;
 
+    mRect.transformation().setPosition(mRect.transformation().position() + Position(0.f, 200.f));
+
     //Log::i(TAG, "(x: %g, y: %g)", x, y);
 
     //mSaturation = x / window().width();
@@ -26,37 +28,33 @@ void FlappyCatGame::processEvent(const AndroidEvent& event) {
 
 void FlappyCatGame::update(const FrameDuration& time) {
 
-  float pos[9] = {-1.f, -0.75f, -0.5f, -0.25f, 0.f, 0.25f, 0.5f, 0.75f, 1.f};
-
-  mRect.transformation().setPosition(Position(0.f, pos[mSizeFactor]));
-  mCircle.transformation().setPosition(Position(pos[mSizeFactor], 0.f));
-
-  mCircle.geometry().setResolution((mSizeFactor % 2 == 0) ? 4 : 8);
+  mRect.transformation().setPosition(mRect.transformation().position() + Position(0.f, -10.f));
 
   mSizeFactor = (mSizeFactor + 1) % 9;
 }
 
 void FlappyCatGame::render(const AndroidWindow& window) {
 
-  Color color(Color::random());
+  //Color color(Color::random());
 
-  Color gray(color.grayscale());
-  color = gray + (color - gray) * (mSaturation / (1.f - mSaturation));
-  color *= mBrightness;
+  //Color gray(color.grayscale());
+  //color = gray + (color - gray) * (mSaturation / (1.f - mSaturation));
+  //color *= mBrightness;
 
 
-  window.clear(color);
+  //window.clear(color);
+  window.clear(0xffffffff);
 
-  Vertices v;
-  v << Vertex(Position(0.0f,  0.5f),  Color::random())
-  << Vertex(Position(-0.5f, -0.5f), Color::random())
-  << Vertex(Position(0.5f, -0.5f),  Color::random());
+  //Vertices v;
+  //v << Vertex(Position(0.0f,  0.5f),  Color::random())
+  //<< Vertex(Position(-0.5f, -0.5f), Color::random())
+  //<< Vertex(Position(0.5f, -0.5f),  Color::random());
 
-  FlatTransformation flatTransformation;
-  window.drawVertices(v, flatTransformation);
+  //FlatTransformation flatTransformation;
+  //window.drawVertices(v, flatTransformation);
 
   window.draw(mRect);
-  window.draw(mCircle);
+  //window.draw(mCircle);
   window.display();
 }
 

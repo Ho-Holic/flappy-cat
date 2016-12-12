@@ -3,6 +3,7 @@
 
 // self
 #include <core/Transformation.h>
+#include <core/Signal.h>
 
 class View : public Transformation {
 public:
@@ -10,10 +11,10 @@ public:
   virtual ~View() = default;
 
 public:
-  virtual void setOrigin(const Position& origin);
-  virtual const Position& origin() const;
-  virtual void setPosition(const Position& position);
-  virtual const Position& getPosition() const;
+  virtual void setOrigin(const Position& origin) override;
+  virtual const Position& origin() const override;
+  virtual void setPosition(const Position& position) override;
+  virtual const Position& position() const override;
 public:
   Position mOrigin;
   Position mSize;

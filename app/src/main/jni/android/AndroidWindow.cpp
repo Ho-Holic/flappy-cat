@@ -34,7 +34,9 @@ AndroidWindow::AndroidWindow()
 , mSurface(EGL_NO_SURFACE)
 , mWidth(0)
 , mHeight(0)
-, mProgram(0) {
+, mProgram(0)
+// data below would go to cross platform wrapper of AndroidWindow later
+, mView() {
   //
 }
 
@@ -206,11 +208,6 @@ void AndroidWindow::initializeOpengl() {
   glEnable(GL_CULL_FACE);
   glDisable(GL_DEPTH_TEST);
 
-  // https://www.opengl.org/discussion_boards/showthread.php/179138-glShadeModel-is-depreciated-So-how-exactly-do-we-do-flat-shading-now
-  // TODO: replace two lines below
-  //glShadeModel(GL_SMOOTH);
-  //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-
   initializeProgram();
 }
 
@@ -358,13 +355,17 @@ void AndroidWindow::drawVertices(const Vertices& vertices,
 
     std::size_t stride = i * VERTEX_SIZE;
 
-    verticesData[VERTEX_X_INDEX + stride] = vertices[i].position().x();
-    verticesData[VERTEX_Y_INDEX + stride] = vertices[i].position().y();
+    verticesData[VERTEX_X_INDEX + stride] = (2.f / transformation.position().x())
+                                            * vertices[i].position().x();
+
+    verticesData[VERTEX_Y_INDEX + stride] = (2.f / transformation.position().y())
+                                            * vertices[i].position().y();
+
     verticesData[VERTEX_R_INDEX + stride] = vertices[i].color().r() / 255.f;
     verticesData[VERTEX_G_INDEX + stride] = vertices[i].color().g() / 255.f;
     verticesData[VERTEX_B_INDEX + stride] = vertices[i].color().b() / 255.f;
-  }
 
+  }
 
   glVertexAttribPointer(VERTEX_POSITION_INDEX, VERTEX_POSITION_SIZE, GL_FLOAT, GL_FALSE,
                         VERTEX_SIZE * sizeof(GLfloat), &verticesData[VERTEX_X_INDEX]);
@@ -406,15 +407,16 @@ void AndroidWindow::resize(int32_t width, int32_t height) {
   mWidth = width;
   mHeight = height;
 
+  mView.setPosition(Position(static_cast<Position::position_type>(mWidth),
+                             static_cast<Position::position_type>(mHeight)));
+
   // Set the viewport
   glViewport(0, 0, mWidth, mHeight);
 }
 
 void AndroidWindow::draw(const Shape& shape) const {
 
-  FlatTransformation giveMeNameTransformation;
-
-  shape.render().drawOn(*this, giveMeNameTransformation);
+  shape.render().drawOn(*this, mView);
 }
 
 
