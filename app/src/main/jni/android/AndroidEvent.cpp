@@ -23,19 +23,19 @@ void AndroidEvent::setEventType(EventType eventType) {
 }
 
 
-void AndroidEvent::setMotionEventData(float x, float y) {
+void AndroidEvent::setTouchEventData(float x, float y) {
 
-  REQUIRE(TAG, mEventType == MotionEventType, "Must be `MotionEventType`");
+  REQUIRE(TAG, mEventType == TouchEventType, "Must be `MotionEventType`");
 
-  mEventData.motionEvent.x = x;
-  mEventData.motionEvent.y = y;
+  mEventData.touchEvent.x = x;
+  mEventData.touchEvent.y = y;
 }
 
-const AndroidMotionEvent& AndroidEvent::motionEvent() const {
+const AndroidTouchEvent& AndroidEvent::touchEvent() const {
 
-  REQUIRE(TAG, mEventType == MotionEventType, "Must be `MotionEventType`");
+  REQUIRE(TAG, mEventType == TouchEventType, "Must be `MotionEventType`");
 
-  return mEventData.motionEvent;
+  return mEventData.touchEvent;
 }
 
 void AndroidEvent::setResizeEventData(int32_t width, int32_t height) {

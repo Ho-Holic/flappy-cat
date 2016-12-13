@@ -12,10 +12,10 @@ FlappyCatGame::FlappyCatGame()
 
 void FlappyCatGame::processEvent(const AndroidEvent& event) {
 
-  if (event.type() == MotionEventType) {
+  if (event.type() == TouchEventType) {
 
-    float x = event.motionEvent().x;
-    float y = event.motionEvent().y;
+    float x = event.touchEvent().x;
+    float y = event.touchEvent().y;
 
     mRect.transformation().setPosition(mRect.transformation().position() + Position(0.f, 200.f));
 

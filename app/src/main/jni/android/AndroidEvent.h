@@ -21,11 +21,11 @@ public:
   void setEventType(EventType eventType);
 
 public:
-  void setMotionEventData(float x, float y);
+  void setTouchEventData(float x, float y);
   void setResizeEventData(int32_t width, int32_t height);
 
 public:
-  const AndroidMotionEvent& motionEvent() const;
+  const AndroidTouchEvent& touchEvent() const;
   const AndroidResizeEvent& resizeEvent() const;
 
 private:
@@ -50,7 +50,7 @@ enum AndroidEvent::EventType : int8_t {
   NativeWindowDestroyedEventType,
 
   ResizedEventType,
-  MotionEventType,
+  TouchEventType
 };
 
 

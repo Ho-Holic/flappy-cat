@@ -40,6 +40,7 @@ private:
   int32_t dispatchEvent(AInputEvent* inputEvent, AndroidEvent& event);
   int32_t dispatchMotionEvent(AInputEvent* inputEvent, AndroidEvent& event);
   int32_t dispatchKeyEvent(AInputEvent* inputEvent, AndroidEvent& event);
+  int32_t dispatchTouchEvent(AInputEvent* inputEvent, AndroidEvent& event);
 
 private:
   ALooper* mLooper;
@@ -57,8 +58,6 @@ enum AndroidLooper::Timeout : int {
   IndefinitelyUntilEventAppearsTimeout = -1,
   ImmediatelyWithoutBlockingTimeout    = 0,
 };
-
-
 
 
 #endif //FLAPPY_CAT_ANDROIDLOOPER_H

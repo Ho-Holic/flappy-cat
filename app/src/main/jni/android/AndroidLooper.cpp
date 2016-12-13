@@ -78,11 +78,25 @@ int32_t AndroidLooper::dispatchEvent(AInputEvent* inputEvent, AndroidEvent& even
 
 int32_t AndroidLooper::dispatchMotionEvent(AInputEvent* inputEvent, AndroidEvent& event) {
 
+  int32_t action = AMotionEvent_getAction(inputEvent);
+
+  switch (action & AMOTION_EVENT_ACTION_MASK) {
+    case AMOTION_EVENT_ACTION_UP: return dispatchTouchEvent(inputEvent, event); break;
+
+  }
+
+  return 0;
+}
+
+int32_t AndroidLooper::dispatchTouchEvent(AInputEvent* inputEvent, AndroidEvent& event) {
+
   float x = AMotionEvent_getX(inputEvent, 0);
   float y = AMotionEvent_getY(inputEvent, 0);
 
-  event.setEventType(MotionEventType);
-  event.setMotionEventData(x, y);
+  event.setEventType(TouchEventType);
+  event.setTouchEventData(x, y);
+
+  Log::i(TAG, "Up event");
 
   return 1;
 }

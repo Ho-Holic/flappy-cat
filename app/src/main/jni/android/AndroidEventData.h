@@ -1,7 +1,7 @@
 #ifndef FLAPPY_CAT_ANDROIDEVENTDATA_H
 #define FLAPPY_CAT_ANDROIDEVENTDATA_H
 
-struct AndroidMotionEvent {
+struct AndroidTouchEvent {
 
   float x;
   float y;
@@ -14,7 +14,7 @@ struct AndroidResizeEvent {
 
 union AndroidEventData {
 
-  AndroidMotionEvent motionEvent;
+  AndroidTouchEvent  touchEvent;
   AndroidResizeEvent resizeEvent;
 };
 
