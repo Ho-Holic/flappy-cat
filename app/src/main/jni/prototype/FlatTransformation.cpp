@@ -15,6 +15,16 @@ FlatTransformation::FlatTransformation()
   //
 }
 
+FlatTransformation::OnUpdateSignal& FlatTransformation::onUpdate() {
+  return mOnUpdate;
+}
+
+void FlatTransformation::move(const Position& position) {
+
+  mPosition = mPosition + position;
+  mOnUpdate.emit();
+}
+
 void FlatTransformation::setPosition(const Position& position) {
 
   mPosition = position;
@@ -26,10 +36,6 @@ const Position& FlatTransformation::position() const {
   return mPosition;
 }
 
-FlatTransformation::OnUpdateSignal& FlatTransformation::onUpdate() {
-  return mOnUpdate;
-}
-
 void FlatTransformation::setOrigin(const Position& origin) {
   mOrigin = origin;
 }
@@ -37,6 +43,10 @@ void FlatTransformation::setOrigin(const Position& origin) {
 const Position& FlatTransformation::origin() const {
   return mOrigin;
 }
+
+
+
+
 
 
 

@@ -15,6 +15,7 @@ public:
 
 public:
   OnUpdateSignal& onUpdate();
+  void move(const Position& position);
 
 public:
   virtual void setOrigin(const Position& origin) override;

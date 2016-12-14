@@ -8,6 +8,9 @@
 #include <prototype/RectangleShape.h>
 #include <prototype/CircleShape.h>
 
+// stl
+#include <vector>
+
 class FlappyCatGame {
 public:
   FlappyCatGame();
@@ -17,10 +20,7 @@ public:
   void render(const AndroidWindow&);
 
 private:
-  float mSaturation;
-  float mBrightness;
-  std::size_t mSizeFactor;
-  RectangleShape mRect;
+  std::vector<RectangleShape> mBlocks;
   CircleShape mCircle;
 };
 
