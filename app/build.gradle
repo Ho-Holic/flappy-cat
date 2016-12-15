@@ -18,7 +18,7 @@ model {
             moduleName "flappycat"
             toolchain 'clang'
             stl 'gnustl_static'
-            cppFlags.add('-std=c++11')
+            cppFlags.add('-std=c++14')
             cppFlags.add('-DTAG=\\\"FlappyCat\\\"') // tag for log system
             cppFlags.add("-I" + file("src/main/jni").absolutePath)
 
