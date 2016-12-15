@@ -10,18 +10,30 @@
 
 // stl
 #include <vector>
+#include <memory>
 
 class FlappyCatGame {
 public:
   FlappyCatGame();
+
 public:
   void processEvent(const AndroidEvent& event);
   void update(const FrameDuration& time);
   void render(const AndroidWindow&);
 
 private:
+  enum GameState {
+    PressButtonState,
+    PlayState
+  };
+
+private:
+  void reset();
+
+private:
+  GameState mGameState;
   std::vector<RectangleShape> mBlocks;
-  CircleShape mCircle;
+  CircleShape mBall;
 };
 
 

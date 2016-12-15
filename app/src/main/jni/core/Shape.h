@@ -7,12 +7,10 @@
 #include <core/Transformation.h>
 #include <core/Render.h>
 
-
-
 class Shape {
 public:
   Shape();
-  ~Shape() = default;
+  virtual ~Shape() = default;
 
 public:
   virtual Geometry& geometry() = 0;

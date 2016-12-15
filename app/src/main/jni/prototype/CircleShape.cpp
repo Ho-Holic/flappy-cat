@@ -11,6 +11,11 @@ CircleShape::CircleShape(const Position& position, float radius, std::size_t res
   update();
 }
 
+CircleShape::CircleShape()
+: CircleShape(Position(0.f, 0.f), 1.f, 32u) {
+  //
+}
+
 CircleGeometry& CircleShape::geometry() {
   return mGeometry;
 }
@@ -38,6 +43,12 @@ const VertexBasedRender& CircleShape::render() const {
 void CircleShape::update() {
   render().update(*this);
 }
+
+
+
+
+
+
 
 
 

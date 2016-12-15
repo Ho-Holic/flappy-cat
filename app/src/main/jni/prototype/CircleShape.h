@@ -10,6 +10,7 @@
 class CircleShape : public Shape {
 public:
   CircleShape(const Position& position, float radius, std::size_t resolution);
+  CircleShape();
 
 public:
   virtual CircleGeometry& geometry() override;

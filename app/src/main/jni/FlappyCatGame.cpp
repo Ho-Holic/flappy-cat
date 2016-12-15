@@ -2,27 +2,43 @@
 #include "FlappyCatGame.h"
 
 FlappyCatGame::FlappyCatGame()
-  : mBlocks(
-      {
-        RectangleShape(Position(-150.f, 600.f), Position(400.f, 100.f)),
-        RectangleShape(Position(-150.f, -1000.f), Position(400.f, 100.f))
-      }
-    )
-  , mCircle(Position(0.f, 0.f), 50.f, 32u){
-  //
+: mGameState(PressButtonState)
+, mBlocks()
+, mBall() {
+  reset();
+}
+
+void FlappyCatGame::reset() {
+
+  mGameState = PressButtonState;
+
+  mBall.geometry().setRadius(50.f);
+  mBall.transformation().setPosition(Position(0.f, 0.f));
+
+  mBlocks.reserve(20);
+  mBlocks.emplace_back(Position(-150.f, 600.f), Position(400.f, 100.f));
+  mBlocks.emplace_back(Position(-150.f, -1000.f), Position(400.f, 100.f));
 }
 
 void FlappyCatGame::processEvent(const AndroidEvent& event) {
 
   if (event.type() == TouchEventType) {
 
-    mCircle.transformation().move(Position(0.f, 400.f));
+    if (mGameState == PressButtonState) {
+
+      mGameState = PlayState;
+    }
+
+    mBall.transformation().move(Position(0.f, 400.f));
   }
 }
 
 void FlappyCatGame::update(const FrameDuration& time) {
 
-  mCircle.transformation().move(Position(0.f, -10.f));
+  if (mGameState == PlayState) {
+
+    mBall.transformation().move(Position(0.f, -10.f));
+  }
 }
 
 void FlappyCatGame::render(const AndroidWindow& window) {
@@ -33,9 +49,11 @@ void FlappyCatGame::render(const AndroidWindow& window) {
     window.draw(block);
   }
 
-  window.draw(mCircle);
+  window.draw(mBall);
 
   window.display();
 }
+
+
 
 
