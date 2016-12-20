@@ -9,7 +9,10 @@
 
 class RectangleShape : public Shape {
 public:
- RectangleShape(const Position& position, const Position& size);
+  RectangleShape(const Position& position, const Position& size);
+
+public:
+  void setColor(const Color& color);
 
 public:
   virtual RectangleGeometry& geometry() override;

@@ -13,6 +13,9 @@ public:
   CircleShape();
 
 public:
+  void setColor(const Color& color);
+
+public:
   virtual CircleGeometry& geometry() override;
   virtual FlatTransformation& transformation() override;
   virtual VertexBasedRender& render() override;
@@ -28,6 +31,7 @@ private:
   FlatTransformation mTransformation;
   CircleGeometry mGeometry;
   VertexBasedRender mRender;
+  Color mColor;
 };
 
 

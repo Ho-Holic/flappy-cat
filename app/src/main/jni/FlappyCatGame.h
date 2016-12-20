@@ -7,6 +7,7 @@
 #include <android/AndroidWindow.h>
 #include <prototype/RectangleShape.h>
 #include <prototype/CircleShape.h>
+#include <FlappyCatColorScheme.h>
 
 // stl
 #include <vector>
@@ -31,7 +32,9 @@ private:
   void reset();
 
 private:
+  FlappyCatColorScheme mColorScheme;
   GameState mGameState;
+  Position::position_type mPlateSize;
   std::vector<RectangleShape> mBlocks;
   CircleShape mBall;
 };

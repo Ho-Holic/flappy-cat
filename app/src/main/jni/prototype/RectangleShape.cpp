@@ -16,6 +16,11 @@ RectangleShape::RectangleShape(const Position& position, const Position& size)
   update();
 }
 
+void RectangleShape::setColor(const Color& color) {
+
+  render().setBrushColor(color);
+}
+
 RectangleGeometry& RectangleShape::geometry() {
   return mGeometry;
 }

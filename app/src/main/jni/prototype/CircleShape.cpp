@@ -5,7 +5,8 @@ CircleShape::CircleShape(const Position& position, float radius, std::size_t res
 : Shape()
 , mTransformation(position)
 , mGeometry(radius, resolution)
-, mRender() {
+, mRender()
+, mColor() {
   mGeometry.onUpdate().connect(std::bind(&CircleShape::update, this));
   mTransformation.onUpdate().connect(std::bind(&CircleShape::update, this));
   update();
@@ -14,6 +15,11 @@ CircleShape::CircleShape(const Position& position, float radius, std::size_t res
 CircleShape::CircleShape()
 : CircleShape(Position(0.f, 0.f), 1.f, 32u) {
   //
+}
+
+void CircleShape::setColor(const Color& color) {
+
+  render().setBrushColor(color);
 }
 
 CircleGeometry& CircleShape::geometry() {
@@ -43,24 +49,3 @@ const VertexBasedRender& CircleShape::render() const {
 void CircleShape::update() {
   render().update(*this);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

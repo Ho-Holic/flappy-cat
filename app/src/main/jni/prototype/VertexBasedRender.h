@@ -8,12 +8,17 @@
 class VertexBasedRender : public Render {
 public:
   VertexBasedRender();
+
+public:
+  void setBrushColor(const Color& color);
+
 public:
   virtual void update(const Shape& shape) override;
   virtual void drawOn(const Window& window, const Transformation& transformation) const override;
 
 private:
   Vertices mVertices;
+  Color mBrushColor;
 };
 
 

@@ -5,8 +5,14 @@
 
 VertexBasedRender::VertexBasedRender()
 : Render()
-, mVertices() {
+, mVertices()
+, mBrushColor() {
   //
+}
+
+void VertexBasedRender::setBrushColor(const Color& color) {
+
+  mBrushColor = color;
 }
 
 void VertexBasedRender::drawOn(const Window& window, const Transformation& transformation) const {
@@ -21,19 +27,14 @@ void VertexBasedRender::update(const Shape& shape) {
   // TODO: not optimal, create more clever approach later
   mVertices.reset();
 
-  if (points < 3) {
+  if (points <3) { // give me some love <3
     return;
   }
 
   for (Geometry::size_type index = 0; index < points; ++index) {
 
     mVertices << Vertex(shape.transformation().position() + shape.geometry().pointAt(index),
-                        Color(255, 0, 0));
+                        mBrushColor);
   }
 
 }
-
-
-
-
-
