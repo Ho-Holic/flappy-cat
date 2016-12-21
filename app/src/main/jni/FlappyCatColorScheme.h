@@ -16,6 +16,7 @@ public:
 
 public:
   void generateNewScheme();
+  Color random();
 
 public:
   Color background() const;

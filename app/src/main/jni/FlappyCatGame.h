@@ -30,6 +30,7 @@ private:
 
 private:
   void reset();
+  Position::position_type randomPositionFrom(Position::position_type initial);
 
 private:
   FlappyCatColorScheme mColorScheme;

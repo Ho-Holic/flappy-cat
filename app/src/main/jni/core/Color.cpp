@@ -2,7 +2,7 @@
 #include "Color.h"
 
 // stl
-#include <random>
+#include <algorithm>
 
 Color::Color(uint8_t r, uint8_t g, uint8_t b, uint8_t alpha)
 : mRed(r)
@@ -16,8 +16,6 @@ Color::Color(uint8_t r, uint8_t g, uint8_t b)
 : Color(r, g, b, 255) {
   //
 }
-
-
 
 Color::Color()
 : Color(0, 0, 0, 255) {
@@ -47,17 +45,6 @@ uint8_t Color::b() const {
 
 uint8_t Color::alpha() const {
   return mAlpha;
-}
-
-Color Color::random() {
-
-  std::random_device rd;
-  std::mt19937 gen(rd());
-  std::uniform_int_distribution<uint32_t> dis; // from 0 to 2^32
-
-  uint32_t fullColor = dis(gen);
-
-  return Color(fullColor | 0xff); // set alpha channel to 255
 }
 
 Color Color::grayscale() const {
