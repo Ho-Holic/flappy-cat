@@ -23,21 +23,27 @@ public:
   void render(const AndroidWindow&);
 
 private:
-  enum GameState {
-    PressButtonState,
-    PlayState
-  };
+  enum GameState : int32_t;
 
 private:
+  void initialize();
   void reset();
   Position::position_type randomPositionFrom(Position::position_type initial);
+  bool isIntersect(const CircleShape& circle, const RectangleShape& rect) const;
 
 private:
   FlappyCatColorScheme mColorScheme;
   GameState mGameState;
   Position::position_type mPlateSize;
-  std::vector<RectangleShape> mBlocks;
+  std::vector<RectangleShape> mTopBlocks;
+  std::vector<RectangleShape> mBottomBlocks;
   CircleShape mBall;
+};
+
+enum FlappyCatGame::GameState : int32_t {
+  PressButtonState,
+  PlayState,
+  LoseState
 };
 
 

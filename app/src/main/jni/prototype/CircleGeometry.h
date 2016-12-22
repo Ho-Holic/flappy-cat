@@ -16,6 +16,7 @@ public:
   OnUpdateSignal& onUpdate();
   void setResolution(std::size_t resolution);
   void setRadius(float radius);
+  float radius() const;
 
 public:
   virtual size_type points() const override;
