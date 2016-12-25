@@ -18,10 +18,26 @@ private:
 
 };
 
-inline Position operator +(const Position& left, const Position& right) {
+inline Position operator+ (const Position& left, const Position& right) {
 
   return Position(left.x() + right.x(),
                   left.y() + right.y());
+}
+
+inline Position operator- (const Position& left, const Position& right) {
+
+  return Position(left.x() - right.x(),
+                  left.y() - right.y());
+}
+
+inline Position operator* (const Position& left, Position::position_type scalar) {
+
+  return Position(left.x() * scalar, left.y() * scalar);
+}
+
+inline Position operator* (Position::position_type scalar, const Position& right) {
+
+  return Position(scalar * right.x(), scalar * right.y());
 }
 
 
