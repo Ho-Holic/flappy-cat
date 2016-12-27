@@ -125,8 +125,8 @@ void FlappyCatGame::update(const FrameDuration& time) {
 
     for (size_t i = 0; i < mTopBlocks.size(); ++i) {
 
-      mTopBlocks   [i].transformation().move(Position(-5.f, 0.f));
-      mBottomBlocks[i].transformation().move(Position(-5.f, 0.f));
+      mTopBlocks   [i].transformation().move(Position(-10.f, 0.f));
+      mBottomBlocks[i].transformation().move(Position(-10.f, 0.f));
 
       if (mTopBlocks[i].transformation().position().x() < ( - mPlateWidth)) {
 
@@ -143,19 +143,20 @@ void FlappyCatGame::update(const FrameDuration& time) {
       }
     }
 
-    // update background
+  }
 
-    for (size_t i = 0; i < mBackgroundCity.size(); ++i) {
+  // update background
 
-      mBackgroundCity[i].transformation().move(Position(-5.f, 0.f));
+  for (size_t i = 0; i < mBackgroundCity.size(); ++i) {
 
-      if (mBackgroundCity[i].transformation().position().x() < ( - mPlateWidth)) {
+    mBackgroundCity[i].transformation().move(Position(-5.f, 0.f));
 
-        Position::position_type oldY = mBackgroundCity[i].transformation().position().y();
-        mBackgroundCity[i].transformation().setPosition(Position(mPlateWidth, oldY));
-      }
+    if (mBackgroundCity[i].transformation().position().x() < ( - mPlateWidth)) {
 
+      Position::position_type oldY = mBackgroundCity[i].transformation().position().y();
+      mBackgroundCity[i].transformation().setPosition(Position(mPlateWidth, oldY));
     }
+
   }
 }
 

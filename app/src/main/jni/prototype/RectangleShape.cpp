@@ -19,6 +19,8 @@ RectangleShape::RectangleShape(const Position& position, const Position& size)
 void RectangleShape::setColor(const Color& color) {
 
   render().setBrushColor(color);
+  // TODO: remove this `update` and add `foreach` to render and set correct color for vertex
+  update();
 }
 
 RectangleGeometry& RectangleShape::geometry() {
