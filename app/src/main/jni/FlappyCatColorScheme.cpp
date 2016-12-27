@@ -16,6 +16,18 @@ void FlappyCatColorScheme::generateNewScheme() {
   mScheme[Background] = Color(255, 255, 255);
   mScheme[Block]      = Color(128, 0, 0);
   mScheme[Ball]       = Color(255, 0, 0);
+  mScheme[House]      = Color(128, 128, 128);
+}
+
+Color FlappyCatColorScheme::random() {
+
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<uint32_t> dis; // from 0 to 2^32
+
+  uint32_t fullColor = dis(gen);
+
+  return Color(fullColor | 0xff); // set alpha channel to 255
 }
 
 Color FlappyCatColorScheme::background() const {
@@ -33,13 +45,12 @@ Color FlappyCatColorScheme::ball() const {
   return mScheme[Ball];
 }
 
-Color FlappyCatColorScheme::random() {
-
-  std::random_device rd;
-  std::mt19937 gen(rd());
-  std::uniform_int_distribution<uint32_t> dis; // from 0 to 2^32
-
-  uint32_t fullColor = dis(gen);
-
-  return Color(fullColor | 0xff); // set alpha channel to 255
+Color FlappyCatColorScheme::house() const {
+  return mScheme[House];
 }
+
+
+
+
+
+

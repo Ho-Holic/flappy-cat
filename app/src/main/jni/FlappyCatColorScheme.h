@@ -22,6 +22,7 @@ public:
   Color background() const;
   Color block() const;
   Color ball() const;
+  Color house() const;
 
 private:
   std::vector<Color> mScheme;
@@ -31,6 +32,7 @@ enum FlappyCatColorScheme::Colors : uint32_t {
   Background,
   Block,
   Ball,
+  House,
   ColorsSize
 };
 

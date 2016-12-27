@@ -7,11 +7,13 @@
 #include <android/AndroidWindow.h>
 #include <prototype/RectangleShape.h>
 #include <prototype/CircleShape.h>
-#include <FlappyCatColorScheme.h>
+#include "FlappyCatColorScheme.h"
+#include "FlappyCatGameConstants.h"
 
 // stl
 #include <vector>
 #include <memory>
+#include <cmath>
 
 class FlappyCatGame {
 public:
@@ -28,15 +30,17 @@ private:
 private:
   void initialize();
   void reset();
-  Position::position_type randomPositionFrom(Position::position_type initial);
+  Position::position_type randomOffsetFrom(Position::position_type initial);
   bool isIntersect(const CircleShape& circle, const RectangleShape& rect) const;
 
 private:
   FlappyCatColorScheme mColorScheme;
+  FlappyCatGameConstants mGameConstants;
   GameState mGameState;
-  Position::position_type mPlateSize;
+  Position::position_type mPlateWidth;
   std::vector<RectangleShape> mTopBlocks;
   std::vector<RectangleShape> mBottomBlocks;
+  std::vector<RectangleShape> mBackgroundCity;
   CircleShape mBall;
 };
 

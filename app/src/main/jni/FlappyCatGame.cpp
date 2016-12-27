@@ -8,10 +8,12 @@
 
 FlappyCatGame::FlappyCatGame()
 : mColorScheme()
+, mGameConstants()
 , mGameState(PressButtonState)
-, mPlateSize(1000.f)
+, mPlateWidth(0.f)
 , mTopBlocks()
 , mBottomBlocks()
+, mBackgroundCity()
 , mBall() {
   initialize();
   reset();
@@ -19,18 +21,36 @@ FlappyCatGame::FlappyCatGame()
 
 void FlappyCatGame::initialize() {
 
-  Position::position_type blockWidth = 300.f;
-  Position::position_type blockHeight = 200.f;
+  mPlateWidth = mGameConstants.plateWidth();
 
-  size_t blockCount = static_cast<size_t >(mPlateSize / blockWidth);
+  // create main game obstacles
+  Position blockSize(mGameConstants.blockSize());
 
   mTopBlocks.reserve(120);
   mBottomBlocks.reserve(120);
 
+  size_t blockCount = static_cast<size_t >(mPlateWidth / blockSize.x());
+
   for (size_t i = 0; i < blockCount; ++i) {
 
-    mTopBlocks.emplace_back(Position(0.f, 0.f), Position(blockWidth, blockHeight));
-    mBottomBlocks.emplace_back(Position(0.f, 0.f), Position(blockWidth, blockHeight));
+    mTopBlocks   .emplace_back(Position(0.f, 0.f), blockSize);
+    mBottomBlocks.emplace_back(Position(0.f, 0.f), blockSize);
+  }
+
+  // create background decoration stuff
+  Position houseSize(mGameConstants.houseSize());
+
+
+  mBackgroundCity.reserve(120);
+
+  size_t houseCount = static_cast<size_t >(mPlateWidth / houseSize.x()) * 2u;
+
+  Log::i(TAG, "city: %d", houseCount);
+
+  for (size_t i = 0; i < houseCount; ++i) {
+
+    mBackgroundCity.emplace_back(Position(0.f, 0.f),
+                                 houseSize + Position(0.f, randomOffsetFrom(0.f)));
   }
 
 }
@@ -41,27 +61,39 @@ void FlappyCatGame::reset() {
 
   mGameState = PressButtonState;
 
-  // add ball
-  mBall.geometry().setRadius(50.f);
+  // place ball
+  mBall.geometry().setRadius(mGameConstants.ballRadius());
   mBall.transformation().setPosition(Position(0.f, 0.f));
   mBall.setColor(mColorScheme.ball());
 
-  // add blocks
-  Position::position_type blockWidth = 300.f;
-  Position::position_type gapHeight = 300.f;
+  // place blocks
+  Position::position_type blockWidth = mGameConstants.blockSize().x();
+  Position::position_type gapInterval = mGameConstants.gapInterval();
 
   REQUIRE(TAG, mTopBlocks.size() == mBottomBlocks.size(), "Blocks must be in sync");
 
   for (size_t i = 0; i < mTopBlocks.size(); ++i) {
 
-    float offsetX = (mPlateSize + i * 2.f * blockWidth);
-    float offsetY = randomPositionFrom(0.f);
+    float offsetX = (mPlateWidth + i * 2.f * blockWidth);
+    float offsetY = randomOffsetFrom(0.f);
 
-    mTopBlocks   [i].transformation().setPosition(Position(offsetX, offsetY + gapHeight));
-    mBottomBlocks[i].transformation().setPosition(Position(offsetX, offsetY - gapHeight));
+    mTopBlocks   [i].transformation().setPosition(Position(offsetX, offsetY + gapInterval));
+    mBottomBlocks[i].transformation().setPosition(Position(offsetX, offsetY - gapInterval));
 
     mTopBlocks   [i].setColor(mColorScheme.block());
     mBottomBlocks[i].setColor(mColorScheme.block());
+  }
+
+  // place background
+
+  Position::position_type houseWidth = mGameConstants.houseSize().x();
+
+  for (size_t i = 0; i < mBackgroundCity.size(); ++i) {
+
+    float offsetX = (- mPlateWidth + i * houseWidth);
+    float offsetY = -800.f;
+    mBackgroundCity[i].transformation().setPosition(Position(offsetX, offsetY));
+    mBackgroundCity[i].setColor(mColorScheme.house());
   }
 
 }
@@ -83,10 +115,11 @@ void FlappyCatGame::update(const FrameDuration& time) {
 
   if (mGameState == PlayState) {
 
-    mBall.transformation().move(Position(0.f, -10.f));
+    // update ball
+    mBall.transformation().move(mGameConstants.gravity());
 
-    Position::position_type blockWidth = 300.f;
-    Position::position_type gapHeight = 300.f;
+    // update obstacles
+    Position::position_type gapInterval = mGameConstants.gapInterval();
 
     REQUIRE(TAG, mTopBlocks.size() == mBottomBlocks.size(), "Blocks must be in sync");
 
@@ -95,12 +128,12 @@ void FlappyCatGame::update(const FrameDuration& time) {
       mTopBlocks   [i].transformation().move(Position(-5.f, 0.f));
       mBottomBlocks[i].transformation().move(Position(-5.f, 0.f));
 
-      if (mTopBlocks[i].transformation().position().x() < ( - mPlateSize)) {
+      if (mTopBlocks[i].transformation().position().x() < ( - mPlateWidth)) {
 
-        float offsetY = randomPositionFrom(0.f);
+        float offsetY = randomOffsetFrom(0.f);
 
-        mTopBlocks[i].transformation().setPosition(Position(mPlateSize, offsetY + gapHeight));
-        mBottomBlocks[i].transformation().setPosition(Position(mPlateSize, offsetY - gapHeight));
+        mTopBlocks[i].transformation().setPosition(Position(mPlateWidth, offsetY + gapInterval));
+        mBottomBlocks[i].transformation().setPosition(Position(mPlateWidth, offsetY - gapInterval));
       }
 
       if (isIntersect(mBall, mTopBlocks[i]) || isIntersect(mBall, mBottomBlocks[i])) {
@@ -108,6 +141,20 @@ void FlappyCatGame::update(const FrameDuration& time) {
         mGameState = PressButtonState;
         Log::i(TAG, "Collide");
       }
+    }
+
+    // update background
+
+    for (size_t i = 0; i < mBackgroundCity.size(); ++i) {
+
+      mBackgroundCity[i].transformation().move(Position(-5.f, 0.f));
+
+      if (mBackgroundCity[i].transformation().position().x() < ( - mPlateWidth)) {
+
+        Position::position_type oldY = mBackgroundCity[i].transformation().position().y();
+        mBackgroundCity[i].transformation().setPosition(Position(mPlateWidth, oldY));
+      }
+
     }
   }
 }
@@ -174,22 +221,23 @@ bool FlappyCatGame::isIntersect(const CircleShape& circle, const RectangleShape&
       || isLineInCircle(center, radius, d, a);
 }
 
-Position::position_type FlappyCatGame::randomPositionFrom(Position::position_type initial) {
+Position::position_type FlappyCatGame::randomOffsetFrom(Position::position_type initial) {
 
   std::random_device rd;
   std::mt19937 gen(rd());
 
   std::normal_distribution<float> d(initial, 200.f);
 
-  return d(gen);
+  return std::abs(d(gen));
 }
 
 void FlappyCatGame::render(const AndroidWindow& window) {
 
   window.clear(mColorScheme.background());
 
-  for (const RectangleShape& block : mTopBlocks)    window.draw(block);
-  for (const RectangleShape& block : mBottomBlocks) window.draw(block);
+  for (const RectangleShape& block : mTopBlocks)      window.draw(block);
+  for (const RectangleShape& block : mBottomBlocks)   window.draw(block);
+  for (const RectangleShape& house : mBackgroundCity) window.draw(house);
 
   window.draw(mBall);
 
