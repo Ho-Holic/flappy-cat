@@ -30,7 +30,6 @@ private:
 private:
   void initialize();
   void reset();
-  Position::position_type randomOffsetFrom(Position::position_type initial);
   bool isIntersect(const CircleShape& circle, const RectangleShape& rect) const;
 
 private:
@@ -41,6 +40,7 @@ private:
   std::vector<RectangleShape> mTopBlocks;
   std::vector<RectangleShape> mBottomBlocks;
   std::vector<RectangleShape> mBackgroundCity;
+  std::vector<CircleShape>    mBackgroundSky;
   CircleShape mBall;
 };
 

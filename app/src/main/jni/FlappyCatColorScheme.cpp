@@ -2,11 +2,11 @@
 // self
 #include "FlappyCatColorScheme.h"
 
-// stl
-#include <random>
 
 FlappyCatColorScheme::FlappyCatColorScheme()
-: mScheme() {
+: mRandomDevice()
+, mGenerator(mRandomDevice())
+, mScheme() {
   mScheme.reserve(ColorsSize);
   generateNewScheme();
 }
@@ -17,15 +17,14 @@ void FlappyCatColorScheme::generateNewScheme() {
   mScheme[Block]      = Color(128, 0, 0);
   mScheme[Ball]       = Color(255, 0, 0);
   mScheme[House]      = Color(128, 128, 128);
+  mScheme[Cloud]      = Color(225, 225, 225);
 }
 
 Color FlappyCatColorScheme::random() {
 
-  std::random_device rd;
-  std::mt19937 gen(rd());
-  std::uniform_int_distribution<uint32_t> dis; // from 0 to 2^32
+  std::uniform_int_distribution<uint32_t> distribution; // from 0 to 2^32
 
-  uint32_t fullColor = dis(gen);
+  uint32_t fullColor = distribution(mGenerator);
 
   return Color(fullColor | 0xff); // set alpha channel to 255
 }
@@ -48,6 +47,12 @@ Color FlappyCatColorScheme::ball() const {
 Color FlappyCatColorScheme::house() const {
   return mScheme[House];
 }
+
+Color FlappyCatColorScheme::cloud() const {
+  return mScheme[Cloud];
+}
+
+
 
 
 

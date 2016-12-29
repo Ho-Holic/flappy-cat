@@ -3,7 +3,6 @@
 #include "Log.h"
 
 // stl
-#include <random>
 #include <algorithm>
 
 FlappyCatGame::FlappyCatGame()
@@ -14,6 +13,7 @@ FlappyCatGame::FlappyCatGame()
 , mTopBlocks()
 , mBottomBlocks()
 , mBackgroundCity()
+, mBackgroundSky()
 , mBall() {
   initialize();
   reset();
@@ -38,19 +38,27 @@ void FlappyCatGame::initialize() {
   }
 
   // create background decoration stuff
-  Position houseSize(mGameConstants.houseSize());
 
+  // city buildings
+  Position houseSize(mGameConstants.houseSize());
 
   mBackgroundCity.reserve(120);
 
-  size_t houseCount = static_cast<size_t >(mPlateWidth / houseSize.x()) * 2u;
-
-  Log::i(TAG, "city: %d", houseCount);
+  size_t houseCount = static_cast<size_t >(mPlateWidth / houseSize.x()) * 2;
 
   for (size_t i = 0; i < houseCount; ++i) {
 
-    mBackgroundCity.emplace_back(Position(0.f, 0.f),
-                                 houseSize + Position(0.f, randomOffsetFrom(0.f)));
+    Position varyingSize(houseSize + Position(0.f, mGameConstants.randomOffsetFrom(0.f, 200.f)));
+    mBackgroundCity.emplace_back(Position(0.f, 0.f), varyingSize);
+  }
+
+  // sky with clouds
+  mBackgroundSky.reserve(120);
+
+  size_t cloudCount = 100;
+
+  for (size_t i = 0; i < cloudCount; ++i) {
+    mBackgroundSky.emplace_back(Position(0.f, 0.f), 50.f, 32);
   }
 
 }
@@ -75,7 +83,7 @@ void FlappyCatGame::reset() {
   for (size_t i = 0; i < mTopBlocks.size(); ++i) {
 
     float offsetX = (mPlateWidth + i * 2.f * blockWidth);
-    float offsetY = randomOffsetFrom(0.f);
+    float offsetY = mGameConstants.randomOffsetFrom(0.f, 200.f);
 
     mTopBlocks   [i].transformation().setPosition(Position(offsetX, offsetY + gapInterval));
     mBottomBlocks[i].transformation().setPosition(Position(offsetX, offsetY - gapInterval));
@@ -86,14 +94,28 @@ void FlappyCatGame::reset() {
 
   // place background
 
+  // city buildings
   Position::position_type houseWidth = mGameConstants.houseSize().x();
 
   for (size_t i = 0; i < mBackgroundCity.size(); ++i) {
 
-    float offsetX = (- mPlateWidth + i * houseWidth);
-    float offsetY = -800.f;
-    mBackgroundCity[i].transformation().setPosition(Position(offsetX, offsetY));
+    Position pos(-mPlateWidth + i * houseWidth, -800.f);
+
+    mBackgroundCity[i].transformation().setPosition(pos);
     mBackgroundCity[i].setColor(mColorScheme.house());
+  }
+
+  // sky with clouds
+  for (size_t i = 0; i < mBackgroundSky.size(); ++i) {
+
+    mBackgroundSky[i].geometry().setRadius(mGameConstants.cloudRadius()
+                                         + mGameConstants.randomOffsetFrom(0.f, 100.f));
+
+    Position pos(mGameConstants.randomOffsetFrom(0.f, 500.f, FlappyCatGameConstants::Sign::Both),
+                 mGameConstants.randomOffsetFrom(0.f, 500.f, FlappyCatGameConstants::Sign::Both));
+
+    mBackgroundSky[i].transformation().setPosition(pos);
+    mBackgroundSky[i].setColor(mColorScheme.cloud());
   }
 
 }
@@ -130,7 +152,7 @@ void FlappyCatGame::update(const FrameDuration& time) {
 
       if (mTopBlocks[i].transformation().position().x() < ( - mPlateWidth)) {
 
-        float offsetY = randomOffsetFrom(0.f);
+        float offsetY = mGameConstants.randomOffsetFrom(0.f, 200.f);
 
         mTopBlocks[i].transformation().setPosition(Position(mPlateWidth, offsetY + gapInterval));
         mBottomBlocks[i].transformation().setPosition(Position(mPlateWidth, offsetY - gapInterval));
@@ -222,23 +244,15 @@ bool FlappyCatGame::isIntersect(const CircleShape& circle, const RectangleShape&
       || isLineInCircle(center, radius, d, a);
 }
 
-Position::position_type FlappyCatGame::randomOffsetFrom(Position::position_type initial) {
-
-  std::random_device rd;
-  std::mt19937 gen(rd());
-
-  std::normal_distribution<float> d(initial, 200.f);
-
-  return std::abs(d(gen));
-}
-
 void FlappyCatGame::render(const AndroidWindow& window) {
 
   window.clear(mColorScheme.background());
 
+  for (const CircleShape& cloud    : mBackgroundSky)  window.draw(cloud);
+  for (const RectangleShape& house : mBackgroundCity) window.draw(house);
   for (const RectangleShape& block : mTopBlocks)      window.draw(block);
   for (const RectangleShape& block : mBottomBlocks)   window.draw(block);
-  for (const RectangleShape& house : mBackgroundCity) window.draw(house);
+
 
   window.draw(mBall);
 

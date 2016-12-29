@@ -1,6 +1,11 @@
 // self
 #include "FlappyCatGameConstants.h"
 
+FlappyCatGameConstants::FlappyCatGameConstants()
+: mRandomDevice()
+, mGenerator(mRandomDevice()) {
+  //
+}
 
 Position FlappyCatGameConstants::houseSize() const {
   return Position(100, 150);
@@ -26,15 +31,18 @@ float FlappyCatGameConstants::ballRadius() const {
   return 50.f;
 }
 
+Position::position_type
+FlappyCatGameConstants::randomOffsetFrom(Position::position_type initial,
+                                         Position::position_type maxOffset,
+                                         Sign sign) {
 
+  std::normal_distribution<float> distribution(initial, maxOffset);
+  return sign == Sign::Positive ? std::abs(distribution(mGenerator))
+                                : distribution(mGenerator);
+}
 
-
-
-
-
-
-
-
-
+float FlappyCatGameConstants::cloudRadius() const {
+  return 20.f;
+}
 
 
