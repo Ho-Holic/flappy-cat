@@ -45,4 +45,10 @@ float FlappyCatGameConstants::cloudRadius() const {
   return 20.f;
 }
 
+Position FlappyCatGameConstants::spikeSize() const {
+  return Position(25.f, 25.f);
+}
+
+
+
 

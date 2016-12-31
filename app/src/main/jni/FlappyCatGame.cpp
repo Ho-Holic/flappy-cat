@@ -10,8 +10,11 @@ FlappyCatGame::FlappyCatGame()
 , mGameConstants()
 , mGameState(PressButtonState)
 , mPlateWidth(0.f)
+, mFloor(Position(0.f, 0.f), Position(0.f, 0.f))
+, mFloorSpikes()
 , mTopBlocks()
 , mBottomBlocks()
+, mBackgroundDirt(Position(0.f, 0.f), Position(0.f, 0.f))
 , mBackgroundCity()
 , mBackgroundSky()
 , mBall() {
@@ -24,12 +27,31 @@ void FlappyCatGame::initialize() {
   mPlateWidth = mGameConstants.plateWidth();
 
   // create main game obstacles
+
+  // floor
+  mFloor.transformation().setPosition(Position(-mPlateWidth, -800.f));
+  mFloor.geometry().resize(Position(mPlateWidth * 2.f, 20.f));
+  mFloor.setColor(mColorScheme.block());
+
+  // floor spikes (for movement effect)
+  Position spikeSize(mGameConstants.spikeSize());
+
+  mFloorSpikes.reserve(120);
+
+  size_t spikeCount = static_cast<size_t>(mPlateWidth / spikeSize.x());
+
+  for (size_t i = 0; i < spikeCount;  ++i) {
+
+    mFloorSpikes.emplace_back(Position(0.f, 0.f), spikeSize);
+  }
+
+  // moving blocks
   Position blockSize(mGameConstants.blockSize());
 
   mTopBlocks.reserve(120);
   mBottomBlocks.reserve(120);
 
-  size_t blockCount = static_cast<size_t >(mPlateWidth / blockSize.x());
+  size_t blockCount = static_cast<size_t>(mPlateWidth / blockSize.x());
 
   for (size_t i = 0; i < blockCount; ++i) {
 
@@ -38,6 +60,11 @@ void FlappyCatGame::initialize() {
   }
 
   // create background decoration stuff
+
+  // dirt under floor
+  mBackgroundDirt.transformation().setPosition(Position(-mPlateWidth, -900.f));
+  mBackgroundDirt.geometry().resize(Position(mPlateWidth * 2.f, 100.f));
+  mBackgroundDirt.setColor(mColorScheme.dirt());
 
   // city buildings
   Position houseSize(mGameConstants.houseSize());
@@ -94,6 +121,18 @@ void FlappyCatGame::reset() {
 
   // place background
 
+  // place spikes
+
+  Position::position_type spikeWidth = mGameConstants.spikeSize().x();
+
+  for (size_t i = 0; i < mFloorSpikes.size(); ++i) {
+
+    Position pos(-mPlateWidth + i * 2.f * spikeWidth, -825.f);
+
+    mFloorSpikes[i].transformation().setPosition(pos);
+    mFloorSpikes[i].setColor(mColorScheme.block());
+  }
+
   // city buildings
   Position::position_type houseWidth = mGameConstants.houseSize().x();
 
@@ -124,10 +163,7 @@ void FlappyCatGame::processEvent(const AndroidEvent& event) {
 
   if (event.type() == TouchEventType) {
 
-    if (mGameState == PressButtonState) {
-
-      mGameState = PlayState;
-    }
+    mGameState = PlayState;
 
     mBall.transformation().move(Position(0.f, 200.f));
   }
@@ -158,9 +194,11 @@ void FlappyCatGame::update(const FrameDuration& time) {
         mBottomBlocks[i].transformation().setPosition(Position(mPlateWidth, offsetY - gapInterval));
       }
 
-      if (isIntersect(mBall, mTopBlocks[i]) || isIntersect(mBall, mBottomBlocks[i])) {
+      if (isIntersect(mBall, mTopBlocks[i])
+      ||  isIntersect(mBall, mBottomBlocks[i])
+      ||  isIntersect(mBall, mFloor)) {
 
-        mGameState = PressButtonState;
+        mGameState = LoseState;
         Log::i(TAG, "Collide");
       }
     }
@@ -169,16 +207,32 @@ void FlappyCatGame::update(const FrameDuration& time) {
 
   // update background
 
-  for (size_t i = 0; i < mBackgroundCity.size(); ++i) {
+  if (mGameState != LoseState) {
 
-    mBackgroundCity[i].transformation().move(Position(-5.f, 0.f));
+    // floor spikes
+    for (size_t i = 0; i < mFloorSpikes.size(); ++i) {
 
-    if (mBackgroundCity[i].transformation().position().x() < ( - mPlateWidth)) {
+      mFloorSpikes[i].transformation().move(Position(-10.f, 0.f));
 
-      Position::position_type oldY = mBackgroundCity[i].transformation().position().y();
-      mBackgroundCity[i].transformation().setPosition(Position(mPlateWidth, oldY));
+      if (mFloorSpikes[i].transformation().position().x() < (-mPlateWidth)) {
+
+        Position::position_type oldY = mFloorSpikes[i].transformation().position().y();
+        mFloorSpikes[i].transformation().setPosition(Position(mPlateWidth, oldY));
+      }
     }
 
+    // clouds
+    for (size_t i = 0; i < mBackgroundCity.size(); ++i) {
+
+      mBackgroundCity[i].transformation().move(Position(-5.f, 0.f));
+
+      if (mBackgroundCity[i].transformation().position().x() < (-mPlateWidth)) {
+
+        Position::position_type oldY = mBackgroundCity[i].transformation().position().y();
+        mBackgroundCity[i].transformation().setPosition(Position(mPlateWidth, oldY));
+      }
+
+    }
   }
 }
 
@@ -250,10 +304,14 @@ void FlappyCatGame::render(const AndroidWindow& window) {
 
   for (const CircleShape& cloud    : mBackgroundSky)  window.draw(cloud);
   for (const RectangleShape& house : mBackgroundCity) window.draw(house);
+
+  window.draw(mBackgroundDirt);
+
   for (const RectangleShape& block : mTopBlocks)      window.draw(block);
   for (const RectangleShape& block : mBottomBlocks)   window.draw(block);
+  for (const RectangleShape& spike : mFloorSpikes)    window.draw(spike);
 
-
+  window.draw(mFloor);
   window.draw(mBall);
 
   window.display();

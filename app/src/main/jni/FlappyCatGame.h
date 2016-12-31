@@ -37,8 +37,11 @@ private:
   FlappyCatGameConstants mGameConstants;
   GameState mGameState;
   Position::position_type mPlateWidth;
+  RectangleShape mFloor;
+  std::vector<RectangleShape> mFloorSpikes;
   std::vector<RectangleShape> mTopBlocks;
   std::vector<RectangleShape> mBottomBlocks;
+  RectangleShape mBackgroundDirt;
   std::vector<RectangleShape> mBackgroundCity;
   std::vector<CircleShape>    mBackgroundSky;
   CircleShape mBall;

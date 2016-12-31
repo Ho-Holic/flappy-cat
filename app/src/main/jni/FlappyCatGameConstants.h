@@ -19,6 +19,7 @@ public:
 public:
   Position houseSize() const;
   Position blockSize() const;
+  Position spikeSize() const;
   Position gravity() const;
 
 public:

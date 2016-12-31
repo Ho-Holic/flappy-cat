@@ -16,8 +16,8 @@ public:
   FlappyCatColorScheme();
 
 public:
-  void generateNewScheme();
   Color random();
+  void generateNewScheme();
 
 public:
   Color background() const;
@@ -25,12 +25,12 @@ public:
   Color ball()       const;
   Color house()      const;
   Color cloud()      const;
+  Color dirt()       const;
 
 private:
   std::random_device mRandomDevice;
   std::mt19937 mGenerator;
   std::vector<Color> mScheme;
-
 };
 
 enum FlappyCatColorScheme::Colors : uint32_t {
@@ -39,6 +39,7 @@ enum FlappyCatColorScheme::Colors : uint32_t {
   Ball,
   House,
   Cloud,
+  Dirt,
   ColorsSize
 };
 
