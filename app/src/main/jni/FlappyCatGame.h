@@ -30,7 +30,7 @@ private:
 private:
   void initialize();
   void reset();
-  bool isIntersect(const CircleShape& circle, const RectangleShape& rect) const;
+
 
 private:
   FlappyCatColorScheme mColorScheme;
