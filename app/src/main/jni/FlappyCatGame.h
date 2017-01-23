@@ -7,8 +7,10 @@
 #include <android/AndroidWindow.h>
 #include <prototype/RectangleShape.h>
 #include <prototype/CircleShape.h>
+
 #include "FlappyCatColorScheme.h"
 #include "FlappyCatGameConstants.h"
+#include "FlappyCatWall.h"
 
 // stl
 #include <vector>
@@ -22,7 +24,7 @@ public:
 public:
   void processEvent(const AndroidEvent& event);
   void update(const FrameDuration& time);
-  void render(const AndroidWindow&);
+  void render(const AndroidWindow&) const;
 
 private:
   enum GameState : int32_t;
@@ -39,8 +41,10 @@ private:
   Position::position_type mPlateWidth;
   RectangleShape mFloor;
   std::vector<RectangleShape> mFloorSpikes;
-  std::vector<RectangleShape> mTopBlocks;
-  std::vector<RectangleShape> mBottomBlocks;
+
+  std::vector<FlappyCatWall> mWalls;
+
+
   RectangleShape mBackgroundDirt;
   std::vector<RectangleShape> mBackgroundCity;
   std::vector<CircleShape>    mBackgroundSky;

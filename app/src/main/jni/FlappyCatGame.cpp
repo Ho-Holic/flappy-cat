@@ -11,8 +11,7 @@ FlappyCatGame::FlappyCatGame()
 , mPlateWidth(0.f)
 , mFloor(Position(0.f, 0.f), Position(0.f, 0.f))
 , mFloorSpikes()
-, mTopBlocks()
-, mBottomBlocks()
+, mWalls()
 , mBackgroundDirt(Position(0.f, 0.f), Position(0.f, 0.f))
 , mBackgroundCity()
 , mBackgroundSky()
@@ -47,15 +46,13 @@ void FlappyCatGame::initialize() {
   // moving blocks
   Position blockSize(mGameConstants.blockSize());
 
-  mTopBlocks.reserve(120);
-  mBottomBlocks.reserve(120);
+  mWalls.reserve(120);
 
   size_t blockCount = static_cast<size_t>(mPlateWidth / blockSize.x());
 
   for (size_t i = 0; i < blockCount; ++i) {
 
-    mTopBlocks   .emplace_back(Position(0.f, 0.f), blockSize);
-    mBottomBlocks.emplace_back(Position(0.f, 0.f), blockSize);
+    mWalls.emplace_back(Position(0.f, 0.f), blockSize);
   }
 
   // create background decoration stuff
@@ -102,20 +99,17 @@ void FlappyCatGame::reset() {
 
   // place blocks
   Position::position_type blockWidth = mGameConstants.blockSize().x();
-  Position::position_type gapInterval = mGameConstants.gapInterval();
 
-  REQUIRE(TAG, mTopBlocks.size() == mBottomBlocks.size(), "Blocks must be in sync");
+  for (size_t i = 0; i < mWalls.size(); ++i) {
 
-  for (size_t i = 0; i < mTopBlocks.size(); ++i) {
+    float x = mPlateWidth + i * 2.f * blockWidth;
+    float y = 0.f;
 
-    float offsetX = (mPlateWidth + i * 2.f * blockWidth);
-    float offsetY = mGameConstants.randomOffsetFrom(0.f, 200.f);
+    mWalls[i].setGapInterval(mGameConstants.gapInterval());
+    mWalls[i].setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
+    mWalls[i].setPosition(Position(x, y));
 
-    mTopBlocks   [i].transformation().setPosition(Position(offsetX, offsetY + gapInterval));
-    mBottomBlocks[i].transformation().setPosition(Position(offsetX, offsetY - gapInterval));
-
-    mTopBlocks   [i].setColor(mColorScheme.block());
-    mBottomBlocks[i].setColor(mColorScheme.block());
+    mWalls[i].setColor(mColorScheme.block());
   }
 
   // place background
@@ -178,28 +172,24 @@ void FlappyCatGame::update(const FrameDuration& time) {
     // update obstacles
     Position::position_type gapInterval = mGameConstants.gapInterval();
 
-    REQUIRE(TAG, mTopBlocks.size() == mBottomBlocks.size(), "Blocks must be in sync");
 
-    for (size_t i = 0; i < mTopBlocks.size(); ++i) {
+    for (size_t i = 0; i < mWalls.size(); ++i) {
 
-      mTopBlocks   [i].transformation().move(Position(-10.f, 0.f));
-      mBottomBlocks[i].transformation().move(Position(-10.f, 0.f));
+      mWalls[i].update(time);
 
-      if (mTopBlocks[i].transformation().position().x() < ( - mPlateWidth)) {
+      if (mWalls[i].position().x() < -mPlateWidth) {
 
-        float offsetY = mGameConstants.randomOffsetFrom(0.f, 200.f);
-
-        mTopBlocks[i].transformation().setPosition(Position(mPlateWidth, offsetY + gapInterval));
-        mBottomBlocks[i].transformation().setPosition(Position(mPlateWidth, offsetY - gapInterval));
+        mWalls[i].setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
+        mWalls[i].setPosition(Position(mPlateWidth, mWalls[i].position().y()));
       }
 
       float radius = mBall.geometry().radius();
+      // TODO: implement proper origin in `transformation` and remove this code
       // circle origin in bottom left so we shift by radius
       Position center = mBall.transformation().position() + Position(radius, radius);
 
 
-      if (Collide::circleRect(center, radius, mTopBlocks[i])
-      ||  Collide::circleRect(center, radius, mBottomBlocks[i])
+      if (mWalls[i].collideWithCircle(center, radius)
       ||  Collide::circleRect(center, radius, mFloor)) {
 
         mGameState = LoseState;
@@ -240,7 +230,7 @@ void FlappyCatGame::update(const FrameDuration& time) {
   }
 }
 
-void FlappyCatGame::render(const AndroidWindow& window) {
+void FlappyCatGame::render(const AndroidWindow& window) const {
 
   window.clear(mColorScheme.background());
 
@@ -249,9 +239,8 @@ void FlappyCatGame::render(const AndroidWindow& window) {
 
   window.draw(mBackgroundDirt);
 
-  for (const RectangleShape& block : mTopBlocks)      window.draw(block);
-  for (const RectangleShape& block : mBottomBlocks)   window.draw(block);
-  for (const RectangleShape& spike : mFloorSpikes)    window.draw(spike);
+  for (const FlappyCatWall& wall   : mWalls)       wall.drawOn(window);
+  for (const RectangleShape& spike : mFloorSpikes) window.draw(spike);
 
   window.draw(mFloor);
   window.draw(mBall);
