@@ -1,2 +1,0 @@
-// self
-#include "FlappyCatRow.h"

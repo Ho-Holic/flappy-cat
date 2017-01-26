@@ -31,21 +31,17 @@ void FlappyCatGame::initialize() {
   mFloor.geometry().resize(Position(mPlateWidth * 2.f, 20.f));
   mFloor.setColor(mColorScheme.block());
 
-  // floor spikes (for movement effect)
-  Position spikeSize(mGameConstants.spikeSize());
-
-  mFloorSpikes.reserve(120);
-
-  size_t spikeCount = static_cast<size_t>(mPlateWidth / spikeSize.x());
-
-  for (size_t i = 0; i < spikeCount;  ++i) {
-
-    mFloorSpikes.emplace_back(Position(0.f, 0.f), spikeSize);
-  }
+  // spikes (movement effect)
+  mFloorSpikes.setPosition(Position(0.f, -825.f));
+  mFloorSpikes.setSize(Position(mPlateWidth, 0.f));
+  mFloorSpikes.setLinkSize(mGameConstants.spikeSize());
+  mFloorSpikes.setMovementDisplacement(Position(-10.f, 0.f));
+  mFloorSpikes.initialize();
 
   // moving blocks
   Position blockSize(mGameConstants.blockSize());
 
+  // TODO: parametrize reserve function
   mWalls.reserve(120);
 
   size_t blockCount = static_cast<size_t>(mPlateWidth / blockSize.x());
@@ -65,6 +61,7 @@ void FlappyCatGame::initialize() {
   // city buildings
   Position houseSize(mGameConstants.houseSize());
 
+  // TODO: parametrize reserve function
   mBackgroundCity.reserve(120);
 
   size_t houseCount = static_cast<size_t >(mPlateWidth / houseSize.x()) * 2;
@@ -76,6 +73,7 @@ void FlappyCatGame::initialize() {
   }
 
   // sky with clouds
+  // TODO: parametrize reserve function
   mBackgroundSky.reserve(120);
 
   size_t cloudCount = 100;
@@ -115,16 +113,8 @@ void FlappyCatGame::reset() {
   // place background
 
   // place spikes
-
-  Position::position_type spikeWidth = mGameConstants.spikeSize().x();
-
-  for (size_t i = 0; i < mFloorSpikes.size(); ++i) {
-
-    Position pos(-mPlateWidth + i * 2.f * spikeWidth, -825.f);
-
-    mFloorSpikes[i].transformation().setPosition(pos);
-    mFloorSpikes[i].setColor(mColorScheme.block());
-  }
+  mFloorSpikes.setColor(mColorScheme.block());
+  mFloorSpikes.reset();
 
   // city buildings
   Position::position_type houseWidth = mGameConstants.houseSize().x();
@@ -177,10 +167,12 @@ void FlappyCatGame::update(const FrameDuration& time) {
 
       mWalls[i].update(time);
 
-      if (mWalls[i].position().x() < -mPlateWidth) {
+      Position p = mWalls[i].position();
+
+      if (p.x() < -mPlateWidth) {
 
         mWalls[i].setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
-        mWalls[i].setPosition(Position(mPlateWidth, mWalls[i].position().y()));
+        mWalls[i].setPosition(Position(p.x() + mPlateWidth * 2.f, p.y()));
       }
 
       float radius = mBall.geometry().radius();
@@ -204,26 +196,18 @@ void FlappyCatGame::update(const FrameDuration& time) {
   if (mGameState != LoseState) {
 
     // floor spikes
-    for (size_t i = 0; i < mFloorSpikes.size(); ++i) {
-
-      mFloorSpikes[i].transformation().move(Position(-10.f, 0.f));
-
-      if (mFloorSpikes[i].transformation().position().x() < (-mPlateWidth)) {
-
-        Position::position_type oldY = mFloorSpikes[i].transformation().position().y();
-        mFloorSpikes[i].transformation().setPosition(Position(mPlateWidth, oldY));
-      }
-    }
+    mFloorSpikes.update(time);
 
     // clouds
     for (size_t i = 0; i < mBackgroundCity.size(); ++i) {
 
       mBackgroundCity[i].transformation().move(Position(-5.f, 0.f));
 
-      if (mBackgroundCity[i].transformation().position().x() < (-mPlateWidth)) {
+      Position p = mBackgroundCity[i].transformation().position();
 
-        Position::position_type oldY = mBackgroundCity[i].transformation().position().y();
-        mBackgroundCity[i].transformation().setPosition(Position(mPlateWidth, oldY));
+      if (p.x() < (-mPlateWidth)) {
+
+        mBackgroundCity[i].transformation().setPosition(Position(p.x() + mPlateWidth * 2.f, p.y()));
       }
 
     }
@@ -240,7 +224,8 @@ void FlappyCatGame::render(const AndroidWindow& window) const {
   window.draw(mBackgroundDirt);
 
   for (const FlappyCatWall& wall   : mWalls)       wall.drawOn(window);
-  for (const RectangleShape& spike : mFloorSpikes) window.draw(spike);
+
+  mFloorSpikes.drawOn(window);
 
   window.draw(mFloor);
   window.draw(mBall);

@@ -11,6 +11,7 @@
 #include "FlappyCatColorScheme.h"
 #include "FlappyCatGameConstants.h"
 #include "FlappyCatWall.h"
+#include "FlappyCatChain.h"
 
 // stl
 #include <vector>
@@ -40,7 +41,8 @@ private:
   GameState mGameState;
   Position::position_type mPlateWidth;
   RectangleShape mFloor;
-  std::vector<RectangleShape> mFloorSpikes;
+
+  FlappyCatChain<RectangleShape> mFloorSpikes;
 
   std::vector<FlappyCatWall> mWalls;
 
