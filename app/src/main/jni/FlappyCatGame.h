@@ -44,7 +44,7 @@ private:
 
   FlappyCatChain<RectangleShape> mFloorSpikes;
 
-  std::vector<FlappyCatWall> mWalls;
+  FlappyCatChain<FlappyCatWall> mWalls;
 
 
   RectangleShape mBackgroundDirt;

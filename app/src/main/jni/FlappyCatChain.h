@@ -18,11 +18,17 @@ private:
   DISABLE_COPY(FlappyCatChain)
 
 public:
+  using modify_callback = std::function<void(Link&)>;
+
+public:
   FlappyCatChain();
+
 public:
   void initialize();
-  void reset();
-  void update(const FrameDuration& time);
+  void reset(modify_callback modify = nullptr);
+  void update(const FrameDuration& time,
+              modify_callback modify = nullptr,
+              modify_callback wrapAround = nullptr);
   void drawOn(const AndroidWindow& window) const;
   void setPosition(const Position& position);
   void setSize(const Position& size);
@@ -68,7 +74,7 @@ void FlappyCatChain<Link>::initialize() {
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::reset() {
+void FlappyCatChain<Link>::reset(modify_callback modify) {
 
   for (std::size_t i = 0; i < mLinks.size(); ++i) {
 
@@ -77,21 +83,26 @@ void FlappyCatChain<Link>::reset() {
     mLinks[i].transformation().setPosition(pos);
     mLinks[i].geometry().resize(mLinkSize);
     mLinks[i].setColor(mFillColor);
+    modify(mLinks[i]);
   }
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::update(const FrameDuration& time) {
+void FlappyCatChain<Link>::update(const FrameDuration& time,
+                                  modify_callback modify,
+                                  modify_callback wrapAround) {
 
   for (size_t i = 0; i < mLinks.size(); ++i) {
 
     mLinks[i].transformation().move(mMovementDisplacement);
+    modify(mLinks[i]);
 
     Position p = mLinks[i].transformation().position();
 
     if (p.x() < -mSize.x()) {
 
       mLinks[i].transformation().setPosition(Position(p.x() + mSize.x() * 2.f, p.y()));
+      wrapAround(mLinks[i]);
     }
   }
 
@@ -100,7 +111,9 @@ void FlappyCatChain<Link>::update(const FrameDuration& time) {
 template <typename Link>
 void FlappyCatChain<Link>::drawOn(const AndroidWindow& window) const {
 
-  for (const Link& link : mLinks) window.draw(link);
+  for (const Link& link : mLinks) {
+    window.draw(link);
+  }
 }
 
 
@@ -130,6 +143,7 @@ void FlappyCatChain<Link>::setLinkSize(const Position& linkSize) {
 
 template <typename Link>
 void FlappyCatChain<Link>::setMovementDisplacement(const Position& movementDisplacement) {
+
   mMovementDisplacement = movementDisplacement;
 }
 

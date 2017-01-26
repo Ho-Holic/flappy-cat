@@ -39,17 +39,11 @@ void FlappyCatGame::initialize() {
   mFloorSpikes.initialize();
 
   // moving blocks
-  Position blockSize(mGameConstants.blockSize());
-
-  // TODO: parametrize reserve function
-  mWalls.reserve(120);
-
-  size_t blockCount = static_cast<size_t>(mPlateWidth / blockSize.x());
-
-  for (size_t i = 0; i < blockCount; ++i) {
-
-    mWalls.emplace_back(Position(0.f, 0.f), blockSize);
-  }
+  mWalls.setPosition(Position(0.f, 0.f));
+  mWalls.setSize(Position(mPlateWidth, 0.f));
+  mWalls.setLinkSize(mGameConstants.blockSize());
+  mWalls.setMovementDisplacement(Position(-10.f, 0.f));
+  mWalls.initialize();
 
   // create background decoration stuff
 
@@ -96,19 +90,12 @@ void FlappyCatGame::reset() {
   mBall.setColor(mColorScheme.ball());
 
   // place blocks
-  Position::position_type blockWidth = mGameConstants.blockSize().x();
-
-  for (size_t i = 0; i < mWalls.size(); ++i) {
-
-    float x = mPlateWidth + i * 2.f * blockWidth;
-    float y = 0.f;
-
-    mWalls[i].setGapInterval(mGameConstants.gapInterval());
-    mWalls[i].setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
-    mWalls[i].setPosition(Position(x, y));
-
-    mWalls[i].setColor(mColorScheme.block());
-  }
+  mWalls.setColor(mColorScheme.block());
+  mWalls.reset(
+    [this](FlappyCatWall& wall) {
+      wall.setGapInterval(mGameConstants.gapInterval());
+      wall.setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
+    });
 
   // place background
 
@@ -160,35 +147,28 @@ void FlappyCatGame::update(const FrameDuration& time) {
     mBall.transformation().move(mGameConstants.gravity());
 
     // update obstacles
-    Position::position_type gapInterval = mGameConstants.gapInterval();
 
+    mWalls.update(time,
+      // update callback
+      [this, &time](FlappyCatWall& wall) {
 
-    for (size_t i = 0; i < mWalls.size(); ++i) {
+        wall.update(time);
 
-      mWalls[i].update(time);
+        float radius = mBall.geometry().radius();
+        // TODO: implement proper origin in `transformation` and remove this code
+        // circle origin in bottom left so we shift by radius
+        Position center = mBall.transformation().position() + Position(radius, radius);
 
-      Position p = mWalls[i].position();
-
-      if (p.x() < -mPlateWidth) {
-
-        mWalls[i].setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
-        mWalls[i].setPosition(Position(p.x() + mPlateWidth * 2.f, p.y()));
+        if (wall.collideWithCircle(center, radius) || Collide::circleRect(center, radius, mFloor)) {
+          mGameState = LoseState;
+          Log::i(TAG, "Collide");
+        }
+      },
+      // wrap around callback
+      [this](FlappyCatWall& wall) {
+        wall.setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
       }
-
-      float radius = mBall.geometry().radius();
-      // TODO: implement proper origin in `transformation` and remove this code
-      // circle origin in bottom left so we shift by radius
-      Position center = mBall.transformation().position() + Position(radius, radius);
-
-
-      if (mWalls[i].collideWithCircle(center, radius)
-      ||  Collide::circleRect(center, radius, mFloor)) {
-
-        mGameState = LoseState;
-        Log::i(TAG, "Collide");
-      }
-    }
-
+    );
   }
 
   // update background
@@ -223,8 +203,7 @@ void FlappyCatGame::render(const AndroidWindow& window) const {
 
   window.draw(mBackgroundDirt);
 
-  for (const FlappyCatWall& wall   : mWalls)       wall.drawOn(window);
-
+  mWalls.drawOn(window);
   mFloorSpikes.drawOn(window);
 
   window.draw(mFloor);
