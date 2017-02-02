@@ -20,7 +20,12 @@ void FlappyCatWall::setGapDisplacement(Position::position_type displacement) {
   mGapDisplacement = displacement;
 }
 
-void FlappyCatWall::setPosition(const Position& position) {
+bool FlappyCatWall::collideWithCircle(const Position& center, float radius) {
+  return Collide::circleRect(center, radius, mTopBlock)
+         || Collide::circleRect(center, radius, mBottomBlock);
+}
+
+void FlappyCatWall::moveTo(const Position& position) {
 
   mTopBlock.transformation().setPosition(position);
   mBottomBlock.transformation().setPosition(position + 120.f);
@@ -44,16 +49,12 @@ void FlappyCatWall::update(const FrameDuration& time) {
 
 }
 
-bool FlappyCatWall::collideWithCircle(const Position& center, float radius) {
-  return Collide::circleRect(center, radius, mTopBlock)
-      || Collide::circleRect(center, radius, mBottomBlock);
-}
-
 void FlappyCatWall::drawOn(const AndroidWindow& window) const {
 
   window.draw(mTopBlock);
   window.draw(mBottomBlock);
 }
+
 
 
 

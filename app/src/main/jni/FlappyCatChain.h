@@ -7,6 +7,7 @@
 #include <core/Clock.h>
 #include <style/Guidelines.h>
 #include <android/AndroidWindow.h>
+#include "Log.h"
 
 // stl
 #include <vector>
@@ -18,23 +19,24 @@ private:
   DISABLE_COPY(FlappyCatChain)
 
 public:
-  using modify_callback = std::function<void(Link&)>;
+  using Modifier = std::function<void(Link&)>;
 
 public:
   FlappyCatChain();
 
 public:
   void initialize();
-  void reset(modify_callback modify = nullptr);
-  void update(const FrameDuration& time,
-              modify_callback modify = nullptr,
-              modify_callback wrapAround = nullptr);
+  void reset();
+  void update(const FrameDuration& time);
   void drawOn(const AndroidWindow& window) const;
   void setPosition(const Position& position);
   void setSize(const Position& size);
   void setLinkSize(const Position& linkSize);
   void setColor(const Color& color);
   void setMovementDisplacement(const Position& movementDisplacement);
+  void setResetModifier(const Modifier& modifier);
+  void setUpdateModifier(const Modifier& modifier);
+  void setWrapAroundModifier(const Modifier& modifier);
 
 
 private:
@@ -44,6 +46,9 @@ private:
   Position mMovementDisplacement;
   Color mFillColor;
   std::vector<Link> mLinks;
+  Modifier mResetModifier;
+  Modifier mUpdateModifier;
+  Modifier mWrapAroundModifier;
 };
 
 // implementation
@@ -55,7 +60,10 @@ FlappyCatChain<Link>::FlappyCatChain()
 , mLinkSize(Position(0.f, 0.f))
 , mMovementDisplacement(Position(0.f, 0.f))
 , mFillColor()
-, mLinks() {
+, mLinks()
+, mResetModifier([](Link&){})
+, mUpdateModifier([](Link&){})
+, mWrapAroundModifier([](Link&){}){
   //
 }
 
@@ -74,35 +82,40 @@ void FlappyCatChain<Link>::initialize() {
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::reset(modify_callback modify) {
+void FlappyCatChain<Link>::reset() {
 
   for (std::size_t i = 0; i < mLinks.size(); ++i) {
 
     Position pos(mPosition.x() - mSize.x() + i * 2.f * mLinkSize.x(), mPosition.y());
 
-    mLinks[i].transformation().setPosition(pos);
-    mLinks[i].geometry().resize(mLinkSize);
+    mLinks[i].moveTo(pos);
+    mLinks[i].resize(mLinkSize);
     mLinks[i].setColor(mFillColor);
-    modify(mLinks[i]);
+
+    REQUIRE(TAG, mResetModifier != nullptr, "Reset modifier must be not null");
+    mResetModifier(mLinks[i]);
   }
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::update(const FrameDuration& time,
-                                  modify_callback modify,
-                                  modify_callback wrapAround) {
+void FlappyCatChain<Link>::update(const FrameDuration& time) {
 
   for (size_t i = 0; i < mLinks.size(); ++i) {
 
-    mLinks[i].transformation().move(mMovementDisplacement);
-    modify(mLinks[i]);
+    mLinks[i].moveBy(mMovementDisplacement);
+    mLinks[i].update(time);
 
-    Position p = mLinks[i].transformation().position();
+    REQUIRE(TAG, mUpdateModifier != nullptr, "Update modifier must be not null");
+    mUpdateModifier(mLinks[i]);
+
+    Position p = mLinks[i].position();
 
     if (p.x() < -mSize.x()) {
 
-      mLinks[i].transformation().setPosition(Position(p.x() + mSize.x() * 2.f, p.y()));
-      wrapAround(mLinks[i]);
+      mLinks[i].moveTo(Position(p.x() + mSize.x() * 2.f, p.y()));
+
+      REQUIRE(TAG, mWrapAroundModifier != nullptr, "WrapAround modifier must be not null");
+      mWrapAroundModifier(mLinks[i]);
     }
   }
 
@@ -112,10 +125,27 @@ template <typename Link>
 void FlappyCatChain<Link>::drawOn(const AndroidWindow& window) const {
 
   for (const Link& link : mLinks) {
-    window.draw(link);
+    link.drawOn(window);
   }
 }
 
+template <typename Link>
+void FlappyCatChain<Link>::setResetModifier(const Modifier& modifier) {
+
+  mResetModifier = modifier;
+}
+
+template <typename Link>
+void FlappyCatChain<Link>::setUpdateModifier(const Modifier& modifier) {
+
+  mUpdateModifier = modifier;
+}
+
+template <typename Link>
+void FlappyCatChain<Link>::setWrapAroundModifier(const Modifier& modifier) {
+
+  mWrapAroundModifier = modifier;
+}
 
 template <typename Link>
 void FlappyCatChain<Link>::setColor(const Color& color) {
@@ -146,5 +176,6 @@ void FlappyCatChain<Link>::setMovementDisplacement(const Position& movementDispl
 
   mMovementDisplacement = movementDisplacement;
 }
+
 
 #endif //FLAPPY_CAT_FLAPPYCATCHAIN_H

@@ -43,6 +43,36 @@ void FlappyCatGame::initialize() {
   mWalls.setSize(Position(mPlateWidth, 0.f));
   mWalls.setLinkSize(mGameConstants.blockSize());
   mWalls.setMovementDisplacement(Position(-10.f, 0.f));
+
+  mWalls.setResetModifier(
+    [this](FlappyCatWall& wall) {
+      wall.setGapInterval(mGameConstants.gapInterval());
+      wall.setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
+    }
+  );
+
+  mWalls.setUpdateModifier(
+    [this](FlappyCatWall& wall) {
+
+      float radius = mBall.geometry().radius();
+      // TODO: implement proper origin in `transformation` and remove this code
+      // circle origin in bottom left so we shift by radius
+      Position center = mBall.transformation().position() + Position(radius, radius);
+
+      if (wall.collideWithCircle(center, radius) || Collide::circleRect(center, radius, mFloor)) {
+        mGameState = LoseState;
+        Log::i(TAG, "Collide");
+      }
+    }
+  );
+
+  mWalls.setWrapAroundModifier(
+    // wrap around callback
+    [this](FlappyCatWall& wall) {
+      wall.setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
+    }
+  );
+
   mWalls.initialize();
 
   // create background decoration stuff
@@ -91,11 +121,7 @@ void FlappyCatGame::reset() {
 
   // place blocks
   mWalls.setColor(mColorScheme.block());
-  mWalls.reset(
-    [this](FlappyCatWall& wall) {
-      wall.setGapInterval(mGameConstants.gapInterval());
-      wall.setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
-    });
+  mWalls.reset();
 
   // place background
 
@@ -148,27 +174,7 @@ void FlappyCatGame::update(const FrameDuration& time) {
 
     // update obstacles
 
-    mWalls.update(time,
-      // update callback
-      [this, &time](FlappyCatWall& wall) {
-
-        wall.update(time);
-
-        float radius = mBall.geometry().radius();
-        // TODO: implement proper origin in `transformation` and remove this code
-        // circle origin in bottom left so we shift by radius
-        Position center = mBall.transformation().position() + Position(radius, radius);
-
-        if (wall.collideWithCircle(center, radius) || Collide::circleRect(center, radius, mFloor)) {
-          mGameState = LoseState;
-          Log::i(TAG, "Collide");
-        }
-      },
-      // wrap around callback
-      [this](FlappyCatWall& wall) {
-        wall.setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
-      }
-    );
+    mWalls.update(time);
   }
 
   // update background

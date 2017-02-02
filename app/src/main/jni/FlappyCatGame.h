@@ -1,17 +1,19 @@
 #ifndef FLAPPY_CAT_FLAPPYCATGAME_H
 #define FLAPPY_CAT_FLAPPYCATGAME_H
 
-// self
+// engine
 #include <core/Clock.h>
 #include <android/AndroidEvent.h>
 #include <android/AndroidWindow.h>
 #include <prototype/RectangleShape.h>
 #include <prototype/CircleShape.h>
 
+// self
 #include "FlappyCatColorScheme.h"
 #include "FlappyCatGameConstants.h"
 #include "FlappyCatWall.h"
 #include "FlappyCatChain.h"
+#include "FlappyCatSpike.h"
 
 // stl
 #include <vector>
@@ -42,7 +44,7 @@ private:
   Position::position_type mPlateWidth;
   RectangleShape mFloor;
 
-  FlappyCatChain<RectangleShape> mFloorSpikes;
+  FlappyCatChain<FlappyCatSpike> mFloorSpikes;
 
   FlappyCatChain<FlappyCatWall> mWalls;
 
