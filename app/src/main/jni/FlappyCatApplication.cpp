@@ -31,7 +31,7 @@ void FlappyCatApplication::main() {
       using std::chrono::duration_cast;
       timeSinceLastUpdate = timeSinceLastUpdate - duration_cast<ClockDuration>(TimePerFrame);
 
-      AndroidEvent event;
+      Event event;
       while (pollEvent(event)) {
         mGame.processEvent(event);
       }

@@ -3,7 +3,7 @@
 
 // engine
 #include <core/Clock.h>
-#include <android/AndroidEvent.h>
+#include <core/Event.h>
 #include <core/Window.h>
 #include <prototype/RectangleShape.h>
 #include <prototype/CircleShape.h>
@@ -25,7 +25,7 @@ public:
   FlappyCatGame();
 
 public:
-  void processEvent(const AndroidEvent& event);
+  void processEvent(const Event& event);
   void update(const FrameDuration& time);
   void render(const Window&) const;
 

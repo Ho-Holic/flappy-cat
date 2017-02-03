@@ -157,7 +157,7 @@ void FlappyCatGame::reset() {
 
 }
 
-void FlappyCatGame::processEvent(const AndroidEvent& event) {
+void FlappyCatGame::processEvent(const Event& event) {
 
   if (event.type() == TouchEventType) {
 
