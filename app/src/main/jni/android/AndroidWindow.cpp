@@ -1,6 +1,8 @@
 // self
 #include "AndroidWindow.h"
-#include "Log.h"
+
+// engine
+#include <core/Log.h>
 #include <prototype/FlatTransformation.h>
 
 // stl

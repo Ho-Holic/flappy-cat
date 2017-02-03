@@ -1,6 +1,8 @@
 // self
 #include "AndroidEvent.h"
-#include "Log.h"
+
+// engine
+#include <core/Log.h>
 
 AndroidEvent::AndroidEvent()
 : AndroidEvent(EmptyEventType) {

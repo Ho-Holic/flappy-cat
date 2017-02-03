@@ -1,8 +1,10 @@
 // self
 #include "Collide.h"
+
+// engine
 #include <style/Guidelines.h>
-#include "Log.h"
-#include "VectorMath.h"
+#include <core/Log.h>
+#include <physics/VectorMath.h>
 
 // stl
 #include <algorithm>

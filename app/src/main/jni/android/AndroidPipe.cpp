@@ -1,6 +1,8 @@
 // self
 #include "AndroidPipe.h"
-#include "Log.h"
+
+// engine
+#include <core/Log.h>
 
 AndroidPipe::AndroidPipe()
 : mReadEnd()

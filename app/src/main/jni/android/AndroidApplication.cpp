@@ -1,6 +1,8 @@
 // self
 #include "AndroidApplication.h"
-#include "Log.h"
+
+// engine
+#include <core/Log.h>
 
 // stl
 #include <functional>

@@ -3,7 +3,9 @@
 
 // self
 #include "FlappyCatApplication.h"
-#include "Log.h"
+
+// engine
+#include <core/Log.h>
 
 // stl
 #include <thread>

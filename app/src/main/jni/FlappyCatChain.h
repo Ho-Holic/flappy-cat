@@ -1,13 +1,13 @@
 #ifndef FLAPPY_CAT_FLAPPYCATCHAIN_H
 #define FLAPPY_CAT_FLAPPYCATCHAIN_H
 
-// self
+// engine
 #include <core/Position.h>
 #include <core/Color.h>
 #include <core/Clock.h>
+#include <core/Log.h>
 #include <style/Guidelines.h>
 #include <android/AndroidWindow.h>
-#include "Log.h"
 
 // stl
 #include <vector>
