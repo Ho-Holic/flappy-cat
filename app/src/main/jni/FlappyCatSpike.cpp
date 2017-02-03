@@ -7,7 +7,7 @@ FlappyCatSpike::FlappyCatSpike(const Position& position, const Position& size)
   //
 }
 
-void FlappyCatSpike::drawOn(const AndroidWindow& window) const {
+void FlappyCatSpike::drawOn(const Window& window) const {
 
   window.draw(mSpike);
 }

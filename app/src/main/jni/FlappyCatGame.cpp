@@ -202,7 +202,7 @@ void FlappyCatGame::update(const FrameDuration& time) {
   }
 }
 
-void FlappyCatGame::render(const AndroidWindow& window) const {
+void FlappyCatGame::render(const Window& window) const {
 
   window.clear(mColorScheme.background());
 

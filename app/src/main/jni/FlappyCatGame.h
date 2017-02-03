@@ -4,7 +4,7 @@
 // engine
 #include <core/Clock.h>
 #include <android/AndroidEvent.h>
-#include <android/AndroidWindow.h>
+#include <core/Window.h>
 #include <prototype/RectangleShape.h>
 #include <prototype/CircleShape.h>
 
@@ -27,7 +27,7 @@ public:
 public:
   void processEvent(const AndroidEvent& event);
   void update(const FrameDuration& time);
-  void render(const AndroidWindow&) const;
+  void render(const Window&) const;
 
 private:
   enum GameState : int32_t;

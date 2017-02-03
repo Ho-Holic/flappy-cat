@@ -3,11 +3,11 @@
 
 // self
 #include <core/Clock.h>
-#include <android/AndroidWindow.h>
+#include <core/Window.h>
 
 class FlappyCatEntity {
 public:
-  virtual void drawOn(const AndroidWindow& window) const = 0;
+  virtual void drawOn(const Window& window) const = 0;
   virtual const Position& position() const = 0;
   virtual void moveTo(const Position& position) = 0;
   virtual void setColor(const Color& color) = 0;

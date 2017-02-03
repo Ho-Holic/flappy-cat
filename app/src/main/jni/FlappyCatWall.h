@@ -3,7 +3,7 @@
 
 // engine
 #include <core/Position.h>
-#include <android/AndroidWindow.h>
+#include <core/Window.h>
 #include <prototype/RectangleShape.h>
 #include <core/Clock.h>
 
@@ -21,7 +21,7 @@ public:
 
 public:
   virtual void update(const FrameDuration& time) override;
-  virtual void drawOn(const AndroidWindow& window) const override;
+  virtual void drawOn(const Window& window) const override;
   virtual void moveTo(const Position& position) override;
   virtual const Position& position() const override;
   virtual void setColor(const Color& color) override;

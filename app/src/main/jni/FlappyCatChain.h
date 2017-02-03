@@ -7,7 +7,7 @@
 #include <core/Clock.h>
 #include <core/Log.h>
 #include <style/Guidelines.h>
-#include <android/AndroidWindow.h>
+#include <core/Window.h>
 
 // stl
 #include <vector>
@@ -28,7 +28,7 @@ public:
   void initialize();
   void reset();
   void update(const FrameDuration& time);
-  void drawOn(const AndroidWindow& window) const;
+  void drawOn(const Window& window) const;
   void setPosition(const Position& position);
   void setSize(const Position& size);
   void setLinkSize(const Position& linkSize);
@@ -122,7 +122,7 @@ void FlappyCatChain<Link>::update(const FrameDuration& time) {
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::drawOn(const AndroidWindow& window) const {
+void FlappyCatChain<Link>::drawOn(const Window& window) const {
 
   for (const Link& link : mLinks) {
     link.drawOn(window);

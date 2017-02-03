@@ -12,7 +12,7 @@ public:
   FlappyCatSpike(const Position& position, const Position& size);
 
 public:
-  virtual void drawOn(const AndroidWindow& window) const override;
+  virtual void drawOn(const Window& window) const override;
   virtual void moveTo(const Position& position) override;
   virtual void moveBy(const Position& position) override;
   virtual void resize(const Position& size) override;

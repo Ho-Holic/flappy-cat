@@ -49,7 +49,7 @@ void FlappyCatWall::update(const FrameDuration& time) {
 
 }
 
-void FlappyCatWall::drawOn(const AndroidWindow& window) const {
+void FlappyCatWall::drawOn(const Window& window) const {
 
   window.draw(mTopBlock);
   window.draw(mBottomBlock);
