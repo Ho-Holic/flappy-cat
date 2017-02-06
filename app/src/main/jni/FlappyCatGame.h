@@ -6,7 +6,6 @@
 #include <core/Event.h>
 #include <core/Window.h>
 #include <prototype/RectangleShape.h>
-#include <prototype/CircleShape.h>
 
 // self
 #include "FlappyCatColorScheme.h"
@@ -14,6 +13,7 @@
 #include "FlappyCatWall.h"
 #include "FlappyCatChain.h"
 #include "FlappyCatSpike.h"
+#include "FlappyCatHero.h"
 
 // stl
 #include <vector>
@@ -43,16 +43,12 @@ private:
   GameState mGameState;
   Position::position_type mPlateWidth;
   RectangleShape mFloor;
-
   FlappyCatChain<FlappyCatSpike> mFloorSpikes;
-
   FlappyCatChain<FlappyCatWall> mWalls;
-
-
   RectangleShape mBackgroundDirt;
-  std::vector<RectangleShape> mBackgroundCity;
+  FlappyCatChain<FlappyCatSpike> mBackgroundCity;
   std::vector<CircleShape>    mBackgroundSky;
-  CircleShape mBall;
+  FlappyCatHero mHero;
 };
 
 enum FlappyCatGame::GameState : int32_t {

@@ -17,7 +17,7 @@ FlappyCatGame::FlappyCatGame()
 , mBackgroundDirt(Position(0.f, 0.f), Position(0.f, 0.f))
 , mBackgroundCity()
 , mBackgroundSky()
-, mBall() {
+, mHero() {
   initialize();
   reset();
 }
@@ -58,10 +58,10 @@ void FlappyCatGame::initialize() {
   mWalls.setUpdateModifier(
     [this](FlappyCatWall& wall) {
 
-      float radius = mBall.geometry().radius();
+      float radius = mHero.radius();
       // TODO: implement proper origin in `transformation` and remove this code
       // circle origin in bottom left so we shift by radius
-      Position center = mBall.transformation().position() + Position(radius, radius);
+      Position center = mHero.position() + Position(radius, radius);
 
       if (wall.collideWithCircle(center, radius) || Collide::circleRect(center, radius, mFloor)) {
         mGameState = LoseState;
@@ -86,18 +86,20 @@ void FlappyCatGame::initialize() {
   mBackgroundDirt.setColor(mColorScheme.dirt());
 
   // city buildings
-  Position houseSize(mGameConstants.houseSize());
+  mBackgroundCity.setPosition(Position(-mPlateWidth, -800.f));
+  mBackgroundCity.setSize(Position(mPlateWidth * 2.f, 0.f));
+  mBackgroundCity.setLinkSize(mGameConstants.houseSize());
+  mBackgroundCity.setMovementDisplacement(Position(-5.f, 0.f));
+  mBackgroundCity.initialize();
 
-  // TODO: parametrize reserve function
-  mBackgroundCity.reserve(120);
+  auto adjustHouseSize = [this](FlappyCatSpike& house) {
+    Position varyingSize(mGameConstants.houseSize()
+                         + Position(0.f, mGameConstants.randomOffsetFrom(0.f, 200.f)));
+    house.resize(varyingSize);
+  };
 
-  size_t houseCount = static_cast<size_t >(mPlateWidth / houseSize.x()) * 2;
-
-  for (size_t i = 0; i < houseCount; ++i) {
-
-    Position varyingSize(houseSize + Position(0.f, mGameConstants.randomOffsetFrom(0.f, 200.f)));
-    mBackgroundCity.emplace_back(Position(0.f, 0.f), varyingSize);
-  }
+  mBackgroundCity.setResetModifier(adjustHouseSize);
+  mBackgroundCity.setWrapAroundModifier(adjustHouseSize);
 
   // sky with clouds
   // TODO: parametrize reserve function
@@ -118,9 +120,9 @@ void FlappyCatGame::reset() {
   mGameState = PressButtonState;
 
   // place ball
-  mBall.geometry().setRadius(mGameConstants.ballRadius());
-  mBall.transformation().setPosition(Position(0.f, 0.f));
-  mBall.setColor(mColorScheme.ball());
+  mHero.setRadius(mGameConstants.ballRadius());
+  mHero.moveTo(Position(0.f, 0.f));
+  mHero.setColor(mColorScheme.ball());
 
   // place blocks
   mWalls.setColor(mColorScheme.block());
@@ -133,15 +135,8 @@ void FlappyCatGame::reset() {
   mFloorSpikes.reset();
 
   // city buildings
-  Position::position_type houseWidth = mGameConstants.houseSize().x();
-
-  for (size_t i = 0; i < mBackgroundCity.size(); ++i) {
-
-    Position pos(-mPlateWidth + i * houseWidth, -800.f);
-
-    mBackgroundCity[i].transformation().setPosition(pos);
-    mBackgroundCity[i].setColor(mColorScheme.house());
-  }
+  mBackgroundCity.setColor(mColorScheme.house());
+  mBackgroundCity.reset();
 
   // sky with clouds
   for (size_t i = 0; i < mBackgroundSky.size(); ++i) {
@@ -164,7 +159,7 @@ void FlappyCatGame::processEvent(const Event& event) {
 
     mGameState = PlayState;
 
-    mBall.transformation().move(Position(0.f, 200.f));
+    mHero.moveBy(Position(0.f, 200.f));
   }
 }
 
@@ -172,34 +167,15 @@ void FlappyCatGame::update(const FrameDuration& time) {
 
   if (mGameState == PlayState) {
 
-    // update ball
-    mBall.transformation().move(mGameConstants.gravity());
-
-    // update obstacles
-
+    mHero.moveBy(mGameConstants.gravity());
     mWalls.update(time);
   }
 
   // update background
-
   if (mGameState != LoseState) {
 
-    // floor spikes
     mFloorSpikes.update(time);
-
-    // clouds
-    for (size_t i = 0; i < mBackgroundCity.size(); ++i) {
-
-      mBackgroundCity[i].transformation().move(Position(-5.f, 0.f));
-
-      Position p = mBackgroundCity[i].transformation().position();
-
-      if (p.x() < (-mPlateWidth)) {
-
-        mBackgroundCity[i].transformation().setPosition(Position(p.x() + mPlateWidth * 2.f, p.y()));
-      }
-
-    }
+    mBackgroundCity.update(time);
   }
 }
 
@@ -208,7 +184,8 @@ void FlappyCatGame::render(const Window& window) const {
   window.clear(mColorScheme.background());
 
   for (const CircleShape& cloud    : mBackgroundSky)  window.draw(cloud);
-  for (const RectangleShape& house : mBackgroundCity) window.draw(house);
+
+  mBackgroundCity.drawOn(window);
 
   window.draw(mBackgroundDirt);
 
@@ -216,7 +193,7 @@ void FlappyCatGame::render(const Window& window) const {
   mFloorSpikes.drawOn(window);
 
   window.draw(mFloor);
-  window.draw(mBall);
+  mHero.drawOn(window);
 
   window.display();
 }

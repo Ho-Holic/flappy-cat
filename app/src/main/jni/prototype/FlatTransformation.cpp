@@ -19,12 +19,6 @@ FlatTransformation::OnUpdateSignal& FlatTransformation::onUpdate() {
   return mOnUpdate;
 }
 
-void FlatTransformation::move(const Position& position) {
-
-  mPosition = mPosition + position;
-  mOnUpdate.emit();
-}
-
 void FlatTransformation::setPosition(const Position& position) {
 
   mPosition = position;

@@ -44,8 +44,11 @@ const Position& FlappyCatWall::position() const {
 
 void FlappyCatWall::update(const FrameDuration& time) {
 
-  mTopBlock.transformation().move(Position(-10.f, 0.f));
-  mBottomBlock.transformation().move(Position(-10.f, 0.f));
+  mTopBlock.transformation().setPosition(mTopBlock.transformation().position()
+                                       + Position(-10.f, 0.f));
+
+  mBottomBlock.transformation().setPosition(mBottomBlock.transformation().position()
+                                          + Position(-10.f, 0.f));
 
 }
 

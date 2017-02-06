@@ -17,11 +17,6 @@ void FlappyCatSpike::moveTo(const Position& position) {
   mSpike.transformation().setPosition(position);
 }
 
-void FlappyCatSpike::moveBy(const Position& position) {
-
-  mSpike.transformation().move(position);
-}
-
 void FlappyCatSpike::resize(const Position& size) {
 
   mSpike.geometry().resize(size);
