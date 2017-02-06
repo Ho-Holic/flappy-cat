@@ -15,6 +15,7 @@
 #include "FlappyCatSpike.h"
 #include "FlappyCatHero.h"
 #include "FlappyCatCloud.h"
+#include "FlappyCatFloor.h"
 
 // stl
 #include <vector>
@@ -43,10 +44,8 @@ private:
   FlappyCatGameConstants mGameConstants;
   GameState mGameState;
   Position::position_type mPlateWidth;
-  RectangleShape mFloor;
-  FlappyCatChain<FlappyCatSpike> mFloorSpikes;
+  FlappyCatFloor mFloor;
   FlappyCatChain<FlappyCatWall> mWalls;
-  RectangleShape mBackgroundDirt;
   FlappyCatChain<FlappyCatSpike> mBackgroundCity;
   FlappyCatCloud mBackgroundSky;
   FlappyCatHero mHero;

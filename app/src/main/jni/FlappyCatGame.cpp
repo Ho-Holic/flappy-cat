@@ -11,10 +11,8 @@ FlappyCatGame::FlappyCatGame()
 , mGameConstants()
 , mGameState(PressButtonState)
 , mPlateWidth(0.f)
-, mFloor(Position(0.f, 0.f), Position(0.f, 0.f))
-, mFloorSpikes()
+, mFloor()
 , mWalls()
-, mBackgroundDirt(Position(0.f, 0.f), Position(0.f, 0.f))
 , mBackgroundCity()
 , mBackgroundSky()
 , mHero() {
@@ -26,20 +24,10 @@ void FlappyCatGame::initialize() {
 
   mPlateWidth = mGameConstants.plateWidth();
 
-  // create main game obstacles
-
   // floor
-  mFloor.transformation().setPosition(Position(-mPlateWidth, -800.f));
-  mFloor.geometry().resize(Position(mPlateWidth * 2.f, 20.f));
-  mFloor.setColor(mColorScheme.block());
-
-  // spikes (movement effect)
-  mFloorSpikes.setPosition(Position(-mPlateWidth, -825.f));
-  mFloorSpikes.setSize(Position(mPlateWidth * 2.f, 0.f));
-  mFloorSpikes.setLinkSize(mGameConstants.spikeSize());
-  mFloorSpikes.setOffset(mGameConstants.spikeSize());
-  mFloorSpikes.setMovementDisplacement(Position(-10.f, 0.f));
-  mFloorSpikes.initialize();
+  mFloor.moveTo(Position(-mPlateWidth, -800.f));
+  mFloor.resize(Position(mPlateWidth * 2.f, 0.f));
+  mFloor.initialize();
 
   // moving blocks
   mWalls.setPosition(Position(-mPlateWidth, 0.f));
@@ -63,7 +51,8 @@ void FlappyCatGame::initialize() {
       // circle origin in bottom left so we shift by radius
       Position center = mHero.position() + Position(radius, radius);
 
-      if (wall.collideWithCircle(center, radius) || Collide::circleRect(center, radius, mFloor)) {
+      if (wall.collideWithCircle(center, radius) || Collide::circleRect(center, radius,
+                                                                        mFloor.boundingBox())) {
         mGameState = LoseState;
         Log::i(TAG, "Collide");
       }
@@ -77,13 +66,6 @@ void FlappyCatGame::initialize() {
   );
 
   mWalls.initialize();
-
-  // create background decoration stuff
-
-  // dirt under floor
-  mBackgroundDirt.transformation().setPosition(Position(-mPlateWidth, -900.f));
-  mBackgroundDirt.geometry().resize(Position(mPlateWidth * 2.f, 100.f));
-  mBackgroundDirt.setColor(mColorScheme.dirt());
 
   // city buildings
   mBackgroundCity.setPosition(Position(-mPlateWidth, -800.f));
@@ -132,11 +114,9 @@ void FlappyCatGame::reset() {
   mWalls.setColor(mColorScheme.block());
   mWalls.reset();
 
-  // place background
-
-  // place spikes
-  mFloorSpikes.setColor(mColorScheme.block());
-  mFloorSpikes.reset();
+  // place floor
+  mFloor.setColor(mColorScheme.block());
+  mFloor.reset();
 
   // city buildings
   mBackgroundCity.setColor(mColorScheme.house());
@@ -168,7 +148,7 @@ void FlappyCatGame::update(const FrameDuration& time) {
   // update background
   if (mGameState != LoseState) {
 
-    mFloorSpikes.update(time);
+    mFloor.update(time);
     mBackgroundCity.update(time);
   }
 }
@@ -179,13 +159,8 @@ void FlappyCatGame::render(const Window& window) const {
 
   mBackgroundSky.drawOn(window);
   mBackgroundCity.drawOn(window);
-
-  window.draw(mBackgroundDirt);
-
+  mFloor.drawOn(window);
   mWalls.drawOn(window);
-  mFloorSpikes.drawOn(window);
-
-  window.draw(mFloor);
   mHero.drawOn(window);
 
   window.display();
