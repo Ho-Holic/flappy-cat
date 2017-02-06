@@ -14,6 +14,7 @@
 #include "FlappyCatChain.h"
 #include "FlappyCatSpike.h"
 #include "FlappyCatHero.h"
+#include "FlappyCatCloud.h"
 
 // stl
 #include <vector>
@@ -47,7 +48,7 @@ private:
   FlappyCatChain<FlappyCatWall> mWalls;
   RectangleShape mBackgroundDirt;
   FlappyCatChain<FlappyCatSpike> mBackgroundCity;
-  std::vector<CircleShape>    mBackgroundSky;
+  FlappyCatCloud mBackgroundSky;
   FlappyCatHero mHero;
 };
 

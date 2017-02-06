@@ -12,10 +12,10 @@ public:
   FlappyCatHero();
 
 public:
-  virtual void drawOn(const Window& window) const;
-  virtual const Position& position() const;
-  virtual void moveTo(const Position& position);
-  virtual void setColor(const Color& color);
+  virtual void drawOn(const Window& window) const override;
+  virtual const Position& position() const override ;
+  virtual void moveTo(const Position& position) override ;
+  virtual void setColor(const Color& color) override ;
 
 public:
   void setRadius(float radius);

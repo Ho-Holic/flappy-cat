@@ -90,7 +90,6 @@ void FlappyCatGame::initialize() {
   mBackgroundCity.setSize(Position(mPlateWidth * 2.f, 0.f));
   mBackgroundCity.setLinkSize(mGameConstants.houseSize());
   mBackgroundCity.setMovementDisplacement(Position(-5.f, 0.f));
-  mBackgroundCity.initialize();
 
   auto adjustHouseSize = [this](FlappyCatSpike& house) {
     Position varyingSize(mGameConstants.houseSize()
@@ -100,17 +99,22 @@ void FlappyCatGame::initialize() {
 
   mBackgroundCity.setResetModifier(adjustHouseSize);
   mBackgroundCity.setWrapAroundModifier(adjustHouseSize);
+  mBackgroundCity.initialize();
 
   // sky with clouds
-  // TODO: parametrize reserve function
-  mBackgroundSky.reserve(120);
+  mBackgroundSky.setResetModifier(
+    [this](FlappyCatCloud::entity_type& cloud) {
+      cloud.geometry().setRadius(mGameConstants.cloudRadius()
+                               + mGameConstants.randomOffsetFrom(0.f, 100.f));
 
-  size_t cloudCount = 100;
+      Position pos(mGameConstants.randomOffsetFrom(0.f, 500.f, FlappyCatGameConstants::Sign::Both),
+                   mGameConstants.randomOffsetFrom(0.f, 500.f, FlappyCatGameConstants::Sign::Both));
 
-  for (size_t i = 0; i < cloudCount; ++i) {
-    mBackgroundSky.emplace_back(Position(0.f, 0.f), 50.f, 32);
-  }
-
+      cloud.transformation().setPosition(pos);
+      cloud.setColor(mColorScheme.cloud());
+    }
+  );
+  mBackgroundSky.initialize();
 }
 
 void FlappyCatGame::reset() {
@@ -139,17 +143,7 @@ void FlappyCatGame::reset() {
   mBackgroundCity.reset();
 
   // sky with clouds
-  for (size_t i = 0; i < mBackgroundSky.size(); ++i) {
-
-    mBackgroundSky[i].geometry().setRadius(mGameConstants.cloudRadius()
-                                         + mGameConstants.randomOffsetFrom(0.f, 100.f));
-
-    Position pos(mGameConstants.randomOffsetFrom(0.f, 500.f, FlappyCatGameConstants::Sign::Both),
-                 mGameConstants.randomOffsetFrom(0.f, 500.f, FlappyCatGameConstants::Sign::Both));
-
-    mBackgroundSky[i].transformation().setPosition(pos);
-    mBackgroundSky[i].setColor(mColorScheme.cloud());
-  }
+  mBackgroundSky.reset();
 
 }
 
@@ -183,8 +177,7 @@ void FlappyCatGame::render(const Window& window) const {
 
   window.clear(mColorScheme.background());
 
-  for (const CircleShape& cloud    : mBackgroundSky)  window.draw(cloud);
-
+  mBackgroundSky.drawOn(window);
   mBackgroundCity.drawOn(window);
 
   window.draw(mBackgroundDirt);
