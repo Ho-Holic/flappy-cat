@@ -34,16 +34,18 @@ void FlappyCatGame::initialize() {
   mFloor.setColor(mColorScheme.block());
 
   // spikes (movement effect)
-  mFloorSpikes.setPosition(Position(0.f, -825.f));
-  mFloorSpikes.setSize(Position(mPlateWidth, 0.f));
+  mFloorSpikes.setPosition(Position(-mPlateWidth, -825.f));
+  mFloorSpikes.setSize(Position(mPlateWidth * 2.f, 0.f));
   mFloorSpikes.setLinkSize(mGameConstants.spikeSize());
+  mFloorSpikes.setOffset(mGameConstants.spikeSize());
   mFloorSpikes.setMovementDisplacement(Position(-10.f, 0.f));
   mFloorSpikes.initialize();
 
   // moving blocks
-  mWalls.setPosition(Position(0.f, 0.f));
-  mWalls.setSize(Position(mPlateWidth, 0.f));
+  mWalls.setPosition(Position(-mPlateWidth, 0.f));
+  mWalls.setSize(Position(mPlateWidth * 2.f, 0.f));
   mWalls.setLinkSize(mGameConstants.blockSize());
+  mWalls.setOffset(mGameConstants.blockSize());
   mWalls.setMovementDisplacement(Position(-10.f, 0.f));
 
   mWalls.setResetModifier(
@@ -69,7 +71,6 @@ void FlappyCatGame::initialize() {
   );
 
   mWalls.setWrapAroundModifier(
-    // wrap around callback
     [this](FlappyCatWall& wall) {
       wall.setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
     }

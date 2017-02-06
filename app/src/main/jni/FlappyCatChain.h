@@ -13,6 +13,7 @@
 #include <vector>
 #include <cmath>
 
+
 template <typename Link>
 class FlappyCatChain {
 private:
@@ -32,17 +33,23 @@ public:
   void setPosition(const Position& position);
   void setSize(const Position& size);
   void setLinkSize(const Position& linkSize);
+  void setOffset(const Position& offset);
   void setColor(const Color& color);
   void setMovementDisplacement(const Position& movementDisplacement);
   void setResetModifier(const Modifier& modifier);
   void setUpdateModifier(const Modifier& modifier);
   void setWrapAroundModifier(const Modifier& modifier);
 
+private:
+  Position::position_type chainLength() const;
+  bool isWarpNeeded(const Position& point) const;
+  Position section() const;
 
 private:
   Position mPosition;
   Position mSize;
   Position mLinkSize;
+  Position mOffset;
   Position mMovementDisplacement;
   Color mFillColor;
   std::vector<Link> mLinks;
@@ -58,6 +65,7 @@ FlappyCatChain<Link>::FlappyCatChain()
 : mPosition(Position(0.f, 0.f))
 , mSize(Position(0.f, 0.f))
 , mLinkSize(Position(0.f, 0.f))
+, mOffset(Position(0.f, 0.f))
 , mMovementDisplacement(Position(0.f, 0.f))
 , mFillColor()
 , mLinks()
@@ -68,12 +76,35 @@ FlappyCatChain<Link>::FlappyCatChain()
 }
 
 template <typename Link>
+Position::position_type FlappyCatChain<Link>::chainLength() const {
+
+  // TODO: We don't have proper 'cmath', replace with code below in NDK r15 (May 27 , 2017)
+  // TODO: return std::round(mSize.x() / section().x()) * section().x();
+  // https://github.com/android-ndk/ndk/milestone/7
+  // https://github.com/android-ndk/ndk/issues/82
+  // https://code.google.com/p/android/issues/detail?id=82734
+
+  return static_cast<size_t>(mSize.x() / section().x()) * section().x();
+}
+
+template <typename Link>
+Position FlappyCatChain<Link>::section() const {
+  return mLinkSize + mOffset;
+}
+
+template <typename Link>
+bool FlappyCatChain<Link>::isWarpNeeded(const Position& point) const {
+
+  return point.x() < mPosition.x();
+}
+
+template <typename Link>
 void FlappyCatChain<Link>::initialize() {
 
   // TODO: parametrize reserve function
   mLinks.reserve(120);
 
-  std::size_t linkCount = static_cast<std::size_t>(mSize.x() / mLinkSize.x());
+  std::size_t linkCount = static_cast<std::size_t>(chainLength() / mLinkSize.x());
 
   for (std::size_t i = 0; i < linkCount;  ++i) {
 
@@ -86,7 +117,7 @@ void FlappyCatChain<Link>::reset() {
 
   for (std::size_t i = 0; i < mLinks.size(); ++i) {
 
-    Position pos(mPosition.x() - mSize.x() + i * 2.f * mLinkSize.x(), mPosition.y());
+    Position pos(mPosition.x() + i * section().x(), mPosition.y());
 
     mLinks[i].moveTo(pos);
     mLinks[i].resize(mLinkSize);
@@ -110,9 +141,10 @@ void FlappyCatChain<Link>::update(const FrameDuration& time) {
 
     Position p = mLinks[i].position();
 
-    if (p.x() < -mSize.x()) {
+    if (isWarpNeeded(p)) {
 
-      mLinks[i].moveTo(Position(p.x() + mSize.x() * 2.f, p.y()));
+      // TODO: If 'p.x()' bigger then '2.f * chainLength' then wrap fails, need a loop
+      mLinks[i].moveTo(Position(p.x() + chainLength(), p.y()));
 
       REQUIRE(TAG, mWrapAroundModifier != nullptr, "WrapAround modifier must be not null");
       mWrapAroundModifier(mLinks[i]);
@@ -175,6 +207,11 @@ template <typename Link>
 void FlappyCatChain<Link>::setMovementDisplacement(const Position& movementDisplacement) {
 
   mMovementDisplacement = movementDisplacement;
+}
+
+template <typename Link>
+void FlappyCatChain<Link>::setOffset(const Position& offset) {
+  mOffset = offset;
 }
 
 
