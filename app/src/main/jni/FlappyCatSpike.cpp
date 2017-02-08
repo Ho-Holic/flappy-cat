@@ -1,8 +1,9 @@
 // self
 #include "FlappyCatSpike.h"
 
-FlappyCatSpike::FlappyCatSpike(const Position& position, const Position& size)
-: FlappyCatEntity()
+FlappyCatSpike::FlappyCatSpike(const Position& position, const Position& size,
+                               const FlappyCatGameConstants& gameConstants)
+: FlappyCatEntity(gameConstants)
 , mSpike(position, size) {
   //
 }

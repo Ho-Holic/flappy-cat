@@ -7,15 +7,14 @@
 
 
 FlappyCatGame::FlappyCatGame()
-: mColorScheme()
-, mGameConstants()
+: mGameConstants()
 , mGameState(PressButtonState)
 , mPlateWidth(0.f)
-, mFloor()
-, mWalls()
-, mBackgroundCity()
-, mBackgroundSky()
-, mHero() {
+, mFloor(mGameConstants)
+, mWalls(mGameConstants)
+, mBackgroundCity(mGameConstants)
+, mBackgroundSky(mGameConstants)
+, mHero(mGameConstants) {
   initialize();
   reset();
 }
@@ -30,8 +29,8 @@ void FlappyCatGame::initialize() {
   mFloor.initialize();
 
   // moving blocks
-  mWalls.setPosition(Position(-mPlateWidth, 0.f));
-  mWalls.setSize(Position(mPlateWidth * 2.f, 0.f));
+  mWalls.moveTo(Position(-mPlateWidth, 0.f));
+  mWalls.resize(Position(mPlateWidth * 2.f, 0.f));
   mWalls.setLinkSize(mGameConstants.blockSize());
   mWalls.setOffset(mGameConstants.blockSize());
   mWalls.setMovementDisplacement(Position(-10.f, 0.f));
@@ -68,8 +67,8 @@ void FlappyCatGame::initialize() {
   mWalls.initialize();
 
   // city buildings
-  mBackgroundCity.setPosition(Position(-mPlateWidth, -800.f));
-  mBackgroundCity.setSize(Position(mPlateWidth * 2.f, 0.f));
+  mBackgroundCity.moveTo(Position(-mPlateWidth, -800.f));
+  mBackgroundCity.resize(Position(mPlateWidth * 2.f, 0.f));
   mBackgroundCity.setLinkSize(mGameConstants.houseSize());
   mBackgroundCity.setMovementDisplacement(Position(-5.f, 0.f));
 
@@ -93,7 +92,7 @@ void FlappyCatGame::initialize() {
                    mGameConstants.randomOffsetFrom(0.f, 500.f, FlappyCatGameConstants::Sign::Both));
 
       cloud.transformation().setPosition(pos);
-      cloud.setColor(mColorScheme.cloud());
+      cloud.setColor(mGameConstants.colorScheme().cloud());
     }
   );
   mBackgroundSky.initialize();
@@ -101,25 +100,25 @@ void FlappyCatGame::initialize() {
 
 void FlappyCatGame::reset() {
 
-  mColorScheme.generateNewScheme();
+  mGameConstants.reset();
 
   mGameState = PressButtonState;
 
   // place ball
   mHero.setRadius(mGameConstants.ballRadius());
   mHero.moveTo(Position(0.f, 0.f));
-  mHero.setColor(mColorScheme.ball());
+  mHero.setColor(mGameConstants.colorScheme().ball());
 
   // place blocks
-  mWalls.setColor(mColorScheme.block());
+  mWalls.setColor(mGameConstants.colorScheme().block());
   mWalls.reset();
 
   // place floor
-  mFloor.setColor(mColorScheme.block());
+  mFloor.setColor(mGameConstants.colorScheme().block());
   mFloor.reset();
 
   // city buildings
-  mBackgroundCity.setColor(mColorScheme.house());
+  mBackgroundCity.setColor(mGameConstants.colorScheme().house());
   mBackgroundCity.reset();
 
   // sky with clouds
@@ -155,7 +154,7 @@ void FlappyCatGame::update(const FrameDuration& time) {
 
 void FlappyCatGame::render(const Window& window) const {
 
-  window.clear(mColorScheme.background());
+  window.clear(mGameConstants.colorScheme().background());
 
   mBackgroundSky.drawOn(window);
   mBackgroundCity.drawOn(window);

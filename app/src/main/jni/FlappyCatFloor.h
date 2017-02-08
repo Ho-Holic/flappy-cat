@@ -11,13 +11,13 @@
 
 class FlappyCatFloor : public FlappyCatEntity{
 public:
-  FlappyCatFloor();
+  FlappyCatFloor(const FlappyCatGameConstants& gameConstants);
 
 public:
   const Shape& boundingBox() const;
-  void initialize();
 
 public:
+  virtual void initialize() override ;
   virtual void drawOn(const Window& window) const override;
   virtual const Position& position() const override;
   virtual void moveTo(const Position& position) override;

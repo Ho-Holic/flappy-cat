@@ -16,8 +16,8 @@
  * @def DISABLE_COPY - disable copy construction and assignment operations
  */
 #define DISABLE_COPY(Class) \
-  Class(const Class &) = delete;\
-  Class &operator=(const Class &) = delete;
+  Class(const Class&) = delete;\
+  Class& operator=(const Class&) = delete;
 
 /**
  * @def loop - endless loop in more readable format

@@ -3,8 +3,20 @@
 
 FlappyCatGameConstants::FlappyCatGameConstants()
 : mRandomDevice()
-, mGenerator(mRandomDevice()) {
-  //
+, mGenerator(mRandomDevice())
+, mColorScheme() {
+
+  reset();
+}
+
+void FlappyCatGameConstants::reset() {
+
+  mColorScheme.generateNewScheme();
+}
+
+const FlappyCatColorScheme& FlappyCatGameConstants::colorScheme() const {
+
+  return mColorScheme;
 }
 
 Position FlappyCatGameConstants::houseSize() const {
@@ -48,7 +60,3 @@ float FlappyCatGameConstants::cloudRadius() const {
 Position FlappyCatGameConstants::spikeSize() const {
   return Position(25.f, 25.f);
 }
-
-
-
-

@@ -13,32 +13,35 @@
 #include <vector>
 #include <cmath>
 
-
 template <typename Link>
-class FlappyCatChain {
+class FlappyCatChain : public FlappyCatEntity {
 private:
   DISABLE_COPY(FlappyCatChain)
 
 public:
-  using Modifier = std::function<void(Link&)>;
+  using entity_type = Link;
+  using modifier_type = std::function<void(entity_type&)>;
 
 public:
-  FlappyCatChain();
+  FlappyCatChain(const FlappyCatGameConstants& gameConstants);
 
 public:
-  void initialize();
-  void reset();
-  void update(const FrameDuration& time);
-  void drawOn(const Window& window) const;
-  void setPosition(const Position& position);
-  void setSize(const Position& size);
+  void initialize() override;
+  void reset() override;
+  void update(const FrameDuration& time) override;
+  void drawOn(const Window& window) const override;
+  const Position& position() const override;
+  void moveTo(const Position& position) override;
+  void resize(const Position& size) override;
+  void setColor(const Color& color) override;
+
+public:
   void setLinkSize(const Position& linkSize);
   void setOffset(const Position& offset);
-  void setColor(const Color& color);
   void setMovementDisplacement(const Position& movementDisplacement);
-  void setResetModifier(const Modifier& modifier);
-  void setUpdateModifier(const Modifier& modifier);
-  void setWrapAroundModifier(const Modifier& modifier);
+  void setResetModifier(const modifier_type& modifier);
+  void setUpdateModifier(const modifier_type& modifier);
+  void setWrapAroundModifier(const modifier_type& modifier);
 
 private:
   Position::position_type chainLength() const;
@@ -52,26 +55,27 @@ private:
   Position mOffset;
   Position mMovementDisplacement;
   Color mFillColor;
-  std::vector<Link> mLinks;
-  Modifier mResetModifier;
-  Modifier mUpdateModifier;
-  Modifier mWrapAroundModifier;
+  std::vector<entity_type> mLinks;
+  modifier_type mResetModifier;
+  modifier_type mUpdateModifier;
+  modifier_type mWrapAroundModifier;
 };
 
 // implementation
 
 template <typename Link>
-FlappyCatChain<Link>::FlappyCatChain()
-: mPosition(Position(0.f, 0.f))
+FlappyCatChain<Link>::FlappyCatChain(const FlappyCatGameConstants& gameConstants)
+: FlappyCatEntity(gameConstants)
+, mPosition(Position(0.f, 0.f))
 , mSize(Position(0.f, 0.f))
 , mLinkSize(Position(0.f, 0.f))
 , mOffset(Position(0.f, 0.f))
 , mMovementDisplacement(Position(0.f, 0.f))
 , mFillColor()
 , mLinks()
-, mResetModifier([](Link&){})
-, mUpdateModifier([](Link&){})
-, mWrapAroundModifier([](Link&){}){
+, mResetModifier([](entity_type&){})
+, mUpdateModifier([](entity_type&){})
+, mWrapAroundModifier([](entity_type&){}){
   //
 }
 
@@ -108,7 +112,7 @@ void FlappyCatChain<Link>::initialize() {
 
   for (std::size_t i = 0; i < linkCount;  ++i) {
 
-    mLinks.emplace_back(mPosition, mLinkSize);
+    mLinks.emplace_back(mPosition, mLinkSize, gameConstants());
   }
 }
 
@@ -156,25 +160,25 @@ void FlappyCatChain<Link>::update(const FrameDuration& time) {
 template <typename Link>
 void FlappyCatChain<Link>::drawOn(const Window& window) const {
 
-  for (const Link& link : mLinks) {
+  for (const entity_type& link : mLinks) {
     link.drawOn(window);
   }
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::setResetModifier(const Modifier& modifier) {
+void FlappyCatChain<Link>::setResetModifier(const modifier_type& modifier) {
 
   mResetModifier = modifier;
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::setUpdateModifier(const Modifier& modifier) {
+void FlappyCatChain<Link>::setUpdateModifier(const modifier_type& modifier) {
 
   mUpdateModifier = modifier;
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::setWrapAroundModifier(const Modifier& modifier) {
+void FlappyCatChain<Link>::setWrapAroundModifier(const modifier_type& modifier) {
 
   mWrapAroundModifier = modifier;
 }
@@ -186,13 +190,13 @@ void FlappyCatChain<Link>::setColor(const Color& color) {
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::setPosition(const Position& position) {
+void FlappyCatChain<Link>::moveTo(const Position& position) {
 
   mPosition = position;
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::setSize(const Position& size) {
+void FlappyCatChain<Link>::resize(const Position& size) {
 
   mSize = size;
 }
@@ -211,7 +215,14 @@ void FlappyCatChain<Link>::setMovementDisplacement(const Position& movementDispl
 
 template <typename Link>
 void FlappyCatChain<Link>::setOffset(const Position& offset) {
+
   mOffset = offset;
+}
+
+template <typename Link>
+const Position& FlappyCatChain<Link>::position() const {
+
+  return mPosition;
 }
 
 

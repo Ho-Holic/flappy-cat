@@ -1,8 +1,8 @@
 // self
 #include "FlappyCatHero.h"
 
-FlappyCatHero::FlappyCatHero()
-: FlappyCatEntity()
+FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
+: FlappyCatEntity(gameConstants)
 , mBall() {
   //
 }

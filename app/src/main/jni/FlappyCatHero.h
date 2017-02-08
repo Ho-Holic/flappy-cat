@@ -9,7 +9,7 @@
 
 class FlappyCatHero : public FlappyCatEntity {
 public:
-  FlappyCatHero();
+  FlappyCatHero(const FlappyCatGameConstants& gameConstants);
 
 public:
   virtual void drawOn(const Window& window) const override;

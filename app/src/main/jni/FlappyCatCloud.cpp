@@ -5,8 +5,8 @@
 #include <core/Log.h>
 #include <style/Guidelines.h>
 
-FlappyCatCloud::FlappyCatCloud()
-: FlappyCatEntity()
+FlappyCatCloud::FlappyCatCloud(const FlappyCatGameConstants& gameConstants)
+: FlappyCatEntity(gameConstants)
 , mCloudParts()
 , mResetModifier([](entity_type&){}){
   //

@@ -2,6 +2,9 @@
 #define FLAPPY_CAT_FLAPPYCATGAMECONSTANT_H
 
 // self
+#include "FlappyCatColorScheme.h"
+
+// engine
 #include <core/Position.h>
 
 // stl
@@ -15,6 +18,10 @@ public:
   };
 public:
   FlappyCatGameConstants();
+
+public:
+  void reset();
+  const FlappyCatColorScheme& colorScheme() const;
 
 public:
   Position houseSize() const;
@@ -36,6 +43,7 @@ public:
 private:
   std::random_device mRandomDevice;
   std::mt19937 mGenerator;
+  FlappyCatColorScheme mColorScheme;
 };
 
 

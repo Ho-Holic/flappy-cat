@@ -1,13 +1,13 @@
 // self
 #include "FlappyCatFloor.h"
 
-FlappyCatFloor::FlappyCatFloor()
-: FlappyCatEntity()
+FlappyCatFloor::FlappyCatFloor(const FlappyCatGameConstants& gameConstants)
+: FlappyCatEntity(gameConstants)
 , mPosition(0.f, 0.f)
 , mSize(0.f, 0.f)
 , mColor()
 , mFloor(Position(0.f, 0.f), Position(0.f, 0.f))
-, mFloorSpikes()
+, mFloorSpikes(gameConstants)
 , mBackgroundDirt(Position(0.f, 0.f), Position(0.f, 0.f)){
   //
 }
@@ -18,13 +18,11 @@ void FlappyCatFloor::initialize() {
   mFloor.geometry().resize(Position(mSize.x(), 20.f));
 
   // spikes (movement effect)
-  mFloorSpikes.setPosition(Position(mPosition.x(), mPosition.y() - 25.f));
-  mFloorSpikes.setSize(Position(mSize.x(), 0.f));
+  mFloorSpikes.moveTo(Position(mPosition.x(), mPosition.y() - 25.f));
+  mFloorSpikes.resize(Position(mSize.x(), 0.f));
 
-  mFloorSpikes.setLinkSize(Position(25.f, 25.f));
-  mFloorSpikes.setOffset(Position(25.f, 25.f));
-  //TODO: remove hardcoded size. mFloorSpikes.setLinkSize(mGameConstants.spikeSize());
-  //TODO: remove hardcoded size. mFloorSpikes.setOffset(mGameConstants.spikeSize());
+  mFloorSpikes.setLinkSize(gameConstants().spikeSize());
+  mFloorSpikes.setOffset(gameConstants().spikeSize());
 
   mFloorSpikes.setMovementDisplacement(Position(-10.f, 0.f));
   mFloorSpikes.initialize();
@@ -65,8 +63,7 @@ void FlappyCatFloor::setColor(const Color& color) {
 
   mFloor.setColor(color);
   mFloorSpikes.setColor(color);
-  mBackgroundDirt.setColor(Color(96, 96, 96));
-  // TODO: get color here, now hardcoded. mBackgroundDirt.setColor(mColorScheme.dirt());
+  mBackgroundDirt.setColor(gameConstants().colorScheme().dirt());
 }
 
 void FlappyCatFloor::reset() {

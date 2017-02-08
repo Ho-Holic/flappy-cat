@@ -57,7 +57,7 @@ private:
 
 private:
   static GLuint createShader(GLenum shaderType, const std::string& shaderString);
-  static GLuint createProgram(const std::vector<GLuint> &shaderList);
+  static GLuint createProgram(const std::vector<GLuint>& shaderList);
 
 
 private:

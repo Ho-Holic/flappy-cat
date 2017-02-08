@@ -17,13 +17,13 @@ public:
   using modifier_type = std::function<void(entity_type&)>;
 
 public:
-  FlappyCatCloud();
+  FlappyCatCloud(const FlappyCatGameConstants& gameConstants);
 
 public:
-  void initialize();
   void setResetModifier(const modifier_type& modifier);
 
 public:
+  virtual void initialize() override;
   virtual void drawOn(const Window& window) const override;
   virtual const Position& position() const override;
   virtual void moveTo(const Position& position) override;

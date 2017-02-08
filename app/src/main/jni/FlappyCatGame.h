@@ -8,7 +8,6 @@
 #include <prototype/RectangleShape.h>
 
 // self
-#include "FlappyCatColorScheme.h"
 #include "FlappyCatGameConstants.h"
 #include "FlappyCatWall.h"
 #include "FlappyCatChain.h"
@@ -40,7 +39,6 @@ private:
 
 
 private:
-  FlappyCatColorScheme mColorScheme;
   FlappyCatGameConstants mGameConstants;
   GameState mGameState;
   Position::position_type mPlateWidth;
