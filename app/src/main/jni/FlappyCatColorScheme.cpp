@@ -24,7 +24,7 @@ void FlappyCatColorScheme::generateNewScheme() {
 
   mScheme[Background] = Color(255, 255, 255);
   mScheme[Block]      = Color(128, 0, 0);
-  mScheme[Ball]       = Color(255, 0, 0);
+  mScheme[Hero]       = Color(255, 0, 0);
   mScheme[House]      = Color(128, 128, 128);
   mScheme[Cloud]      = Color(225, 225, 225);
   mScheme[Dirt]       = Color(96, 96, 96);
@@ -42,9 +42,9 @@ Color FlappyCatColorScheme::block() const {
   return mScheme[Block];
 }
 
-Color FlappyCatColorScheme::ball() const {
+Color FlappyCatColorScheme::hero() const {
 
-  return mScheme[Ball];
+  return mScheme[Hero];
 }
 
 Color FlappyCatColorScheme::house() const {

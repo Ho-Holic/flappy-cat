@@ -22,7 +22,7 @@ public:
 public:
   Color background() const;
   Color block()      const;
-  Color ball()       const;
+  Color hero()       const;
   Color house()      const;
   Color cloud()      const;
   Color dirt()       const;
@@ -36,7 +36,7 @@ private:
 enum FlappyCatColorScheme::Colors : uint32_t {
   Background,
   Block,
-  Ball,
+  Hero,
   House,
   Cloud,
   Dirt,

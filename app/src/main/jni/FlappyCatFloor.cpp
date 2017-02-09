@@ -59,16 +59,14 @@ const Position& FlappyCatFloor::position() const {
   return mPosition;
 }
 
-void FlappyCatFloor::setColor(const Color& color) {
-
-  mFloor.setColor(color);
-  mFloorSpikes.setColor(color);
-  mBackgroundDirt.setColor(gameConstants().colorScheme().dirt());
-}
-
 void FlappyCatFloor::reset() {
 
   mFloorSpikes.reset();
+
+  mFloor.setColor(gameConstants().colorScheme().block());
+  // TODO: fix this color issue
+  //mFloorSpikes.setColor(gameConstants().colorScheme().block());
+  mBackgroundDirt.setColor(gameConstants().colorScheme().dirt());
 }
 
 const Shape& FlappyCatFloor::boundingBox() const {

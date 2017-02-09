@@ -25,7 +25,7 @@ public:
 
   virtual void resize(const Position& size);
 
-  virtual void setColor(const Color& color) = 0;
+  //virtual void setColor(const Color& color) = 0;
 
 public:
   const FlappyCatGameConstants& gameConstants() const;

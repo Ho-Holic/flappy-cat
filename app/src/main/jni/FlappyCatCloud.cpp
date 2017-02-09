@@ -7,6 +7,7 @@
 
 FlappyCatCloud::FlappyCatCloud(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
+, mPosition(0.f, 0.f)
 , mCloudParts()
 , mResetModifier([](entity_type&){}){
   //
@@ -50,28 +51,9 @@ void FlappyCatCloud::drawOn(const Window& window) const {
 }
 
 const Position& FlappyCatCloud::position() const {
-  return Position(0.f, 0.f);
+  return mPosition;
 }
 
 void FlappyCatCloud::moveTo(const Position& position) {
   //
 }
-
-void FlappyCatCloud::setColor(const Color& color) {
-  //
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

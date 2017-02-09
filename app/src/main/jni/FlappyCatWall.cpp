@@ -33,12 +33,6 @@ void FlappyCatWall::moveTo(const Position& position) {
   mBottomBlock.transformation().setPosition(position + 120.f);
 }
 
-void FlappyCatWall::setColor(const Color& color) {
-
-  mTopBlock.setColor(color);
-  mBottomBlock.setColor(color);
-}
-
 const Position& FlappyCatWall::position() const {
 
   return mTopBlock.transformation().position();
@@ -59,6 +53,14 @@ void FlappyCatWall::drawOn(const Window& window) const {
   window.draw(mTopBlock);
   window.draw(mBottomBlock);
 }
+
+void FlappyCatWall::reset() {
+
+  mTopBlock.setColor(gameConstants().colorScheme().block());
+  mBottomBlock.setColor(gameConstants().colorScheme().block());
+}
+
+
 
 
 

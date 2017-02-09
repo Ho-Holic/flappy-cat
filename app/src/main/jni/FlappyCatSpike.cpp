@@ -27,8 +27,3 @@ const Position& FlappyCatSpike::position() const {
 
   return mSpike.transformation().position();
 }
-
-void FlappyCatSpike::setColor(const Color& color) {
-
-  mSpike.render().setBrushColor(color);
-}

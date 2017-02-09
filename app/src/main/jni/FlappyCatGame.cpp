@@ -72,14 +72,21 @@ void FlappyCatGame::initialize() {
   mBackgroundCity.setLinkSize(mGameConstants.houseSize());
   mBackgroundCity.setMovementDisplacement(Position(-5.f, 0.f));
 
-  auto adjustHouseSize = [this](FlappyCatSpike& house) {
-    Position varyingSize(mGameConstants.houseSize()
-                         + Position(0.f, mGameConstants.randomOffsetFrom(0.f, 200.f)));
-    house.resize(varyingSize);
-  };
+  mBackgroundCity.setResetModifier(
+    [this](FlappyCatSpike& house) {
+      Position varyingSize(mGameConstants.houseSize()
+                           + Position(0.f, mGameConstants.randomOffsetFrom(0.f, 200.f)));
+      house.resize(varyingSize);
+    }
+  );
 
-  mBackgroundCity.setResetModifier(adjustHouseSize);
-  mBackgroundCity.setWrapAroundModifier(adjustHouseSize);
+  mBackgroundCity.setWrapAroundModifier(
+    [this](FlappyCatSpike& house) {
+      Position varyingSize(mGameConstants.houseSize()
+                           + Position(0.f, mGameConstants.randomOffsetFrom(0.f, 200.f)));
+      house.resize(varyingSize);
+    }
+  );
   mBackgroundCity.initialize();
 
   // sky with clouds
@@ -105,23 +112,13 @@ void FlappyCatGame::reset() {
   mGameState = PressButtonState;
 
   // place ball
+  mHero.reset();
   mHero.setRadius(mGameConstants.ballRadius());
   mHero.moveTo(Position(0.f, 0.f));
-  mHero.setColor(mGameConstants.colorScheme().ball());
 
-  // place blocks
-  mWalls.setColor(mGameConstants.colorScheme().block());
   mWalls.reset();
-
-  // place floor
-  mFloor.setColor(mGameConstants.colorScheme().block());
   mFloor.reset();
-
-  // city buildings
-  mBackgroundCity.setColor(mGameConstants.colorScheme().house());
   mBackgroundCity.reset();
-
-  // sky with clouds
   mBackgroundSky.reset();
 
 }

@@ -32,20 +32,6 @@ const Position& FlappyCatHero::position() const {
   return mBall.transformation().position();
 }
 
-void FlappyCatHero::setColor(const Color& color) {
-
-  mBall.setColor(color);
+void FlappyCatHero::reset() {
+  mBall.setColor(gameConstants().colorScheme().hero());
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

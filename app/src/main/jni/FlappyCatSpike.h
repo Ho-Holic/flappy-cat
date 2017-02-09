@@ -19,7 +19,6 @@ public:
   virtual void moveTo(const Position& position) override;
   virtual void resize(const Position& size) override;
   virtual const Position& position() const override;
-  virtual void setColor(const Color& color) override;
 
 private:
   RectangleShape mSpike;

@@ -21,7 +21,6 @@ public:
   virtual void drawOn(const Window& window) const override;
   virtual const Position& position() const override;
   virtual void moveTo(const Position& position) override;
-  virtual void setColor(const Color& color) override;
   virtual void update(const FrameDuration& time) override;
   virtual void resize(const Position& size) override;
   virtual void reset() override;

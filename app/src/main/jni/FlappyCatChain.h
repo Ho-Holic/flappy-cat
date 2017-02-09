@@ -33,7 +33,6 @@ public:
   const Position& position() const override;
   void moveTo(const Position& position) override;
   void resize(const Position& size) override;
-  void setColor(const Color& color) override;
 
 public:
   void setLinkSize(const Position& linkSize);
@@ -54,7 +53,6 @@ private:
   Position mLinkSize;
   Position mOffset;
   Position mMovementDisplacement;
-  Color mFillColor;
   std::vector<entity_type> mLinks;
   modifier_type mResetModifier;
   modifier_type mUpdateModifier;
@@ -71,7 +69,6 @@ FlappyCatChain<Link>::FlappyCatChain(const FlappyCatGameConstants& gameConstants
 , mLinkSize(Position(0.f, 0.f))
 , mOffset(Position(0.f, 0.f))
 , mMovementDisplacement(Position(0.f, 0.f))
-, mFillColor()
 , mLinks()
 , mResetModifier([](entity_type&){})
 , mUpdateModifier([](entity_type&){})
@@ -121,11 +118,12 @@ void FlappyCatChain<Link>::reset() {
 
   for (std::size_t i = 0; i < mLinks.size(); ++i) {
 
+    mLinks[i].reset();
+
     Position pos(mPosition.x() + i * section().x(), mPosition.y());
 
     mLinks[i].moveTo(pos);
     mLinks[i].resize(mLinkSize);
-    mLinks[i].setColor(mFillColor);
 
     REQUIRE(TAG, mResetModifier != nullptr, "Reset modifier must be not null");
     mResetModifier(mLinks[i]);
@@ -181,12 +179,6 @@ template <typename Link>
 void FlappyCatChain<Link>::setWrapAroundModifier(const modifier_type& modifier) {
 
   mWrapAroundModifier = modifier;
-}
-
-template <typename Link>
-void FlappyCatChain<Link>::setColor(const Color& color) {
-
-  mFillColor = color;
 }
 
 template <typename Link>
