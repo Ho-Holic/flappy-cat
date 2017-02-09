@@ -3,7 +3,8 @@
 
 FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
-, mBall() {
+, mBall()
+, mResetModifier([](entity_type&){}) {
   //
 }
 
@@ -33,5 +34,20 @@ const Position& FlappyCatHero::position() const {
 }
 
 void FlappyCatHero::reset() {
-  mBall.setColor(gameConstants().colorScheme().hero());
+
+  mResetModifier(*this);
 }
+
+void FlappyCatHero::setResetModifier(const modifier_type& modifier) {
+
+  mResetModifier = modifier;
+}
+
+void FlappyCatHero::setColor(const Color& color) {
+
+  mBall.setColor(color);
+}
+
+
+
+

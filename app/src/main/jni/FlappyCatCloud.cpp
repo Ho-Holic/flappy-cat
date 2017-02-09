@@ -25,18 +25,13 @@ void FlappyCatCloud::initialize() {
   }
 }
 
-void FlappyCatCloud::setResetModifier(const modifier_type& modifier) {
-  mResetModifier = modifier;
-}
-
 void FlappyCatCloud::reset() {
 
-  for (size_t i = 0; i < mCloudParts.size(); ++i) {
+  for (entity_type& part : mCloudParts) {
 
     REQUIRE(TAG, mResetModifier != nullptr, "Reset modifier must be not null");
 
-    mResetModifier(mCloudParts[i]);
-
+    mResetModifier(part);
   }
 
 }
@@ -51,9 +46,26 @@ void FlappyCatCloud::drawOn(const Window& window) const {
 }
 
 const Position& FlappyCatCloud::position() const {
+
   return mPosition;
 }
 
 void FlappyCatCloud::moveTo(const Position& position) {
-  //
+
+  mPosition = mPosition + position;
 }
+
+void FlappyCatCloud::setResetModifier(const modifier_type& modifier) {
+
+  mResetModifier = modifier;
+}
+
+void FlappyCatCloud::setColor(const Color& color) {
+
+  for (entity_type& part : mCloudParts) {
+
+    part.setColor(color);
+  }
+}
+
+

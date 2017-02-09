@@ -20,6 +20,9 @@ public:
   virtual void resize(const Position& size) override;
   virtual const Position& position() const override;
 
+public:
+  virtual void setColor(const Color& color);
+
 private:
   RectangleShape mSpike;
 };

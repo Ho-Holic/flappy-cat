@@ -9,7 +9,10 @@
 // engine
 #include <prototype/RectangleShape.h>
 
-class FlappyCatFloor : public FlappyCatEntity{
+class FlappyCatFloor : public FlappyCatEntity {
+public:
+  using entity_type = FlappyCatFloor;
+  using modifier_type = std::function<void(entity_type&)>;
 public:
   FlappyCatFloor(const FlappyCatGameConstants& gameConstants);
 
@@ -26,12 +29,16 @@ public:
   virtual void reset() override;
 
 public:
+  void setColor(const Color& floorColor, const Color& dirtColor);
+  void setResetModifier(const modifier_type& modifier);
+
+public:
   Position mPosition;
   Position mSize;
-  Color mColor;
   RectangleShape mFloor;
   FlappyCatChain<FlappyCatSpike> mFloorSpikes;
   RectangleShape mBackgroundDirt;
+  modifier_type mResetModifier;
 };
 
 

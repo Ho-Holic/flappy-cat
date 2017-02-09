@@ -27,7 +27,9 @@ public:
   virtual void drawOn(const Window& window) const override;
   virtual void moveTo(const Position& position) override;
   virtual const Position& position() const override;
-  virtual void reset() override;
+
+public:
+  void setColor(const Color& color);
 
 private:
   Position::position_type mGapInterval;

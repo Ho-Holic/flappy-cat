@@ -30,7 +30,7 @@ public:
   Position gravity() const;
 
 public:
-  float ballRadius() const;
+  float heroRadius() const;
   float cloudRadius() const;
   Position::position_type plateWidth() const;
   Position::position_type gapInterval() const;

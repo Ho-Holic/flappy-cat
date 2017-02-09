@@ -42,6 +42,9 @@ public:
   void setUpdateModifier(const modifier_type& modifier);
   void setWrapAroundModifier(const modifier_type& modifier);
 
+public:
+  void foreachLink(const modifier_type& modifier);
+
 private:
   Position::position_type chainLength() const;
   bool isWarpNeeded(const Position& point) const;
@@ -133,23 +136,23 @@ void FlappyCatChain<Link>::reset() {
 template <typename Link>
 void FlappyCatChain<Link>::update(const FrameDuration& time) {
 
-  for (size_t i = 0; i < mLinks.size(); ++i) {
+  for (Link& link : mLinks) {
 
-    mLinks[i].moveBy(mMovementDisplacement);
-    mLinks[i].update(time);
+    link.moveBy(mMovementDisplacement);
+    link.update(time);
 
     REQUIRE(TAG, mUpdateModifier != nullptr, "Update modifier must be not null");
-    mUpdateModifier(mLinks[i]);
+    mUpdateModifier(link);
 
-    Position p = mLinks[i].position();
+    Position p = link.position();
 
     if (isWarpNeeded(p)) {
 
       // TODO: If 'p.x()' bigger then '2.f * chainLength' then wrap fails, need a loop
-      mLinks[i].moveTo(Position(p.x() + chainLength(), p.y()));
+      link.moveTo(Position(p.x() + chainLength(), p.y()));
 
       REQUIRE(TAG, mWrapAroundModifier != nullptr, "WrapAround modifier must be not null");
-      mWrapAroundModifier(mLinks[i]);
+      mWrapAroundModifier(link);
     }
   }
 
@@ -215,6 +218,14 @@ template <typename Link>
 const Position& FlappyCatChain<Link>::position() const {
 
   return mPosition;
+}
+
+template <typename Link>
+void FlappyCatChain<Link>::foreachLink(const modifier_type& modifier) {
+
+  for (entity_type& link: mLinks) {
+    modifier(link);
+  }
 }
 
 

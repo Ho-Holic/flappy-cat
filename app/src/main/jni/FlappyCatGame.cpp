@@ -24,8 +24,15 @@ void FlappyCatGame::initialize() {
   mPlateWidth = mGameConstants.plateWidth();
 
   // floor
+
   mFloor.moveTo(Position(-mPlateWidth, -800.f));
   mFloor.resize(Position(mPlateWidth * 2.f, 0.f));
+  mFloor.setResetModifier(
+    [this](FlappyCatFloor& floor) {
+      floor.setColor(mGameConstants.colorScheme().block(),
+                     mGameConstants.colorScheme().dirt());
+    }
+  );
   mFloor.initialize();
 
   // moving blocks
@@ -39,6 +46,7 @@ void FlappyCatGame::initialize() {
     [this](FlappyCatWall& wall) {
       wall.setGapInterval(mGameConstants.gapInterval());
       wall.setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
+      wall.setColor(mGameConstants.colorScheme().block());
     }
   );
 
@@ -77,6 +85,7 @@ void FlappyCatGame::initialize() {
       Position varyingSize(mGameConstants.houseSize()
                            + Position(0.f, mGameConstants.randomOffsetFrom(0.f, 200.f)));
       house.resize(varyingSize);
+      house.setColor(mGameConstants.colorScheme().house());
     }
   );
 
@@ -103,19 +112,24 @@ void FlappyCatGame::initialize() {
     }
   );
   mBackgroundSky.initialize();
+
+  mHero.setResetModifier(
+    [this](FlappyCatHero& hero) {
+      hero.setRadius(mGameConstants.heroRadius());
+      hero.moveTo(Position(0.f, 0.f));
+      hero.setColor(mGameConstants.colorScheme().hero());
+    }
+  );
+  mHero.initialize();
 }
 
 void FlappyCatGame::reset() {
 
-  mGameConstants.reset();
-
   mGameState = PressButtonState;
 
-  // place ball
-  mHero.reset();
-  mHero.setRadius(mGameConstants.ballRadius());
-  mHero.moveTo(Position(0.f, 0.f));
+  mGameConstants.reset();
 
+  mHero.reset();
   mWalls.reset();
   mFloor.reset();
   mBackgroundCity.reset();

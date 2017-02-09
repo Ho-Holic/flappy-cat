@@ -9,6 +9,10 @@
 
 class FlappyCatHero : public FlappyCatEntity {
 public:
+  using entity_type = FlappyCatHero;
+  using modifier_type = std::function<void(entity_type&)>;
+
+public:
   FlappyCatHero(const FlappyCatGameConstants& gameConstants);
 
 public:
@@ -18,11 +22,14 @@ public:
   virtual void reset() override;
 
 public:
+  void setColor(const Color& color);
+  void setResetModifier(const modifier_type& modifier);
   void setRadius(float radius);
   float radius() const;
 
 private:
   CircleShape mBall;
+  modifier_type mResetModifier;
 };
 
 

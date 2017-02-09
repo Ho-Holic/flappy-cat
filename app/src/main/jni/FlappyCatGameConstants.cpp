@@ -39,7 +39,7 @@ Position FlappyCatGameConstants::gravity() const {
   return Position(0, -10.f);
 }
 
-float FlappyCatGameConstants::ballRadius() const {
+float FlappyCatGameConstants::heroRadius() const {
   return 50.f;
 }
 

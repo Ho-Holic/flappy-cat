@@ -54,10 +54,10 @@ void FlappyCatWall::drawOn(const Window& window) const {
   window.draw(mBottomBlock);
 }
 
-void FlappyCatWall::reset() {
+void FlappyCatWall::setColor(const Color& color) {
 
-  mTopBlock.setColor(gameConstants().colorScheme().block());
-  mBottomBlock.setColor(gameConstants().colorScheme().block());
+  mTopBlock.setColor(color);
+  mBottomBlock.setColor(color);
 }
 
 

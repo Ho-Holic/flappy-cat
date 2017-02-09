@@ -34,9 +34,3 @@ const FlappyCatGameConstants& FlappyCatEntity::gameConstants() const {
 
   return mGameConstants;
 }
-
-
-
-
-
-

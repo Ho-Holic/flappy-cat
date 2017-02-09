@@ -5,10 +5,10 @@ FlappyCatFloor::FlappyCatFloor(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
 , mPosition(0.f, 0.f)
 , mSize(0.f, 0.f)
-, mColor()
 , mFloor(Position(0.f, 0.f), Position(0.f, 0.f))
 , mFloorSpikes(gameConstants)
-, mBackgroundDirt(Position(0.f, 0.f), Position(0.f, 0.f)){
+, mBackgroundDirt(Position(0.f, 0.f), Position(0.f, 0.f))
+, mResetModifier([](entity_type&){}) {
   //
 }
 
@@ -62,17 +62,35 @@ const Position& FlappyCatFloor::position() const {
 void FlappyCatFloor::reset() {
 
   mFloorSpikes.reset();
-
-  mFloor.setColor(gameConstants().colorScheme().block());
-  // TODO: fix this color issue
-  //mFloorSpikes.setColor(gameConstants().colorScheme().block());
-  mBackgroundDirt.setColor(gameConstants().colorScheme().dirt());
+  mResetModifier(*this);
 }
 
 const Shape& FlappyCatFloor::boundingBox() const {
 
   return mFloor;
 }
+
+void FlappyCatFloor::setColor(const Color& floorColor, const Color& dirtColor) {
+
+  mFloor.setColor(floorColor);
+
+  mFloorSpikes.foreachLink(
+    [&floorColor](FlappyCatSpike& spike) {
+      spike.setColor(floorColor);
+    }
+  );
+
+  mBackgroundDirt.setColor(dirtColor);
+}
+
+void FlappyCatFloor::setResetModifier(const modifier_type& modifier) {
+
+  mResetModifier = modifier;
+}
+
+
+
+
 
 
 
