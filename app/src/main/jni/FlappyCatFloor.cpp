@@ -3,11 +3,11 @@
 
 FlappyCatFloor::FlappyCatFloor(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
-, mPosition(0.f, 0.f)
-, mSize(0.f, 0.f)
-, mFloor(Position(0.f, 0.f), Position(0.f, 0.f))
+, mPosition()
+, mSize()
+, mFloor()
 , mFloorSpikes(gameConstants)
-, mBackgroundDirt(Position(0.f, 0.f), Position(0.f, 0.f))
+, mBackgroundDirt()
 , mResetModifier([](entity_type&){}) {
   //
 }

@@ -67,11 +67,11 @@ private:
 template <typename Link>
 FlappyCatChain<Link>::FlappyCatChain(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
-, mPosition(Position(0.f, 0.f))
-, mSize(Position(0.f, 0.f))
-, mLinkSize(Position(0.f, 0.f))
-, mOffset(Position(0.f, 0.f))
-, mMovementDisplacement(Position(0.f, 0.f))
+, mPosition()
+, mSize()
+, mLinkSize()
+, mOffset(0.f, 0.f)
+, mMovementDisplacement(0.f, 0.f)
 , mLinks()
 , mResetModifier([](entity_type&){})
 , mUpdateModifier([](entity_type&){})
@@ -112,7 +112,7 @@ void FlappyCatChain<Link>::initialize() {
 
   for (std::size_t i = 0; i < linkCount;  ++i) {
 
-    mLinks.emplace_back(mPosition, mLinkSize, gameConstants());
+    mLinks.emplace_back(gameConstants());
   }
 }
 

@@ -18,6 +18,11 @@ RectangleShape::RectangleShape(const Position& position, const Position& size)
   update();
 }
 
+RectangleShape::RectangleShape()
+: RectangleShape(Position(), Position()) {
+  //
+}
+
 void RectangleShape::setColor(const Color& color) {
 
   render().setBrushColor(color);
@@ -52,3 +57,5 @@ const VertexBasedRender& RectangleShape::render() const {
 void RectangleShape::update() {
   render().update(*this);
 }
+
+

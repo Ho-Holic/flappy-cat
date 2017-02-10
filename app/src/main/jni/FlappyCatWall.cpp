@@ -2,11 +2,10 @@
 #include <physics/Collide.h>
 #include "FlappyCatWall.h"
 
-FlappyCatWall::FlappyCatWall(const Position& position, const Position& size,
-                             const FlappyCatGameConstants& gameConstants)
+FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
-, mTopBlock(position, size)
-, mBottomBlock(position + 120.f, size)
+, mTopBlock()
+, mBottomBlock()
 , mGapInterval(0.f)
 , mGapDisplacement(0.f) {
   //
@@ -59,6 +58,14 @@ void FlappyCatWall::setColor(const Color& color) {
   mTopBlock.setColor(color);
   mBottomBlock.setColor(color);
 }
+
+void FlappyCatWall::resize(const Position& size) {
+
+  mTopBlock.geometry().resize(size);
+  mBottomBlock.geometry().resize(size);
+}
+
+
 
 
 

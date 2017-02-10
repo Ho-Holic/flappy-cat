@@ -11,8 +11,7 @@ class FlappyCatSpike : public FlappyCatEntity {
 public:
   // TODO: remove position and size from constructor. Need to fix issue with empty emplace_back()
   // TODO: it has some bug with call to empty constructor
-  FlappyCatSpike(const Position& position, const Position& size,
-                 const FlappyCatGameConstants& gameConstants);
+  FlappyCatSpike(const FlappyCatGameConstants& gameConstants);
 
 public:
   virtual void drawOn(const Window& window) const override;

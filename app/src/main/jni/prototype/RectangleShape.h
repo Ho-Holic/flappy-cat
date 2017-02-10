@@ -10,6 +10,7 @@
 class RectangleShape : public Shape {
 public:
   RectangleShape(const Position& position, const Position& size);
+  RectangleShape();
 
 public:
   void setColor(const Color& color);

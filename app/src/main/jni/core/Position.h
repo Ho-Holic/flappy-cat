@@ -7,6 +7,7 @@ class Position {
 public:
   typedef float position_type;
 public:
+  Position();
   Position(position_type x, position_type y);
 public:
   position_type x() const;

@@ -14,8 +14,7 @@ class FlappyCatWall : public FlappyCatEntity {
 public:
   // TODO: remove position and size from constructor. Need to fix issue with emplace_back()
   // TODO: it has some bug with call to empty constructor
-  FlappyCatWall(const Position& position, const Position& size,
-                const FlappyCatGameConstants& gameConstants);
+  FlappyCatWall(const FlappyCatGameConstants& gameConstants);
 
 public:
   void setGapInterval(Position::position_type interval);
@@ -27,6 +26,7 @@ public:
   virtual void drawOn(const Window& window) const override;
   virtual void moveTo(const Position& position) override;
   virtual const Position& position() const override;
+  virtual void resize(const Position& size) override;
 
 public:
   void setColor(const Color& color);

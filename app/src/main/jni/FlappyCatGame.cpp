@@ -24,16 +24,15 @@ void FlappyCatGame::initialize() {
   mPlateWidth = mGameConstants.plateWidth();
 
   // floor
-
   mFloor.moveTo(Position(-mPlateWidth, -800.f));
   mFloor.resize(Position(mPlateWidth * 2.f, 0.f));
+
   mFloor.setResetModifier(
     [this](FlappyCatFloor& floor) {
       floor.setColor(mGameConstants.colorScheme().block(),
                      mGameConstants.colorScheme().dirt());
     }
   );
-  mFloor.initialize();
 
   // moving blocks
   mWalls.moveTo(Position(-mPlateWidth, 0.f));
@@ -58,6 +57,7 @@ void FlappyCatGame::initialize() {
       // circle origin in bottom left so we shift by radius
       Position center = mHero.position() + Position(radius, radius);
 
+      // TODO: This type of interface? if (collide(wall, mHero).or(wall, mFloor)){}
       if (wall.collideWithCircle(center, radius) || Collide::circleRect(center, radius,
                                                                         mFloor.boundingBox())) {
         mGameState = LoseState;
@@ -71,8 +71,6 @@ void FlappyCatGame::initialize() {
       wall.setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
     }
   );
-
-  mWalls.initialize();
 
   // city buildings
   mBackgroundCity.moveTo(Position(-mPlateWidth, -800.f));
@@ -96,7 +94,6 @@ void FlappyCatGame::initialize() {
       house.resize(varyingSize);
     }
   );
-  mBackgroundCity.initialize();
 
   // sky with clouds
   mBackgroundSky.setResetModifier(
@@ -111,7 +108,6 @@ void FlappyCatGame::initialize() {
       cloud.setColor(mGameConstants.colorScheme().cloud());
     }
   );
-  mBackgroundSky.initialize();
 
   mHero.setResetModifier(
     [this](FlappyCatHero& hero) {
@@ -120,6 +116,12 @@ void FlappyCatGame::initialize() {
       hero.setColor(mGameConstants.colorScheme().hero());
     }
   );
+
+  // initialize all stuff
+  mFloor.initialize();
+  mWalls.initialize();
+  mBackgroundCity.initialize();
+  mBackgroundSky.initialize();
   mHero.initialize();
 }
 

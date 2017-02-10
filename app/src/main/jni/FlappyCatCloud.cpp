@@ -7,7 +7,7 @@
 
 FlappyCatCloud::FlappyCatCloud(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
-, mPosition(0.f, 0.f)
+, mPosition()
 , mCloudParts()
 , mResetModifier([](entity_type&){}){
   //
