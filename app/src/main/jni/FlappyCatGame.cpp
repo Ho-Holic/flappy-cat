@@ -38,7 +38,7 @@ void FlappyCatGame::initialize() {
   mWalls.moveTo(Position(-mPlateWidth, 0.f));
   mWalls.resize(Position(mPlateWidth * 2.f, 0.f));
   mWalls.setLinkSize(mGameConstants.blockSize());
-  mWalls.setOffset(mGameConstants.blockSize());
+  mWalls.setOffset(mGameConstants.blockSize() * 2.f);
   mWalls.setMovementDisplacement(Position(-10.f, 0.f));
 
   mWalls.setResetModifier(
@@ -109,6 +109,14 @@ void FlappyCatGame::initialize() {
     }
   );
 
+  mHero.setUpdateModifier(
+    [this](FlappyCatHero& hero, const FrameDuration& frameDuration) {
+
+
+      hero.moveBy(hero.distance());
+    }
+  );
+
   mHero.setResetModifier(
     [this](FlappyCatHero& hero) {
       hero.setRadius(mGameConstants.heroRadius());
@@ -145,6 +153,8 @@ void FlappyCatGame::processEvent(const Event& event) {
 
     mGameState = PlayState;
 
+    mHero.setAcceleration(Position(0.f, 0.f));
+    mHero.setVelocity(Position(0.f, 0.f));
     mHero.moveBy(Position(0.f, 200.f));
   }
 }
@@ -153,7 +163,7 @@ void FlappyCatGame::update(const FrameDuration& time) {
 
   if (mGameState == PlayState) {
 
-    mHero.moveBy(mGameConstants.gravity());
+    mHero.update(time);
     mWalls.update(time);
   }
 

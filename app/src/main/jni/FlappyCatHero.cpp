@@ -4,7 +4,8 @@
 FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
 , mBall()
-, mResetModifier([](entity_type&){}) {
+, mResetModifier([](entity_type&){})
+, mUpdateModifier([](entity_type&, const FrameDuration&){}) {
   //
 }
 
@@ -21,6 +22,12 @@ void FlappyCatHero::setRadius(float radius) {
 void FlappyCatHero::moveTo(const Position& position) {
 
   mBall.transformation().setPosition(position);
+}
+
+void FlappyCatHero::update(const FrameDuration& time) {
+
+  FlappyCatEntity::update(time);
+  mUpdateModifier(*this, time);
 }
 
 void FlappyCatHero::drawOn(const Window& window) const {
@@ -48,6 +55,7 @@ void FlappyCatHero::setColor(const Color& color) {
   mBall.setColor(color);
 }
 
+void FlappyCatHero::setUpdateModifier(const update_modifier_type& modifier) {
 
-
-
+  mUpdateModifier = modifier;
+}

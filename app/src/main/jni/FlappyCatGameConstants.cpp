@@ -35,8 +35,8 @@ Position::position_type FlappyCatGameConstants::gapInterval() const {
   return 300.f;
 }
 
-Position FlappyCatGameConstants::gravity() const {
-  return Position(0, -10.f);
+Position::position_type FlappyCatGameConstants::gravity() const {
+  return 10.f;
 }
 
 float FlappyCatGameConstants::heroRadius() const {

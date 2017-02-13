@@ -27,7 +27,7 @@ public:
   Position houseSize() const;
   Position blockSize() const;
   Position spikeSize() const;
-  Position gravity() const;
+  Position::position_type gravity() const;
 
 public:
   float heroRadius() const;

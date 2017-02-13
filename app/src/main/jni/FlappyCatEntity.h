@@ -16,7 +16,7 @@ public:
 public:
   virtual void initialize();
   virtual void reset();
-  virtual void update(const FrameDuration& time);
+  virtual void update(const FrameDuration& frameDuration);
   virtual void drawOn(const Window& window) const = 0;
 
   virtual const Position& position() const = 0;
@@ -27,9 +27,17 @@ public:
 
 public:
   const FlappyCatGameConstants& gameConstants() const;
+  const Position& acceleration() const;
+  const Position& velocity() const;
+  const Position& distance() const;
+  void setAcceleration(const Position& acceleration);
+  void setVelocity(const Position& velocity);
 
 private:
   const FlappyCatGameConstants& mGameConstants;
+  Position mAcceleration;
+  Position mVelocity;
+  Position mDistance;
 };
 
 

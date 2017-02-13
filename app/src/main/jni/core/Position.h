@@ -5,6 +5,7 @@
 
 class Position {
 public:
+  // TODO: replace with 'value_type'
   typedef float position_type;
 public:
   Position();
