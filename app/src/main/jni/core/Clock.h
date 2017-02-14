@@ -7,6 +7,8 @@
 using Clock = std::chrono::high_resolution_clock;
 using Time = std::chrono::time_point<Clock>;
 using ClockDuration = Clock::duration;
-using FrameDuration = std::chrono::duration<float , std::ratio<1, 60>>; // `1/60` of second
+
+// TODO: move this to game code, this is not a engine code
+using FrameDuration = std::chrono::duration<float , std::ratio<1, 60>>; // '1/60' of second
 
 #endif //FLAPPY_CAT_ANDROIDCLOCK_H

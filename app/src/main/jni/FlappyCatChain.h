@@ -135,6 +135,7 @@ void FlappyCatChain<Link>::reset() {
     mLinks[i].resize(mLinkSize);
 
     REQUIRE(TAG, mResetModifier != nullptr, "Reset modifier must be not null");
+
     mResetModifier(mLinks[i]);
   }
 }

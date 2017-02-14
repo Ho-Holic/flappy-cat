@@ -11,7 +11,7 @@
 // without collecting return values.
 //
 // Any copy of signal resets it, because you get error
-// accessing `this` pointer of maybe deleted object
+// accessing 'this' pointer of maybe deleted object
 // and other bad stuff can happen
 
 template <typename SlotFunction>
@@ -42,14 +42,14 @@ Signal<SlotFunction>::Signal(const Signal& that)
 : mEmit(nullptr) {
 
   UNUSED(that);
-  CAUTION("Variable `mEmit` intentionally set to `nullptr`");
+  CAUTION("Variable 'mEmit' intentionally set to 'nullptr'");
 }
 
 template <typename SlotFunction>
 Signal<SlotFunction>& Signal<SlotFunction>::operator = (Signal<SlotFunction>& that) {
 
   UNUSED(that);
-  CAUTION("Variable `mEmit` intentionally set to `nullptr`");
+  CAUTION("Variable 'mEmit' intentionally set to 'nullptr'");
 
   mEmit = nullptr;
 

@@ -63,9 +63,9 @@ private:
   void terminateNativeWindow();
 
 private:
-  virtual void main() = 0; // private because launched from `exec` function
+  virtual void main() = 0; // private because launched from 'exec' function
 
-private: // android `C` callbacks
+private: // android 'C' callbacks
   static void onDestroy(ANativeActivity* activity);
   static void onStart(ANativeActivity* activity);
   static void onResume(ANativeActivity* activity);

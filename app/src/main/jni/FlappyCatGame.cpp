@@ -54,7 +54,7 @@ void FlappyCatGame::initialize() {
     [this](FlappyCatWall& wall) {
 
       float radius = mHero.radius();
-      // TODO: implement proper origin in `transformation` and remove this code
+      // TODO: implement proper origin in 'transformation' and remove this code
       // circle origin in bottom left so we shift by radius
       Position center = mHero.position() + Position(radius, radius);
 
@@ -150,13 +150,15 @@ void FlappyCatGame::reset() {
 
 void FlappyCatGame::processEvent(const Event& event) {
 
-  if (event.type() == TouchEventType) {
+  if (event.type() == AndroidEvent::EventType::TouchEventType) {
 
     mGameState = PlayState;
 
-    mHero.setAcceleration(Position(0.f, 0.f));
-    mHero.setVelocity(Position(0.f, 0.f));
-    mHero.moveBy(Position(0.f, 200.f));
+    // i'am falling with speed = v, acceleration = a, what must be 'v' and 'a' to pass distance 'd'?
+
+    mHero.setAcceleration(Position(0.f, 600.f));
+    mHero.setVelocity(Position(0.f, 200.f));
+    //mHero.moveBy(Position(0.f, 200.f));
   }
 }
 

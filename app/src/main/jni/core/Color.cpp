@@ -49,7 +49,7 @@ uint8_t Color::alpha() const {
 
 Color Color::grayscale() const {
 
-  // explicit integer promotion `int(mRed)`
+  // explicit integer promotion 'int(mRed)'
 
   uint8_t mid = static_cast<uint8_t>((int(mRed) + mGreen + mBlue) / 3);
   return Color(mid, mid, mid, 255);
@@ -68,7 +68,7 @@ Color& Color::operator *= (float factor) {
 
 Color operator + (const Color& left, const Color& right)  {
 
-  // explicit integer promotion `int(left.mRed)`
+  // explicit integer promotion 'int(left.mRed)'
 
   return Color(uint8_t(std::min(int(left.mRed)   + right.mRed,   255)),
                       uint8_t(std::min(int(left.mGreen) + right.mGreen, 255)),
@@ -78,7 +78,7 @@ Color operator + (const Color& left, const Color& right)  {
 
 Color operator - (const Color& left, const Color& right) {
 
-  // explicit integer promotion `int(left.mRed)`
+  // explicit integer promotion 'int(left.mRed)'
 
   return Color(uint8_t(std::max(int(left.mRed)   - right.mRed,   0)),
                       uint8_t(std::max(int(left.mGreen) - right.mGreen, 0)),
@@ -90,7 +90,7 @@ Color operator - (const Color& left, const Color& right) {
 
 Color operator * (const Color& left, const Color& right)  {
 
-  // explicit integer promotion `int(left.mRed)`
+  // explicit integer promotion 'int(left.mRed)'
 
   return Color(uint8_t(int(left.mRed)   * right.mRed   / 255),
                       uint8_t(int(left.mGreen) * right.mGreen / 255),

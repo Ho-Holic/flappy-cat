@@ -26,7 +26,8 @@ RectangleShape::RectangleShape()
 void RectangleShape::setColor(const Color& color) {
 
   render().setBrushColor(color);
-  // TODO: remove this `update` and add `foreach` to render and set correct color for vertex
+  // TODO: remove this 'update' and add 'foreach' to render and set correct color for vertex
+  // TODO: update takes extra time to update position that does not changed
   update();
 }
 

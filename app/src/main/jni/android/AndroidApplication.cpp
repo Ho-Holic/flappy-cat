@@ -41,17 +41,17 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
   activity->callbacks->onInputQueueDestroyed   = &AndroidApplication::onInputQueueDestroyed;
   activity->callbacks->onContentRectChanged    = &AndroidApplication::onContentRectChanged;
 
-  CAUTION("Memory allocated before constructor so we can assign `this` here, but if you"
+  CAUTION("Memory allocated before constructor so we can assign 'this' here, but if you"
           "want to move this code from constructor and assign to pointer of class that extends"
           "AndroidApplication, you must cast to AndroidApplication, because callbacks would"
-          "downcast from `void*` and you would get problems under virtual inheritance."
+          "downcast from 'void*' and you would get problems under virtual inheritance."
           "You would get wrong address, so do this please:"
-          "`activity->instance = static_cast<AndroidApplication*>(derivedPointer)`");
+          "activity->instance = static_cast<AndroidApplication*>(derivedPointer)");
   activity->instance = this;
 }
 
 AndroidApplication::~AndroidApplication() {
-  // this destructor intentionally left blank and moved to `.cpp` file
+  // this destructor intentionally left blank and moved to '.cpp' file
   Log::i(TAG, "Deleted! \n"); // delete this line when app is done
 }
 
@@ -244,20 +244,20 @@ void AndroidApplication::exec() {
     UNUSED(lock); // unlocks when goes out of a scope
   }
 
-  // start `system event loop`
+  // start 'system event loop'
 
   // if native window is not ready wait for appropriate event
-  // then enter user `main`, if window is not ready again fall back to
+  // then enter user 'main', if window is not ready again fall back to
   // system event loop and wait for appropriate event again
 
   while ( ! isDestroyRequested()) {
 
     AndroidEvent event;
-    pollEvent(event); // we call `pollEvent` to run `processEvent` function
+    pollEvent(event); // we call 'pollEvent' to run 'processEvent' function
 
     if (mWindow.isReady()) {
 
-      // start `user event loop`
+      // start 'user event loop'
       main();
     }
   }
@@ -314,12 +314,14 @@ void AndroidApplication::initialize() {
 
 void AndroidApplication::changeActivityStateTo(AndroidApplication::ActivityState activityState) {
 
+  using EventType = AndroidEvent::EventType;
+
   AndroidEvent event;
   switch (activityState) {
-    case StartActivityState:  event.setEventType(ActivityStartEventType);  break;
-    case ResumeActivityState: event.setEventType(ActivityResumeEventType); break;
-    case PauseActivityState:  event.setEventType(ActivityPauseEventType);  break;
-    case StopActivityState:   event.setEventType(ActivityStopEventType);   break;
+    case StartActivityState:  event.setEventType(EventType::ActivityStartEventType);  break;
+    case ResumeActivityState: event.setEventType(EventType::ActivityResumeEventType); break;
+    case PauseActivityState:  event.setEventType(EventType::ActivityPauseEventType);  break;
+    case StopActivityState:   event.setEventType(EventType::ActivityStopEventType);   break;
     default: break;
   }
 
@@ -339,8 +341,8 @@ void AndroidApplication::changeActivityStateTo(AndroidApplication::ActivityState
 
 void AndroidApplication::setNativeWindow(ANativeWindow* window) {
 
-  AndroidEvent event(window ? NativeWindowCreatedEventType
-                            : NativeWindowDestroyedEventType);
+  AndroidEvent event(window ? AndroidEvent::EventType::NativeWindowCreatedEventType
+                            : AndroidEvent::EventType::NativeWindowDestroyedEventType);
 
   std::lock_guard<std::mutex> lock(mMutex);
 
@@ -355,7 +357,9 @@ void AndroidApplication::setNativeWindow(ANativeWindow* window) {
 
 void AndroidApplication::updateNativeWindowSize() {
 
-  AndroidEvent event(ResizedEventType);
+  using EventType = AndroidEvent::EventType;
+
+  AndroidEvent event(EventType::ResizedEventType);
 
   std::lock_guard<std::mutex> lock(mMutex);
 
@@ -370,10 +374,12 @@ void AndroidApplication::updateNativeWindowSize() {
 
 void AndroidApplication::changeFocus(AndroidApplication::Focus focus) {
 
+  using EventType = AndroidEvent::EventType;
+
   AndroidEvent event;
   switch (focus) {
-    case GainFocus: event.setEventType(GainFocusEventType);  break;
-    case LostFocus: event.setEventType(LostFocusEventType);  break;
+    case GainFocus: event.setEventType(EventType::GainFocusEventType);  break;
+    case LostFocus: event.setEventType(EventType::LostFocusEventType);  break;
     default: break;
   }
 
@@ -423,7 +429,7 @@ void AndroidApplication::terminate() {
 
   UNUSED(lock); // unlocks when goes out of a scope
 
-  CAUTION("If you `unlock` mutex, you can't touch `this` object");
+  CAUTION("If you 'unlock' mutex, you can't touch 'this' object");
 }
 
 // from event handler thread
@@ -433,19 +439,21 @@ void AndroidApplication::processEvent(const AndroidEvent& event) {
   CAUTION("Don't forget to lock mutex when you add new processing parts here"
           "If you touch class members of course");
 
+  using EventType = AndroidEvent::EventType;
+
   switch (event.type()) {
 
-    case ActivityStartEventType:  setActivityState(StartActivityState);  break;
-    case ActivityResumeEventType: setActivityState(ResumeActivityState); break;
-    case ActivityPauseEventType:  setActivityState(PauseActivityState);  break;
-    case ActivityStopEventType:   setActivityState(StopActivityState);   break;
+    case EventType::ActivityStartEventType:  setActivityState(StartActivityState);  break;
+    case EventType::ActivityResumeEventType: setActivityState(ResumeActivityState); break;
+    case EventType::ActivityPauseEventType:  setActivityState(PauseActivityState);  break;
+    case EventType::ActivityStopEventType:   setActivityState(StopActivityState);   break;
 
-    case NativeWindowCreatedEventType:   initializeNativeWindow(); break;
-    case NativeWindowDestroyedEventType: terminateNativeWindow(); break;
+    case EventType::NativeWindowCreatedEventType:   initializeNativeWindow(); break;
+    case EventType::NativeWindowDestroyedEventType: terminateNativeWindow(); break;
 
-    case ResizedEventType: resizeNativeWindow(event); break;
+    case EventType::ResizedEventType: resizeNativeWindow(event); break;
 
-    case EmptyEventType: break;
+    case EventType::EmptyEventType: break;
   }
 
 }

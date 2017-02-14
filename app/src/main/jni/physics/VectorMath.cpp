@@ -19,7 +19,7 @@ Position VectorMath::projectionPointLine(const Position& p, const Position& a, c
   Position c = b - a;
   Position::value_type factor = VectorMath::dot(c, p-a) / (c.x() * c.x() + c.y() * c.y());
 
-  return (c * factor) + a; // result is projection of `p` on `ab`
+  return (c * factor) + a; // result is projection of 'p' on 'ab'
 }
 
 

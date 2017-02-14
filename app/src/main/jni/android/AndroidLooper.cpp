@@ -94,7 +94,7 @@ int32_t AndroidLooper::dispatchTouchEvent(AInputEvent* inputEvent, AndroidEvent&
   float x = AMotionEvent_getX(inputEvent, 0);
   float y = AMotionEvent_getY(inputEvent, 0);
 
-  event.setEventType(TouchEventType);
+  event.setEventType(AndroidEvent::EventType::TouchEventType);
   event.setTouchEventData(x, y);
 
   return 1;

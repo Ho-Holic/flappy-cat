@@ -23,7 +23,7 @@ public:
 
 namespace {
 
-  // make this functions `free` to avoid complex template specialization for variadic templates
+  // make this functions 'free' to avoid complex template specialization for variadic templates
 
   template<typename... Args>
   inline int android_log_print(int priority,

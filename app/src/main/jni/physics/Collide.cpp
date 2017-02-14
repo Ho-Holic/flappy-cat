@@ -55,7 +55,7 @@ bool Collide::lineCircle(const Position& circleCenter, float circleRadius,
 
   bool isPointOnLine = distanceAC + distanceCB <= distanceAB; // insure we inside a line
 
-  // TODO: if circle is very big compared to line `ab`, collide would fail
+  // TODO: if circle is very big compared to line 'ab', collide would fail
   // TODO: For example consider line segment inside the circle but projected point is outside of
   // TODO: this line segment, but we still in the circle yet =)
   return isPointOnLine && (VectorMath::distance(circleCenter, c) <= circleRadius);

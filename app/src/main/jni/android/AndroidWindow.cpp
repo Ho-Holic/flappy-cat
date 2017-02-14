@@ -99,9 +99,9 @@ void AndroidWindow::initialize() {
                                       supportedConfigs.get(), numConfigs,
                                       &numConfigs);
 
-  REQUIRE(TAG, numConfigs != 0, "Value of `numConfigs` must be positive");
+  REQUIRE(TAG, numConfigs != 0, "Value of 'numConfigs' must be positive");
 
-  // match required configuration by `configAttribs`
+  // match required configuration by 'configAttribs'
   EGLConfig config = nullptr;
 
   EGLint configIndex = 0;

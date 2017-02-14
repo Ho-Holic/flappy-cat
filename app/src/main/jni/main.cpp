@@ -14,28 +14,28 @@
 //
 //    1. Namespaces not used - project too small
 //
-//    2. Java   `Log::i(TAG, "Creating: %p\n", activity);` was prefered to
-//       C++ish `log_i(TAG) << "Creating: " << activity << "\n";` because of confusion
+//    2. Java   'Log::i(TAG, "Creating: %p\n", activity);' was prefered to
+//       C++ish 'log_i(TAG) << "Creating: " << activity << "\n";' because of confusion
 //       with std::log() function and less error prone implementation
 //
-//    3. Macro `DISABLE_COPY` prefered to manual `= delete` because of easy search and maintenance
+//    3. Macro 'DISABLE_COPY' prefered to manual '= delete' because of easy search and maintenance
 //
-//    4. Initialize smart pointers  `shared_ptr(nullptr)` instead of `shared_ptr()`
+//    4. Initialize smart pointers  'shared_ptr(nullptr)' instead of 'shared_ptr()'
 //       for readability and back compatibility with raw pointers
 //
 //    5. Use of UNUSED macro for every case, even if I can omit it in well
-//       known places like `std::lock_guard`
+//       known places like 'std::lock_guard'
 //
 
 //  Known errors, glitches and strange behaviour
 //
-//    1. Linker error `unused DT entry: type blahhh arg blabla`
+//    1. Linker error 'unused DT entry: type blahhh arg blabla'
 //       http://stackoverflow.com/questions/33206409/unused-dt-entry-type-0x1d-arg
 //
-//    2. In `app/build.gradle` link against `atomic`
+//    2. In 'app/build.gradle' link against 'atomic'
 //       https://code.google.com/p/android/issues/detail?id=68779
 //
-//    3. If Java can't find `ANativeActivity_onCreate`, read article `Make sure glue isn't stripped`
+//    3. If Java can't find 'ANativeActivity_onCreate', read article 'Make sure glue isn't stripped'
 //       http://blog.beuc.net/posts/Make_sure_glue_isn__39__t_stripped/
 
 extern "C" {
@@ -48,8 +48,8 @@ extern "C" {
 
     FlappyCatApplication* application = new FlappyCatApplication(activity,
                                                                  savedState, savedStateSize);
-    // Create `event handler` thread
-    //   - don't capture `application` pointer, this would produce less readable code
+    // Create 'event handler' thread
+    //   - don't capture 'application' pointer, this would produce less readable code
     auto eventLoopWorker = [](FlappyCatApplication* application) -> void {
       application->exec();
     };
@@ -57,7 +57,7 @@ extern "C" {
     std::thread eventLoopThread(std::ref(eventLoopWorker), std::ref(application));
     eventLoopThread.detach();
 
-    // Wait until `eventLoopWorker` properly lunch the event loop
+    // Wait until 'eventLoopWorker' properly lunch the event loop
     application->waitForStarted();
   }
 }

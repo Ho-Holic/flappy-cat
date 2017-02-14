@@ -12,7 +12,7 @@
 
 class FlappyCatWall : public FlappyCatEntity {
 public:
-  // TODO: remove position and size from constructor. Need to fix issue with emplace_back()
+  // TODO: Need to fix issue with emplace_back()
   // TODO: it has some bug with call to empty constructor
   FlappyCatWall(const FlappyCatGameConstants& gameConstants);
 

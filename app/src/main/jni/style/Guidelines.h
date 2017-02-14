@@ -24,11 +24,11 @@
  *
  * Avoid common warnings and static analyzer false positives.
  *
- * Implemented as `for(;;)` instead of `while(true)` or `while(1)` because
- * some compilers can warn about `condition is always true` and some
+ * Implemented as 'for(;;)' instead of 'while(true)' or ''while(1)' because
+ * some compilers can warn about 'condition is always true' and some
  * static analyzers would have a lot of false positive on this issue
- * along with real ones like typo `while(i = 1)` when programmer
- * intended to write `while(i == 1)`.
+ * along with real ones like typo 'while(i = 1)' when programmer
+ * intended to write 'while(i == 1)'.
  *
  * ... and inspired by Rust language
  */

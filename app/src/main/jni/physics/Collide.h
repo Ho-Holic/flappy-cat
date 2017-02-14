@@ -11,7 +11,7 @@ public:
                          const Shape& rect);
 
   // replace Shape w/ TransformMatrix and operate with this structure
-  // to eliminate code like `rect.transformation().position() + rect.geometry().pointAt(0)`
+  // to eliminate code like 'rect.transformation().position() + rect.geometry().pointAt(0)'
   static bool pointRect(const Position& p,
                         const Position& a,
                         const Position& b,
