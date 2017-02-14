@@ -17,8 +17,8 @@ public:
   FlappyCatWall(const FlappyCatGameConstants& gameConstants);
 
 public:
-  void setGapInterval(Position::position_type interval);
-  void setGapDisplacement(Position::position_type displacement);
+  void setGapInterval(Position::value_type interval);
+  void setGapDisplacement(Position::value_type displacement);
   bool collideWithCircle(const Position& center, float radius);
 
 public:
@@ -32,8 +32,8 @@ public:
   void setColor(const Color& color);
 
 private:
-  Position::position_type mGapInterval;
-  Position::position_type mGapDisplacement;
+  Position::value_type mGapInterval;
+  Position::value_type mGapDisplacement;
   RectangleShape mTopBlock;
   RectangleShape mBottomBlock;
 };

@@ -27,15 +27,15 @@ Position FlappyCatGameConstants::blockSize() const {
   return Position(300, 200);
 }
 
-Position::position_type FlappyCatGameConstants::plateWidth() const {
+Position::value_type FlappyCatGameConstants::plateWidth() const {
   return 1000.f;
 }
 
-Position::position_type FlappyCatGameConstants::gapInterval() const {
+Position::value_type FlappyCatGameConstants::gapInterval() const {
   return 300.f;
 }
 
-Position::position_type FlappyCatGameConstants::gravity() const {
+Position::value_type FlappyCatGameConstants::gravity() const {
   return 10.f;
 }
 
@@ -43,9 +43,9 @@ float FlappyCatGameConstants::heroRadius() const {
   return 50.f;
 }
 
-Position::position_type
-FlappyCatGameConstants::randomOffsetFrom(Position::position_type initial,
-                                         Position::position_type maxOffset,
+Position::value_type
+FlappyCatGameConstants::randomOffsetFrom(Position::value_type initial,
+                                         Position::value_type maxOffset,
                                          Sign sign) {
 
   std::normal_distribution<float> distribution(initial, maxOffset);

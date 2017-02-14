@@ -27,18 +27,18 @@ public:
   Position houseSize() const;
   Position blockSize() const;
   Position spikeSize() const;
-  Position::position_type gravity() const;
+  Position::value_type gravity() const;
 
 public:
   float heroRadius() const;
   float cloudRadius() const;
-  Position::position_type plateWidth() const;
-  Position::position_type gapInterval() const;
+  Position::value_type plateWidth() const;
+  Position::value_type gapInterval() const;
 
 public:
-  Position::position_type randomOffsetFrom(Position::position_type initial,
-                                           Position::position_type maxOffset,
-                                           Sign sign = Sign::Positive);
+  Position::value_type randomOffsetFrom(Position::value_type initial,
+                                        Position::value_type maxOffset,
+                                        Sign sign = Sign::Positive);
 
 private:
   std::random_device mRandomDevice;

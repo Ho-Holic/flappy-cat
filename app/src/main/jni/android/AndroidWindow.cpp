@@ -409,8 +409,8 @@ void AndroidWindow::resize(int32_t width, int32_t height) {
   mWidth = width;
   mHeight = height;
 
-  mView.setPosition(Position(static_cast<Position::position_type>(mWidth),
-                             static_cast<Position::position_type>(mHeight)));
+  mView.setPosition(Position(static_cast<Position::value_type>(mWidth),
+                             static_cast<Position::value_type>(mHeight)));
 
   // Set the viewport
   glViewport(0, 0, mWidth, mHeight);

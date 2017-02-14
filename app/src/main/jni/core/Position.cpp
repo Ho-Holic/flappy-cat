@@ -1,7 +1,7 @@
 // self
 #include "Position.h"
 
-Position::Position(position_type x, position_type y)
+Position::Position(value_type x, value_type y)
 : mX(x)
 , mY(y) {
   //
@@ -12,12 +12,12 @@ Position::Position()
   //
 }
 
-Position::position_type Position::x() const {
+Position::value_type Position::x() const {
 
   return mX;
 }
 
-Position::position_type Position::y() const {
+Position::value_type Position::y() const {
 
   return mY;
 }

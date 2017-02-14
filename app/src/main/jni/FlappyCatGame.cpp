@@ -37,8 +37,9 @@ void FlappyCatGame::initialize() {
   // moving blocks
   mWalls.moveTo(Position(-mPlateWidth, 0.f));
   mWalls.resize(Position(mPlateWidth * 2.f, 0.f));
+  mWalls.setStartOffset(Position(mPlateWidth * 4.f, 0.f));
   mWalls.setLinkSize(mGameConstants.blockSize());
-  mWalls.setOffset(mGameConstants.blockSize() * 2.f);
+  mWalls.setOffsetBetweenLinks(mGameConstants.blockSize() * 2.f);
   mWalls.setMovementDisplacement(Position(-10.f, 0.f));
 
   mWalls.setResetModifier(
@@ -120,7 +121,7 @@ void FlappyCatGame::initialize() {
   mHero.setResetModifier(
     [this](FlappyCatHero& hero) {
       hero.setRadius(mGameConstants.heroRadius());
-      hero.moveTo(Position(0.f, 0.f));
+      hero.moveTo(Position(-300.f, 0.f));
       hero.setColor(mGameConstants.colorScheme().hero());
     }
   );

@@ -5,18 +5,17 @@
 
 class Position {
 public:
-  // TODO: replace with 'value_type'
-  typedef float position_type;
+  typedef float value_type;
 public:
   Position();
-  Position(position_type x, position_type y);
+  Position(value_type x, value_type y);
 public:
-  position_type x() const;
-  position_type y() const;
+  value_type x() const;
+  value_type y() const;
 
 private:
-  position_type mX;
-  position_type mY;
+  value_type mX;
+  value_type mY;
 
 };
 
@@ -32,22 +31,22 @@ inline Position operator- (const Position& left, const Position& right) {
                   left.y() - right.y());
 }
 
-inline Position operator* (const Position& left, Position::position_type scalar) {
+inline Position operator* (const Position& left, Position::value_type scalar) {
 
   return Position(left.x() * scalar, left.y() * scalar);
 }
 
-inline Position operator* (Position::position_type scalar, const Position& right) {
+inline Position operator* (Position::value_type scalar, const Position& right) {
 
   return Position(scalar * right.x(), scalar * right.y());
 }
 
-inline Position operator+ (const Position& left, Position::position_type scalar) {
+inline Position operator+ (const Position& left, Position::value_type scalar) {
 
   return Position(left.x() + scalar, left.y() + scalar);
 }
 
-inline Position operator+ (Position::position_type scalar, const Position& right) {
+inline Position operator+ (Position::value_type scalar, const Position& right) {
 
   return Position(scalar + right.x(), scalar + right.y());
 }

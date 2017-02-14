@@ -22,7 +22,7 @@ void FlappyCatFloor::initialize() {
   mFloorSpikes.resize(Position(mSize.x(), 0.f));
 
   mFloorSpikes.setLinkSize(gameConstants().spikeSize());
-  mFloorSpikes.setOffset(gameConstants().spikeSize());
+  mFloorSpikes.setOffsetBetweenLinks(gameConstants().spikeSize());
 
   mFloorSpikes.setMovementDisplacement(Position(-10.f, 0.f));
   mFloorSpikes.initialize();

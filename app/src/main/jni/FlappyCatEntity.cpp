@@ -30,11 +30,9 @@ void FlappyCatEntity::resize(const Position& size) {
 
 void FlappyCatEntity::update(const FrameDuration& frameDuration) {
 
-  using FloatSecond = std::chrono::duration<Position::position_type, std::ratio<1,1>>;
+  using FloatSecond = std::chrono::duration<Position::value_type, std::ratio<1,1>>;
 
-  Position::position_type time = std::chrono::duration_cast<FloatSecond>(frameDuration).count();
-
-  Log::i(TAG, "Time: %f", time);
+  Position::value_type time = std::chrono::duration_cast<FloatSecond>(frameDuration).count();
 
   mAcceleration = mAcceleration - Position(0.f, mGameConstants.gravity());
   mVelocity = mVelocity + (mAcceleration * time);

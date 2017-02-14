@@ -41,7 +41,7 @@ private:
 private:
   FlappyCatGameConstants mGameConstants;
   GameState mGameState;
-  Position::position_type mPlateWidth;
+  Position::value_type mPlateWidth;
   FlappyCatFloor mFloor;
   FlappyCatChain<FlappyCatWall> mWalls;
   FlappyCatChain<FlappyCatSpike> mBackgroundCity;

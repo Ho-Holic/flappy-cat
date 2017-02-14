@@ -36,7 +36,8 @@ public:
 
 public:
   void setLinkSize(const Position& linkSize);
-  void setOffset(const Position& offset);
+  void setOffsetBetweenLinks(const Position& offset);
+  void setStartOffset(const Position& offset);
   void setMovementDisplacement(const Position& movementDisplacement);
   void setResetModifier(const modifier_type& modifier);
   void setUpdateModifier(const modifier_type& modifier);
@@ -46,7 +47,7 @@ public:
   void foreachLink(const modifier_type& modifier);
 
 private:
-  Position::position_type chainLength() const;
+  Position::value_type chainLength() const;
   bool isWarpNeeded(const Position& point) const;
   Position section() const;
 
@@ -54,7 +55,8 @@ private:
   Position mPosition;
   Position mSize;
   Position mLinkSize;
-  Position mOffset;
+  Position mOffsetBetweenLinks;
+  Position mStartOffset;
   Position mMovementDisplacement;
   std::vector<entity_type> mLinks;
   modifier_type mResetModifier;
@@ -70,17 +72,19 @@ FlappyCatChain<Link>::FlappyCatChain(const FlappyCatGameConstants& gameConstants
 , mPosition()
 , mSize()
 , mLinkSize()
-, mOffset(0.f, 0.f)
+, mOffsetBetweenLinks(0.f, 0.f)
+, mStartOffset(0.f, 0.f)
 , mMovementDisplacement(0.f, 0.f)
 , mLinks()
 , mResetModifier([](entity_type&){})
 , mUpdateModifier([](entity_type&){})
 , mWrapAroundModifier([](entity_type&){}){
-  //
+
+  static_assert(std::is_base_of<FlappyCatEntity, Link>::value, "Must be derived from Entity");
 }
 
 template <typename Link>
-Position::position_type FlappyCatChain<Link>::chainLength() const {
+Position::value_type FlappyCatChain<Link>::chainLength() const {
 
   // TODO: We don't have proper 'cmath', replace with code below in NDK r15 (May 27 , 2017)
   // TODO: return std::round(mSize.x() / section().x()) * section().x();
@@ -93,7 +97,7 @@ Position::position_type FlappyCatChain<Link>::chainLength() const {
 
 template <typename Link>
 Position FlappyCatChain<Link>::section() const {
-  return mLinkSize + mOffset;
+  return mLinkSize + mOffsetBetweenLinks;
 }
 
 template <typename Link>
@@ -125,7 +129,9 @@ void FlappyCatChain<Link>::reset() {
 
     Position pos(mPosition.x() + i * section().x(), mPosition.y());
 
-    mLinks[i].moveTo(pos);
+    Log::i(TAG, "start %f", pos.x());
+
+    mLinks[i].moveTo(pos + mStartOffset); // shift off-screen if needed by mStartOffset
     mLinks[i].resize(mLinkSize);
 
     REQUIRE(TAG, mResetModifier != nullptr, "Reset modifier must be not null");
@@ -209,9 +215,14 @@ void FlappyCatChain<Link>::setMovementDisplacement(const Position& movementDispl
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::setOffset(const Position& offset) {
+void FlappyCatChain<Link>::setOffsetBetweenLinks(const Position& offset) {
 
-  mOffset = offset;
+  mOffsetBetweenLinks = offset;
+}
+
+template <typename Link>
+void FlappyCatChain<Link>::setStartOffset(const Position& offset) {
+  mStartOffset = offset;
 }
 
 template <typename Link>
@@ -227,6 +238,5 @@ void FlappyCatChain<Link>::foreachLink(const modifier_type& modifier) {
     modifier(link);
   }
 }
-
 
 #endif //FLAPPY_CAT_FLAPPYCATCHAIN_H

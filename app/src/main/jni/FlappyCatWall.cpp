@@ -11,12 +11,12 @@ FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
   //
 }
 
-void FlappyCatWall::setGapInterval(Position::position_type interval) {
+void FlappyCatWall::setGapInterval(Position::value_type interval) {
 
   mGapInterval = interval;
 }
 
-void FlappyCatWall::setGapDisplacement(Position::position_type displacement) {
+void FlappyCatWall::setGapDisplacement(Position::value_type displacement) {
 
   mGapDisplacement = displacement;
 }
