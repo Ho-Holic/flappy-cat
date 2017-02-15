@@ -17,11 +17,15 @@ model {
         ndk {
             moduleName "flappycat"
 
-            toolchain 'clang'
-            cppFlags.add('-DTAG=\\\"FlappyCat\\\"') // clang // tag for log system
+            toolchain 'gcc'
 
-            //toolchain 'gcc'
-            //cppFlags.add('-DTAG="FlappyCat"') // gcc // tag for log system
+            if (toolchain == 'clang') {
+                cppFlags.add('-DTAG=\\\"FlappyCat\\\"') // clang // tag for log system
+            }
+
+            if (toolchain == 'gcc') {
+                cppFlags.add('-DTAG="FlappyCat"') // gcc // tag for log system
+            }
 
             stl 'gnustl_static'
             cppFlags.add('-std=c++14')
