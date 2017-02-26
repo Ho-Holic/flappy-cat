@@ -24,7 +24,7 @@ Position FlappyCatGameConstants::houseSize() const {
 }
 
 Position FlappyCatGameConstants::blockSize() const {
-  return Position(300, 200);
+  return Position(300, 1400);
 }
 
 Position::value_type FlappyCatGameConstants::plateWidth() const {
@@ -32,11 +32,11 @@ Position::value_type FlappyCatGameConstants::plateWidth() const {
 }
 
 Position::value_type FlappyCatGameConstants::gapInterval() const {
-  return 300.f;
+  return 600.f;
 }
 
 Position::value_type FlappyCatGameConstants::gravity() const {
-  return 10.f;
+  return 40.f;
 }
 
 float FlappyCatGameConstants::heroRadius() const {

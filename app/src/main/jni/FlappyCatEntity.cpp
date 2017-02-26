@@ -38,6 +38,7 @@ void FlappyCatEntity::update(const FrameDuration& frameDuration) {
   mVelocity = mVelocity + (mAcceleration * time);
 
   mDistance = mVelocity * time; // distance passed by last update
+
 }
 
 void FlappyCatEntity::initialize() {

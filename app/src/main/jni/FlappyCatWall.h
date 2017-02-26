@@ -10,6 +10,20 @@
 // self
 #include "FlappyCatEntity.h"
 
+//
+//    .----.
+//    |....|
+//    |....|
+//    .----.    <----------.
+//                         |
+//     hero  <-            | Gap Interval
+//            |            |
+//    .----.  | <----------.
+//    |....|  |
+//    |....|  | Gap Displacement
+//    .----. <-
+//
+
 class FlappyCatWall : public FlappyCatEntity {
 public:
   // TODO: Need to fix issue with emplace_back()
@@ -32,10 +46,17 @@ public:
   void setColor(const Color& color);
 
 private:
+  void syncChildrenSize();
+
+private:
+  Position mPosition;
+  Position mSize;
   Position::value_type mGapInterval;
   Position::value_type mGapDisplacement;
   RectangleShape mTopBlock;
   RectangleShape mBottomBlock;
+
+
 };
 
 

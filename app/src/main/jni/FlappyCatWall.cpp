@@ -4,16 +4,19 @@
 
 FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
-, mTopBlock()
-, mBottomBlock()
+, mPosition()
+, mSize()
 , mGapInterval(0.f)
-, mGapDisplacement(0.f) {
+, mGapDisplacement(0.f)
+, mTopBlock()
+, mBottomBlock() {
   //
 }
 
 void FlappyCatWall::setGapInterval(Position::value_type interval) {
 
   mGapInterval = interval;
+  syncChildrenSize();
 }
 
 void FlappyCatWall::setGapDisplacement(Position::value_type displacement) {
@@ -28,22 +31,22 @@ bool FlappyCatWall::collideWithCircle(const Position& center, float radius) {
 
 void FlappyCatWall::moveTo(const Position& position) {
 
-  mTopBlock.transformation().setPosition(position);
-  mBottomBlock.transformation().setPosition(position + 120.f);
+  mPosition = position;
+
+  mTopBlock   .transformation().setPosition(mPosition + Position(0.f, mGapInterval / 2.f));
+  mBottomBlock.transformation().setPosition(mPosition
+                                          - Position(0.f, mGapInterval / 2.f)
+                                          - Position(0.f, mBottomBlock.geometry().size().y()));
 }
 
 const Position& FlappyCatWall::position() const {
 
-  return mTopBlock.transformation().position();
+  return mPosition;
 }
 
 void FlappyCatWall::update(const FrameDuration& time) {
 
-  mTopBlock.transformation().setPosition(mTopBlock.transformation().position()
-                                       + Position(-10.f, 0.f));
-
-  mBottomBlock.transformation().setPosition(mBottomBlock.transformation().position()
-                                          + Position(-10.f, 0.f));
+  moveBy(Position(-5.f, 0.f));
 
 }
 
@@ -61,9 +64,22 @@ void FlappyCatWall::setColor(const Color& color) {
 
 void FlappyCatWall::resize(const Position& size) {
 
-  mTopBlock.geometry().resize(size);
-  mBottomBlock.geometry().resize(size);
+  mSize = size;
+
+  syncChildrenSize();
 }
+
+void FlappyCatWall::syncChildrenSize() {
+
+  Position::value_type bothBlocksHeight = mSize.y() - mGapInterval;
+
+  Position::value_type oneBlockHeight = bothBlocksHeight / 2.f;
+
+  mTopBlock   .geometry().resize(Position(mSize.x(), bothBlocksHeight - oneBlockHeight));
+  mBottomBlock.geometry().resize(Position(mSize.x(), oneBlockHeight));
+}
+
+
 
 
 

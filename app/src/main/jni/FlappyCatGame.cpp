@@ -154,17 +154,27 @@ void FlappyCatGame::processEvent(const Event& event) {
 
     mGameState = PlayState;
 
-    // i'am falling with speed = v, acceleration = a, what must be 'v' and 'a' to pass distance 'd'?
+    using FloatSecond = std::chrono::duration<Position::value_type, std::ratio<1,1>>;
 
-    mHero.setAcceleration(Position(0.f, 600.f));
-    mHero.setVelocity(Position(0.f, 200.f));
-    //mHero.moveBy(Position(0.f, 200.f));
+    // hardcoded magic numbers
+    mHero.setAcceleration(Position(0.f, -800.f));
+    mHero.setVelocity(Position(0.f, 800.f));
+
+    // TODO: do some physics
+//    mHero.setAcceleration(Position(0.f, 0.f));
+//
+//    Position::value_type distance = (2.f * mHero.radius());
+//
+//    Position::value_type velocityY = distance / FloatSecond(1).count();
+//
+//    mHero.setVelocity(Position(0.f, velocityY));
   }
 }
 
 void FlappyCatGame::update(const FrameDuration& time) {
 
   if (mGameState == PlayState) {
+
 
     mHero.update(time);
     mWalls.update(time);
@@ -187,6 +197,13 @@ void FlappyCatGame::render(const Window& window) const {
   mFloor.drawOn(window);
   mWalls.drawOn(window);
   mHero.drawOn(window);
+
+  // debug
+//  FlappyCatSpike s(mGameConstants);
+//  s.moveTo(Position(-300.f, 0.f));
+//  s.resize(Position(20.f, 2.f * mHero.radius() * 4.f));
+//  s.drawOn(window);
+
 
   window.display();
 }
