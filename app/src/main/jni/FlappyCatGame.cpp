@@ -35,17 +35,22 @@ void FlappyCatGame::initialize() {
   );
 
   // moving blocks
-  mWalls.moveTo(Position(-mPlateWidth, 0.f));
+  mWalls.moveTo(Position(-mPlateWidth, 92.f));
   mWalls.resize(Position(mPlateWidth * 2.f, 0.f));
   mWalls.setStartOffset(Position(mPlateWidth * 4.f, 0.f));
-  mWalls.setLinkSize(mGameConstants.blockSize());
-  mWalls.setOffsetBetweenLinks(mGameConstants.blockSize() * 2.f);
+  mWalls.setLinkSize(mGameConstants.wallSize());
+  mWalls.setOffsetBetweenLinks(mGameConstants.wallSize() * 2.f);
   mWalls.setMovementDisplacement(Position(-10.f, 0.f));
 
   mWalls.setResetModifier(
     [this](FlappyCatWall& wall) {
       wall.setGapInterval(mGameConstants.gapInterval());
-      wall.setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
+
+      wall.setGapDisplacement(mGameConstants.clampedRandomOffsetFrom(
+        0.f, 200.f,
+        FlappyCatGameConstants::Sign::Both)
+      );
+
       wall.setColor(mGameConstants.colorScheme().block());
     }
   );
@@ -69,7 +74,11 @@ void FlappyCatGame::initialize() {
 
   mWalls.setWrapAroundModifier(
     [this](FlappyCatWall& wall) {
-      wall.setGapDisplacement(mGameConstants.randomOffsetFrom(0.f, 200.f));
+
+      wall.setGapDisplacement(mGameConstants.clampedRandomOffsetFrom(
+        0.f, 200.f,
+        FlappyCatGameConstants::Sign::Both)
+      );
     }
   );
 
@@ -136,8 +145,6 @@ void FlappyCatGame::initialize() {
 
 void FlappyCatGame::reset() {
 
-  mGameState = PressButtonState;
-
   mGameConstants.reset();
 
   mHero.reset();
@@ -152,15 +159,31 @@ void FlappyCatGame::processEvent(const Event& event) {
 
   if (event.type() == AndroidEvent::EventType::TouchEventType) {
 
-    mGameState = PlayState;
+    if (mGameState == PressButtonState) {
 
-    using FloatSecond = std::chrono::duration<Position::value_type, std::ratio<1,1>>;
+      mGameState = PlayState;
 
-    // hardcoded magic numbers
-    mHero.setAcceleration(Position(0.f, -800.f));
-    mHero.setVelocity(Position(0.f, 800.f));
+      // TODO: remove duplicate code and make jump function
+      mHero.setAcceleration(Position(0.f, -800.f));
+      mHero.setVelocity(Position(0.f, 800.f));
+    }
+    else if (mGameState == LoseState) {
 
-    // TODO: do some physics
+      if (mHero.position().y() < -2000.f) {
+
+        mGameState = PressButtonState;
+        reset();
+      }
+    }
+    else if (mGameState == PlayState) {
+
+      using FloatSecond = std::chrono::duration<Position::value_type, std::ratio<1, 1>>;
+
+      // hardcoded magic numbers
+      mHero.setAcceleration(Position(0.f, -800.f));
+      mHero.setVelocity(Position(0.f, 800.f));
+
+      // TODO: do some physics
 //    mHero.setAcceleration(Position(0.f, 0.f));
 //
 //    Position::value_type distance = (2.f * mHero.radius());
@@ -168,6 +191,7 @@ void FlappyCatGame::processEvent(const Event& event) {
 //    Position::value_type velocityY = distance / FloatSecond(1).count();
 //
 //    mHero.setVelocity(Position(0.f, velocityY));
+    }
   }
 }
 
@@ -175,13 +199,16 @@ void FlappyCatGame::update(const FrameDuration& time) {
 
   if (mGameState == PlayState) {
 
-
     mHero.update(time);
     mWalls.update(time);
+    mFloor.update(time);
+    mBackgroundCity.update(time);
   }
+  else if (mGameState == LoseState) {
 
-  // update background
-  if (mGameState != LoseState) {
+    mHero.update(time);
+  }
+  else if (mGameState == PressButtonState) {
 
     mFloor.update(time);
     mBackgroundCity.update(time);

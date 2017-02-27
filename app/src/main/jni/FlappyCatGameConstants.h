@@ -25,7 +25,7 @@ public:
 
 public:
   Position houseSize() const;
-  Position blockSize() const;
+  Position wallSize() const;
   Position spikeSize() const;
   Position::value_type gravity() const;
 
@@ -40,6 +40,9 @@ public:
                                         Position::value_type maxOffset,
                                         Sign sign = Sign::Positive);
 
+  Position::value_type clampedRandomOffsetFrom(Position::value_type initial,
+                                               Position::value_type maxOffset,
+                                               Sign sign = Sign::Positive);
 private:
   std::random_device mRandomDevice;
   std::mt19937 mGenerator;

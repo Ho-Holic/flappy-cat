@@ -36,7 +36,6 @@ public:
   bool collideWithCircle(const Position& center, float radius);
 
 public:
-  virtual void update(const FrameDuration& time) override;
   virtual void drawOn(const Window& window) const override;
   virtual void moveTo(const Position& position) override;
   virtual const Position& position() const override;

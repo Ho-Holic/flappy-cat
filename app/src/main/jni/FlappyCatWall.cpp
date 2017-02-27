@@ -1,6 +1,10 @@
 // self
-#include <physics/Collide.h>
 #include "FlappyCatWall.h"
+#include <physics/Collide.h>
+#include "style/Guidelines.h"
+
+// engine
+#include <core/Log.h>
 
 FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
@@ -22,6 +26,7 @@ void FlappyCatWall::setGapInterval(Position::value_type interval) {
 void FlappyCatWall::setGapDisplacement(Position::value_type displacement) {
 
   mGapDisplacement = displacement;
+  syncChildrenSize();
 }
 
 bool FlappyCatWall::collideWithCircle(const Position& center, float radius) {
@@ -33,21 +38,18 @@ void FlappyCatWall::moveTo(const Position& position) {
 
   mPosition = position;
 
-  mTopBlock   .transformation().setPosition(mPosition + Position(0.f, mGapInterval / 2.f));
-  mBottomBlock.transformation().setPosition(mPosition
-                                          - Position(0.f, mGapInterval / 2.f)
-                                          - Position(0.f, mBottomBlock.geometry().size().y()));
+  Position::value_type topPosition    = mGapDisplacement + (mGapInterval / 2.f);
+  Position::value_type bottomPosition = - mBottomBlock.geometry().size().y()
+                                       + mGapDisplacement
+                                       - (mGapInterval / 2.f);
+
+  mTopBlock   .transformation().setPosition(mPosition + Position(0.f, topPosition));
+  mBottomBlock.transformation().setPosition(mPosition + Position(0.f, bottomPosition));
 }
 
 const Position& FlappyCatWall::position() const {
 
   return mPosition;
-}
-
-void FlappyCatWall::update(const FrameDuration& time) {
-
-  moveBy(Position(-5.f, 0.f));
-
 }
 
 void FlappyCatWall::drawOn(const Window& window) const {
@@ -75,8 +77,15 @@ void FlappyCatWall::syncChildrenSize() {
 
   Position::value_type oneBlockHeight = bothBlocksHeight / 2.f;
 
-  mTopBlock   .geometry().resize(Position(mSize.x(), bothBlocksHeight - oneBlockHeight));
-  mBottomBlock.geometry().resize(Position(mSize.x(), oneBlockHeight));
+  Log::i(TAG, "gap %f", mGapDisplacement);
+
+  REQUIRE(TAG, oneBlockHeight > mGapDisplacement, "Block size must be greater then gap displace");
+
+  Position::value_type topHeight    = bothBlocksHeight - oneBlockHeight - mGapDisplacement;
+  Position::value_type bottomHeight = oneBlockHeight + mGapDisplacement;
+
+  mTopBlock   .geometry().resize(Position(mSize.x(), topHeight));
+  mBottomBlock.geometry().resize(Position(mSize.x(), bottomHeight));
 }
 
 

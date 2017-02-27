@@ -42,6 +42,7 @@ const Position& FlappyCatHero::position() const {
 
 void FlappyCatHero::reset() {
 
+  FlappyCatEntity::reset();
   mResetModifier(*this);
 }
 

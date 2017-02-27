@@ -17,10 +17,14 @@ FlappyCatEntity::~FlappyCatEntity() {
 }
 
 void FlappyCatEntity::reset() {
-  // intentionally left blank
+
+  mAcceleration = Position(0.f, 0.f);
+  mVelocity = Position(0.f, 0.f);
+  mDistance = Position(0.f, 0.f);
 }
 
 void FlappyCatEntity::moveBy(const Position& offset) {
+
   moveTo(position() + offset);
 }
 

@@ -129,8 +129,6 @@ void FlappyCatChain<Link>::reset() {
 
     Position pos(mPosition.x() + i * section().x(), mPosition.y());
 
-    Log::i(TAG, "start %f", pos.x());
-
     mLinks[i].moveTo(pos + mStartOffset); // shift off-screen if needed by mStartOffset
     mLinks[i].resize(mLinkSize);
 

@@ -13,6 +13,9 @@ FlappyCatFloor::FlappyCatFloor(const FlappyCatGameConstants& gameConstants)
 }
 
 void FlappyCatFloor::initialize() {
+
+  // TODO: move part of a code to reset modifier in client code
+
   // floor
   mFloor.transformation().setPosition(mPosition);
   mFloor.geometry().resize(Position(mSize.x(), 20.f));

@@ -1,5 +1,6 @@
 // self
 #include "FlappyCatGameConstants.h"
+#include "style/BackportCpp17.h"
 
 FlappyCatGameConstants::FlappyCatGameConstants()
 : mRandomDevice()
@@ -23,8 +24,8 @@ Position FlappyCatGameConstants::houseSize() const {
   return Position(100, 150);
 }
 
-Position FlappyCatGameConstants::blockSize() const {
-  return Position(300, 1400);
+Position FlappyCatGameConstants::wallSize() const {
+  return Position(300, 1725);
 }
 
 Position::value_type FlappyCatGameConstants::plateWidth() const {
@@ -48,9 +49,30 @@ FlappyCatGameConstants::randomOffsetFrom(Position::value_type initial,
                                          Position::value_type maxOffset,
                                          Sign sign) {
 
-  std::normal_distribution<float> distribution(initial, maxOffset);
-  return sign == Sign::Positive ? std::abs(distribution(mGenerator))
-                                : distribution(mGenerator);
+  std::normal_distribution<Position::value_type> distribution(initial, maxOffset);
+
+  auto number = distribution(mGenerator);
+
+  return sign == Sign::Positive ? std::abs(number)
+                                : number;
+
+}
+
+Position::value_type
+FlappyCatGameConstants::clampedRandomOffsetFrom(Position::value_type initial,
+                                         Position::value_type maxOffset,
+                                         Sign sign) {
+
+  std::normal_distribution<Position::value_type> distribution(initial, maxOffset);
+
+  auto number = distribution(mGenerator);
+
+  return sign == Sign::Positive ? std::abs(backport::std::clamp(number,
+                                                                initial,
+                                                                initial + maxOffset))
+                                : backport::std::clamp(number,
+                                                       initial - maxOffset,
+                                                       initial + maxOffset);
 }
 
 float FlappyCatGameConstants::cloudRadius() const {
