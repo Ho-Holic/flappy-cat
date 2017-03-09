@@ -11,17 +11,17 @@
 #include "FlappyCatEntity.h"
 
 //
-//    .----.
-//    |....|
-//    |....|
-//    .----.    <----------.
-//                         |
-//     hero  <-            | Gap Interval
-//            |            |
-//    .----.  | <----------.
-//    |....|  |
-//    |....|  | Gap Displacement
-//    .----. <-
+//  A4    .----.
+//        |....|
+//        |....|
+//  A3    .----.    <----------.
+//                             |
+//         hero  <-            | Gap Interval
+//                |            |
+//  A2    .----.  | <----------.
+//        |....|  |
+//        |....|  | Gap Displacement
+//  A1    .----. <-
 //
 
 class FlappyCatWall : public FlappyCatEntity {
@@ -45,7 +45,7 @@ public:
   void setColor(const Color& color);
 
 private:
-  void syncChildrenSize();
+  void syncChildren();
 
 private:
   Position mPosition;

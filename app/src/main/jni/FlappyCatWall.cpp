@@ -20,13 +20,13 @@ FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
 void FlappyCatWall::setGapInterval(Position::value_type interval) {
 
   mGapInterval = interval;
-  syncChildrenSize();
+  syncChildren();
 }
 
 void FlappyCatWall::setGapDisplacement(Position::value_type displacement) {
 
   mGapDisplacement = displacement;
-  syncChildrenSize();
+  syncChildren();
 }
 
 bool FlappyCatWall::collideWithCircle(const Position& center, float radius) {
@@ -37,14 +37,7 @@ bool FlappyCatWall::collideWithCircle(const Position& center, float radius) {
 void FlappyCatWall::moveTo(const Position& position) {
 
   mPosition = position;
-
-  Position::value_type topPosition    = mGapDisplacement + (mGapInterval / 2.f);
-  Position::value_type bottomPosition = - mBottomBlock.geometry().size().y()
-                                       + mGapDisplacement
-                                       - (mGapInterval / 2.f);
-
-  mTopBlock   .transformation().setPosition(mPosition + Position(0.f, topPosition));
-  mBottomBlock.transformation().setPosition(mPosition + Position(0.f, bottomPosition));
+  syncChildren();
 }
 
 const Position& FlappyCatWall::position() const {
@@ -67,25 +60,45 @@ void FlappyCatWall::setColor(const Color& color) {
 void FlappyCatWall::resize(const Position& size) {
 
   mSize = size;
-
-  syncChildrenSize();
+  syncChildren();
 }
 
-void FlappyCatWall::syncChildrenSize() {
+void FlappyCatWall::syncChildren() {
 
-  Position::value_type bothBlocksHeight = mSize.y() - mGapInterval;
+  Position::value_type A1 = mPosition.y();
 
-  Position::value_type oneBlockHeight = bothBlocksHeight / 2.f;
+  Position::value_type A2 = A1 + mSize.y()
+                            - mGapInterval / 2.f
+                            - mSize.y() / 2.f
+                            - mGapDisplacement;
 
-  Log::i(TAG, "gap %f", mGapDisplacement);
+  Position::value_type A3 = A2 + mGapInterval;
 
-  REQUIRE(TAG, oneBlockHeight > mGapDisplacement, "Block size must be greater then gap displace");
+  Position::value_type A4 = A3 + mSize.y() / 2.f
+                            + mGapDisplacement
+                            - mGapInterval / 2.f;
 
-  Position::value_type topHeight    = bothBlocksHeight - oneBlockHeight - mGapDisplacement;
-  Position::value_type bottomHeight = oneBlockHeight + mGapDisplacement;
+  // Need to deal with situation when all values are 0.f to make assert work
+  //REQUIRE(TAG, ((A1 < A2) && (A2 < A3) && (A3 < A4)), "Vectors must not overlap");
 
-  mTopBlock   .geometry().resize(Position(mSize.x(), topHeight));
-  mBottomBlock.geometry().resize(Position(mSize.x(), bottomHeight));
+  mBottomBlock.transformation().setPosition(Position(mPosition.x(), A1));
+  mBottomBlock.geometry().resize(Position(mSize.x(), (A2 - A1)));
+
+  mTopBlock.transformation().setPosition(Position(mPosition.x(), A3));
+  mTopBlock.geometry().resize(Position(mSize.x(), (A4 - A3)));
+
+//  Log::i(TAG, "top   : pos(%f,%f), size(%f, %f)",
+//         mTopBlock.transformation().position().x(),
+//         mTopBlock.transformation().position().y(),
+//         mTopBlock.geometry().size().x(),
+//         mTopBlock.geometry().size().y());
+//  Log::i(TAG, "bottom: pos(%f,%f), size(%f, %f)",
+//         mBottomBlock.transformation().position().x(),
+//         mBottomBlock.transformation().position().y(),
+//         mBottomBlock.geometry().size().x(),
+//         mBottomBlock.geometry().size().y());
+//  Log::i(TAG, "gap: %f, shift: %f", mGapInterval, mGapDisplacement);
+//  Log::i(TAG, "------------------------------------");
 }
 
 

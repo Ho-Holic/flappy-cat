@@ -380,7 +380,7 @@ void AndroidWindow::drawVertices(const Vertices& vertices,
 
   glUseProgram(mProgram);
 
-  //glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+  // TODO: need 'size_t -> int' conversion on glDrawArrays
   glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size());
 
 

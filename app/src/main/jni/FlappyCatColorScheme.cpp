@@ -11,7 +11,7 @@ FlappyCatColorScheme::FlappyCatColorScheme()
   generateNewScheme();
 }
 
-Color FlappyCatColorScheme::random() {
+Color FlappyCatColorScheme::random() const {
 
   std::uniform_int_distribution<uint32_t> distribution; // from 0 to 2^32
 

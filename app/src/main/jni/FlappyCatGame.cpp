@@ -35,7 +35,7 @@ void FlappyCatGame::initialize() {
   );
 
   // moving blocks
-  mWalls.moveTo(Position(-mPlateWidth, 92.f));
+  mWalls.moveTo(Position(-mPlateWidth, -775.f));
   mWalls.resize(Position(mPlateWidth * 2.f, 0.f));
   mWalls.setStartOffset(Position(mPlateWidth * 4.f, 0.f));
   mWalls.setLinkSize(mGameConstants.wallSize());
@@ -58,6 +58,8 @@ void FlappyCatGame::initialize() {
   mWalls.setUpdateModifier(
     [this](FlappyCatWall& wall) {
 
+      wall.setColor(mGameConstants.colorScheme().random());
+
       float radius = mHero.radius();
       // TODO: implement proper origin in 'transformation' and remove this code
       // circle origin in bottom left so we shift by radius
@@ -66,7 +68,8 @@ void FlappyCatGame::initialize() {
       // TODO: This type of interface? if (collide(wall, mHero).or(wall, mFloor)){}
       if (wall.collideWithCircle(center, radius) || Collide::circleRect(center, radius,
                                                                         mFloor.boundingBox())) {
-        mGameState = LoseState;
+        //mGameState = LoseState;
+        mGameState = PressButtonState;
         Log::i(TAG, "Collide");
       }
     }
@@ -121,7 +124,6 @@ void FlappyCatGame::initialize() {
 
   mHero.setUpdateModifier(
     [this](FlappyCatHero& hero, const FrameDuration& frameDuration) {
-
 
       hero.moveBy(hero.distance());
     }
@@ -224,13 +226,6 @@ void FlappyCatGame::render(const Window& window) const {
   mFloor.drawOn(window);
   mWalls.drawOn(window);
   mHero.drawOn(window);
-
-  // debug
-//  FlappyCatSpike s(mGameConstants);
-//  s.moveTo(Position(-300.f, 0.f));
-//  s.resize(Position(20.f, 2.f * mHero.radius() * 4.f));
-//  s.drawOn(window);
-
 
   window.display();
 }

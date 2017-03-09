@@ -154,7 +154,8 @@ void FlappyCatChain<Link>::update(const FrameDuration& time) {
     if (isWarpNeeded(p)) {
 
       // TODO: If 'p.x()' bigger then '2.f * chainLength' then wrap fails, need a loop
-      link.moveTo(Position(p.x() + chainLength(), p.y()));
+      // TODO: neatest bug here
+      link.moveTo(Position(p.x() + chainLength()+20.f, p.y()));
 
       REQUIRE(TAG, mWrapAroundModifier != nullptr, "WrapAround modifier must be not null");
       mWrapAroundModifier(link);

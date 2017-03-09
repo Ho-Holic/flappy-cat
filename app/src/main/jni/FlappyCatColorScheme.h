@@ -16,7 +16,7 @@ public:
   FlappyCatColorScheme();
 
 public:
-  Color random();
+  Color random() const;
   void generateNewScheme();
 
 public:
@@ -28,8 +28,8 @@ public:
   Color dirt()       const;
 
 private:
-  std::random_device mRandomDevice;
-  std::mt19937 mGenerator;
+  mutable std::random_device mRandomDevice;
+  mutable std::mt19937 mGenerator;
   std::vector<Color> mScheme;
 };
 
