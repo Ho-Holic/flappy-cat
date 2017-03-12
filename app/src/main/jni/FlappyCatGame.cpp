@@ -58,8 +58,6 @@ void FlappyCatGame::initialize() {
   mWalls.setUpdateModifier(
     [this](FlappyCatWall& wall) {
 
-      wall.setColor(mGameConstants.colorScheme().random());
-
       float radius = mHero.radius();
       // TODO: implement proper origin in 'transformation' and remove this code
       // circle origin in bottom left so we shift by radius
@@ -68,8 +66,7 @@ void FlappyCatGame::initialize() {
       // TODO: This type of interface? if (collide(wall, mHero).or(wall, mFloor)){}
       if (wall.collideWithCircle(center, radius) || Collide::circleRect(center, radius,
                                                                         mFloor.boundingBox())) {
-        //mGameState = LoseState;
-        mGameState = PressButtonState;
+        mGameState = LoseState;
         Log::i(TAG, "Collide");
       }
     }

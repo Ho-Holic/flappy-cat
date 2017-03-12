@@ -6,6 +6,7 @@ FlatTransformation::FlatTransformation(const Position& position)
 : Transformation()
 , mPosition(position)
 , mOrigin(0.f, 0.f)
+, mScale(1.f, 1.f)
 , mOnUpdate() {
   //
 }
@@ -37,6 +38,18 @@ void FlatTransformation::setOrigin(const Position& origin) {
 const Position& FlatTransformation::origin() const {
   return mOrigin;
 }
+
+void FlatTransformation::setScale(const Position& factor) {
+  mScale = factor;
+}
+
+const Position& FlatTransformation::scale() const {
+  return mScale;
+}
+
+
+
+
 
 
 

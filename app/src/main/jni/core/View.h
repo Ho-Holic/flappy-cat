@@ -15,9 +15,12 @@ public:
   virtual const Position& origin() const override;
   virtual void setPosition(const Position& position) override;
   virtual const Position& position() const override;
+  virtual void setScale(const Position& factor) override;
+  virtual const Position& scale() const override;
 public:
   Position mOrigin;
   Position mSize;
+  Position mScale;
 };
 
 

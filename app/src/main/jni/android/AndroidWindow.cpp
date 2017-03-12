@@ -358,10 +358,12 @@ void AndroidWindow::drawVertices(const Vertices& vertices,
     std::size_t stride = i * VERTEX_SIZE;
 
     verticesData[VERTEX_X_INDEX + stride] = (2.f / transformation.position().x())
-                                            * vertices[i].position().x();
+                                            * vertices[i].position().x()
+                                            * transformation.scale().x();
 
     verticesData[VERTEX_Y_INDEX + stride] = (2.f / transformation.position().y())
-                                            * vertices[i].position().y();
+                                            * vertices[i].position().y()
+                                            * transformation.scale().y();
 
     verticesData[VERTEX_R_INDEX + stride] = vertices[i].color().r() / 255.f;
     verticesData[VERTEX_G_INDEX + stride] = vertices[i].color().g() / 255.f;
