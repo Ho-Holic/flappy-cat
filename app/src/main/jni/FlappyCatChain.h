@@ -112,7 +112,8 @@ void FlappyCatChain<Link>::initialize() {
   // TODO: parametrize reserve function
   mLinks.reserve(120);
 
-  std::size_t linkCount = static_cast<std::size_t>(chainLength() / mLinkSize.x());
+  // TODO: if mOffsetBetweenLinks is set before `initialize()` then incorrect behaviour
+  std::size_t linkCount = static_cast<std::size_t>(chainLength() / section().x());
 
   for (std::size_t i = 0; i < linkCount;  ++i) {
 
@@ -155,7 +156,7 @@ void FlappyCatChain<Link>::update(const FrameDuration& time) {
 
       // TODO: If 'p.x()' bigger then '2.f * chainLength' then wrap fails, need a loop
       // TODO: neatest bug here
-      link.moveTo(Position(p.x() + chainLength()+20.f, p.y()));
+      link.moveTo(Position(p.x() + chainLength(), p.y()));
 
       REQUIRE(TAG, mWrapAroundModifier != nullptr, "WrapAround modifier must be not null");
       mWrapAroundModifier(link);
