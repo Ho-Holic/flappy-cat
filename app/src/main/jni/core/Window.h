@@ -4,6 +4,7 @@
 // self
 #include <core/Color.h>
 #include <core/Shape.h>
+#include <core/View.h>
 
 class Window {
 public:
@@ -16,6 +17,13 @@ public:
   virtual void drawVertices(const Vertices& vertices,
                             const Transformation& transformation) const = 0;
   virtual void display() const = 0;
+
+public:
+  const View& view() const;
+  View& view();
+
+private:
+  View mView;
 };
 
 

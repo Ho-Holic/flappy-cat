@@ -29,6 +29,7 @@ public:
   void processEvent(const Event& event);
   void update(const FrameDuration& time);
   void render(const Window&) const;
+  Position cameraSize() const;
 
 private:
   enum GameState : int32_t;
@@ -54,6 +55,5 @@ enum FlappyCatGame::GameState : int32_t {
   PlayState,
   LoseState
 };
-
 
 #endif //FLAPPY_CAT_FLAPPYCATGAME_H

@@ -301,6 +301,11 @@ const AndroidWindow& AndroidApplication::window() const {
   return mWindow;
 }
 
+AndroidWindow& AndroidApplication::window() {
+
+  return mWindow;
+}
+
 void AndroidApplication::initialize() {
 
   // load configuration
@@ -454,6 +459,8 @@ void AndroidApplication::processEvent(const AndroidEvent& event) {
     case EventType::ResizedEventType: resizeNativeWindow(event); break;
 
     case EventType::EmptyEventType: break;
+
+    default: break;
   }
 
 }
@@ -507,6 +514,3 @@ void AndroidApplication::resizeNativeWindow(const AndroidEvent& event) {
 
   UNUSED(lock); // unlocks when goes out of a scope
 }
-
-
-

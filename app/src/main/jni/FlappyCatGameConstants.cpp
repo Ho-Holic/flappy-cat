@@ -44,6 +44,14 @@ float FlappyCatGameConstants::heroRadius() const {
   return 50.f;
 }
 
+float FlappyCatGameConstants::cloudRadius() const {
+  return 20.f;
+}
+
+Position FlappyCatGameConstants::spikeSize() const {
+  return Position(25.f, 25.f);
+}
+
 Position::value_type
 FlappyCatGameConstants::randomOffsetFrom(Position::value_type initial,
                                          Position::value_type maxOffset,
@@ -75,10 +83,9 @@ FlappyCatGameConstants::clampedRandomOffsetFrom(Position::value_type initial,
                                                        initial + maxOffset);
 }
 
-float FlappyCatGameConstants::cloudRadius() const {
-  return 20.f;
+Position FlappyCatGameConstants::cameraSize() const {
+
+  return Position(1080.f, 1920.f);
 }
 
-Position FlappyCatGameConstants::spikeSize() const {
-  return Position(25.f, 25.f);
-}
+

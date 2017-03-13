@@ -5,12 +5,24 @@ FlappyCatApplication::FlappyCatApplication(ANativeActivity* activity,
                                            void* savedState,
                                            size_t savedStateSize)
 
-: AndroidApplication(activity, savedState, savedStateSize)
-, mGame() {
+: AndroidApplication(activity, savedState, savedStateSize) {
   //
 }
 
 void FlappyCatApplication::main() {
+
+  // set apropriate view
+  FlappyCatGame game;
+
+  Position::value_type windowWidth = static_cast<Position::value_type>(window().width());
+
+  Position::value_type cameraWidth = game.cameraSize().x();
+
+  Position::value_type scale = windowWidth / cameraWidth;
+
+  window().view().setScale(Position(scale, scale));
+
+  // run loop
 
   constexpr FrameDuration TimePerFrame = FrameDuration(1);
 
@@ -33,12 +45,12 @@ void FlappyCatApplication::main() {
 
       Event event;
       while (pollEvent(event)) {
-        mGame.processEvent(event);
+        game.processEvent(event);
       }
 
-      mGame.update(TimePerFrame);
+      game.update(TimePerFrame);
     }
-    mGame.render(window());
+    game.render(window());
   }
 }
 

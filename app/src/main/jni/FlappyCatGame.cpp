@@ -19,6 +19,11 @@ FlappyCatGame::FlappyCatGame()
   reset();
 }
 
+Position FlappyCatGame::cameraSize() const {
+
+  return mGameConstants.cameraSize();
+}
+
 void FlappyCatGame::initialize() {
 
   mPlateWidth = mGameConstants.plateWidth();

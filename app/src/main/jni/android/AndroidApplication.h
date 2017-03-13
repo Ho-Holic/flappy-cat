@@ -42,6 +42,7 @@ public:
   bool pollEvent(AndroidEvent& event);
   void postEvent(const AndroidEvent& event);
   const AndroidWindow& window() const;
+  AndroidWindow& window();
 
 private:
   void initialize();

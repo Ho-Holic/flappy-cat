@@ -36,9 +36,7 @@ AndroidWindow::AndroidWindow()
 , mSurface(EGL_NO_SURFACE)
 , mWidth(0)
 , mHeight(0)
-, mProgram(0)
-// data below would go to cross platform wrapper of AndroidWindow later
-, mView() {
+, mProgram(0) {
   //
 }
 
@@ -411,7 +409,7 @@ void AndroidWindow::resize(int32_t width, int32_t height) {
   mWidth = width;
   mHeight = height;
 
-  mView.setPosition(Position(static_cast<Position::value_type>(mWidth),
+  view().setPosition(Position(static_cast<Position::value_type>(mWidth),
                              static_cast<Position::value_type>(mHeight)));
 
   // Set the viewport
@@ -420,7 +418,7 @@ void AndroidWindow::resize(int32_t width, int32_t height) {
 
 void AndroidWindow::draw(const Shape& shape) const {
 
-  shape.render().drawOn(*this, mView);
+  shape.render().drawOn(*this, view());
 }
 
 

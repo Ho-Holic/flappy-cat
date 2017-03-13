@@ -73,6 +73,7 @@ int32_t AndroidLooper::dispatchEvent(AInputEvent* inputEvent, AndroidEvent& even
   switch (type) {
     case AINPUT_EVENT_TYPE_MOTION: return dispatchMotionEvent(inputEvent, event); break;
     case AINPUT_EVENT_TYPE_KEY:    return dispatchKeyEvent(inputEvent, event);    break;
+    default: break;
   }
 
   return 0;
@@ -83,7 +84,8 @@ int32_t AndroidLooper::dispatchMotionEvent(AInputEvent* inputEvent, AndroidEvent
   int32_t action = AMotionEvent_getAction(inputEvent);
 
   switch (action & AMOTION_EVENT_ACTION_MASK) {
-    case AMOTION_EVENT_ACTION_UP: return dispatchTouchEvent(inputEvent, event); break;
+    case AMOTION_EVENT_ACTION_DOWN: return dispatchTouchEvent(inputEvent, event); break;
+    default: break;
   }
 
   return 0;

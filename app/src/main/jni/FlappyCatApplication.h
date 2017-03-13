@@ -16,9 +16,6 @@ public:
 
 private:
   virtual void main();
-
-private:
-  FlappyCatGame mGame;
 };
 
 

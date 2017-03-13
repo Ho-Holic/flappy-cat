@@ -21,7 +21,6 @@
 // stl
 #include <vector>
 #include <string>
-#include <core/View.h>
 
 class AndroidWindow : public Window {
 private:
@@ -68,9 +67,6 @@ private:
   EGLint mWidth;
   EGLint mHeight;
   GLuint mProgram;
-
-private:
-  View mView;
 };
 
 
