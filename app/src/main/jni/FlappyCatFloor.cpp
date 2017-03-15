@@ -31,8 +31,9 @@ void FlappyCatFloor::initialize() {
   mFloorSpikes.initialize();
 
   // dirt under floor
-  mBackgroundDirt.transformation().setPosition(Position(mPosition.x(), mPosition.y() - 100.f));
-  mBackgroundDirt.geometry().resize(Position(mSize.x(), 100.f));
+  // TODO: remove hardcoded values, make proper floor class
+  mBackgroundDirt.transformation().setPosition(Position(mPosition.x(), mPosition.y() - 500.f));
+  mBackgroundDirt.geometry().resize(Position(mSize.x(), 500.f));
 }
 
 void FlappyCatFloor::drawOn(const Window& window) const {
