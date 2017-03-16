@@ -28,7 +28,7 @@ void FlappyCatColorScheme::generateNewScheme() {
   std::uniform_real_distribution<HslColor::value_type> distribution(0, 360);
   HslColor::value_type hue = distribution(mGenerator);
   HslColor heroColor(hue, 100.0, 50.0);
-  
+
 
   HslColor blockColor(heroColor);
   blockColor.setLuminance(25.0);

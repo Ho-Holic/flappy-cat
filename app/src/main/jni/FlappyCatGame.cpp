@@ -68,7 +68,7 @@ void FlappyCatGame::initialize() {
       // circle origin in bottom left so we shift by radius
       Position center = mHero.position() + Position(radius, radius);
 
-      // TODO: This type of interface? if (collide(wall, mHero).or(wall, mFloor)){}
+      // TODO: This type of interface? how about (collide(wall, mHero).or(wall, mFloor)){}
       if (wall.collideWithCircle(center, radius) || Collide::circleRect(center, radius,
                                                                         mFloor.boundingBox())) {
         mGameState = LoseState;

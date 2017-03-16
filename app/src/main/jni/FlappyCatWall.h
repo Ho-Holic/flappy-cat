@@ -26,8 +26,14 @@
 
 class FlappyCatWall : public FlappyCatEntity {
 public:
-  // TODO: Need to fix issue with emplace_back()
-  // TODO: it has some bug with call to empty constructor
+  /*
+   * TODO: Problem with emplace_back() with no args
+   * It has some bug with call to empty constructor
+   * Then game show black screen. Also header files
+   * shows that emplace build on top of push_back()
+   * Seems this is not final version of header
+   * Need to check this bug in Ndk r15
+   */
   FlappyCatWall(const FlappyCatGameConstants& gameConstants);
 
 public:

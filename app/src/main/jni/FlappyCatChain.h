@@ -86,11 +86,19 @@ FlappyCatChain<Link>::FlappyCatChain(const FlappyCatGameConstants& gameConstants
 template <typename Link>
 Position::value_type FlappyCatChain<Link>::chainLength() const {
 
-  // TODO: We don't have proper 'cmath', replace with code below in NDK r15 (May 27 , 2017)
-  // TODO: return std::round(mSize.x() / section().x()) * section().x();
-  // https://github.com/android-ndk/ndk/milestone/7
-  // https://github.com/android-ndk/ndk/issues/82
-  // https://code.google.com/p/android/issues/detail?id=82734
+  /*
+   * TODO: Math functions does not work properly
+   *
+   * We don't have proper cmath header, replace with code below in NDK r15 (May 27 , 2017)
+   * replace code with:
+   *
+   *     return std::round(mSize.x() / section().x()) * section().x();
+   *
+   * Read more about problem:
+   * https://github.com/android-ndk/ndk/milestone/7
+   * https://github.com/android-ndk/ndk/issues/82
+   * https://code.google.com/p/android/issues/detail?id=82734
+   */
 
   return static_cast<size_t>(mSize.x() / section().x()) * section().x();
 }
@@ -112,7 +120,12 @@ void FlappyCatChain<Link>::initialize() {
   // TODO: parametrize reserve function
   mLinks.reserve(120);
 
-  // TODO: if mOffsetBetweenLinks is set before `initialize()` then incorrect behaviour
+  /*
+   * TODO: Write code for better offset usage
+   *
+   * If mOffsetBetweenLinks is set before `initialize()` then incorrect behaviour
+   * would be observed when one would call setOffsetBetweenLinks()
+   */
   std::size_t linkCount = static_cast<std::size_t>(chainLength() / section().x());
 
   for (std::size_t i = 0; i < linkCount;  ++i) {
@@ -155,7 +168,6 @@ void FlappyCatChain<Link>::update(const FrameDuration& time) {
     if (isWarpNeeded(p)) {
 
       // TODO: If 'p.x()' bigger then '2.f * chainLength' then wrap fails, need a loop
-      // TODO: neatest bug here
       link.moveTo(Position(p.x() + chainLength(), p.y()));
 
       REQUIRE(TAG, mWrapAroundModifier != nullptr, "WrapAround modifier must be not null");
