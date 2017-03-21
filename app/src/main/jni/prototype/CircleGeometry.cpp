@@ -5,7 +5,7 @@
 // stl
 #include <cmath>
 
-CircleGeometry::CircleGeometry(float radius, std::size_t resolution)
+CircleGeometry::CircleGeometry(Position::value_type radius, std::size_t resolution)
 : Geometry()
 , mRadius(radius)
 , mResolution(resolution)
@@ -40,13 +40,13 @@ void CircleGeometry::setResolution(std::size_t resolution) {
   mOnUpdate.emit();
 }
 
-void CircleGeometry::setRadius(float radius) {
+void CircleGeometry::setRadius(Position::value_type radius) {
 
   mRadius = radius;
   mOnUpdate.emit();
 }
 
-float CircleGeometry::radius() const {
+Position::value_type CircleGeometry::radius() const {
 
   return mRadius;
 }

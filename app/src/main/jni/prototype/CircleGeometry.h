@@ -10,13 +10,13 @@ public:
   using OnUpdateSignal = Signal<void()>;
 
 public:
-  CircleGeometry(float radius, std::size_t resolution);
+  CircleGeometry(Position::value_type radius, std::size_t resolution);
 
 public:
   OnUpdateSignal& onUpdate();
   void setResolution(std::size_t resolution);
-  void setRadius(float radius);
-  float radius() const;
+  void setRadius(Position::value_type radius);
+  Position::value_type radius() const;
 
 public:
   virtual size_type points() const override;
