@@ -32,6 +32,16 @@ void FlappyCatEntity::resize(const Position& size) {
   // intentionally left blank
 }
 
+/**
+ * TODO: Create new entity for objects with physics
+ *
+ * Move this to PhysicsEntity or some other fancy name
+ * This would prevent from calculating physics on static objects
+ * and other that don't use this params
+ * Normally if you would implement 'update()' your self, you can
+ * omit call to this function, but if you don't provide default one
+ * this code would be called
+ */
 void FlappyCatEntity::update(const FrameDuration& frameDuration) {
 
   using FloatSecond = std::chrono::duration<Position::value_type, std::ratio<1,1>>;

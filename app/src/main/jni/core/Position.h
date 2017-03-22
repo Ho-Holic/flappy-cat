@@ -51,5 +51,18 @@ inline Position operator+ (Position::value_type scalar, const Position& right) {
   return Position(scalar + right.x(), scalar + right.y());
 }
 
+// Normally no multiplication operator for vectors, but this is good for scaling
+// other operators must be named e.g. dot_product and so on
+inline Position operator* (const Position& left, const Position& right) {
+
+  return Position(left.x() * right.x(),
+                  left.y() * right.y());
+}
+
+inline Position operator/ (const Position& left, const Position& right) {
+  return Position(left.x() / right.x(),
+                  left.y() / right.y());
+}
+
 
 #endif //FLAPPY_CAT_POSITION_H
