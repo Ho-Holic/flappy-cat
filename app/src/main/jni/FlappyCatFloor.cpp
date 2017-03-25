@@ -14,27 +14,32 @@ FlappyCatFloor::FlappyCatFloor(const FlappyCatGameConstants& gameConstants)
 
 void FlappyCatFloor::initialize() {
 
-  // TODO: move part of a code to reset modifier in client code
+  mFloorSpikes.initialize();
+}
 
-  // floor
+void FlappyCatFloor::syncChildren() {
+
+
+  // floor for collide
+  Position::value_type floorHeight = mSize.y() * 0.1f; // 10% of height
+  Position::value_type spikeHeight = mSize.y() * 0.125f;
+
   mFloor.transformation().setPosition(mPosition);
-  mFloor.geometry().resize(Position(mSize.x(), 20.f));
+  mFloor.geometry().resize(Position(mSize.x(), floorHeight));
 
-  // spikes (movement effect)
-  mFloorSpikes.moveTo(Position(mPosition.x(), mPosition.y() - 25.f));
+  // spikes for movement effect
+  mFloorSpikes.moveTo(Position(mPosition.x(), mPosition.y() - spikeHeight));
+
+  mFloorSpikes.setLinkSize(Position(spikeHeight, spikeHeight));
+  mFloorSpikes.setOffsetBetweenLinks(Position(spikeHeight, spikeHeight));
+
   mFloorSpikes.resize(Position(mSize.x(), 0.f));
 
-  mFloorSpikes.setLinkSize(gameConstants().spikeSize());
-  mFloorSpikes.setOffsetBetweenLinks(gameConstants().spikeSize());
-
-  mFloorSpikes.setMovementDisplacement(Position(-10.f, 0.f));
-  mFloorSpikes.initialize();
-
   // dirt under floor
-  // TODO: remove hardcoded values, make proper floor class
-  mBackgroundDirt.transformation().setPosition(Position(mPosition.x(), mPosition.y() - 500.f));
-  mBackgroundDirt.geometry().resize(Position(mSize.x(), 500.f));
+  mBackgroundDirt.transformation().setPosition(Position(mPosition.x(), mPosition.y() - mSize.y()));
+  mBackgroundDirt.geometry().resize(Position(mSize.x(), mSize.y()));
 }
+
 
 void FlappyCatFloor::drawOn(const Window& window) const {
 
@@ -51,11 +56,15 @@ void FlappyCatFloor::update(const FrameDuration& time) {
 void FlappyCatFloor::moveTo(const Position& position) {
 
   mPosition = position;
+
+  syncChildren();
 }
 
 void FlappyCatFloor::resize(const Position& size) {
 
   mSize = size;
+
+  syncChildren();
 }
 
 const Position& FlappyCatFloor::position() const {
@@ -69,7 +78,7 @@ void FlappyCatFloor::reset() {
   mResetModifier(*this);
 }
 
-const Shape& FlappyCatFloor::boundingBox() const {
+const RectangleShape& FlappyCatFloor::boundingBox() const {
 
   return mFloor;
 }
@@ -92,25 +101,7 @@ void FlappyCatFloor::setResetModifier(const modifier_type& modifier) {
   mResetModifier = modifier;
 }
 
+void FlappyCatFloor::setMovementDisplacement(const Position& movementDisplacement) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  mFloorSpikes.setMovementDisplacement(movementDisplacement);
+}

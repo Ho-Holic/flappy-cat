@@ -87,5 +87,3 @@ Position FlappyCatGameConstants::cameraSize() const {
 
   return Position(1080.f, 1920.f);
 }
-
-

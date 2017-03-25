@@ -17,7 +17,7 @@ public:
   FlappyCatFloor(const FlappyCatGameConstants& gameConstants);
 
 public:
-  const Shape& boundingBox() const;
+  const RectangleShape& boundingBox() const;
 
 public:
   virtual void initialize() override ;
@@ -31,8 +31,12 @@ public:
 public:
   void setColor(const Color& floorColor, const Color& dirtColor);
   void setResetModifier(const modifier_type& modifier);
+  void setMovementDisplacement(const Position& movementDisplacement);
 
-public:
+private:
+  void syncChildren();
+
+private:
   Position mPosition;
   Position mSize;
   RectangleShape mFloor;

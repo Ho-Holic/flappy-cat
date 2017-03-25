@@ -30,7 +30,8 @@ void FlappyCatGame::initialize() {
 
   // floor
   mFloor.moveTo(Position(-mPlateWidth, -800.f));
-  mFloor.resize(Position(mPlateWidth * 2.f, 0.f));
+  mFloor.resize(Position(mPlateWidth * 2.f, 200.f));
+  mFloor.setMovementDisplacement(Position(-10.f, 0.f));
 
   mFloor.setResetModifier(
     [this](FlappyCatFloor& floor) {
