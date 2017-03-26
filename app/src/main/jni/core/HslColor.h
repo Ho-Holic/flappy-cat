@@ -30,7 +30,7 @@ public:
   void setLuminance(value_type luminance);
 
 public:
-  Color toRgb();
+  Color toRgb(uint8_t alpha = 255);
 
 private:
   value_type mHue;

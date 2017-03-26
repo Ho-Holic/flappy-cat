@@ -13,7 +13,7 @@ HslColor::HslColor(value_type hue, value_type saturation, value_type luminance)
   //
 }
 
-Color HslColor::toRgb() {
+Color HslColor::toRgb(uint8_t alpha) {
 
   value_type temporary_1
     = (mLuminance < 0.5) ? mLuminance * (1.0 + mSaturation)
@@ -59,7 +59,8 @@ Color HslColor::toRgb() {
 
   return Color(static_cast<uint8_t>(red),
                static_cast<uint8_t>(green),
-               static_cast<uint8_t>(blue));
+               static_cast<uint8_t>(blue),
+               alpha);
 }
 
 HslColor::value_type HslColor::hue() const {

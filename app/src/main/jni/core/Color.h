@@ -18,7 +18,7 @@ public: // free-function operators
   friend Color operator + (const Color& left, const Color& right);
   friend Color operator - (const Color& left, const Color& right);
   friend Color operator * (const Color& left, const Color& right);
-  friend Color operator * (float factor,             const Color& right);
+  friend Color operator * (float factor,      const Color& right);
   friend Color operator * (const Color& left, float factor);
 
 public:

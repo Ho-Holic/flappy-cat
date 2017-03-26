@@ -117,9 +117,6 @@ bool FlappyCatChain<Link>::isWarpNeeded(const Position& point) const {
 template <typename Link>
 void FlappyCatChain<Link>::initialize() {
 
-  // TODO: parametrize reserve function
-  mLinks.reserve(120);
-
   /*
    * TODO: Write code for better offset usage
    *
@@ -127,6 +124,11 @@ void FlappyCatChain<Link>::initialize() {
    * would be observed when one would call setOffsetBetweenLinks()
    */
   std::size_t linkCount = static_cast<std::size_t>(chainLength() / section().x());
+
+  CAUTION("If all of a sudden no object appears on the screen, please pass"
+          "some hardcoded value e.g 'mLinks.reserve(120)' and check if bug appears"
+          "this appears if 'emplace_back' is not implemented properly");
+  mLinks.reserve(linkCount);
 
   for (std::size_t i = 0; i < linkCount;  ++i) {
 

@@ -1,5 +1,6 @@
 // self
 #include "FlappyCatEntity.h"
+#include "FlappyCatClock.h"
 
 // engine
 #include <core/Log.h>
@@ -43,8 +44,6 @@ void FlappyCatEntity::resize(const Position& size) {
  * this code would be called
  */
 void FlappyCatEntity::update(const FrameDuration& frameDuration) {
-
-  using FloatSecond = std::chrono::duration<Position::value_type, std::ratio<1,1>>;
 
   Position::value_type time = std::chrono::duration_cast<FloatSecond>(frameDuration).count();
 

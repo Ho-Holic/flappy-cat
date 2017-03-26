@@ -41,7 +41,7 @@ void FlappyCatHero::drawOn(const Window& window) const {
 
   FlappyCatMascot mascot(gameConstants());
 
-  mascot.setColor(Color(0, 0, 0), Color(0, 255, 255), Color(64, 0, 0));
+  mascot.setColor(Color(0, 0, 0), Color(255, 255, 255), Color(64, 0, 0));
   mascot.moveTo(mascotPos);
   mascot.resize(Position(diameter, diameter));
 

@@ -26,7 +26,6 @@ public:
 public:
   Position houseSize() const;
   Position wallSize() const;
-  Position spikeSize() const;
   Position cameraSize() const;
   Position::value_type gravity() const;
 

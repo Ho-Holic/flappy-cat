@@ -1,5 +1,6 @@
 // self
 #include "FlappyCatApplication.h"
+#include "FlappyCatClock.h"
 
 FlappyCatApplication::FlappyCatApplication(ANativeActivity* activity,
                                            void* savedState,

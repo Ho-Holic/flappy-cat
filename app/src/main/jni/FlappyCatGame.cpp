@@ -1,5 +1,6 @@
 // self
 #include "FlappyCatGame.h"
+#include "FlappyCatClock.h"
 
 // engine
 #include <core/Log.h>
@@ -182,20 +183,9 @@ void FlappyCatGame::processEvent(const Event& event) {
     }
     else if (mGameState == PlayState) {
 
-      using FloatSecond = std::chrono::duration<Position::value_type, std::ratio<1, 1>>;
-
       // hardcoded magic numbers
       mHero.setAcceleration(Position(0.f, -800.f));
       mHero.setVelocity(Position(0.f, 800.f));
-
-      // TODO: do some physics
-//    mHero.setAcceleration(Position(0.f, 0.f));
-//
-//    Position::value_type distance = (2.f * mHero.radius());
-//
-//    Position::value_type velocityY = distance / FloatSecond(1).count();
-//
-//    mHero.setVelocity(Position(0.f, velocityY));
     }
   }
 }
