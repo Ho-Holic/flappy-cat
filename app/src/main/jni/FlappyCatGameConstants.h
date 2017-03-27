@@ -27,13 +27,12 @@ public:
   Position houseSize() const;
   Position wallSize() const;
   Position cameraSize() const;
+  Position backgroundDisplacement() const;
+  Position foregroundDisplacement() const;
   Position::value_type gravity() const;
-
-public:
-  float heroRadius() const;
-  float cloudRadius() const;
+  Position::value_type heroRadius() const;
+  Position::value_type cloudRadius() const;
   Position::value_type plateWidth() const;
-  Position::value_type gapInterval() const;
 
 public:
   Position::value_type randomOffsetFrom(Position::value_type initial,

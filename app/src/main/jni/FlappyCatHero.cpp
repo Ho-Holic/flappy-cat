@@ -11,7 +11,7 @@ FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
   //
 }
 
-Position::value_type  FlappyCatHero::radius() const {
+Position::value_type FlappyCatHero::radius() const {
 
   return mBall.geometry().radius();
 }

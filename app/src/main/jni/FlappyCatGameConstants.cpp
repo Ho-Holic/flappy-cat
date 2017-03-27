@@ -25,26 +25,22 @@ Position FlappyCatGameConstants::houseSize() const {
 }
 
 Position FlappyCatGameConstants::wallSize() const {
-  return Position(300, 1725);
+  return Position(180, 1725);
 }
 
 Position::value_type FlappyCatGameConstants::plateWidth() const {
   return 1000.f;
 }
 
-Position::value_type FlappyCatGameConstants::gapInterval() const {
-  return 600.f;
-}
-
 Position::value_type FlappyCatGameConstants::gravity() const {
-  return 40.f;
+  return 100.f;
 }
 
-float FlappyCatGameConstants::heroRadius() const {
+Position::value_type FlappyCatGameConstants::heroRadius() const {
   return 50.f;
 }
 
-float FlappyCatGameConstants::cloudRadius() const {
+Position::value_type FlappyCatGameConstants::cloudRadius() const {
   return 20.f;
 }
 
@@ -82,4 +78,12 @@ FlappyCatGameConstants::clampedRandomOffsetFrom(Position::value_type initial,
 Position FlappyCatGameConstants::cameraSize() const {
 
   return Position(1080.f, 1920.f);
+}
+
+Position FlappyCatGameConstants::backgroundDisplacement() const {
+  return Position(-5.f, 0.f);
+}
+
+Position FlappyCatGameConstants::foregroundDisplacement() const {
+  return Position(-10.f, 0.f);
 }

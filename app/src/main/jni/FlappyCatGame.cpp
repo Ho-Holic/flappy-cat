@@ -32,12 +32,30 @@ void FlappyCatGame::initialize() {
   // floor
   mFloor.moveTo(Position(-mPlateWidth, -800.f));
   mFloor.resize(Position(mPlateWidth * 2.f, 200.f));
-  mFloor.setMovementDisplacement(Position(-10.f, 0.f));
 
   mFloor.setResetModifier(
     [this](FlappyCatFloor& floor) {
+      mFloor.setMovementDisplacement(mGameConstants.foregroundDisplacement());
       floor.setColor(mGameConstants.colorScheme().block(),
                      mGameConstants.colorScheme().dirt());
+    }
+  );
+
+  mFloor.setUpdateModifier(
+    [this](FlappyCatFloor& floor, const FrameDuration& frameDuration) {
+
+      Position::value_type radius = mHero.radius();
+      // TODO: implement proper origin in 'transformation' and remove this code
+      // circle origin in bottom left so we shift by radius
+      Position center = mHero.position() + Position(radius, radius);
+
+      if (mGameState == PlayState || mGameState == LoseState) {
+
+        if (Collide::circleRect(center, radius, mFloor.boundingBox())) {
+          mGameState = OnTheFloorState;
+          Log::i(TAG, "Collide");
+        }
+      }
     }
   );
 
@@ -46,12 +64,12 @@ void FlappyCatGame::initialize() {
   mWalls.resize(Position(mPlateWidth * 2.f, 0.f));
   mWalls.setStartOffset(Position(mPlateWidth * 4.f, 0.f));
   mWalls.setLinkSize(mGameConstants.wallSize());
-  mWalls.setOffsetBetweenLinks(mGameConstants.wallSize() * 2.f);
-  mWalls.setMovementDisplacement(Position(-10.f, 0.f));
+  mWalls.setOffsetBetweenLinks(mGameConstants.wallSize() * 2.2f);
+  mWalls.setMovementDisplacement(mGameConstants.foregroundDisplacement());
 
   mWalls.setResetModifier(
     [this](FlappyCatWall& wall) {
-      wall.setGapInterval(mGameConstants.gapInterval());
+      wall.setGapInterval(mHero.radius() * 2.f * 4.f);
 
       wall.setGapDisplacement(mGameConstants.clampedRandomOffsetFrom(
         0.f, 200.f,
@@ -65,16 +83,18 @@ void FlappyCatGame::initialize() {
   mWalls.setUpdateModifier(
     [this](FlappyCatWall& wall) {
 
-      float radius = mHero.radius();
+      Position::value_type radius = mHero.radius();
       // TODO: implement proper origin in 'transformation' and remove this code
       // circle origin in bottom left so we shift by radius
       Position center = mHero.position() + Position(radius, radius);
 
-      // TODO: This type of interface? how about (collide(wall, mHero).or(wall, mFloor)){}
-      if (wall.collideWithCircle(center, radius) || Collide::circleRect(center, radius,
-                                                                        mFloor.boundingBox())) {
-        mGameState = LoseState;
-        Log::i(TAG, "Collide");
+      if (mGameState == PlayState) {
+
+        if (wall.collideWithCircle(center, radius)) {
+          mGameState = LoseState;
+          mFloor.setMovementDisplacement(Position(0.f, 0.f));
+          Log::i(TAG, "Collide");
+        }
       }
     }
   );
@@ -93,7 +113,7 @@ void FlappyCatGame::initialize() {
   mBackgroundCity.moveTo(Position(-mPlateWidth, -800.f));
   mBackgroundCity.resize(Position(mPlateWidth * 2.f, 0.f));
   mBackgroundCity.setLinkSize(mGameConstants.houseSize());
-  mBackgroundCity.setMovementDisplacement(Position(-5.f, 0.f));
+  mBackgroundCity.setMovementDisplacement(mGameConstants.backgroundDisplacement());
 
   mBackgroundCity.setResetModifier(
     [this](FlappyCatSpike& house) {
@@ -173,19 +193,20 @@ void FlappyCatGame::processEvent(const Event& event) {
       mHero.setAcceleration(Position(0.f, -800.f));
       mHero.setVelocity(Position(0.f, 800.f));
     }
-    else if (mGameState == LoseState) {
-
-      if (mHero.position().y() < -2000.f) {
+    else if (mGameState == OnTheFloorState) {
 
         mGameState = PressButtonState;
         reset();
-      }
     }
     else if (mGameState == PlayState) {
 
-      // hardcoded magic numbers
-      mHero.setAcceleration(Position(0.f, -800.f));
-      mHero.setVelocity(Position(0.f, 800.f));
+      // don't jump out from screen
+      if (mHero.position().y() < 800.f) {
+
+        // hardcoded magic numbers
+        mHero.setAcceleration(Position(0.f, -800.f));
+        mHero.setVelocity(Position(0.f, 800.f));
+      }
     }
   }
 }
@@ -202,6 +223,10 @@ void FlappyCatGame::update(const FrameDuration& time) {
   else if (mGameState == LoseState) {
 
     mHero.update(time);
+    mFloor.update(time);
+  }
+  else if (mGameState == OnTheFloorState) {
+    // nothing to do here now
   }
   else if (mGameState == PressButtonState) {
 

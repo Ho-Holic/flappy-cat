@@ -13,6 +13,7 @@ class FlappyCatFloor : public FlappyCatEntity {
 public:
   using entity_type = FlappyCatFloor;
   using modifier_type = std::function<void(entity_type&)>;
+  using update_modifier_type = std::function<void(entity_type&, const FrameDuration& time)>;
 public:
   FlappyCatFloor(const FlappyCatGameConstants& gameConstants);
 
@@ -31,6 +32,7 @@ public:
 public:
   void setColor(const Color& floorColor, const Color& dirtColor);
   void setResetModifier(const modifier_type& modifier);
+  void setUpdateModifier(const update_modifier_type& modifier);
   void setMovementDisplacement(const Position& movementDisplacement);
 
 private:
@@ -43,6 +45,7 @@ private:
   FlappyCatChain<FlappyCatSpike> mFloorSpikes;
   RectangleShape mBackgroundDirt;
   modifier_type mResetModifier;
+  update_modifier_type mUpdateModifier;
 };
 
 

@@ -8,7 +8,8 @@ FlappyCatFloor::FlappyCatFloor(const FlappyCatGameConstants& gameConstants)
 , mFloor()
 , mFloorSpikes(gameConstants)
 , mBackgroundDirt()
-, mResetModifier([](entity_type&){}) {
+, mResetModifier([](entity_type&){})
+, mUpdateModifier([](entity_type&, const FrameDuration&){}) {
   //
 }
 
@@ -51,6 +52,7 @@ void FlappyCatFloor::drawOn(const Window& window) const {
 void FlappyCatFloor::update(const FrameDuration& time) {
 
   mFloorSpikes.update(time);
+  mUpdateModifier(*this, time);
 }
 
 void FlappyCatFloor::moveTo(const Position& position) {
@@ -104,4 +106,9 @@ void FlappyCatFloor::setResetModifier(const modifier_type& modifier) {
 void FlappyCatFloor::setMovementDisplacement(const Position& movementDisplacement) {
 
   mFloorSpikes.setMovementDisplacement(movementDisplacement);
+}
+
+void FlappyCatFloor::setUpdateModifier(const FlappyCatFloor::update_modifier_type& modifier) {
+
+  mUpdateModifier = modifier;
 }

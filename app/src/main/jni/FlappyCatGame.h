@@ -53,7 +53,8 @@ private:
 enum FlappyCatGame::GameState : int32_t {
   PressButtonState,
   PlayState,
-  LoseState
+  LoseState,
+  OnTheFloorState
 };
 
 #endif //FLAPPY_CAT_FLAPPYCATGAME_H
