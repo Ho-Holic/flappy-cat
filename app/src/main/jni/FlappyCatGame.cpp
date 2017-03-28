@@ -241,9 +241,10 @@ void FlappyCatGame::render(const Window& window) const {
 
   mBackgroundSky.drawOn(window);
   mBackgroundCity.drawOn(window);
-  mFloor.drawOn(window);
+
   mWalls.drawOn(window);
   mHero.drawOn(window);
+  mFloor.drawOn(window);
 
   window.display();
 }

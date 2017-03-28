@@ -13,6 +13,11 @@ HslColor::HslColor(value_type hue, value_type saturation, value_type luminance)
   //
 }
 
+Color HslColor::toRgb() {
+
+  return toRgb(255);
+}
+
 Color HslColor::toRgb(uint8_t alpha) {
 
   value_type temporary_1
@@ -123,23 +128,3 @@ void HslColor::addLuminance(value_type shift) {
   if (mLuminance > 1.0) mLuminance = 1.0;
   if (mLuminance < 0.0) mLuminance = 0.0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

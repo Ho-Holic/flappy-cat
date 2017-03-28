@@ -16,7 +16,7 @@ enum : GLuint {
 
 enum : GLint {
   VERTEX_POSITION_SIZE = 2,
-  VERTEX_COLOR_SIZE = 3,
+  VERTEX_COLOR_SIZE = 4,
 };
 
 enum : GLsizei {
@@ -25,6 +25,7 @@ enum : GLsizei {
   VERTEX_R_INDEX,
   VERTEX_G_INDEX,
   VERTEX_B_INDEX,
+  VERTEX_A_INDEX,
   VERTEX_SIZE
 };
 
@@ -74,6 +75,7 @@ void AndroidWindow::initialize() {
     EGL_BLUE_SIZE,  8,
     EGL_GREEN_SIZE, 8,
     EGL_RED_SIZE,   8,
+    EGL_ALPHA_SIZE, 8,
     // enable opengl es2
     EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
     // terminating symbol
@@ -110,15 +112,18 @@ void AndroidWindow::initialize() {
     EGLint r = 0;
     EGLint g = 0;
     EGLint b = 0;
+    EGLint a = 0;
     EGLint d = 0;
 
     bool hasMatch = eglGetConfigAttrib(display, cfg, EGL_RED_SIZE,   &r)
                  && eglGetConfigAttrib(display, cfg, EGL_GREEN_SIZE, &g)
                  && eglGetConfigAttrib(display, cfg, EGL_BLUE_SIZE,  &b)
+                 && eglGetConfigAttrib(display, cfg, EGL_ALPHA_SIZE, &a)
                  && eglGetConfigAttrib(display, cfg, EGL_DEPTH_SIZE, &d)
                  && r == 8
                  && g == 8
                  && b == 8
+                 && a == 8
                  && d == 0;
 
     if (hasMatch) {
@@ -200,6 +205,7 @@ void AndroidWindow::initializeOpengl() {
 
   for (auto name : opengl_info) {
 
+    // TODO: fix conversion error
     const GLubyte* info = glGetString(name);
     Log::i(TAG, "OpenGL Info: %s", info);
   }
@@ -207,13 +213,16 @@ void AndroidWindow::initializeOpengl() {
   // Initialize GL state.
   glEnable(GL_CULL_FACE);
   glDisable(GL_DEPTH_TEST);
+  glEnable(GL_BLEND);
+
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   initializeProgram();
 }
 
 void AndroidWindow::initializeProgram() {
 
-    std::string strVertexShader(
+    static std::string strVertexShader(
       "attribute vec4 a_position;   \n"
       "attribute vec4 a_color;      \n"
       "varying vec4 v_color;        \n"
@@ -223,7 +232,7 @@ void AndroidWindow::initializeProgram() {
       "}                            \n"
     );
 
-    std::string strFragmentShader(
+    static std::string strFragmentShader(
       "precision mediump float;                   \n"
       "varying vec4 v_color;                      \n"
       "void main() {                              \n"
@@ -316,7 +325,7 @@ GLuint AndroidWindow::createProgram(const std::vector<GLuint>& shaderList) {
 }
 
 void AndroidWindow::display() const {
-
+  
   if ( ! isReady()) {
     return;
   }
@@ -347,6 +356,10 @@ int32_t AndroidWindow::requestHeight() const {
 void AndroidWindow::drawVertices(const Vertices& vertices,
                                  const Transformation& transformation) const {
 
+  if ( ! isReady()) {
+    return;
+  }
+
   std::size_t verticesDataSize = vertices.size() * VERTEX_SIZE;
 
   std::unique_ptr<GLfloat[]> verticesData(new GLfloat[verticesDataSize]);
@@ -366,6 +379,7 @@ void AndroidWindow::drawVertices(const Vertices& vertices,
     verticesData[VERTEX_R_INDEX + stride] = vertices[i].color().r() / 255.f;
     verticesData[VERTEX_G_INDEX + stride] = vertices[i].color().g() / 255.f;
     verticesData[VERTEX_B_INDEX + stride] = vertices[i].color().b() / 255.f;
+    verticesData[VERTEX_A_INDEX + stride] = vertices[i].color().alpha() / 255.f;
 
   }
 
@@ -391,6 +405,10 @@ void AndroidWindow::drawVertices(const Vertices& vertices,
 }
 
 void AndroidWindow::clear(const Color& color) const {
+
+  if ( ! isReady()) {
+    return;
+  }
 
   glClearColor(color.r()     / 255.f,
                color.g()     / 255.f,

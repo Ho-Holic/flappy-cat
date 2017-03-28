@@ -23,10 +23,13 @@ public:
   virtual const Position& position() const override;
   virtual void setScale(const Position& factor) override;
   virtual const Position& scale() const override;
+  virtual void setRotation(Position::value_type angle) override;
+  virtual Position::value_type rotation() const override;
 private:
   Position mPosition;
   Position mOrigin;
   Position mScale;
+  Position::value_type mAngle;
   OnUpdateSignal mOnUpdate;
 };
 

@@ -7,6 +7,7 @@ FlatTransformation::FlatTransformation(const Position& position)
 , mPosition(position)
 , mOrigin(0.f, 0.f)
 , mScale(1.f, 1.f)
+, mAngle(0.f)
 , mOnUpdate() {
   //
 }
@@ -47,25 +48,12 @@ const Position& FlatTransformation::scale() const {
   return mScale;
 }
 
+void FlatTransformation::setRotation(Position::value_type angle) {
 
+  mAngle = angle;
+}
 
+Position::value_type FlatTransformation::rotation() const {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  return mAngle;
+}

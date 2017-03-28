@@ -54,7 +54,7 @@ void FlappyCatColorScheme::generateNewScheme() {
 
   mScheme[Background] = backgroundColor.toRgb();
   mScheme[Block]      = blockColor.toRgb();
-  mScheme[Hero]       = heroColor.toRgb();
+  mScheme[Hero]       = heroColor.toRgb(128);
   mScheme[House]      = houseColor.toRgb();
   mScheme[Cloud]      = cloudColor.toRgb();
   mScheme[Dirt]       = dirtColor.toRgb();
@@ -88,13 +88,3 @@ Color FlappyCatColorScheme::cloud() const {
 Color FlappyCatColorScheme::dirt() const {
   return mScheme[Dirt];
 }
-
-
-
-
-
-
-
-
-
-
