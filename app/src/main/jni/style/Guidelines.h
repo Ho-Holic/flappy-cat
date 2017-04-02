@@ -2,25 +2,25 @@
 #define FLAPPY_CAT_GUIDELINES_H
 
 /**
- * @def UNUSED - document that variable is unused and programmer know this
+ * UNUSED - document that variable is unused and programmer know this
  */
 #define UNUSED(expr) (void)(expr)
 
 /**
- * @def SCOPE - document that you creating new scope with some purpose
+ * SCOPE - document that you creating new scope with some purpose
  * Useful with RAII techniques
  */
 #define SCOPE(description) (void)(description);
 
 /**
- * @def DISABLE_COPY - disable copy construction and assignment operations
+ * DISABLE_COPY - disable copy construction and assignment operations
  */
 #define DISABLE_COPY(Class) \
   Class(const Class&) = delete;\
   Class& operator=(const Class&) = delete;
 
 /**
- * @def loop - endless loop in more readable format
+ * loop - endless loop in more readable format
  *
  * Avoid common warnings and static analyzer false positives.
  *
@@ -35,18 +35,18 @@
 #define loop() for(;;)
 
 /**
- * @def CAUTION(message) - document critical sections of code
+ * CAUTION(message) - document critical sections of code
  * This macro do noting. This is like a comment, but bring extra attention to it's message
  */
 #define CAUTION(message)
 
 /**
- * @def REQUIRE - assert with fancy name =)
+ * REQUIRE - assert with fancy name =)
  */
 #define REQUIRE(tag, condition, ...) Log::assert(condition, #condition, tag, __VA_ARGS__)
 
 /**
- * @def UNEXPECTED_SWITCH - Mark switch branch that must be unreachable
+ * UNEXPECTED_SWITCH - Mark switch branch that must be unreachable
  *
  * This is used when some code permutations lead to code that compile but works wrong,
  * like adding new enum value and not handle this in a switch
@@ -57,7 +57,7 @@
   }
 
 /**
- * @def UNEXPECTED_RETURN - Mark switch branch that must be unreachable
+ * UNEXPECTED_RETURN - Mark switch branch that must be unreachable
  *
  * This is used for switch constructions when all brunches return from a function
  * but you need to be shure that code does not leave the switch statement

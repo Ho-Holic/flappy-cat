@@ -1,8 +1,8 @@
 // ndk
 #include <android/native_activity.h>
 
-// self
-#include "FlappyCatApplication.h"
+// game
+#include "game/FlappyCatApplication.h"
 
 // engine
 #include <core/Log.h>
@@ -16,7 +16,7 @@
 //
 //    2. Java   'Log::i(TAG, "Creating: %p\n", activity);' was prefered to
 //       C++ish 'log_i(TAG) << "Creating: " << activity << "\n";' because of confusion
-//       with std::log() function and less error prone implementation
+//       with std::log()
 //
 //    3. Macro 'DISABLE_COPY' prefered to manual '= delete' because of easy search and maintenance
 //
@@ -50,8 +50,8 @@ extern "C" {
                                                                  savedState, savedStateSize);
     // Create 'event handler' thread
     //   - don't capture 'application' pointer, this would produce less readable code
-    auto eventLoopWorker = [](FlappyCatApplication* application) -> void {
-      application->exec();
+    auto eventLoopWorker = [](FlappyCatApplication* app) -> void {
+      app->exec();
     };
 
     std::thread eventLoopThread(std::ref(eventLoopWorker), std::ref(application));

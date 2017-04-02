@@ -1,2 +1,0 @@
-// self
-#include "Geometry.h"

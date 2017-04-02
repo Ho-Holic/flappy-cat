@@ -29,7 +29,8 @@ model {
 
             stl 'gnustl_static'
             cppFlags.add('-std=c++14')
-            cppFlags.add("-I" + file("src/main/jni").absolutePath)
+            cppFlags.add("-I" + file("src/main/jni/engine").absolutePath)
+            cppFlags.add("-I" + file("src/main/jni/").absolutePath)
 
             // you can change toolchain to 'gcc' and remove link against 'atomic'
             // https://code.google.com/p/android/issues/detail?id=68779
