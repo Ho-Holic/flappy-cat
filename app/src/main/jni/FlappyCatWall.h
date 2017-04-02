@@ -39,7 +39,7 @@ public:
 public:
   void setGapInterval(Position::value_type interval);
   void setGapDisplacement(Position::value_type displacement);
-  bool collideWithCircle(const Position& center, float radius);
+  bool collideWithCircle(const Position& center, Position::value_type radius);
 
 public:
   virtual void drawOn(const Window& window) const override;

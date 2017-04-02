@@ -30,8 +30,13 @@ public:
   void setUpdateModifier(const update_modifier_type& modifier);
   void setRadius(Position::value_type radius);
   Position::value_type radius() const;
+  void setJumpConstants(const Position& acceleration, const Position& velocity);
+
+  void jump();
 
 private:
+  Position mJumpAcceleration;
+  Position mJumpVelocity;
   CircleShape mBall;
   modifier_type mResetModifier;
   update_modifier_type mUpdateModifier;

@@ -29,9 +29,10 @@ void FlappyCatWall::setGapDisplacement(Position::value_type displacement) {
   syncChildren();
 }
 
-bool FlappyCatWall::collideWithCircle(const Position& center, float radius) {
+bool FlappyCatWall::collideWithCircle(const Position& center, Position::value_type radius) {
+
   return Collide::circleRect(center, radius, mTopBlock)
-         || Collide::circleRect(center, radius, mBottomBlock);
+      || Collide::circleRect(center, radius, mBottomBlock);
 }
 
 void FlappyCatWall::moveTo(const Position& position) {
@@ -87,18 +88,6 @@ void FlappyCatWall::syncChildren() {
   mTopBlock.transformation().setPosition(Position(mPosition.x(), A3));
   mTopBlock.geometry().resize(Position(mSize.x(), (A4 - A3)));
 
-//  Log::i(TAG, "top   : pos(%f,%f), size(%f, %f)",
-//         mTopBlock.transformation().position().x(),
-//         mTopBlock.transformation().position().y(),
-//         mTopBlock.geometry().size().x(),
-//         mTopBlock.geometry().size().y());
-//  Log::i(TAG, "bottom: pos(%f,%f), size(%f, %f)",
-//         mBottomBlock.transformation().position().x(),
-//         mBottomBlock.transformation().position().y(),
-//         mBottomBlock.geometry().size().x(),
-//         mBottomBlock.geometry().size().y());
-//  Log::i(TAG, "gap: %f, shift: %f", mGapInterval, mGapDisplacement);
-//  Log::i(TAG, "------------------------------------");
 }
 
 

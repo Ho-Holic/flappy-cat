@@ -8,6 +8,7 @@
 FlappyCatCloud::FlappyCatCloud(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
 , mPosition()
+, mParts(0.f)
 , mCloudParts()
 , mResetModifier([](entity_type&){}){
   //
@@ -15,12 +16,11 @@ FlappyCatCloud::FlappyCatCloud(const FlappyCatGameConstants& gameConstants)
 
 void FlappyCatCloud::initialize() {
 
-  size_t cloudCount = 100;
 
-  mCloudParts.reserve(cloudCount);
+  mCloudParts.reserve(static_cast<size_t>(mParts));
 
-  for (size_t i = 0; i < cloudCount; ++i) {
-    mCloudParts.emplace_back(Position(0.f, 0.f), 50.f, 32);
+  for (size_t i = 0; i < mParts; ++i) {
+    mCloudParts.emplace_back(Position(0.f, 0.f), 0.f, 32);
   }
 }
 
@@ -65,6 +65,11 @@ void FlappyCatCloud::setColor(const Color& color) {
 
     part.setColor(color);
   }
+}
+
+void FlappyCatCloud::setParts(Position::value_type parts) {
+
+  mParts = parts;
 }
 
 

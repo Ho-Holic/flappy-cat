@@ -5,7 +5,8 @@
 FlappyCatGameConstants::FlappyCatGameConstants()
 : mRandomDevice()
 , mGenerator(mRandomDevice())
-, mColorScheme() {
+, mColorScheme()
+, mConstants(ConstantsSize, Position()) {
 
   reset();
 }
@@ -13,6 +14,19 @@ FlappyCatGameConstants::FlappyCatGameConstants()
 void FlappyCatGameConstants::reset() {
 
   mColorScheme.generateNewScheme();
+
+  Position::value_type mPlateWidth = plateWidth();
+
+  mConstants[CameraSize]        = Position(1080.f, 1920.f);
+  mConstants[WallSize]          = Position(180, 1725);
+  mConstants[HouseSize]         = Position(100, 150);
+  mConstants[FloorPosition]     = Position(-mPlateWidth, -800.f);
+  mConstants[FloorSize]         = Position(mPlateWidth * 2.f, 200.f);
+  mConstants[CityPosition]      = Position(-mPlateWidth, -800.f);
+  mConstants[CitySize]          = Position(mPlateWidth * 2.f, 0.f);
+  mConstants[BarricadePosition] = Position(-mPlateWidth, -775.f);
+  mConstants[BarricadeSize]     = Position(mPlateWidth * 2.f, 0.f);
+
 }
 
 const FlappyCatColorScheme& FlappyCatGameConstants::colorScheme() const {
@@ -20,12 +34,41 @@ const FlappyCatColorScheme& FlappyCatGameConstants::colorScheme() const {
   return mColorScheme;
 }
 
+Position FlappyCatGameConstants::cameraSize() const {
+
+  return mConstants[CameraSize] ;
+}
+
+Position FlappyCatGameConstants::cityPosition() const {
+  return mConstants[CityPosition];
+}
+
+Position FlappyCatGameConstants::citySize() const {
+  return mConstants[CitySize];
+}
+
 Position FlappyCatGameConstants::houseSize() const {
-  return Position(100, 150);
+  return mConstants[HouseSize];
+}
+
+Position FlappyCatGameConstants::barricadePosition() const {
+  return mConstants[BarricadePosition];
+}
+
+Position FlappyCatGameConstants::barricadeSize() const {
+  return mConstants[BarricadeSize];
 }
 
 Position FlappyCatGameConstants::wallSize() const {
-  return Position(180, 1725);
+  return mConstants[WallSize];
+}
+
+Position FlappyCatGameConstants::floorPosition() const {
+  return mConstants[FloorPosition];
+}
+
+Position FlappyCatGameConstants::floorSize() const {
+  return mConstants[FloorSize];
 }
 
 Position::value_type FlappyCatGameConstants::plateWidth() const {
@@ -42,6 +85,17 @@ Position::value_type FlappyCatGameConstants::heroRadius() const {
 
 Position::value_type FlappyCatGameConstants::cloudRadius() const {
   return 20.f;
+}
+
+
+
+
+Position FlappyCatGameConstants::backgroundDisplacement() const {
+  return Position(-5.f, 0.f);
+}
+
+Position FlappyCatGameConstants::foregroundDisplacement() const {
+  return Position(-10.f, 0.f);
 }
 
 Position::value_type
@@ -68,22 +122,11 @@ FlappyCatGameConstants::clampedRandomOffsetFrom(Position::value_type initial,
   auto number = distribution(mGenerator);
 
   return sign == Sign::Positive ? std::abs(backport::std::clamp(number,
-                                                                initial,
+                                                                initial - maxOffset,
                                                                 initial + maxOffset))
                                 : backport::std::clamp(number,
                                                        initial - maxOffset,
                                                        initial + maxOffset);
 }
 
-Position FlappyCatGameConstants::cameraSize() const {
 
-  return Position(1080.f, 1920.f);
-}
-
-Position FlappyCatGameConstants::backgroundDisplacement() const {
-  return Position(-5.f, 0.f);
-}
-
-Position FlappyCatGameConstants::foregroundDisplacement() const {
-  return Position(-10.f, 0.f);
-}

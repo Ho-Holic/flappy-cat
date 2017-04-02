@@ -10,7 +10,6 @@
 FlappyCatGame::FlappyCatGame()
 : mGameConstants()
 , mGameState(PressButtonState)
-, mPlateWidth(0.f)
 , mFloor(mGameConstants)
 , mWalls(mGameConstants)
 , mBackgroundCity(mGameConstants)
@@ -27,11 +26,9 @@ Position FlappyCatGame::cameraSize() const {
 
 void FlappyCatGame::initialize() {
 
-  mPlateWidth = mGameConstants.plateWidth();
-
   // floor
-  mFloor.moveTo(Position(-mPlateWidth, -800.f));
-  mFloor.resize(Position(mPlateWidth * 2.f, 200.f));
+  mFloor.moveTo(mGameConstants.floorPosition());
+  mFloor.resize(mGameConstants.floorSize());
 
   mFloor.setResetModifier(
     [this](FlappyCatFloor& floor) {
@@ -45,7 +42,7 @@ void FlappyCatGame::initialize() {
     [this](FlappyCatFloor& floor, const FrameDuration& frameDuration) {
 
       Position::value_type radius = mHero.radius();
-      // TODO: implement proper origin in 'transformation' and remove this code
+      // TODO: implement proper origin in 'transformation' and remove this line
       // circle origin in bottom left so we shift by radius
       Position center = mHero.position() + Position(radius, radius);
 
@@ -53,16 +50,16 @@ void FlappyCatGame::initialize() {
 
         if (Collide::circleRect(center, radius, mFloor.boundingBox())) {
           mGameState = OnTheFloorState;
-          Log::i(TAG, "Collide");
+          mHero.moveTo(Position(mHero.position().x(), mFloor.position().y()));
         }
       }
     }
   );
 
   // moving blocks
-  mWalls.moveTo(Position(-mPlateWidth, -775.f));
-  mWalls.resize(Position(mPlateWidth * 2.f, 0.f));
-  mWalls.setStartOffset(Position(mPlateWidth * 4.f, 0.f));
+  mWalls.moveTo(mGameConstants.barricadePosition());
+  mWalls.resize(mGameConstants.barricadeSize());
+  mWalls.setStartOffset(Position(mGameConstants.barricadeSize().x() * 2.f, 0.f));
   mWalls.setLinkSize(mGameConstants.wallSize());
   mWalls.setOffsetBetweenLinks(mGameConstants.wallSize() * 2.2f);
   mWalls.setMovementDisplacement(mGameConstants.foregroundDisplacement());
@@ -91,9 +88,9 @@ void FlappyCatGame::initialize() {
       if (mGameState == PlayState) {
 
         if (wall.collideWithCircle(center, radius)) {
+
           mGameState = LoseState;
           mFloor.setMovementDisplacement(Position(0.f, 0.f));
-          Log::i(TAG, "Collide");
         }
       }
     }
@@ -110,8 +107,8 @@ void FlappyCatGame::initialize() {
   );
 
   // city buildings
-  mBackgroundCity.moveTo(Position(-mPlateWidth, -800.f));
-  mBackgroundCity.resize(Position(mPlateWidth * 2.f, 0.f));
+  mBackgroundCity.moveTo(mGameConstants.cityPosition());
+  mBackgroundCity.resize(mGameConstants.citySize());
   mBackgroundCity.setLinkSize(mGameConstants.houseSize());
   mBackgroundCity.setMovementDisplacement(mGameConstants.backgroundDisplacement());
 
@@ -133,6 +130,7 @@ void FlappyCatGame::initialize() {
   );
 
   // sky with clouds
+  mBackgroundSky.setParts(100.f);
   mBackgroundSky.setResetModifier(
     [this](FlappyCatCloud::entity_type& cloud) {
       cloud.geometry().setRadius(mGameConstants.cloudRadius()
@@ -145,6 +143,9 @@ void FlappyCatGame::initialize() {
       cloud.setColor(mGameConstants.colorScheme().cloud());
     }
   );
+
+  // cat hero!
+  mHero.setJumpConstants(Position(0.f, -800.f), Position(0.f, 800.f)); // hardcoded magic numbers
 
   mHero.setUpdateModifier(
     [this](FlappyCatHero& hero, const FrameDuration& frameDuration) {
@@ -188,10 +189,7 @@ void FlappyCatGame::processEvent(const Event& event) {
     if (mGameState == PressButtonState) {
 
       mGameState = PlayState;
-
-      // TODO: remove duplicate code and make jump function
-      mHero.setAcceleration(Position(0.f, -800.f));
-      mHero.setVelocity(Position(0.f, 800.f));
+      mHero.jump();
     }
     else if (mGameState == OnTheFloorState) {
 
@@ -200,12 +198,10 @@ void FlappyCatGame::processEvent(const Event& event) {
     }
     else if (mGameState == PlayState) {
 
-      // don't jump out from screen
-      if (mHero.position().y() < 800.f) {
+      // don't jump out of screen
+      if (mHero.position().y() < ((cameraSize().y() / 2.f) - mGameConstants.heroRadius() * 4.f)) {
 
-        // hardcoded magic numbers
-        mHero.setAcceleration(Position(0.f, -800.f));
-        mHero.setVelocity(Position(0.f, 800.f));
+        mHero.jump();
       }
     }
   }

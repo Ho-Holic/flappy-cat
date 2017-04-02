@@ -325,7 +325,7 @@ GLuint AndroidWindow::createProgram(const std::vector<GLuint>& shaderList) {
 }
 
 void AndroidWindow::display() const {
-  
+
   if ( ! isReady()) {
     return;
   }

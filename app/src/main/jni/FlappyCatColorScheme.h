@@ -10,7 +10,7 @@
 
 class FlappyCatColorScheme {
 public:
-  enum Colors : uint32_t;
+  enum Colors : size_t;
 
 public:
   FlappyCatColorScheme();
@@ -33,13 +33,13 @@ private:
   std::vector<Color> mScheme;
 };
 
-enum FlappyCatColorScheme::Colors : uint32_t {
-  Background,
-  Block,
-  Hero,
-  House,
-  Cloud,
-  Dirt,
+enum FlappyCatColorScheme::Colors : size_t {
+  BackgroundColor,
+  BlockColor,
+  HeroColor,
+  HouseColor,
+  CloudColor,
+  DirtColor,
   ColorsSize
 };
 

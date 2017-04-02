@@ -29,8 +29,10 @@ public:
 public:
   void setResetModifier(const modifier_type& modifier);
   void setColor(const Color& color);
+  void setParts(Position::value_type parts);
 public:
   Position mPosition;
+  Position::value_type mParts;
   std::vector<entity_type> mCloudParts;
   modifier_type mResetModifier;
 };

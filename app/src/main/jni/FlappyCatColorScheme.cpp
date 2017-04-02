@@ -9,8 +9,8 @@
 FlappyCatColorScheme::FlappyCatColorScheme()
 : mRandomDevice()
 , mGenerator(mRandomDevice())
-, mScheme() {
-  mScheme.reserve(ColorsSize);
+, mScheme(ColorsSize, Color()) {
+
   generateNewScheme();
 }
 
@@ -52,39 +52,39 @@ void FlappyCatColorScheme::generateNewScheme() {
   houseColor.setLuminance(55.0);
 
 
-  mScheme[Background] = backgroundColor.toRgb();
-  mScheme[Block]      = blockColor.toRgb();
-  mScheme[Hero]       = heroColor.toRgb(128);
-  mScheme[House]      = houseColor.toRgb();
-  mScheme[Cloud]      = cloudColor.toRgb();
-  mScheme[Dirt]       = dirtColor.toRgb();
+  mScheme[BackgroundColor] = backgroundColor.toRgb();
+  mScheme[BlockColor]      = blockColor.toRgb();
+  mScheme[HeroColor]       = heroColor.toRgb(128);
+  mScheme[HouseColor]      = houseColor.toRgb();
+  mScheme[CloudColor]      = cloudColor.toRgb();
+  mScheme[DirtColor]       = dirtColor.toRgb();
 }
 
 
 
 Color FlappyCatColorScheme::background() const {
 
-  return mScheme[Background];
+  return mScheme[BackgroundColor];
 }
 
 Color FlappyCatColorScheme::block() const {
 
-  return mScheme[Block];
+  return mScheme[BlockColor];
 }
 
 Color FlappyCatColorScheme::hero() const {
 
-  return mScheme[Hero];
+  return mScheme[HeroColor];
 }
 
 Color FlappyCatColorScheme::house() const {
-  return mScheme[House];
+  return mScheme[HouseColor];
 }
 
 Color FlappyCatColorScheme::cloud() const {
-  return mScheme[Cloud];
+  return mScheme[CloudColor];
 }
 
 Color FlappyCatColorScheme::dirt() const {
-  return mScheme[Dirt];
+  return mScheme[DirtColor];
 }

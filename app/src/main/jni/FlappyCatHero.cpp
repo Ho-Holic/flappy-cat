@@ -5,6 +5,8 @@
 
 FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
+, mJumpAcceleration()
+, mJumpVelocity()
 , mBall()
 , mResetModifier([](entity_type&){})
 , mUpdateModifier([](entity_type&, const FrameDuration&){}) {
@@ -41,7 +43,7 @@ void FlappyCatHero::drawOn(const Window& window) const {
 
   FlappyCatMascot mascot(gameConstants());
 
-  mascot.setColor(Color(0, 0, 0), Color(255, 255, 255), Color(64, 0, 0));
+  mascot.setColor(Color(0, 0, 0), Color(255, 255, 255), Color(255, 0, 0));
   mascot.moveTo(mascotPos);
   mascot.resize(Position(diameter, diameter));
 
@@ -74,4 +76,16 @@ void FlappyCatHero::setColor(const Color& color) {
 void FlappyCatHero::setUpdateModifier(const update_modifier_type& modifier) {
 
   mUpdateModifier = modifier;
+}
+
+void FlappyCatHero::setJumpConstants(const Position& acceleration, const Position& velocity) {
+
+  mJumpAcceleration = acceleration;
+  mJumpVelocity = velocity;
+}
+
+void FlappyCatHero::jump() {
+
+  setAcceleration(mJumpAcceleration);
+  setVelocity(mJumpVelocity);
 }
