@@ -47,7 +47,7 @@ void FlappyCatEntity::update(const FrameDuration& frameDuration) {
 
   Position::value_type time = std::chrono::duration_cast<FloatSecond>(frameDuration).count();
 
-  mAcceleration = mAcceleration - Position(0.f, mGameConstants.gravity());
+  mAcceleration = mAcceleration - Position(0.f, mGameConstants.gravity().y());
   mVelocity = mVelocity + (mAcceleration * time);
 
   mDistance = mVelocity * time; // distance passed by last update

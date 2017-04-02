@@ -12,7 +12,6 @@
 
 class FlappyCatGameConstants {
 public:
-  enum class Sign { Positive, Both };
   enum Constants : size_t;
 
 public:
@@ -32,25 +31,32 @@ public:
   Position cityPosition() const;
   Position citySize() const;
   Position houseSize() const;
-
-  Position backgroundDisplacement() const;
-  Position foregroundDisplacement() const;
-
-  Position::value_type gravity() const;
-  Position::value_type heroRadius() const;
-  Position::value_type cloudRadius() const;
-  Position::value_type plateWidth() const;
+  Position heroPosition() const;
+  Position heroSize() const;
+  Position cloudSize() const;
 
 public:
-  // TODO: remove 'Sign sign' just call abs directly in the code
-  Position::value_type randomOffsetFrom(Position::value_type initial,
-                                        Position::value_type maxOffset,
-                                        Sign sign = Sign::Positive);
+  Position wallOffset() const;
+  Position houseOffset() const;
+  Position cloudOffset() const;
+  Position skyOffset() const;
 
-  // TODO: remove 'Sign sign' just call abs directly in the code
+public:
+  Position gravity() const;
+  Position backgroundDisplacement() const;
+  Position foregroundDisplacement() const;
+  Position jumpAcceleration() const;
+  Position jumpVelocity() const;
+
+public:
+  Position::value_type cloudParts() const;
+
+public:
+  Position::value_type randomOffsetFrom(Position::value_type initial,
+                                        Position::value_type maxOffset);
+
   Position::value_type clampedRandomOffsetFrom(Position::value_type initial,
-                                               Position::value_type maxOffset,
-                                               Sign sign = Sign::Positive);
+                                               Position::value_type maxOffset);
 private:
   std::random_device mRandomDevice;
   std::mt19937 mGenerator;
@@ -65,13 +71,22 @@ enum FlappyCatGameConstants::Constants : size_t {
   BarricadePosition,
   BarricadeSize,
   WallSize,
+  WallOffset,
 
   CityPosition,
   CitySize,
   HouseSize,
+  HouseOffset,
 
   FloorPosition,
   FloorSize,
+
+  HeroPosition,
+  HeroSize,
+
+  CloudSize,
+  CloudOffset,
+  SkyOffset,
 
   ConstantsSize
 };

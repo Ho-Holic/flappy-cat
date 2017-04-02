@@ -15,17 +15,25 @@ void FlappyCatGameConstants::reset() {
 
   mColorScheme.generateNewScheme();
 
-  Position::value_type mPlateWidth = plateWidth();
+  Position::value_type plateWidth = 1000.f;
 
   mConstants[CameraSize]        = Position(1080.f, 1920.f);
   mConstants[WallSize]          = Position(180, 1725);
+  mConstants[WallOffset]        = Position(0.f, 400.f);
+  mConstants[HouseOffset]       = Position(0.f, 200.f);
   mConstants[HouseSize]         = Position(100, 150);
-  mConstants[FloorPosition]     = Position(-mPlateWidth, -800.f);
-  mConstants[FloorSize]         = Position(mPlateWidth * 2.f, 200.f);
-  mConstants[CityPosition]      = Position(-mPlateWidth, -800.f);
-  mConstants[CitySize]          = Position(mPlateWidth * 2.f, 0.f);
-  mConstants[BarricadePosition] = Position(-mPlateWidth, -775.f);
-  mConstants[BarricadeSize]     = Position(mPlateWidth * 2.f, 0.f);
+  mConstants[FloorPosition]     = Position(-plateWidth, -800.f);
+  mConstants[FloorSize]         = Position(plateWidth * 2.f, 200.f);
+  mConstants[CityPosition]      = Position(-plateWidth, -800.f);
+  mConstants[CitySize]          = Position(plateWidth * 2.f, 0.f);
+  mConstants[BarricadePosition] = Position(-plateWidth, -775.f);
+  mConstants[BarricadeSize]     = Position(plateWidth * 2.f, 0.f);
+  mConstants[HeroPosition]      = Position(-300.f, 0.f);
+  mConstants[HeroSize]          = Position(50.f, 0.f);
+  mConstants[CloudSize]         = Position(20.f, 0.f);
+  mConstants[CloudOffset]       = Position(0.f, 100.f);
+  mConstants[SkyOffset]         = Position(0.f, 500.f);
+
 
 }
 
@@ -71,24 +79,38 @@ Position FlappyCatGameConstants::floorSize() const {
   return mConstants[FloorSize];
 }
 
-Position::value_type FlappyCatGameConstants::plateWidth() const {
-  return 1000.f;
+
+Position FlappyCatGameConstants::heroPosition() const {
+  return mConstants[HeroPosition];
 }
 
-Position::value_type FlappyCatGameConstants::gravity() const {
-  return 100.f;
+Position FlappyCatGameConstants::heroSize() const {
+  return mConstants[HeroSize];
 }
 
-Position::value_type FlappyCatGameConstants::heroRadius() const {
-  return 50.f;
+Position FlappyCatGameConstants::wallOffset() const {
+  return mConstants[WallOffset];
 }
 
-Position::value_type FlappyCatGameConstants::cloudRadius() const {
-  return 20.f;
+Position FlappyCatGameConstants::houseOffset() const {
+  return mConstants[HouseOffset];
 }
 
+Position FlappyCatGameConstants::cloudSize() const {
+  return mConstants[CloudSize];
+}
 
+Position FlappyCatGameConstants::cloudOffset() const {
+  return mConstants[CloudOffset];
+}
 
+Position FlappyCatGameConstants::skyOffset() const {
+  return mConstants[SkyOffset];
+}
+
+Position FlappyCatGameConstants::gravity() const {
+  return Position(0.f, 100.f);
+}
 
 Position FlappyCatGameConstants::backgroundDisplacement() const {
   return Position(-5.f, 0.f);
@@ -100,33 +122,30 @@ Position FlappyCatGameConstants::foregroundDisplacement() const {
 
 Position::value_type
 FlappyCatGameConstants::randomOffsetFrom(Position::value_type initial,
-                                         Position::value_type maxOffset,
-                                         Sign sign) {
+                                         Position::value_type maxOffset) {
 
   std::normal_distribution<Position::value_type> distribution(initial, maxOffset);
 
-  auto number = distribution(mGenerator);
-
-  return sign == Sign::Positive ? std::abs(number)
-                                : number;
-
+  return distribution(mGenerator);
 }
 
 Position::value_type
 FlappyCatGameConstants::clampedRandomOffsetFrom(Position::value_type initial,
-                                         Position::value_type maxOffset,
-                                         Sign sign) {
+                                                Position::value_type maxOffset) {
 
-  std::normal_distribution<Position::value_type> distribution(initial, maxOffset);
-
-  auto number = distribution(mGenerator);
-
-  return sign == Sign::Positive ? std::abs(backport::std::clamp(number,
-                                                                initial - maxOffset,
-                                                                initial + maxOffset))
-                                : backport::std::clamp(number,
-                                                       initial - maxOffset,
-                                                       initial + maxOffset);
+  return backport::std::clamp(randomOffsetFrom(initial, maxOffset),
+                              initial - maxOffset,
+                              initial + maxOffset);
 }
 
+Position FlappyCatGameConstants::jumpAcceleration() const {
+  return Position(0.f, -800.f);
+}
 
+Position FlappyCatGameConstants::jumpVelocity() const {
+  return Position(0.f, 800.f);
+}
+
+Position::value_type FlappyCatGameConstants::cloudParts() const {
+  return 100.f;
+}

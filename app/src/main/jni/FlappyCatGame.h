@@ -43,7 +43,7 @@ private:
   FlappyCatGameConstants mGameConstants;
   GameState mGameState;
   FlappyCatFloor mFloor;
-  FlappyCatChain<FlappyCatWall> mWalls;
+  FlappyCatChain<FlappyCatWall> mBarricade;
   FlappyCatChain<FlappyCatSpike> mBackgroundCity;
   FlappyCatCloud mBackgroundSky;
   FlappyCatHero mHero;
