@@ -10,6 +10,11 @@
 // stl
 #include <random>
 
+enum class Daytime {
+  Day,
+  Night
+};
+
 class FlappyCatGameConstants {
 public:
   enum Constants : size_t;
@@ -49,7 +54,7 @@ public:
   Position jumpVelocity() const;
 
 public:
-  Position::value_type cloudParts() const;
+  Position cloudParts() const;
 
 public:
   Position::value_type randomOffsetFrom(Position::value_type initial,
@@ -58,10 +63,13 @@ public:
   Position::value_type clampedRandomOffsetFrom(Position::value_type initial,
                                                Position::value_type maxOffset);
 private:
+  Daytime chooseDaytime();
+private:
   std::random_device mRandomDevice;
   std::mt19937 mGenerator;
   FlappyCatColorScheme mColorScheme;
   std::vector<Position> mConstants;
+  int32_t mDaytimeFactor;
 };
 
 enum FlappyCatGameConstants::Constants : size_t {
@@ -87,8 +95,11 @@ enum FlappyCatGameConstants::Constants : size_t {
   CloudSize,
   CloudOffset,
   SkyOffset,
+  CloudParts,
 
   ConstantsSize
 };
+
+
 
 #endif //FLAPPY_CAT_FLAPPYCATSIZECONSTANTS_H

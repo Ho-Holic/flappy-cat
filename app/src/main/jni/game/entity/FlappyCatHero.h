@@ -25,19 +25,27 @@ public:
   virtual void update(const FrameDuration& time);
 
 public:
-  void setColor(const Color& color);
+  void setColor(const Color& backgroundColor,
+                const Color& bodyColor,
+                const Color& scarfColor,
+                const Color& mouthColor);
+
   void setResetModifier(const modifier_type& modifier);
   void setUpdateModifier(const update_modifier_type& modifier);
+
   void setRadius(Position::value_type radius);
   Position::value_type radius() const;
-  void setJumpConstants(const Position& acceleration, const Position& velocity);
 
+  void setJumpConstants(const Position& acceleration, const Position& velocity);
   void jump();
 
+private:
+  void syncFigure();
 private:
   Position mJumpAcceleration;
   Position mJumpVelocity;
   CircleShape mBall;
+  FlappyCatMascot mMascot;
   modifier_type mResetModifier;
   update_modifier_type mUpdateModifier;
 };

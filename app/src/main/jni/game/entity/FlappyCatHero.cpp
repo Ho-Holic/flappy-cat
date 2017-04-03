@@ -10,6 +10,7 @@ FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
 , mJumpAcceleration()
 , mJumpVelocity()
 , mBall()
+, mMascot(gameConstants)
 , mResetModifier([](entity_type&){})
 , mUpdateModifier([](entity_type&, const FrameDuration&){}) {
   //
@@ -20,14 +21,16 @@ Position::value_type FlappyCatHero::radius() const {
   return mBall.geometry().radius();
 }
 
-void FlappyCatHero::setRadius(Position::value_type  radius) {
+void FlappyCatHero::setRadius(Position::value_type radius) {
 
   mBall.geometry().setRadius(radius);
+  syncFigure();
 }
 
 void FlappyCatHero::moveTo(const Position& position) {
 
   mBall.transformation().setPosition(position);
+  syncFigure();
 }
 
 void FlappyCatHero::update(const FrameDuration& time) {
@@ -38,19 +41,8 @@ void FlappyCatHero::update(const FrameDuration& time) {
 
 void FlappyCatHero::drawOn(const Window& window) const {
 
-  Position::value_type diameter = mBall.geometry().radius() * 2.f;
-
-  Position mascotPos = mBall.transformation().position()
-                     + Position(diameter * 0.3f, diameter * 0.3f);
-
-  FlappyCatMascot mascot(gameConstants());
-
-  mascot.setColor(Color(0, 0, 0), Color(255, 255, 255), Color(255, 128, 0));
-  mascot.moveTo(mascotPos);
-  mascot.resize(Position(diameter, diameter));
-
   window.draw(mBall);
-  mascot.drawOn(window);
+  mMascot.drawOn(window);
 
 }
 
@@ -70,9 +62,13 @@ void FlappyCatHero::setResetModifier(const modifier_type& modifier) {
   mResetModifier = modifier;
 }
 
-void FlappyCatHero::setColor(const Color& color) {
+void FlappyCatHero::setColor(const Color& backgroundColor,
+                             const Color& bodyColor,
+                             const Color& scarfColor,
+                             const Color& mouthColor) {
 
-  mBall.setColor(color);
+  mBall.setColor(backgroundColor);
+  mMascot.setColor(bodyColor, scarfColor, mouthColor);
 }
 
 void FlappyCatHero::setUpdateModifier(const update_modifier_type& modifier) {
@@ -90,4 +86,15 @@ void FlappyCatHero::jump() {
 
   setAcceleration(mJumpAcceleration);
   setVelocity(mJumpVelocity);
+}
+
+void FlappyCatHero::syncFigure() {
+
+  Position::value_type diameter = mBall.geometry().radius() * 2.f;
+
+  Position mascotPos = mBall.transformation().position()
+                       + Position(diameter * 0.3f, diameter * 0.3f);
+
+  mMascot.moveTo(mascotPos);
+  mMascot.resize(Position(diameter, diameter));
 }

@@ -118,7 +118,7 @@ void FlappyCatMascot::syncFigure() {
 }
 
 void FlappyCatMascot::setColor(const Color& bodyColor,
-                               const Color& eyesColor,
+                               const Color& scarfColor,
                                const Color& mouthColor) {
 
   mBody.setColor(bodyColor);
@@ -129,10 +129,10 @@ void FlappyCatMascot::setColor(const Color& bodyColor,
   mLeftEar.setColor(bodyColor);
   mRightEar.setColor(bodyColor);
 
-  mScarf.setColor(eyesColor);
-  mScarfTail.setColor(eyesColor);
-  mLeftEye.setColor(eyesColor);
-  mRightEye.setColor(eyesColor);
+  mScarf.setColor(scarfColor);
+  mScarfTail.setColor(scarfColor);
+  mLeftEye.setColor(scarfColor);
+  mRightEye.setColor(scarfColor);
 
   mMouth.setColor(mouthColor);
 }

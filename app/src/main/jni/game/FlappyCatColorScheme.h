@@ -8,6 +8,8 @@
 #include <random>
 #include <vector>
 
+enum class Daytime;
+
 class FlappyCatColorScheme {
 public:
   enum Colors : size_t;
@@ -17,7 +19,7 @@ public:
 
 public:
   Color random() const;
-  void generateNewScheme();
+  void generateNewScheme(Daytime daytime);
 
 public:
   Color background() const;
@@ -26,6 +28,13 @@ public:
   Color house()      const;
   Color cloud()      const;
   Color dirt()       const;
+  Color mascotBody() const;
+  Color mascotScarf() const;
+  Color mascotMouth() const;
+
+private:
+  void generateDayScheme();
+  void generateNightScheme();
 
 private:
   mutable std::random_device mRandomDevice;
@@ -40,6 +49,10 @@ enum FlappyCatColorScheme::Colors : size_t {
   HouseColor,
   CloudColor,
   DirtColor,
+  MascotBodyColor,
+  MascotScarfColor,
+  MascotMouthColor,
+
   ColorsSize
 };
 

@@ -133,7 +133,7 @@ void FlappyCatGame::initialize() {
   );
 
   // sky with clouds
-  mBackgroundSky.setParts(mGameConstants.cloudParts());
+  mBackgroundSky.setParts(mGameConstants.cloudParts().x());
   mBackgroundSky.setResetModifier(
     [this](FlappyCatCloud::entity_type& cloud) {
 
@@ -165,9 +165,14 @@ void FlappyCatGame::initialize() {
 
   mHero.setResetModifier(
     [this](FlappyCatHero& hero) {
+
       hero.setRadius(mGameConstants.heroSize().x());
       hero.moveTo(mGameConstants.heroPosition());
-      hero.setColor(mGameConstants.colorScheme().hero());
+
+      hero.setColor(mGameConstants.colorScheme().hero(),
+                    mGameConstants.colorScheme().mascotBody(),
+                    mGameConstants.colorScheme().mascotScarf(),
+                    mGameConstants.colorScheme().mascotMouth());
     }
   );
 

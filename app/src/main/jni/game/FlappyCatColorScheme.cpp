@@ -1,6 +1,7 @@
 
 // game
 #include "FlappyCatColorScheme.h"
+#include "FlappyCatGameConstants.h"
 
 // engine
 #include <core/HslColor.h>
@@ -10,8 +11,7 @@ FlappyCatColorScheme::FlappyCatColorScheme()
 : mRandomDevice()
 , mGenerator(mRandomDevice())
 , mScheme(ColorsSize, Color()) {
-
-  generateNewScheme();
+  //
 }
 
 Color FlappyCatColorScheme::random() const {
@@ -23,10 +23,57 @@ Color FlappyCatColorScheme::random() const {
   return Color(fullColor | 0xff); // set alpha channel to 255
 }
 
-void FlappyCatColorScheme::generateNewScheme() {
+void FlappyCatColorScheme::generateNewScheme(Daytime daytime) {
 
-  std::uniform_real_distribution<HslColor::value_type> distribution(0, 360);
+  switch (daytime) {
+    case Daytime::Day:   generateDayScheme(); break;
+    case Daytime::Night: generateNightScheme(); break;
+  }
+}
+
+void FlappyCatColorScheme::generateNightScheme() {
+
+  std::uniform_real_distribution<HslColor::value_type> distribution(0.0, 360.0);
   HslColor::value_type hue = distribution(mGenerator);
+
+  HslColor heroColor(hue, 100.0, 50.0);
+
+  HslColor backgroundColor(heroColor);
+  backgroundColor.setLuminance(5.0);
+
+  HslColor blockColor(backgroundColor);
+  blockColor.rotateHue(240.0);
+  blockColor.setSaturation(40.0);
+  blockColor.setLuminance(25.0);
+
+  HslColor houseColor(backgroundColor);
+  houseColor.rotateHue(120.0);
+  houseColor.setSaturation(100.0);
+  houseColor.setLuminance(60.0);
+
+  HslColor dirtColor(backgroundColor);
+
+  HslColor cloudColor(backgroundColor);
+  cloudColor.setLuminance(100.0);
+
+
+  mScheme[BackgroundColor] = backgroundColor.toRgb();
+  mScheme[BlockColor]      = blockColor.toRgb();
+  mScheme[HeroColor]       = heroColor.toRgb(128);
+  mScheme[HouseColor]      = houseColor.toRgb();
+  mScheme[CloudColor]      = cloudColor.toRgb();
+  mScheme[DirtColor]       = dirtColor.toRgb();
+  mScheme[MascotBodyColor] = Color(0, 0, 0);
+  mScheme[MascotScarfColor] = Color(255, 255, 255);
+  mScheme[MascotMouthColor] = Color(255, 128, 0);
+
+}
+
+void FlappyCatColorScheme::generateDayScheme() {
+
+  std::uniform_real_distribution<HslColor::value_type> distribution(0.0, 360.0);
+  HslColor::value_type hue = distribution(mGenerator);
+
   HslColor heroColor(hue, 100.0, 50.0);
 
 
@@ -58,6 +105,9 @@ void FlappyCatColorScheme::generateNewScheme() {
   mScheme[HouseColor]      = houseColor.toRgb();
   mScheme[CloudColor]      = cloudColor.toRgb();
   mScheme[DirtColor]       = dirtColor.toRgb();
+  mScheme[MascotBodyColor] = Color(0, 0, 0);
+  mScheme[MascotScarfColor] = Color(255, 255, 255);
+  mScheme[MascotMouthColor] = Color(255, 128, 0);
 }
 
 
@@ -87,4 +137,16 @@ Color FlappyCatColorScheme::cloud() const {
 
 Color FlappyCatColorScheme::dirt() const {
   return mScheme[DirtColor];
+}
+
+Color FlappyCatColorScheme::mascotBody() const {
+  return mScheme[MascotBodyColor];
+}
+
+Color FlappyCatColorScheme::mascotScarf() const {
+  return mScheme[MascotScarfColor];
+}
+
+Color FlappyCatColorScheme::mascotMouth() const {
+  return mScheme[MascotMouthColor];
 }

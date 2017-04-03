@@ -20,7 +20,7 @@ public:
 
 public:
   void setColor(const Color& bodyColor,
-                const Color& eyesColor,
+                const Color& scarfColor,
                 const Color& mouthColor);
 
 private:
