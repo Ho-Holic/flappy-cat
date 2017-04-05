@@ -17,14 +17,15 @@ public:
   OnUpdateSignal& onUpdate();
 
 public:
-  virtual void setOrigin(const Position& origin) override;
   virtual const Position& origin() const override;
-  virtual void setPosition(const Position& position) override;
   virtual const Position& position() const override;
-  virtual void setScale(const Position& factor) override;
   virtual const Position& scale() const override;
-  virtual void setRotation(Position::value_type angle) override;
   virtual Position::value_type rotation() const override;
+
+  virtual void setOrigin(const Position& origin) override;
+  virtual void setPosition(const Position& position) override;
+  virtual void setScale(const Position& factor) override;
+  virtual void setRotation(Position::value_type angle) override;
 private:
   Position mPosition;
   Position mOrigin;

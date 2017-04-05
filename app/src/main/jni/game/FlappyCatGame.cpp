@@ -258,5 +258,22 @@ void FlappyCatGame::render(const Window& window) const {
   mHero.drawOn(window);
   mFloor.drawOn(window);
 
+
+  // TODO: remove code below
+//  // --- tmp v
+//  static float p = 0;
+//
+//  RectangleShape rect(Position(0.f, 0.f), Position(100.f, 100.f));
+//  rect.transformation().setRotation(p);
+//  rect.transformation().setOrigin(Position(200.f, 200.f));
+//  window.draw(rect);
+//
+//  p += 0.1;
+//
+//  if (p > 360.f) p = 0.f;
+//  // --- tmp ^
+
+
+
   window.display();
 }

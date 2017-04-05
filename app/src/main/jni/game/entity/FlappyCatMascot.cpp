@@ -114,6 +114,30 @@ void FlappyCatMascot::syncFigure() {
   mScarf    .geometry().resize(scarfSize * scale);
   mScarfTail.geometry().resize(scarfTailSize * scale);
   mMouth    .geometry().resize(mouthSize * scale);
+  
+  // rotate
+
+  // TODO: remove code below
+//  // --- tmp v
+//  static float p = 0;
+//
+//  mBody     .transformation().setRotation(p);
+//  mHead     .transformation().setRotation(p);
+//  mBackLeg  .transformation().setRotation(p);
+//  mFrontLeg .transformation().setRotation(p);
+//  mTail     .transformation().setRotation(p);
+//  mLeftEar  .transformation().setRotation(p);
+//  mRightEar .transformation().setRotation(p);
+//  mLeftEye  .transformation().setRotation(p);
+//  mRightEye .transformation().setRotation(p);
+//  mScarf    .transformation().setRotation(p);
+//  mScarfTail.transformation().setRotation(p);
+//  mMouth    .transformation().setRotation(p);
+//
+//  p += 0.1;
+//
+//  if (p > 360.f) p = 0.f;
+//  // --- tmp ^
 
 }
 

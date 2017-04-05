@@ -2,6 +2,10 @@
 // engine
 #include "VertexBasedRender.h"
 #include <core/Window.h>
+#include <core/Log.h>
+
+// stl
+#include <cmath>
 
 VertexBasedRender::VertexBasedRender()
 : Render()
@@ -33,7 +37,20 @@ void VertexBasedRender::update(const Shape& shape) {
 
   for (Geometry::size_type index = 0; index < points; ++index) {
 
-    mVertices << Vertex(shape.transformation().position() + shape.geometry().pointAt(index),
+    // TODO: remove this part and make transform matrix
+    Position::value_type angle = shape.transformation().rotation();
+
+    Position::value_type sinValue = std::sin(angle);
+    Position::value_type cosValue = std::cos(angle);
+
+    Position p = shape.geometry().pointAt(index) - shape.transformation().origin();
+
+    Position::value_type rotatedX = p.x() * cosValue - p.y() * sinValue;
+    Position::value_type rotatedY = p.x() * sinValue + p.y() * cosValue;
+
+    mVertices << Vertex(shape.transformation().position()
+                        + Position(rotatedX, rotatedY)
+                        + shape.transformation().origin(),
                         mBrushColor);
   }
 

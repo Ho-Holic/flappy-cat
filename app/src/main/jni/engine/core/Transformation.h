@@ -9,6 +9,7 @@ public:
   virtual ~Transformation() = default;
 
 public:
+  // TODO: setOrigin currently affects only rotation, change this
   virtual void setOrigin(const Position& position) = 0;
   virtual void setPosition(const Position& position) = 0;
   virtual void setScale(const Position& factor) = 0;
