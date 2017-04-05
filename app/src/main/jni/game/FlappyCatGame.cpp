@@ -5,6 +5,10 @@
 // engine
 #include <core/Log.h>
 #include <physics/Collide.h>
+#include <physics/VectorMath.h>
+
+// style
+#include <style/BackportCpp17.h>
 
 
 FlappyCatGame::FlappyCatGame()
@@ -51,6 +55,7 @@ void FlappyCatGame::initialize() {
         if (Collide::circleRect(center, radius, mFloor.boundingBox())) {
           mGameState = OnTheFloorState;
           mHero.moveTo(Position(mHero.position().x(), mFloor.position().y()));
+          // mHero.rotate(0.f); // if we want cat standing on the legs :3
         }
       }
     }
@@ -160,6 +165,19 @@ void FlappyCatGame::initialize() {
     [this](FlappyCatHero& hero, const FrameDuration& frameDuration) {
 
       hero.moveBy(hero.distance());
+
+      Position::value_type clampedDistance = backport::std::clamp(hero.distance().y(),
+                                                                  -70.f, 14.f);
+
+      Position::value_type angle = (clampedDistance > 0.f)
+        ? VectorMath::linearInterpolation(clampedDistance,
+                                          0.f, 14.f,
+                                          0.f, 45.f)
+        : VectorMath::linearInterpolation(clampedDistance,
+                                          0.f, -70.f,
+                                          0.f, -90.f);
+
+      hero.rotate(angle);
     }
   );
 
@@ -168,6 +186,7 @@ void FlappyCatGame::initialize() {
 
       hero.setRadius(mGameConstants.heroSize().x());
       hero.moveTo(mGameConstants.heroPosition());
+      hero.rotate(0.f);
 
       hero.setColor(mGameConstants.colorScheme().hero(),
                     mGameConstants.colorScheme().mascotBody(),
@@ -257,23 +276,6 @@ void FlappyCatGame::render(const Window& window) const {
   mBarricade.drawOn(window);
   mHero.drawOn(window);
   mFloor.drawOn(window);
-
-
-  // TODO: remove code below
-//  // --- tmp v
-//  static float p = 0;
-//
-//  RectangleShape rect(Position(0.f, 0.f), Position(100.f, 100.f));
-//  rect.transformation().setRotation(p);
-//  rect.transformation().setOrigin(Position(200.f, 200.f));
-//  window.draw(rect);
-//
-//  p += 0.1;
-//
-//  if (p > 360.f) p = 0.f;
-//  // --- tmp ^
-
-
 
   window.display();
 }

@@ -17,6 +17,7 @@ public:
   virtual const Position& position() const override;
   virtual void moveTo(const Position& position) override;
   virtual void resize(const Position& size) override;
+  void rotate(Position::value_type angle) override;
 
 public:
   void setColor(const Color& bodyColor,
@@ -29,6 +30,8 @@ private:
 private:
   Position mPosition;
   Position mSize;
+  Position::value_type mAngle;
+
   RectangleShape mBody;
   RectangleShape mBackLeg;
   RectangleShape mFrontLeg;

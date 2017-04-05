@@ -1,6 +1,7 @@
 // engine
 #include <prototype/RectangleShape.h>
 #include <prototype/TriangleShape.h>
+#include <core/Log.h>
 
 // game
 #include "FlappyCatHero.h"
@@ -9,6 +10,7 @@ FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
 , mJumpAcceleration()
 , mJumpVelocity()
+, mAngle(0.f)
 , mBall()
 , mMascot(gameConstants)
 , mResetModifier([](entity_type&){})
@@ -30,6 +32,21 @@ void FlappyCatHero::setRadius(Position::value_type radius) {
 void FlappyCatHero::moveTo(const Position& position) {
 
   mBall.transformation().setPosition(position);
+  syncFigure();
+}
+
+void FlappyCatHero::rotate(Position::value_type angle) {
+
+  mAngle = angle;
+
+/**
+   * TODO: add rotation to mBall
+   * Currently origin of ball is not in the center of the ball
+   * so rotation would cause bad render, fix origin code
+   * and uncomment rotation line
+   */
+  //mBall.transformation().setRotation(mAngle);
+
   syncFigure();
 }
 
@@ -97,4 +114,5 @@ void FlappyCatHero::syncFigure() {
 
   mMascot.moveTo(mascotPos);
   mMascot.resize(Position(diameter, diameter));
+  mMascot.rotate(mAngle);
 }

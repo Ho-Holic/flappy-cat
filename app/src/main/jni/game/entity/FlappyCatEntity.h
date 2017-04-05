@@ -24,6 +24,8 @@ public:
   virtual void moveBy(const Position& offset);
 
   virtual void resize(const Position& size);
+  // TODO: rename rotateTo
+  virtual void rotate(Position::value_type angle);
 
 public:
   const FlappyCatGameConstants& gameConstants() const;

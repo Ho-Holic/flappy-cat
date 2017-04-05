@@ -62,5 +62,16 @@ inline Position operator/ (const Position& left, const Position& right) {
                   left.y() / right.y());
 }
 
+inline Position operator- (const Position& p) {
+  return Position(-p.x(), -p.y());
+}
+
+//inline Position& operator+= (Position& left, const Position& right) {
+//
+//  // TODO: optimize via friend later
+//  left = left + right;
+//  return left;
+//}
+
 
 #endif //FLAPPY_CAT_POSITION_H

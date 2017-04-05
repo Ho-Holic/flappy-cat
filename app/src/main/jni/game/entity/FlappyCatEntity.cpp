@@ -32,6 +32,10 @@ void FlappyCatEntity::resize(const Position& size) {
   // intentionally left blank
 }
 
+void FlappyCatEntity::rotate(Position::value_type angle) {
+  // intentionally left blank
+}
+
 /**
  * TODO: Create new entity for objects with physics
  *
@@ -86,13 +90,3 @@ void FlappyCatEntity::setVelocity(const Position& velocity) {
 
   mVelocity = velocity;
 }
-
-
-
-
-
-
-
-
-
-
