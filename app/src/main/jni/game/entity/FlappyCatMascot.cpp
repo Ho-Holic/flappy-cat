@@ -139,12 +139,6 @@ void FlappyCatMascot::syncFigure() {
   
   // rotate
 
-  // TODO: remove code below
-  // --- tmp v
-  static float p = 0;
-
-  //mAngle = 45.f;
-
   Position center (bodySize.x() / 2.f, bodySize.y() / 2.f);
 
   mBody     .transformation().setOrigin((center - bodyPosRes) * scale);
@@ -172,11 +166,6 @@ void FlappyCatMascot::syncFigure() {
   mScarf    .transformation().setRotation(mAngle);
   mScarfTail.transformation().setRotation(mAngle);
   mMouth    .transformation().setRotation(mAngle);
-
-  p += 1;
-
-  if (p > 360.f) p = 0.f;
-  // --- tmp ^
 
 }
 

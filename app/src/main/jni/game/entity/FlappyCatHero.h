@@ -20,6 +20,7 @@ public:
 public:
   virtual void drawOn(const Window& window) const override;
   virtual const Position& position() const override;
+  virtual Position::value_type rotation() const override;
   virtual void moveTo(const Position& position) override;
   virtual void reset() override;
   virtual void update(const FrameDuration& time) override;

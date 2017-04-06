@@ -68,6 +68,11 @@ const Position& FlappyCatHero::position() const {
   return mBall.transformation().position();
 }
 
+Position::value_type FlappyCatHero::rotation() const {
+
+  return mAngle;
+}
+
 void FlappyCatHero::reset() {
 
   FlappyCatEntity::reset();

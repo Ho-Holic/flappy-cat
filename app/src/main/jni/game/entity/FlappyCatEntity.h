@@ -20,6 +20,8 @@ public:
   virtual void drawOn(const Window& window) const = 0;
 
   virtual const Position& position() const = 0;
+  virtual Position::value_type rotation() const;
+
   virtual void moveTo(const Position& position) = 0;
   virtual void moveBy(const Position& offset);
 

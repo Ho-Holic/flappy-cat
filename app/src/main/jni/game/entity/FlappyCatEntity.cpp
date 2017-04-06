@@ -90,3 +90,7 @@ void FlappyCatEntity::setVelocity(const Position& velocity) {
 
   mVelocity = velocity;
 }
+
+Position::value_type FlappyCatEntity::rotation() const {
+  return 0.f;
+}

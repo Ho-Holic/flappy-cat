@@ -166,16 +166,19 @@ void FlappyCatGame::initialize() {
 
       hero.moveBy(hero.distance());
 
-      Position::value_type clampedDistance = backport::std::clamp(hero.distance().y(),
-                                                                  -70.f, 14.f);
+      // tilt the hero
+      Position::value_type angle = hero.rotation();
 
-      Position::value_type angle = (clampedDistance > 0.f)
-        ? VectorMath::linearInterpolation(clampedDistance,
-                                          0.f, 14.f,
-                                          0.f, 45.f)
-        : VectorMath::linearInterpolation(clampedDistance,
-                                          0.f, -70.f,
-                                          0.f, -90.f);
+      if (hero.distance().y() > 0.f) {
+        if (angle < 35.f) {
+          angle += 2.5f;
+        }
+      }
+      else {
+        if (angle > -90.f) {
+          angle -= 2.5f;
+        }
+      }
 
       hero.rotate(angle);
     }
