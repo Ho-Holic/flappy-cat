@@ -132,6 +132,8 @@ void FlappyCatChain<Link>::initialize() {
           "this appears if 'emplace_back' is not implemented properly");
   mLinks.reserve(linkCount);
 
+  Log::i(TAG, "Link count: %f", static_cast<float>(linkCount));
+
   for (std::size_t i = 0; i < linkCount;  ++i) {
 
     mLinks.emplace_back(gameConstants());

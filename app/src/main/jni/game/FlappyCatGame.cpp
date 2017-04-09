@@ -33,6 +33,7 @@ void FlappyCatGame::initialize() {
   // floor
   mFloor.moveTo(mGameConstants.floorPosition());
   mFloor.resize(mGameConstants.floorSize());
+  mFloor.setDecorationSizes(mGameConstants.organicSurfaceSize(), mGameConstants.spikesSize());
 
   mFloor.setResetModifier(
     [this](FlappyCatFloor& floor) {
@@ -55,7 +56,6 @@ void FlappyCatGame::initialize() {
         if (Collide::circleRect(center, radius, mFloor.boundingBox())) {
           mGameState = OnTheFloorState;
           mHero.moveTo(Position(mHero.position().x(), mFloor.position().y()));
-          // mHero.rotate(0.f); // if we want cat standing on the legs :3
         }
       }
     }
@@ -66,7 +66,7 @@ void FlappyCatGame::initialize() {
   mBarricade.resize(mGameConstants.barricadeSize());
   mBarricade.setStartOffset(Position(mGameConstants.barricadeSize().x() * 2.f, 0.f));
   mBarricade.setLinkSize(mGameConstants.wallSize());
-  mBarricade.setOffsetBetweenLinks(mGameConstants.wallSize() * 2.2f);
+  mBarricade.setOffsetBetweenLinks(mGameConstants.betweenWallOffset());
   mBarricade.setMovementDisplacement(mGameConstants.foregroundDisplacement());
 
   mBarricade.setResetModifier(
@@ -199,8 +199,11 @@ void FlappyCatGame::initialize() {
   );
 
   // initialize all stuff
+  Log::i(TAG, "Floor:");
   mFloor.initialize();
+  Log::i(TAG, "Barricade:");
   mBarricade.initialize();
+  Log::i(TAG, "City:");
   mBackgroundCity.initialize();
   mBackgroundSky.initialize();
   mHero.initialize();
@@ -279,6 +282,14 @@ void FlappyCatGame::render(const Window& window) const {
   mBarricade.drawOn(window);
   mHero.drawOn(window);
   mFloor.drawOn(window);
+
+//  // tmp
+//  FlappyCatSpike frame(mGameConstants);
+//  frame.setColor(Color(255, 0, 0, 128));
+//  frame.moveTo(-Position(cameraSize().x() / 2.f, cameraSize().y() / 2.f));
+//  frame.resize(cameraSize());
+//  frame.drawOn(window);
+//  // end tmp
 
   window.display();
 }

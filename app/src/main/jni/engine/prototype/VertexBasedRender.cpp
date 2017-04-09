@@ -40,6 +40,7 @@ void VertexBasedRender::update(const Shape& shape) {
     constexpr float pi = 3.141592654f;
 
     // TODO: remove this part and make transform matrix
+    // rotate
     Position::value_type angle = shape.transformation().rotation() * pi / 180.f;
 
     Position::value_type sinValue = std::sin(angle);
@@ -50,6 +51,7 @@ void VertexBasedRender::update(const Shape& shape) {
     Position::value_type rotatedX = p.x() * cosValue - p.y() * sinValue;
     Position::value_type rotatedY = p.x() * sinValue + p.y() * cosValue;
 
+    // TODO: add shape scale
     mVertices << Vertex(shape.transformation().position()
                         + Position(rotatedX, rotatedY)
                         + shape.transformation().origin(),

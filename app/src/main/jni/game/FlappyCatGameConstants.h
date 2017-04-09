@@ -25,6 +25,7 @@ public:
 public:
   void reset();
   const FlappyCatColorScheme& colorScheme() const;
+  Position operator[](Constants index) const;
 
 public:
   Position cameraSize() const;
@@ -33,6 +34,8 @@ public:
   Position wallSize() const;
   Position floorPosition() const;
   Position floorSize() const;
+  Position organicSurfaceSize() const;
+  Position spikesSize() const;
   Position cityPosition() const;
   Position citySize() const;
   Position houseSize() const;
@@ -41,6 +44,7 @@ public:
   Position cloudSize() const;
 
 public:
+  Position betweenWallOffset() const;
   Position wallOffset() const;
   Position houseOffset() const;
   Position cloudOffset() const;
@@ -78,7 +82,8 @@ enum FlappyCatGameConstants::Constants : size_t {
 
   BarricadePosition,
   BarricadeSize,
-  WallSize,
+  WallSize, // TODO: write Barricade in front of all walls items
+  BetweenWallOffset,
   WallOffset,
 
   CityPosition,
@@ -88,6 +93,8 @@ enum FlappyCatGameConstants::Constants : size_t {
 
   FloorPosition,
   FloorSize,
+  FloorOrganicSurfaceSize,
+  FloorSpikesSize,
 
   HeroPosition,
   HeroSize,

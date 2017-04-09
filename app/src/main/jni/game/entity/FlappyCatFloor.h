@@ -34,6 +34,7 @@ public:
   void setResetModifier(const modifier_type& modifier);
   void setUpdateModifier(const update_modifier_type& modifier);
   void setMovementDisplacement(const Position& movementDisplacement);
+  void setDecorationSizes(const Position& surfaceSize, const Position& spikesSize);
 
 private:
   void syncChildren();
@@ -41,6 +42,8 @@ private:
 private:
   Position mPosition;
   Position mSize;
+  Position mOrganicSurfaceSize;
+  Position mSpikesSize;
   RectangleShape mFloor;
   FlappyCatChain<FlappyCatSpike> mFloorSpikes;
   RectangleShape mBackgroundDirt;

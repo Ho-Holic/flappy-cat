@@ -5,6 +5,8 @@ FlappyCatFloor::FlappyCatFloor(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
 , mPosition()
 , mSize()
+, mOrganicSurfaceSize()
+, mSpikesSize()
 , mFloor()
 , mFloorSpikes(gameConstants)
 , mBackgroundDirt()
@@ -20,19 +22,15 @@ void FlappyCatFloor::initialize() {
 
 void FlappyCatFloor::syncChildren() {
 
-
   // floor for collide
-  Position::value_type floorHeight = mSize.y() * 0.1f; // 10% of height
-  Position::value_type spikeHeight = mSize.y() * 0.125f;
-
   mFloor.transformation().setPosition(mPosition);
-  mFloor.geometry().resize(Position(mSize.x(), floorHeight));
+  mFloor.geometry().resize(Position(mSize.x(), mOrganicSurfaceSize.y()));
 
   // spikes for movement effect
-  mFloorSpikes.moveTo(Position(mPosition.x(), mPosition.y() - spikeHeight));
+  mFloorSpikes.moveTo(Position(mPosition.x(), mPosition.y() - mSpikesSize.y()));
 
-  mFloorSpikes.setLinkSize(Position(spikeHeight, spikeHeight));
-  mFloorSpikes.setOffsetBetweenLinks(Position(spikeHeight, spikeHeight));
+  mFloorSpikes.setLinkSize(mSpikesSize);
+  mFloorSpikes.setOffsetBetweenLinks(mSpikesSize);
 
   mFloorSpikes.resize(Position(mSize.x(), 0.f));
 
@@ -111,4 +109,12 @@ void FlappyCatFloor::setMovementDisplacement(const Position& movementDisplacemen
 void FlappyCatFloor::setUpdateModifier(const FlappyCatFloor::update_modifier_type& modifier) {
 
   mUpdateModifier = modifier;
+}
+
+void FlappyCatFloor::setDecorationSizes(const Position& surfaceSize,
+                                        const Position& spikesSize) {
+  mOrganicSurfaceSize = surfaceSize;
+  mSpikesSize = spikesSize;
+
+  syncChildren();
 }
