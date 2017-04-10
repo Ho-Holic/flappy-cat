@@ -7,6 +7,9 @@
 #include <core/HslColor.h>
 #include <core/Log.h>
 
+// style
+#include <style/Guidelines.h>
+
 FlappyCatColorScheme::FlappyCatColorScheme()
 : mRandomDevice()
 , mGenerator(mRandomDevice())
@@ -21,6 +24,12 @@ Color FlappyCatColorScheme::random() const {
   uint32_t fullColor = distribution(mGenerator);
 
   return Color(fullColor | 0xff); // set alpha channel to 255
+}
+
+Color FlappyCatColorScheme::operator[](FlappyCatColorScheme::Colors index) const {
+
+  REQUIRE(TAG, index < ColorsSize, "mScheme is out of bounds");
+  return mScheme[index];
 }
 
 void FlappyCatColorScheme::generateNewScheme(Daytime daytime) {
@@ -108,45 +117,4 @@ void FlappyCatColorScheme::generateDayScheme() {
   mScheme[MascotBodyColor] = Color(0, 0, 0);
   mScheme[MascotScarfColor] = Color(255, 255, 255);
   mScheme[MascotMouthColor] = Color(255, 128, 0);
-}
-
-
-
-Color FlappyCatColorScheme::background() const {
-
-  return mScheme[BackgroundColor];
-}
-
-Color FlappyCatColorScheme::block() const {
-
-  return mScheme[BlockColor];
-}
-
-Color FlappyCatColorScheme::hero() const {
-
-  return mScheme[HeroColor];
-}
-
-Color FlappyCatColorScheme::house() const {
-  return mScheme[HouseColor];
-}
-
-Color FlappyCatColorScheme::cloud() const {
-  return mScheme[CloudColor];
-}
-
-Color FlappyCatColorScheme::dirt() const {
-  return mScheme[DirtColor];
-}
-
-Color FlappyCatColorScheme::mascotBody() const {
-  return mScheme[MascotBodyColor];
-}
-
-Color FlappyCatColorScheme::mascotScarf() const {
-  return mScheme[MascotScarfColor];
-}
-
-Color FlappyCatColorScheme::mascotMouth() const {
-  return mScheme[MascotMouthColor];
 }

@@ -20,17 +20,7 @@ public:
 public:
   Color random() const;
   void generateNewScheme(Daytime daytime);
-
-public:
-  Color background() const;
-  Color block()      const;
-  Color hero()       const;
-  Color house()      const;
-  Color cloud()      const;
-  Color dirt()       const;
-  Color mascotBody() const;
-  Color mascotScarf() const;
-  Color mascotMouth() const;
+  Color operator[](Colors index) const;
 
 private:
   void generateDayScheme();

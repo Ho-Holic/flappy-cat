@@ -24,7 +24,16 @@ public:
 
 public:
   void reset();
+
+  // If you have error 'Error: 'FlappyCatColorScheme' does not name a type'
+  // Then Android Studio accidentally insert following line
+  //
+  //     #include "FlappyCatGameConstants.h"
+  //
+  // to 'FlappyCatColorScheme.h'. Android studio really wants this line there
+  // and don't want to deal with forward declarations of modern enums =)
   const FlappyCatColorScheme& colorScheme() const;
+
   Position operator[](Constants index) const;
 
 public:

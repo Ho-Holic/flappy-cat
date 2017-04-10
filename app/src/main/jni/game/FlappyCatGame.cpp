@@ -33,6 +33,7 @@ Position FlappyCatGame::cameraSize() const {
 void FlappyCatGame::initialize() {
 
   using Constant = FlappyCatGameConstants::Constants;
+  using ColorConstant = FlappyCatColorScheme::Colors;
 
   // floor
   mFloor.moveTo(mGameConstants[Constant::FloorPosition]);
@@ -42,9 +43,11 @@ void FlappyCatGame::initialize() {
 
   mFloor.setResetModifier(
     [this](FlappyCatFloor& floor) {
+
+      const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
+
       mFloor.setMovementDisplacement(mGameConstants[Constant::PhysicsForegroundDisplacement]);
-      floor.setColor(mGameConstants.colorScheme().block(),
-                     mGameConstants.colorScheme().dirt());
+      floor.setColor(colorScheme[ColorConstant::BlockColor], colorScheme[ColorConstant::DirtColor]);
     }
   );
 
@@ -77,12 +80,14 @@ void FlappyCatGame::initialize() {
   mBarricade.setResetModifier(
     [this](FlappyCatWall& wall) {
 
+      const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
+
       wall.setGapInterval(mHero.radius() * 2.f * 4.f);
 
       Position offset = mGameConstants[Constant::BarricadeWallGapDisplacement];
       wall.setGapDisplacement(mGameConstants.clampedRandomOffsetFrom(offset.x(), offset.y()));
 
-      wall.setColor(mGameConstants.colorScheme().block());
+      wall.setColor(colorScheme[ColorConstant::BlockColor]);
     }
   );
 
@@ -122,12 +127,14 @@ void FlappyCatGame::initialize() {
   mBackgroundCity.setResetModifier(
     [this](FlappyCatSpike& house) {
 
+      const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
+
       Position offset = mGameConstants[Constant::CityHouseOffset];
       Position varyingSize(mGameConstants[Constant::CityHouseSize]
                            + Position(0.f, std::abs(mGameConstants.randomOffsetFrom(offset.x(),
                                                                                     offset.y()))));
       house.resize(varyingSize);
-      house.setColor(mGameConstants.colorScheme().house());
+      house.setColor(colorScheme[ColorConstant::HouseColor]);
     }
   );
 
@@ -147,6 +154,8 @@ void FlappyCatGame::initialize() {
   mBackgroundSky.setResetModifier(
     [this](FlappyCatCloud::entity_type& cloud) {
 
+      const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
+
       Position cloudOffset = mGameConstants[Constant::SkyCloudOffset];
       Position skyOffset = mGameConstants[Constant::SkyOffset];
 
@@ -158,7 +167,7 @@ void FlappyCatGame::initialize() {
                    mGameConstants.randomOffsetFrom(skyOffset.x(), skyOffset.y()));
 
       cloud.transformation().setPosition(pos);
-      cloud.setColor(mGameConstants.colorScheme().cloud());
+      cloud.setColor(colorScheme[ColorConstant::CloudColor]);
     }
   );
 
@@ -192,14 +201,16 @@ void FlappyCatGame::initialize() {
   mHero.setResetModifier(
     [this](FlappyCatHero& hero) {
 
+      const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
+
       hero.setRadius(mGameConstants[Constant::HeroSize].x());
       hero.moveTo(mGameConstants[Constant::HeroPosition]);
       hero.rotate(0.f);
 
-      hero.setColor(mGameConstants.colorScheme().hero(),
-                    mGameConstants.colorScheme().mascotBody(),
-                    mGameConstants.colorScheme().mascotScarf(),
-                    mGameConstants.colorScheme().mascotMouth());
+      hero.setColor(colorScheme[ColorConstant::HeroColor],
+                    colorScheme[ColorConstant::MascotBodyColor],
+                    colorScheme[ColorConstant::MascotScarfColor],
+                    colorScheme[ColorConstant::MascotMouthColor]);
     }
   );
 
@@ -279,7 +290,10 @@ void FlappyCatGame::update(const FrameDuration& time) {
 
 void FlappyCatGame::render(const Window& window) const {
 
-  window.clear(mGameConstants.colorScheme().background());
+  using ColorConstant = FlappyCatColorScheme::Colors;
+  const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
+
+  window.clear(colorScheme[ColorConstant::BackgroundColor]);
 
   mBackgroundSky.drawOn(window);
   mBackgroundCity.drawOn(window);
