@@ -48,9 +48,11 @@ void FlappyCatEntity::rotate(Position::value_type angle) {
  */
 void FlappyCatEntity::update(const FrameDuration& frameDuration) {
 
+  using Constant = FlappyCatGameConstants::Constants;
+
   Position::value_type time = std::chrono::duration_cast<FloatSecond>(frameDuration).count();
 
-  mAcceleration = mAcceleration - Position(0.f, mGameConstants.gravity().y());
+  mAcceleration = mAcceleration - Position(0.f, mGameConstants[Constant::PhysicsGravity].y());
   mVelocity = mVelocity + (mAcceleration * time);
 
   mDistance = mVelocity * time; // distance passed by last update

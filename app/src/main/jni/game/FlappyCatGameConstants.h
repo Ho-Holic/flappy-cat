@@ -28,39 +28,6 @@ public:
   Position operator[](Constants index) const;
 
 public:
-  Position cameraSize() const;
-  Position barricadePosition() const;
-  Position barricadeSize() const;
-  Position wallSize() const;
-  Position floorPosition() const;
-  Position floorSize() const;
-  Position organicSurfaceSize() const;
-  Position spikesSize() const;
-  Position cityPosition() const;
-  Position citySize() const;
-  Position houseSize() const;
-  Position heroPosition() const;
-  Position heroSize() const;
-  Position cloudSize() const;
-
-public:
-  Position betweenWallOffset() const;
-  Position wallOffset() const;
-  Position houseOffset() const;
-  Position cloudOffset() const;
-  Position skyOffset() const;
-
-public:
-  Position gravity() const;
-  Position backgroundDisplacement() const;
-  Position foregroundDisplacement() const;
-  Position jumpAcceleration() const;
-  Position jumpVelocity() const;
-
-public:
-  Position cloudParts() const;
-
-public:
   Position::value_type randomOffsetFrom(Position::value_type initial,
                                         Position::value_type maxOffset);
 
@@ -68,6 +35,7 @@ public:
                                                Position::value_type maxOffset);
 private:
   Daytime chooseDaytime();
+
 private:
   std::random_device mRandomDevice;
   std::mt19937 mGenerator;
@@ -82,14 +50,14 @@ enum FlappyCatGameConstants::Constants : size_t {
 
   BarricadePosition,
   BarricadeSize,
-  WallSize, // TODO: write Barricade in front of all walls items
-  BetweenWallOffset,
-  WallOffset,
+  BarricadeWallSize,
+  BarricadeBetweenWallOffset,
+  BarricadeWallGapDisplacement,
 
   CityPosition,
   CitySize,
-  HouseSize,
-  HouseOffset,
+  CityHouseSize,
+  CityHouseOffset,
 
   FloorPosition,
   FloorSize,
@@ -99,14 +67,18 @@ enum FlappyCatGameConstants::Constants : size_t {
   HeroPosition,
   HeroSize,
 
-  CloudSize,
-  CloudOffset,
+  SkyCloudSize,
+  SkyCloudOffset,
   SkyOffset,
-  CloudParts,
+  SkyCloudParts,
+
+  PhysicsGravity,
+  PhysicsBackgroundDisplacement,
+  PhysicsForegroundDisplacement,
+  PhysicsJumpAcceleration,
+  PhysicsJumpVelocity,
 
   ConstantsSize
 };
-
-
 
 #endif //FLAPPY_CAT_FLAPPYCATSIZECONSTANTS_H
