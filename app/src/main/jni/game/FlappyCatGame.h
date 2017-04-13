@@ -15,6 +15,8 @@
 #include "entity/FlappyCatHero.h"
 #include "entity/FlappyCatCloud.h"
 #include "entity/FlappyCatFloor.h"
+#include "entity/FlappyCatViewLimit.h"
+#include "entity/FlappyCatBackground.h"
 
 // stl
 #include <vector>
@@ -38,15 +40,16 @@ private:
   void initialize();
   void reset();
 
-
 private:
   FlappyCatGameConstants mGameConstants;
   GameState mGameState;
+  FlappyCatBackground mBackground;
   FlappyCatFloor mFloor;
   FlappyCatChain<FlappyCatWall> mBarricade;
   FlappyCatChain<FlappyCatSpike> mBackgroundCity;
   FlappyCatCloud mBackgroundSky;
   FlappyCatHero mHero;
+  FlappyCatViewLimit mLimit;
 };
 
 enum FlappyCatGame::GameState : int32_t {

@@ -14,11 +14,13 @@
 FlappyCatGame::FlappyCatGame()
 : mGameConstants()
 , mGameState(PressButtonState)
+, mBackground(mGameConstants)
 , mFloor(mGameConstants)
 , mBarricade(mGameConstants)
 , mBackgroundCity(mGameConstants)
 , mBackgroundSky(mGameConstants)
-, mHero(mGameConstants) {
+, mHero(mGameConstants)
+, mLimit(mGameConstants){
   initialize();
   reset();
 }
@@ -35,6 +37,22 @@ void FlappyCatGame::initialize() {
   using Constant = FlappyCatGameConstants::Constants;
   using ColorConstant = FlappyCatColorScheme::Colors;
 
+  // background
+  mBackground.moveTo(-(mGameConstants[Constant::CameraSize] / 2.f));
+  mBackground.resize(mGameConstants[Constant::CameraSize]);
+  mBackground.setResetModifier(
+    [this](FlappyCatBackground& background) {
+
+      const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
+
+      background.setColor(colorScheme[ColorConstant::BackgroundColor]);
+    }
+  );
+
+  // limit
+  mLimit.moveTo(-(mGameConstants[Constant::CameraSize] / 2.f));
+  mLimit.resize(mGameConstants[Constant::CameraSize]);
+
   // floor
   mFloor.moveTo(mGameConstants[Constant::FloorPosition]);
   mFloor.resize(mGameConstants[Constant::FloorSize]);
@@ -46,7 +64,7 @@ void FlappyCatGame::initialize() {
 
       const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
 
-      mFloor.setMovementDisplacement(mGameConstants[Constant::PhysicsForegroundDisplacement]);
+      floor.setMovementDisplacement(mGameConstants[Constant::PhysicsForegroundDisplacement]);
       floor.setColor(colorScheme[ColorConstant::BlockColor], colorScheme[ColorConstant::DirtColor]);
     }
   );
@@ -215,6 +233,7 @@ void FlappyCatGame::initialize() {
   );
 
   // initialize all stuff
+  mBackground.initialize();
   Log::i(TAG, "Floor:");
   mFloor.initialize();
   Log::i(TAG, "Barricade:");
@@ -223,17 +242,20 @@ void FlappyCatGame::initialize() {
   mBackgroundCity.initialize();
   mBackgroundSky.initialize();
   mHero.initialize();
+  mLimit.initialize();
 }
 
 void FlappyCatGame::reset() {
 
   mGameConstants.reset();
 
+  mBackground.reset();
   mHero.reset();
   mBarricade.reset();
   mFloor.reset();
   mBackgroundCity.reset();
   mBackgroundSky.reset();
+  mLimit.reset();
 
 }
 
@@ -290,10 +312,9 @@ void FlappyCatGame::update(const FrameDuration& time) {
 
 void FlappyCatGame::render(const Window& window) const {
 
-  using ColorConstant = FlappyCatColorScheme::Colors;
-  const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
+  window.clear(Color(0, 0, 0));
 
-  window.clear(colorScheme[ColorConstant::BackgroundColor]);
+  mBackground.drawOn(window);
 
   mBackgroundSky.drawOn(window);
   mBackgroundCity.drawOn(window);
@@ -301,14 +322,7 @@ void FlappyCatGame::render(const Window& window) const {
   mBarricade.drawOn(window);
   mHero.drawOn(window);
   mFloor.drawOn(window);
-
-//  // tmp
-//  FlappyCatSpike frame(mGameConstants);
-//  frame.setColor(Color(255, 0, 0, 128));
-//  frame.moveTo(-Position(cameraSize().x() / 2.f, cameraSize().y() / 2.f));
-//  frame.resize(cameraSize());
-//  frame.drawOn(window);
-//  // end tmp
+  mLimit.drawOn(window);
 
   window.display();
 }

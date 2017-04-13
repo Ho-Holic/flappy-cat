@@ -11,6 +11,7 @@ class FlappyCatSpike : public FlappyCatEntity {
 public:
   /*
    * TODO: Problem with emplace_back() with no args
+   *
    * It has some bug with call to empty constructor
    * Then game show black screen. Also header files
    * shows that emplace build on top of push_back()
@@ -26,7 +27,7 @@ public:
   virtual const Position& position() const override;
 
 public:
-  virtual void setColor(const Color& color);
+  void setColor(const Color& color);
 
 private:
   RectangleShape mSpike;
