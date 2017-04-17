@@ -43,19 +43,14 @@ public:
 
 public:
   virtual void drawOn(const Window& window) const override;
-  virtual void moveTo(const Position& position) override;
-  virtual const Position& position() const override;
-  virtual void resize(const Position& size) override;
 
 public:
   void setColor(const Color& color);
 
 private:
-  void syncChildren();
+  virtual void syncChildren() override;
 
 private:
-  Position mPosition;
-  Position mSize;
   Position::value_type mGapInterval;
   Position::value_type mGapDisplacement;
   RectangleShape mTopBlock;

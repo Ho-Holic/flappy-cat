@@ -23,10 +23,7 @@ public:
 public:
   virtual void initialize() override ;
   virtual void drawOn(const Window& window) const override;
-  virtual const Position& position() const override;
-  virtual void moveTo(const Position& position) override;
   virtual void update(const FrameDuration& time) override;
-  virtual void resize(const Position& size) override;
   virtual void reset() override;
 
 public:
@@ -37,11 +34,9 @@ public:
   void setDecorationSizes(const Position& surfaceSize, const Position& spikesSize);
 
 private:
-  void syncChildren();
+  virtual void syncChildren() override;
 
 private:
-  Position mPosition;
-  Position mSize;
   Position mOrganicSurfaceSize;
   Position mSpikesSize;
   RectangleShape mFloor;

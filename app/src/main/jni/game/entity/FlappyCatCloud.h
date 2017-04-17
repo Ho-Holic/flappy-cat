@@ -22,8 +22,6 @@ public:
 public:
   virtual void initialize() override;
   virtual void drawOn(const Window& window) const override;
-  virtual const Position& position() const override;
-  virtual void moveTo(const Position& position) override;
   virtual void reset() override;
 
 public:
@@ -31,7 +29,6 @@ public:
   void setColor(const Color& color);
   void setParts(Position::value_type parts);
 public:
-  Position mPosition;
   Position::value_type mParts;
   std::vector<entity_type> mCloudParts;
   modifier_type mResetModifier;

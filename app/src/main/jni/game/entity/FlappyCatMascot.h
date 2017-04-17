@@ -14,10 +14,6 @@ public:
 
 public:
   virtual void drawOn(const Window& window) const override;
-  virtual const Position& position() const override;
-  virtual void moveTo(const Position& position) override;
-  virtual void resize(const Position& size) override;
-  void rotate(Position::value_type angle) override;
 
 public:
   void setColor(const Color& bodyColor,
@@ -25,12 +21,9 @@ public:
                 const Color& mouthColor);
 
 private:
-  void syncFigure();
+  virtual void syncChildren() override;
 
 private:
-  Position mPosition;
-  Position mSize;
-  Position::value_type mAngle;
 
   RectangleShape mBody;
   RectangleShape mBackLeg;

@@ -6,6 +6,9 @@
 
 FlappyCatEntity::FlappyCatEntity(const FlappyCatGameConstants& gameConstants)
 : mGameConstants(gameConstants)
+, mPosition()
+, mSize()
+, mAngle(0.f)
 , mAcceleration()
 , mVelocity()
 , mDistance() {
@@ -18,9 +21,11 @@ FlappyCatEntity::~FlappyCatEntity() {
 
 void FlappyCatEntity::reset() {
 
+  mPosition     = Position(0.f, 0.f);
+  mSize         = Position(0.f, 0.f);
   mAcceleration = Position(0.f, 0.f);
-  mVelocity = Position(0.f, 0.f);
-  mDistance = Position(0.f, 0.f);
+  mVelocity     = Position(0.f, 0.f);
+  mDistance     = Position(0.f, 0.f);
 }
 
 void FlappyCatEntity::moveBy(const Position& offset) {
@@ -28,12 +33,26 @@ void FlappyCatEntity::moveBy(const Position& offset) {
   moveTo(position() + offset);
 }
 
+void FlappyCatEntity::moveTo(const Position& position) {
+
+  mPosition = position;
+  syncChildren();
+}
+
 void FlappyCatEntity::resize(const Position& size) {
+
+  mSize = size;
+  syncChildren();
+}
+
+void FlappyCatEntity::syncChildren() {
   // intentionally left blank
 }
 
-void FlappyCatEntity::rotate(Position::value_type angle) {
-  // intentionally left blank
+void FlappyCatEntity::rotateTo(Position::value_type angle) {
+
+  mAngle = angle;
+  syncChildren();
 }
 
 /**
@@ -68,6 +87,18 @@ const FlappyCatGameConstants& FlappyCatEntity::gameConstants() const {
   return mGameConstants;
 }
 
+const Position& FlappyCatEntity::position() const {
+  return mPosition;
+}
+
+const Position& FlappyCatEntity::size() const {
+  return mSize;
+}
+
+Position::value_type FlappyCatEntity::rotation() const {
+  return mAngle;
+}
+
 const Position& FlappyCatEntity::acceleration() const {
 
   return mAcceleration;
@@ -93,6 +124,4 @@ void FlappyCatEntity::setVelocity(const Position& velocity) {
   mVelocity = velocity;
 }
 
-Position::value_type FlappyCatEntity::rotation() const {
-  return 0.f;
-}
+

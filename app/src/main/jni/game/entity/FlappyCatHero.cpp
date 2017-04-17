@@ -10,7 +10,6 @@ FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
 , mJumpAcceleration()
 , mJumpVelocity()
-, mAngle(0.f)
 , mBall()
 , mMascot(gameConstants)
 , mResetModifier([](entity_type&){})
@@ -26,28 +25,7 @@ Position::value_type FlappyCatHero::radius() const {
 void FlappyCatHero::setRadius(Position::value_type radius) {
 
   mBall.geometry().setRadius(radius);
-  syncFigure();
-}
-
-void FlappyCatHero::moveTo(const Position& position) {
-
-  mBall.transformation().setPosition(position);
-  syncFigure();
-}
-
-void FlappyCatHero::rotate(Position::value_type angle) {
-
-  mAngle = angle;
-
-/**
-   * TODO: add rotation to mBall
-   * Currently origin of ball is not in the center of the ball
-   * so rotation would cause bad render, fix origin code
-   * and uncomment rotation line
-   */
-  //mBall.transformation().setRotation(mAngle);
-
-  syncFigure();
+  syncChildren();
 }
 
 void FlappyCatHero::update(const FrameDuration& time) {
@@ -61,16 +39,6 @@ void FlappyCatHero::drawOn(const Window& window) const {
   window.draw(mBall);
   mMascot.drawOn(window);
 
-}
-
-const Position& FlappyCatHero::position() const {
-
-  return mBall.transformation().position();
-}
-
-Position::value_type FlappyCatHero::rotation() const {
-
-  return mAngle;
 }
 
 void FlappyCatHero::reset() {
@@ -110,7 +78,17 @@ void FlappyCatHero::jump() {
   setVelocity(mJumpVelocity);
 }
 
-void FlappyCatHero::syncFigure() {
+void FlappyCatHero::syncChildren() {
+
+/**
+   * TODO: add rotation to mBall
+   * Currently origin of ball is not in the center of the ball
+   * so rotation would cause bad render, fix origin code
+   * and uncomment rotation line
+   */
+  //mBall.transformation().setRotation(mAngle);
+
+  mBall.transformation().setPosition(position());
 
   Position::value_type diameter = mBall.geometry().radius() * 2.f;
 
@@ -119,5 +97,6 @@ void FlappyCatHero::syncFigure() {
 
   mMascot.moveTo(mascotPos);
   mMascot.resize(Position(diameter, diameter));
-  mMascot.rotate(mAngle);
+  mMascot.rotateTo(rotation());
+
 }

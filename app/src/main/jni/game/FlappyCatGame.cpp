@@ -212,7 +212,7 @@ void FlappyCatGame::initialize() {
         }
       }
 
-      hero.rotate(angle);
+      hero.rotateTo(angle);
     }
   );
 
@@ -223,7 +223,7 @@ void FlappyCatGame::initialize() {
 
       hero.setRadius(mGameConstants[Constant::HeroSize].x());
       hero.moveTo(mGameConstants[Constant::HeroPosition]);
-      hero.rotate(0.f);
+      hero.rotateTo(0.f);
 
       hero.setColor(colorScheme[ColorConstant::HeroColor],
                     colorScheme[ColorConstant::MascotBodyColor],

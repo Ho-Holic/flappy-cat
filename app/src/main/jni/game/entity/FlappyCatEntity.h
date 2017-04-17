@@ -19,15 +19,15 @@ public:
   virtual void update(const FrameDuration& frameDuration);
   virtual void drawOn(const Window& window) const = 0;
 
-  virtual const Position& position() const = 0;
+  virtual const Position& position() const;
   virtual Position::value_type rotation() const;
+  virtual const Position& size() const;
 
-  virtual void moveTo(const Position& position) = 0;
+  virtual void moveTo(const Position& position);
   virtual void moveBy(const Position& offset);
 
   virtual void resize(const Position& size);
-  // TODO: rename rotateTo
-  virtual void rotate(Position::value_type angle);
+  virtual void rotateTo(Position::value_type angle);
 
 public:
   const FlappyCatGameConstants& gameConstants() const;
@@ -38,7 +38,13 @@ public:
   void setVelocity(const Position& velocity);
 
 private:
+  virtual void syncChildren();
+
+private:
   const FlappyCatGameConstants& mGameConstants;
+  Position mPosition;
+  Position mSize;
+  Position::value_type mAngle;
   Position mAcceleration;
   Position mVelocity;
   Position mDistance;

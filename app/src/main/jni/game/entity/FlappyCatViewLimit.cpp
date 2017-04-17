@@ -4,8 +4,6 @@
 
 FlappyCatViewLimit::FlappyCatViewLimit(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
-, mPosition()
-, mSize()
 , mTop()
 , mTopRight()
 , mRight()
@@ -17,44 +15,30 @@ FlappyCatViewLimit::FlappyCatViewLimit(const FlappyCatGameConstants& gameConstan
   //
 }
 
-void FlappyCatViewLimit::moveTo(const Position& position) {
-
-  mPosition = position;
-  syncChildren();
-}
-
-void FlappyCatViewLimit::resize(const Position& size) {
-
-  mSize = size;
-  syncChildren();
-}
-
-const Position& FlappyCatViewLimit::position() const {
-
-  return mPosition;
-}
-
 void FlappyCatViewLimit::syncChildren() {
 
+  const Position& position = this->position();
+  const Position& size     = this->size();
+
   // move
-  mTop        .transformation().setPosition(mPosition + Position(0.f       , mSize.y()));
-  mTopRight   .transformation().setPosition(mPosition + Position(mSize.x() , mSize.y()));
-  mRight      .transformation().setPosition(mPosition + Position(mSize.x() , 0.f));
-  mBottomRight.transformation().setPosition(mPosition + Position(mSize.x() , -mSize.y()));
-  mBottom     .transformation().setPosition(mPosition + Position(0.f       , -mSize.y()));
-  mBottomLeft .transformation().setPosition(mPosition + Position(-mSize.x(), -mSize.y()));
-  mLeft       .transformation().setPosition(mPosition + Position(-mSize.x(), 0.f));
-  mTopLeft    .transformation().setPosition(mPosition + Position(-mSize.x(), mSize.y()));
+  mTop        .transformation().setPosition(position + Position(0.f      , size.y()));
+  mTopRight   .transformation().setPosition(position + Position(size.x() , size.y()));
+  mRight      .transformation().setPosition(position + Position(size.x() , 0.f));
+  mBottomRight.transformation().setPosition(position + Position(size.x() , -size.y()));
+  mBottom     .transformation().setPosition(position + Position(0.f      , -size.y()));
+  mBottomLeft .transformation().setPosition(position + Position(-size.x(), -size.y()));
+  mLeft       .transformation().setPosition(position + Position(-size.x(), 0.f));
+  mTopLeft    .transformation().setPosition(position + Position(-size.x(), size.y()));
 
   // resize
-  mTop        .geometry().resize(mSize);
-  mTopRight   .geometry().resize(mSize);
-  mRight      .geometry().resize(mSize);
-  mBottomRight.geometry().resize(mSize);
-  mBottom     .geometry().resize(mSize);
-  mBottomLeft .geometry().resize(mSize);
-  mLeft       .geometry().resize(mSize);
-  mTopLeft    .geometry().resize(mSize);
+  mTop        .geometry().resize(size);
+  mTopRight   .geometry().resize(size);
+  mRight      .geometry().resize(size);
+  mBottomRight.geometry().resize(size);
+  mBottom     .geometry().resize(size);
+  mBottomLeft .geometry().resize(size);
+  mLeft       .geometry().resize(size);
+  mTopLeft    .geometry().resize(size);
 }
 
 void FlappyCatViewLimit::drawOn(const Window& window) const {

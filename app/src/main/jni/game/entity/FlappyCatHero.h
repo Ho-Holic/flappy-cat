@@ -19,12 +19,8 @@ public:
 
 public:
   virtual void drawOn(const Window& window) const override;
-  virtual const Position& position() const override;
-  virtual Position::value_type rotation() const override;
-  virtual void moveTo(const Position& position) override;
   virtual void reset() override;
   virtual void update(const FrameDuration& time) override;
-  virtual void rotate(Position::value_type angle) override;
 
 public:
   void setColor(const Color& backgroundColor,
@@ -42,11 +38,11 @@ public:
   void jump();
 
 private:
-  void syncFigure();
+  virtual void syncChildren() override;
+
 private:
   Position mJumpAcceleration;
   Position mJumpVelocity;
-  Position::value_type mAngle;
   CircleShape mBall;
   FlappyCatMascot mMascot;
   modifier_type mResetModifier;

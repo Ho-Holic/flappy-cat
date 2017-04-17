@@ -10,8 +10,6 @@
 
 FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
-, mPosition()
-, mSize()
 , mGapInterval(0.f)
 , mGapDisplacement(0.f)
 , mTopBlock()
@@ -37,17 +35,6 @@ bool FlappyCatWall::collideWithCircle(const Position& center, Position::value_ty
       || Collide::circleRect(center, radius, mBottomBlock);
 }
 
-void FlappyCatWall::moveTo(const Position& position) {
-
-  mPosition = position;
-  syncChildren();
-}
-
-const Position& FlappyCatWall::position() const {
-
-  return mPosition;
-}
-
 void FlappyCatWall::drawOn(const Window& window) const {
 
   window.draw(mTopBlock);
@@ -60,61 +47,28 @@ void FlappyCatWall::setColor(const Color& color) {
   mBottomBlock.setColor(color);
 }
 
-void FlappyCatWall::resize(const Position& size) {
-
-  mSize = size;
-  syncChildren();
-}
-
 void FlappyCatWall::syncChildren() {
 
-  Position::value_type A1 = mPosition.y();
+  Position::value_type A1 = position().y();
 
-  Position::value_type A2 = A1 + mSize.y()
+  Position::value_type A2 = A1 + size().y()
                             - mGapInterval / 2.f
-                            - mSize.y() / 2.f
+                            - size().y() / 2.f
                             - mGapDisplacement;
 
   Position::value_type A3 = A2 + mGapInterval;
 
-  Position::value_type A4 = A3 + mSize.y() / 2.f
+  Position::value_type A4 = A3 + size().y() / 2.f
                             + mGapDisplacement
                             - mGapInterval / 2.f;
 
   // Need to deal with situation when all values are 0.f to make assert work
   //REQUIRE(TAG, ((A1 < A2) && (A2 < A3) && (A3 < A4)), "Vectors must not overlap");
 
-  mBottomBlock.transformation().setPosition(Position(mPosition.x(), A1));
-  mBottomBlock.geometry().resize(Position(mSize.x(), (A2 - A1)));
+  mBottomBlock.transformation().setPosition(Position(position().x(), A1));
+  mBottomBlock.geometry().resize(Position(size().x(), (A2 - A1)));
 
-  mTopBlock.transformation().setPosition(Position(mPosition.x(), A3));
-  mTopBlock.geometry().resize(Position(mSize.x(), (A4 - A3)));
+  mTopBlock.transformation().setPosition(Position(position().x(), A3));
+  mTopBlock.geometry().resize(Position(size().x(), (A4 - A3)));
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

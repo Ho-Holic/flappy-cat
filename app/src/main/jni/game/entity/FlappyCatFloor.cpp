@@ -3,8 +3,6 @@
 
 FlappyCatFloor::FlappyCatFloor(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
-, mPosition()
-, mSize()
 , mOrganicSurfaceSize()
 , mSpikesSize()
 , mFloor()
@@ -23,20 +21,25 @@ void FlappyCatFloor::initialize() {
 void FlappyCatFloor::syncChildren() {
 
   // floor for collide
-  mFloor.transformation().setPosition(mPosition);
-  mFloor.geometry().resize(Position(mSize.x(), mOrganicSurfaceSize.y()));
+  mFloor.transformation().setPosition(position());
+  mFloor.geometry().resize(Position(size().x(), mOrganicSurfaceSize.y()));
 
   // spikes for movement effect
-  mFloorSpikes.moveTo(Position(mPosition.x(), mPosition.y() - mSpikesSize.y()));
+  // TODO: replace to mFloorSpikes.moveTo(position() - Position(0.f, mSpikesSize.y()));
+  mFloorSpikes.moveTo(Position(position().x(), position().y() - mSpikesSize.y()));
 
   mFloorSpikes.setLinkSize(mSpikesSize);
   mFloorSpikes.setOffsetBetweenLinks(mSpikesSize);
 
-  mFloorSpikes.resize(Position(mSize.x(), 0.f));
+  mFloorSpikes.resize(Position(size().x(), 0.f));
 
   // dirt under floor
-  mBackgroundDirt.transformation().setPosition(Position(mPosition.x(), mPosition.y() - mSize.y()));
-  mBackgroundDirt.geometry().resize(Position(mSize.x(), mSize.y()));
+  // TODO: replace to mBackgroundDirt.transformation().setPosition(position() - Position(0.f,
+  //                                                               mSpikesSize.y()));
+
+  mBackgroundDirt.transformation().setPosition(Position(position().x(),
+                                                        position().y() - size().y()));
+  mBackgroundDirt.geometry().resize(Position(size().x(), size().y()));
 }
 
 
@@ -51,25 +54,6 @@ void FlappyCatFloor::update(const FrameDuration& time) {
 
   mFloorSpikes.update(time);
   mUpdateModifier(*this, time);
-}
-
-void FlappyCatFloor::moveTo(const Position& position) {
-
-  mPosition = position;
-
-  syncChildren();
-}
-
-void FlappyCatFloor::resize(const Position& size) {
-
-  mSize = size;
-
-  syncChildren();
-}
-
-const Position& FlappyCatFloor::position() const {
-
-  return mPosition;
 }
 
 void FlappyCatFloor::reset() {

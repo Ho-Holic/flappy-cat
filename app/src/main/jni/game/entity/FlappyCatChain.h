@@ -32,9 +32,6 @@ public:
   void reset() override;
   void update(const FrameDuration& time) override;
   void drawOn(const Window& window) const override;
-  const Position& position() const override;
-  void moveTo(const Position& position) override;
-  void resize(const Position& size) override;
 
 public:
   void setLinkSize(const Position& linkSize);
@@ -54,8 +51,6 @@ private:
   Position section() const;
 
 private:
-  Position mPosition;
-  Position mSize;
   Position mLinkSize;
   Position mOffsetBetweenLinks;
   Position mStartOffset;
@@ -71,8 +66,6 @@ private:
 template <typename Link>
 FlappyCatChain<Link>::FlappyCatChain(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)
-, mPosition()
-, mSize()
 , mLinkSize()
 , mOffsetBetweenLinks(0.f, 0.f)
 , mStartOffset(0.f, 0.f)
@@ -102,7 +95,7 @@ Position::value_type FlappyCatChain<Link>::chainLength() const {
    * https://code.google.com/p/android/issues/detail?id=82734
    */
 
-  return static_cast<size_t>(mSize.x() / section().x()) * section().x();
+  return static_cast<size_t>(size().x() / section().x()) * section().x();
 }
 
 template <typename Link>
@@ -113,7 +106,7 @@ Position FlappyCatChain<Link>::section() const {
 template <typename Link>
 bool FlappyCatChain<Link>::isWarpNeeded(const Position& point) const {
 
-  return point.x() < mPosition.x();
+  return point.x() < position().x();
 }
 
 template <typename Link>
@@ -147,7 +140,8 @@ void FlappyCatChain<Link>::reset() {
 
     mLinks[i].reset();
 
-    Position pos(mPosition.x() + i * section().x(), mPosition.y());
+    // TODO: replace with Position pos(position + Position(i * section().x(), 0.f));
+    Position pos(position().x() + i * section().x(), position().y());
 
     mLinks[i].moveTo(pos + mStartOffset); // shift off-screen if needed by mStartOffset
     mLinks[i].resize(mLinkSize);
@@ -210,18 +204,6 @@ void FlappyCatChain<Link>::setWrapAroundModifier(const modifier_type& modifier) 
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::moveTo(const Position& position) {
-
-  mPosition = position;
-}
-
-template <typename Link>
-void FlappyCatChain<Link>::resize(const Position& size) {
-
-  mSize = size;
-}
-
-template <typename Link>
 void FlappyCatChain<Link>::setLinkSize(const Position& linkSize) {
 
   mLinkSize = linkSize;
@@ -242,12 +224,6 @@ void FlappyCatChain<Link>::setOffsetBetweenLinks(const Position& offset) {
 template <typename Link>
 void FlappyCatChain<Link>::setStartOffset(const Position& offset) {
   mStartOffset = offset;
-}
-
-template <typename Link>
-const Position& FlappyCatChain<Link>::position() const {
-
-  return mPosition;
 }
 
 template <typename Link>

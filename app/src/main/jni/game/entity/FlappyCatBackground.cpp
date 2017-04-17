@@ -24,23 +24,13 @@ void FlappyCatBackground::reset() {
   mResetModifier(*this);
 }
 
-void FlappyCatBackground::moveTo(const Position& position) {
-
-  mBackground.transformation().setPosition(position);
-}
-
-void FlappyCatBackground::resize(const Position& size) {
-
-  mBackground.geometry().resize(size);
-}
-
-const Position& FlappyCatBackground::position() const {
-
-  return mBackground.transformation().position();
-}
-
 void FlappyCatBackground::setColor(const Color& color) {
 
   mBackground.setColor(color);
 }
 
+void FlappyCatBackground::syncChildren() {
+
+  mBackground.transformation().setPosition(position());
+  mBackground.geometry().resize(size());
+}
