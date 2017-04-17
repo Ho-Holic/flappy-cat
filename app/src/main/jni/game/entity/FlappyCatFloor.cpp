@@ -25,8 +25,7 @@ void FlappyCatFloor::syncChildren() {
   mFloor.geometry().resize(Position(size().x(), mOrganicSurfaceSize.y()));
 
   // spikes for movement effect
-  // TODO: replace to mFloorSpikes.moveTo(position() - Position(0.f, mSpikesSize.y()));
-  mFloorSpikes.moveTo(Position(position().x(), position().y() - mSpikesSize.y()));
+  mFloorSpikes.moveTo(position() - Position(0.f, mSpikesSize.y()));
 
   mFloorSpikes.setLinkSize(mSpikesSize);
   mFloorSpikes.setOffsetBetweenLinks(mSpikesSize);
@@ -34,11 +33,7 @@ void FlappyCatFloor::syncChildren() {
   mFloorSpikes.resize(Position(size().x(), 0.f));
 
   // dirt under floor
-  // TODO: replace to mBackgroundDirt.transformation().setPosition(position() - Position(0.f,
-  //                                                               mSpikesSize.y()));
-
-  mBackgroundDirt.transformation().setPosition(Position(position().x(),
-                                                        position().y() - size().y()));
+  mBackgroundDirt.transformation().setPosition(position() - Position(0.f, size().y()));
   mBackgroundDirt.geometry().resize(Position(size().x(), size().y()));
 }
 

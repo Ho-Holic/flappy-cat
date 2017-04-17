@@ -93,7 +93,7 @@ void FlappyCatHero::syncChildren() {
   Position::value_type diameter = mBall.geometry().radius() * 2.f;
 
   Position mascotPos = mBall.transformation().position()
-                       + Position(diameter * 0.3f, diameter * 0.3f);
+                       + Position(diameter * 0.25f, diameter * 0.3f);
 
   mMascot.moveTo(mascotPos);
   mMascot.resize(Position(diameter, diameter));

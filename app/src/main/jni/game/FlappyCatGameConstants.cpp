@@ -55,17 +55,11 @@ void FlappyCatGameConstants::reset() {
 
   Position cameraSize = Position(1080.f, 1920.f);
 
-  Position::value_type plateWidth = 1000.f; // TODO: remove tmp variable
-
-  Position::value_type offscreenMargin = 1.f; // one column beyond front and back part of a screen
+  Position::value_type plateWidth = 1000.f;
 
   Position::value_type halfCameraX = cameraSize.x() / 2.f;
   Position::value_type halfCameraY = cameraSize.y() / 2.f;
   Position::value_type offsetFloorY = halfCameraY * 0.8f; // ground takes 20%
-
-//  Position::value_type vanishWallX = 0.f;
-//  Position::value_type vanishCityX = 0.f;
-//  Position::value_type vanishFloorX = 0.f;
 
 
   // camera
@@ -83,6 +77,7 @@ void FlappyCatGameConstants::reset() {
   mConstants[BarricadePosition]            = Position(-plateWidth, -offsetFloorY);
   mConstants[BarricadeSize]                = Position(plateWidth * 2.f, halfCameraY + offsetFloorY);
   mConstants[BarricadeWallGapDisplacement] = Position(0.f, 300.f);
+  mConstants[BarricadeStartOffset]         = Position(plateWidth * 2.5f, 0.f);
 
   // city
   mConstants[CityHouseOffset]   = Position(0.f, 200.f);

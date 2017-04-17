@@ -47,20 +47,20 @@ void FlappyCatMascot::syncChildren() {
   Position bodyPos = Position(0.f, 0.f);
 
   Position bodySize      (1000.f, 500.f);
-  Position headPos       (600.f, 375.f);
-  Position headSize      (560.f, 440.f);
+  Position headPos       (660.f, 340.f);
+  Position headSize      (570.f, 440.f);
   Position backLegPos    (0.f, -375.f);
   Position frontLegPos   (625.f, 0.f);
   Position legAndTailSize(150.f, 500.f);
-  Position tailPos       (0.f, 175.f);
+  Position tailPos       (0.f, 250.f);
   Position earSize       (200.f, 375.f);
   Position leftEarPos    (0.f, headSize.y()); // 0.f, 440.f
   Position rightEarPos   (headSize.x() - earSize.x(), 0.f); // 360.f, 0
-  Position eyeSize       (140.f, 140.f);
-  Position leftEyePos    (80.f, 220.f);
+  Position eyeSize       (145.f, 145.f);
+  Position leftEyePos    (80.f, 200.f);
   Position rightEyePos   (300.f, 0.f);
   Position scarfSize     (750.f, 210.f);
-  Position scarfPos      (340.f, 210.f);
+  Position scarfPos      (400.f, 210.f);
   Position scarfTailSize (150.f, 315.f);
   Position scarfTailPos  (75.f,  -148.f);
   Position mouthSize     (56.f, 36.f);
@@ -82,8 +82,6 @@ void FlappyCatMascot::syncChildren() {
   Position scarfPosRes     = bodyPos + scarfPos;
   Position scarfTailPosRes = bodyPos + scarfPos + scarfTailPos;
   Position mouthPosRes     = bodyPos + headPos + mouthPos;
-
-
 
   // place objects
 

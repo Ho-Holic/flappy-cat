@@ -90,7 +90,7 @@ void FlappyCatGame::initialize() {
   // moving walls
   mBarricade.moveTo(mGameConstants[Constant::BarricadePosition]);
   mBarricade.resize(mGameConstants[Constant::BarricadeSize]);
-  mBarricade.setStartOffset(Position(mGameConstants[Constant::BarricadeSize].x() * 2.f, 0.f));
+  mBarricade.setStartOffset(mGameConstants[Constant::BarricadeStartOffset]);
   mBarricade.setLinkSize(mGameConstants[Constant::BarricadeWallSize]);
   mBarricade.setOffsetBetweenLinks(mGameConstants[Constant::BarricadeBetweenWallOffset]);
   mBarricade.setMovementDisplacement(mGameConstants[Constant::PhysicsForegroundDisplacement]);

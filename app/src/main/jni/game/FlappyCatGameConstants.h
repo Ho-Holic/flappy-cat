@@ -62,6 +62,7 @@ enum FlappyCatGameConstants::Constants : size_t {
   BarricadeWallSize,
   BarricadeBetweenWallOffset,
   BarricadeWallGapDisplacement,
+  BarricadeStartOffset,
 
   CityPosition,
   CitySize,
