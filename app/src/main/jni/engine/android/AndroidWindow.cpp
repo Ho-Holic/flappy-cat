@@ -29,6 +29,7 @@ enum : GLsizei {
 
 AndroidWindow::AndroidWindow()
 : Window()
+, mIsReady(false)
 , mWindow(nullptr)
 , mDisplay(EGL_NO_DISPLAY)
 , mContext(EGL_NO_CONTEXT)
@@ -41,18 +42,21 @@ AndroidWindow::AndroidWindow()
 
 bool AndroidWindow::isReady() const {
 
-  return mWindow  != nullptr
-      && mDisplay != EGL_NO_DISPLAY
-      && mContext != EGL_NO_CONTEXT
-      && mSurface != EGL_NO_SURFACE;
+  return mIsReady;
 }
 
 void AndroidWindow::setNativeWindow(ANativeWindow* window) {
+
+  //Log::i(TAG, "Call to setNativeWindow: %p, ready: %d", window, mIsReady);
+
+  mIsReady = false;
 
   mWindow = window;
 }
 
 void AndroidWindow::initialize() {
+
+  //Log::i(TAG, "Call to initialize: %p, ready: %d", mWindow, mIsReady);
 
   // get display and init it
   EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
@@ -169,9 +173,17 @@ void AndroidWindow::initialize() {
   // deal with opengl now
   initializeOpengl();
 
+  mIsReady = true;
+
 }
 
 void AndroidWindow::terminate() {
+
+  CAUTION("Don't use mWindow here, this is already new window pointer")
+
+  //Log::i(TAG, "Call to terminate: %p, ready: %d", mWindow, mIsReady);
+
+  mIsReady = false;
 
   if (mDisplay != EGL_NO_DISPLAY) {
 
@@ -425,7 +437,7 @@ void AndroidWindow::resize(int32_t width, int32_t height) {
   mHeight = height;
 
   view().setPosition(Position(static_cast<Position::value_type>(mWidth),
-                             static_cast<Position::value_type>(mHeight)));
+                              static_cast<Position::value_type>(mHeight)));
 
   // Set the viewport
   glViewport(0, 0, mWidth, mHeight);
@@ -435,18 +447,3 @@ void AndroidWindow::draw(const Shape& shape) const {
 
   shape.render().drawOn(*this, view());
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
