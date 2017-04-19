@@ -45,18 +45,28 @@ bool AndroidWindow::isReady() const {
   return mIsReady;
 }
 
+void AndroidWindow::setReady(bool ready) {
+
+  mIsReady = ready;
+}
+
 void AndroidWindow::setNativeWindow(ANativeWindow* window) {
 
-  //Log::i(TAG, "Call to setNativeWindow: %p, ready: %d", window, mIsReady);
+  Log::i(TAG, "Call to setNativeWindow: %p, ready: %d", window, mIsReady);
 
   mIsReady = false;
 
   mWindow = window;
 }
 
+ANativeWindow* AndroidWindow::nativeWindow() const {
+
+  return mWindow;
+}
+
 void AndroidWindow::initialize() {
 
-  //Log::i(TAG, "Call to initialize: %p, ready: %d", mWindow, mIsReady);
+  Log::i(TAG, "Call to initialize: %p, ready: %d", mWindow, mIsReady);
 
   // get display and init it
   EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
@@ -181,7 +191,7 @@ void AndroidWindow::terminate() {
 
   CAUTION("Don't use mWindow here, this is already new window pointer")
 
-  //Log::i(TAG, "Call to terminate: %p, ready: %d", mWindow, mIsReady);
+  Log::i(TAG, "Call to terminate: %p, ready: %d", mWindow, mIsReady);
 
   mIsReady = false;
 
@@ -447,3 +457,7 @@ void AndroidWindow::draw(const Shape& shape) const {
 
   shape.render().drawOn(*this, view());
 }
+
+
+
+

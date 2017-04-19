@@ -347,14 +347,21 @@ void AndroidApplication::setNativeWindow(ANativeWindow* window) {
   AndroidEvent event(window ? AndroidEvent::EventType::NativeWindowCreatedEventType
                             : AndroidEvent::EventType::NativeWindowDestroyedEventType);
 
-  std::lock_guard<std::mutex> lock(mMutex);
+  event.setNativeWindowEventData(window);
 
-  mWindow.setNativeWindow(window);
+  auto isWindowChanged = [&window, this]() -> bool {
+
+    return this->mWindow.nativeWindow() == window;
+  };
+
+  // wait window to change
+  std::unique_lock<std::mutex> lock(mMutex);
+
+  mWindow.setReady(false);
   this->postEvent(event);
 
-  mConditionVariable.notify_all();
-
-  UNUSED(lock); // unlocks when goes out of a scope
+  mConditionVariable.wait(lock, isWindowChanged);
+  mMutex.unlock();
 
 }
 
@@ -451,8 +458,8 @@ void AndroidApplication::processEvent(const AndroidEvent& event) {
     case EventType::ActivityPauseEventType:  setActivityState(PauseActivityState);  break;
     case EventType::ActivityStopEventType:   setActivityState(StopActivityState);   break;
 
-    case EventType::NativeWindowCreatedEventType:   initializeNativeWindow(); break;
-    case EventType::NativeWindowDestroyedEventType: terminateNativeWindow(); break;
+    case EventType::NativeWindowCreatedEventType:   initializeNativeWindow(event); break;
+    case EventType::NativeWindowDestroyedEventType: terminateNativeWindow(event); break;
 
     case EventType::ResizedEventType: resizeNativeWindow(event); break;
 
@@ -476,11 +483,13 @@ void AndroidApplication::setActivityState(AndroidApplication::ActivityState acti
   UNUSED(lock); // unlocks when goes out of a scope
 }
 
-void AndroidApplication::initializeNativeWindow() {
+void AndroidApplication::initializeNativeWindow(const AndroidEvent& event) {
 
   Log::i(TAG, "Initialize native window\n");
 
   std::lock_guard<std::mutex> lock(mMutex);
+
+  mWindow.setNativeWindow(event.nativeWindowEvent().pendingWindow);
 
   mWindow.initialize();
 
@@ -489,13 +498,15 @@ void AndroidApplication::initializeNativeWindow() {
   UNUSED(lock); // unlocks when goes out of a scope
 }
 
-void AndroidApplication::terminateNativeWindow() {
+void AndroidApplication::terminateNativeWindow(const AndroidEvent& event) {
 
   Log::i(TAG, "Terminate native window\n");
 
   std::lock_guard<std::mutex> lock(mMutex);
 
   mWindow.terminate();
+
+  mWindow.setNativeWindow(event.nativeWindowEvent().pendingWindow);
 
   mConditionVariable.notify_all();
 

@@ -62,8 +62,8 @@ private:
   void processEvent(const AndroidEvent& event);
   void setActivityState(ActivityState activityState);
   void resizeNativeWindow(const AndroidEvent& event);
-  void initializeNativeWindow();
-  void terminateNativeWindow();
+  void initializeNativeWindow(const AndroidEvent& event);
+  void terminateNativeWindow(const AndroidEvent& event);
 
 private:
   virtual void main() = 0; // private because launched from 'exec' function

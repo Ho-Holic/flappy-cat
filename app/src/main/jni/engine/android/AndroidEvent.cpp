@@ -49,11 +49,30 @@ void AndroidEvent::setResizeEventData(int32_t width, int32_t height) {
 
 }
 
+
+void AndroidEvent::setNativeWindowEventData(ANativeWindow* pendingWindow) {
+
+  REQUIRE(TAG, mEventType == NativeWindowCreatedEventType
+            || mEventType == NativeWindowDestroyedEventType,
+          "Must be 'NativeWindowCreatedEventType' or 'NativeWindowDestroyedEventType'");
+
+  mEventData.nativeWindowEvent.pendingWindow = pendingWindow;
+}
+
 const AndroidResizeEvent& AndroidEvent::resizeEvent() const {
 
   REQUIRE(TAG, mEventType == ResizedEventType, "Must be 'ResizedEventType'");
 
   return mEventData.resizeEvent;
+}
+
+const AndroidNativeWindowEvent& AndroidEvent::nativeWindowEvent() const {
+
+  REQUIRE(TAG, mEventType == NativeWindowCreatedEventType
+            || mEventType == NativeWindowDestroyedEventType,
+          "Must be 'NativeWindowCreatedEventType' or 'NativeWindowDestroyedEventType'");
+
+  return mEventData.nativeWindowEvent;
 }
 
 

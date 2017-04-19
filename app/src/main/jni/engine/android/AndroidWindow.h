@@ -39,6 +39,8 @@ public:
   virtual void display() const override;
 public:
   void setNativeWindow(ANativeWindow* window);
+  ANativeWindow* nativeWindow() const;
+  void setReady(bool ready);
   bool isReady() const;
   void initialize();
   void terminate();

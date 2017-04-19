@@ -10,6 +10,9 @@
 // style
 #include "style/Guidelines.h"
 
+// ndk
+#include <android/native_activity.h>
+
 class AndroidEvent {
 public:
   enum EventType : int8_t;
@@ -25,10 +28,12 @@ public:
 public:
   void setTouchEventData(float x, float y);
   void setResizeEventData(int32_t width, int32_t height);
+  void setNativeWindowEventData(ANativeWindow* pendingWindow);
 
 public:
   const AndroidTouchEvent& touchEvent() const;
   const AndroidResizeEvent& resizeEvent() const;
+  const AndroidNativeWindowEvent& nativeWindowEvent() const;
 
 private:
   EventType mEventType;
