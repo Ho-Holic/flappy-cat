@@ -404,13 +404,22 @@ void AndroidApplication::changeFocus(AndroidApplication::Focus focus) {
 
 void AndroidApplication::setInputQueue(AInputQueue* queue) {
 
-  std::lock_guard<std::mutex> lock(mMutex);
+  AndroidEvent event(queue ? AndroidEvent::EventType::InputQueueCreatedEventType
+                           : AndroidEvent::EventType::InputQueueDestroyedEventType);
 
-  mLooper.setInputQueue(queue);
+  event.setInputQueueEventData(queue);
 
-  mConditionVariable.notify_all();
+  auto isQueueChanged = [&queue, this]() -> bool {
 
-  UNUSED(lock); // unlocks when goes out of a scope
+    return this->mLooper.inputQueue() == queue;
+  };
+
+  std::unique_lock<std::mutex> lock(mMutex);
+
+  this->postEvent(event);
+
+  mConditionVariable.wait(lock, isQueueChanged);
+  mMutex.unlock();
 }
 
 void AndroidApplication::reloadConfiguration() {
@@ -459,7 +468,10 @@ void AndroidApplication::processEvent(const AndroidEvent& event) {
     case EventType::ActivityStopEventType:   setActivityState(StopActivityState);   break;
 
     case EventType::NativeWindowCreatedEventType:   initializeNativeWindow(event); break;
-    case EventType::NativeWindowDestroyedEventType: terminateNativeWindow(event); break;
+    case EventType::NativeWindowDestroyedEventType: terminateNativeWindow(event);  break;
+
+    case EventType::InputQueueCreatedEventType:   setInputQueue(event); break;
+    case EventType::InputQueueDestroyedEventType: setInputQueue(event); break;
 
     case EventType::ResizedEventType: resizeNativeWindow(event); break;
 
@@ -518,6 +530,17 @@ void AndroidApplication::resizeNativeWindow(const AndroidEvent& event) {
   std::lock_guard<std::mutex> lock(mMutex);
 
   mWindow.resize(event.resizeEvent().width, event.resizeEvent().height);
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
+}
+
+void AndroidApplication::setInputQueue(const AndroidEvent& event) {
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  mLooper.setInputQueue(event.inputQueueEvent().pendingQueue);
 
   mConditionVariable.notify_all();
 

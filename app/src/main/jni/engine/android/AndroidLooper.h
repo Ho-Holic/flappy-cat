@@ -33,6 +33,7 @@ public:
   void prepare();
   bool pollEvent(AndroidEvent& event);
   void setInputQueue(AInputQueue* inputQueue);
+  AInputQueue* inputQueue() const;
 
 private:
   void pollFromInputQueue(AndroidEvent& event);
@@ -60,6 +61,5 @@ enum AndroidLooper::Timeout : int {
   IndefinitelyUntilEventAppearsTimeout = -1,
   ImmediatelyWithoutBlockingTimeout    = 0,
 };
-
 
 #endif //FLAPPY_CAT_ANDROIDLOOPER_H

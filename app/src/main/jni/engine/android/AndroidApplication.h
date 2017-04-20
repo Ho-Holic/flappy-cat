@@ -64,6 +64,7 @@ private:
   void resizeNativeWindow(const AndroidEvent& event);
   void initializeNativeWindow(const AndroidEvent& event);
   void terminateNativeWindow(const AndroidEvent& event);
+  void setInputQueue(const AndroidEvent& event);
 
 private:
   virtual void main() = 0; // private because launched from 'exec' function

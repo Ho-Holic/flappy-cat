@@ -30,6 +30,11 @@ void AndroidLooper::setInputQueue(AInputQueue* inputQueue) {
   }
 }
 
+AInputQueue* AndroidLooper::inputQueue() const {
+
+  return mInputQueue.get();
+}
+
 bool AndroidLooper::pollEvent(AndroidEvent& event) {
 
   int id = ALooper_pollAll(ImmediatelyWithoutBlockingTimeout,

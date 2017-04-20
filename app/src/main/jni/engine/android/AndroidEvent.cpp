@@ -59,6 +59,15 @@ void AndroidEvent::setNativeWindowEventData(ANativeWindow* pendingWindow) {
   mEventData.nativeWindowEvent.pendingWindow = pendingWindow;
 }
 
+void AndroidEvent::setInputQueueEventData(AInputQueue* pendingQueue) {
+
+  REQUIRE(TAG, mEventType == InputQueueCreatedEventType
+            || mEventType == InputQueueDestroyedEventType,
+          "Must be 'InputQueueCreatedEventType' or 'InputQueueDestroyedEventType'");
+
+  mEventData.inputQueueEvent.pendingQueue = pendingQueue;
+}
+
 const AndroidResizeEvent& AndroidEvent::resizeEvent() const {
 
   REQUIRE(TAG, mEventType == ResizedEventType, "Must be 'ResizedEventType'");
@@ -75,6 +84,11 @@ const AndroidNativeWindowEvent& AndroidEvent::nativeWindowEvent() const {
   return mEventData.nativeWindowEvent;
 }
 
+const AndroidInputQueueEvent& AndroidEvent::inputQueueEvent() const {
 
+  REQUIRE(TAG, mEventType == InputQueueCreatedEventType
+            || mEventType == InputQueueDestroyedEventType,
+          "Must be 'InputQueueCreatedEventType' or 'InputQueueDestroyedEventType'");
 
-
+  return mEventData.inputQueueEvent;
+}

@@ -20,11 +20,16 @@ struct AndroidNativeWindowEvent {
   ANativeWindow* pendingWindow;
 };
 
+struct AndroidInputQueueEvent {
+  AInputQueue* pendingQueue;
+};
+
 union AndroidEventData {
 
   AndroidTouchEvent  touchEvent;
   AndroidResizeEvent resizeEvent;
   AndroidNativeWindowEvent nativeWindowEvent;
+  AndroidInputQueueEvent inputQueueEvent;
 };
 
 #endif //FLAPPY_CAT_ANDROIDEVENTDATA_H
