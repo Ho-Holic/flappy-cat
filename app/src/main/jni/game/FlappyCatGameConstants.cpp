@@ -57,7 +57,6 @@ void FlappyCatGameConstants::reset() {
 
   Position::value_type plateWidth = 1000.f;
 
-  Position::value_type halfCameraX = cameraSize.x() / 2.f;
   Position::value_type halfCameraY = cameraSize.y() / 2.f;
   Position::value_type offsetFloorY = halfCameraY * 0.8f; // ground takes 20%
 

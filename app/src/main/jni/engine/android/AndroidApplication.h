@@ -11,7 +11,7 @@
 #include <queue>
 
 // style
-#include "style/Guidelines.h"
+#include <style/Guidelines.h>
 
 // engine
 #include "AndroidConfiguration.h"

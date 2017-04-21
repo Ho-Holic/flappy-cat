@@ -9,6 +9,7 @@ FlappyCatEntity::FlappyCatEntity(const FlappyCatGameConstants& gameConstants)
 , mPosition()
 , mSize()
 , mAngle(0.f)
+, mGravity(0.f, 0.f)
 , mAcceleration()
 , mVelocity()
 , mDistance() {
@@ -67,11 +68,10 @@ void FlappyCatEntity::rotateTo(Position::value_type angle) {
  */
 void FlappyCatEntity::update(const FrameDuration& frameDuration) {
 
-  using Constant = FlappyCatGameConstants::Constants;
-
   Position::value_type time = std::chrono::duration_cast<FloatSecond>(frameDuration).count();
 
-  mAcceleration = mAcceleration - Position(0.f, mGameConstants[Constant::PhysicsGravity].y());
+  // TODO: make list of physical forces instead of gravity variable
+  mAcceleration = mAcceleration - mGravity;
   mVelocity = mVelocity + (mAcceleration * time);
 
   mDistance = mVelocity * time; // distance passed by last update
@@ -122,6 +122,11 @@ void FlappyCatEntity::setAcceleration(const Position& acceleration) {
 void FlappyCatEntity::setVelocity(const Position& velocity) {
 
   mVelocity = velocity;
+}
+
+void FlappyCatEntity::setGravity(const Position& gravity) {
+
+  mGravity = gravity;
 }
 
 

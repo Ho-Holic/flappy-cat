@@ -84,6 +84,9 @@ void FlappyCatGame::initialize() {
           mHero.moveTo(Position(mHero.position().x(), mFloor.position().y()));
         }
       }
+
+      UNUSED(floor); // this update function process 'mHere' as a real target, not floor
+      UNUSED(frameDuration); // not need for time processing here
     }
   );
 
@@ -192,6 +195,7 @@ void FlappyCatGame::initialize() {
   // cat hero!
   mHero.setJumpConstants(mGameConstants[Constant::PhysicsJumpAcceleration],
                          mGameConstants[Constant::PhysicsJumpVelocity]);
+  mHero.setGravity(mGameConstants[Constant::PhysicsGravity]);
 
   mHero.setUpdateModifier(
     [this](FlappyCatHero& hero, const FrameDuration& frameDuration) {
@@ -213,6 +217,8 @@ void FlappyCatGame::initialize() {
       }
 
       hero.rotateTo(angle);
+
+      UNUSED(frameDuration); // not need for time processing here
     }
   );
 
@@ -234,11 +240,8 @@ void FlappyCatGame::initialize() {
 
   // initialize all stuff
   mBackground.initialize();
-  Log::i(TAG, "Floor:");
   mFloor.initialize();
-  Log::i(TAG, "Barricade:");
   mBarricade.initialize();
-  Log::i(TAG, "City:");
   mBackgroundCity.initialize();
   mBackgroundSky.initialize();
   mHero.initialize();

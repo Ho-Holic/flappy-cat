@@ -37,6 +37,15 @@ namespace {
     return android_log_print(priority, tag, "%s", message.data());
   }
 
+  template<typename... Args>
+  inline void android_log_assert(const char* cond, const char* tag, Args... args) {
+    __android_log_assert(cond, tag, args...);
+  }
+
+  inline void android_log_assert(const char* cond, const char* tag, const std::string& message) {
+
+    __android_log_assert(cond, tag, "%s", message.data());
+  }
 }
 
 template <typename... Args>
@@ -79,7 +88,7 @@ template<typename... Args>
 void AndroidLog::assert(bool cond, const char* condAsString, const char* tag, Args... args) {
 
   if (! cond) {
-    __android_log_assert(condAsString, tag, args...);
+    android_log_assert(condAsString, tag, args...);
   }
 }
 

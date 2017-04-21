@@ -16,9 +16,9 @@
 //
 //    2. Java   'Log::i(TAG, "Creating: %p\n", activity);' was prefered to
 //       C++ish 'log_i(TAG) << "Creating: " << activity << "\n";' because of confusion
-//       with std::log()
+//       more simple implementation
 //
-//    3. Macro 'DISABLE_COPY' prefered to manual '= delete' because of easy search and maintenance
+//    3. Macro 'DISABLE_COPY' prefered to manual '= delete' because of direct intent to disable copy
 //
 //    4. Initialize smart pointers  'shared_ptr(nullptr)' instead of 'shared_ptr()'
 //       for readability and back compatibility with raw pointers

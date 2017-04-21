@@ -21,6 +21,7 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
 , mEvents() {
   UNUSED(savedState);     // we don't save and load state for now
   UNUSED(savedStateSize); // --/--
+  UNUSED(mActivity);      // this variable also don't used now
 
   activity->callbacks->onDestroy               = &AndroidApplication::onDestroy;
   activity->callbacks->onStart                 = &AndroidApplication::onStart;
@@ -153,7 +154,7 @@ void AndroidApplication::onNativeWindowRedrawNeeded(ANativeActivity* activity,
   Log::i(TAG, "NativeWindowRedrawNeeded: %p -- %p\n", activity, window);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
-
+  UNUSED(application); // for later usage
 }
 
 void AndroidApplication::onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window) {
@@ -484,7 +485,7 @@ void AndroidApplication::processEvent(const AndroidEvent& event) {
 
 void AndroidApplication::setActivityState(AndroidApplication::ActivityState activityState) {
 
-  Log::i(TAG, "activityState = %d\n", activityState);
+  Log::i(TAG, "Set activityState = %d\n", activityState);
 
   std::lock_guard<std::mutex> lock(mMutex);
 

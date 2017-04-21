@@ -35,6 +35,8 @@ bool Collide::pointRect(const Position& p,
                         const Position& c,
                         const Position& d) {
 
+  UNUSED(c); // algorithm dont use 'c' point to fin intersection
+
   auto apab = VectorMath::dot(p - a, b - a);
   auto ab2  = VectorMath::dot(b - a, b - a);
   auto apad = VectorMath::dot(p - a, d - a);

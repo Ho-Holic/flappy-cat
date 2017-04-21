@@ -123,9 +123,8 @@ void FlappyCatChain<Link>::initialize() {
   CAUTION("If all of a sudden no object appears on the screen, please pass"
           "some hardcoded value e.g 'mLinks.reserve(120)' and check if bug appears"
           "this appears if 'emplace_back' is not implemented properly");
-  mLinks.reserve(linkCount);
 
-  Log::i(TAG, "Link count: %f", static_cast<float>(linkCount));
+  mLinks.reserve(linkCount);
 
   for (std::size_t i = 0; i < linkCount;  ++i) {
 

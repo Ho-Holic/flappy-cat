@@ -36,6 +36,7 @@ public:
   const Position& distance() const;
   void setAcceleration(const Position& acceleration);
   void setVelocity(const Position& velocity);
+  void setGravity(const Position& gravity);
 
 private:
   virtual void syncChildren();
@@ -45,6 +46,7 @@ private:
   Position mPosition;
   Position mSize;
   Position::value_type mAngle;
+  Position mGravity;
   Position mAcceleration;
   Position mVelocity;
   Position mDistance;

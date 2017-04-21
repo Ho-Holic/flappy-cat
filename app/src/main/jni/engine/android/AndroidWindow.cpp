@@ -101,6 +101,7 @@ void AndroidWindow::initialize() {
                                                  nullptr, 0,
                                                  &numConfigs);
 
+
   REQUIRE(TAG, numConfigs != 0, "We can't have EGLConfig array with zero size!");
 
   // then we create array large enough to store all configs
@@ -158,6 +159,7 @@ void AndroidWindow::initialize() {
   EGLBoolean nativeVisualStatus = eglGetConfigAttrib(display, config,
                                                      EGL_NATIVE_VISUAL_ID, &format);
 
+
   EGLSurface surface = eglCreateWindowSurface(display, config, mWindow, nullptr);
 
   // context configuration
@@ -170,6 +172,15 @@ void AndroidWindow::initialize() {
   EGLContext context = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
 
   EGLBoolean isCurrent = eglMakeCurrent(display, surface, surface, context);
+
+  /** TODO: check this bunch of unused variables
+   *
+   *  Decide do we need to process return values or just can discard them?
+   */
+  UNUSED(displayState);
+  UNUSED(chooseConfigState);
+  UNUSED(nativeVisualStatus);
+  UNUSED(isCurrent);
 
   // when all done
   mDisplay = display;
@@ -218,14 +229,13 @@ void AndroidWindow::terminate() {
 void AndroidWindow::initializeOpengl() {
 
   // Check openGL on the system
-  auto opengl_info = {
+  std::initializer_list<GLenum> opengl_info = {
     GL_VENDOR, GL_RENDERER, GL_VERSION, GL_EXTENSIONS,
     GL_SHADING_LANGUAGE_VERSION
   };
 
-  for (auto name : opengl_info) {
+  for (GLenum name : opengl_info) {
 
-    // TODO: fix conversion error
     const GLubyte* info = glGetString(name);
     Log::i(TAG, "OpenGL Info: %s", info);
   }
