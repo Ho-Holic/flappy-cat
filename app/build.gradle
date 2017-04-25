@@ -15,6 +15,18 @@ model {
         }
 
         ndk {
+
+            // clang toolchain must compile!
+            //
+            // https://android.googlesource.com/platform/ndk.git/+/refs/heads/master/CHANGELOG.md
+            //
+            // GCC is no longer supported. It will not be removed from the NDK just yet, but is no
+            // longer receiving backports. It cannot be removed until after libc++ has become stable
+            // enough to be the default, as some parts of gnustl are still incompatible with Clang.
+            // It will likely be removed after that point.
+            //
+            // 24.04.2017
+
             moduleName "flappycat"
 
             toolchain 'gcc'

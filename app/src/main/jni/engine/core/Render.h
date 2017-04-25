@@ -1,10 +1,9 @@
 #ifndef FLAPPY_CAT_RENDER_H
 #define FLAPPY_CAT_RENDER_H
 
-#include <core/Transformation.h>
-
 class Window;
 class Shape;
+class Transformation;
 
 class Render {
 public:

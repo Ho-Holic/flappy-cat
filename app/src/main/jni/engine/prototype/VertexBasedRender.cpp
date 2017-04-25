@@ -37,7 +37,7 @@ void VertexBasedRender::update(const Shape& shape) {
 
   for (Geometry::size_type index = 0; index < points; ++index) {
 
-    constexpr float pi = 3.141592654f;
+    constexpr Position::value_type pi = 3.141592654f;
 
     // TODO: remove this part and make transform matrix
     // rotate
@@ -51,7 +51,15 @@ void VertexBasedRender::update(const Shape& shape) {
     Position::value_type rotatedX = p.x() * cosValue - p.y() * sinValue;
     Position::value_type rotatedY = p.x() * sinValue + p.y() * cosValue;
 
-    // TODO: add shape scale
+    /** TODO: add scale/origin later
+     *
+     * When object is moved, origin doesn't take into account
+     * only for rotation.
+     *
+     * Scale is implemented only for 'View' to change all objects
+     * representation on the screen, but local scale is not implemented
+     */
+
     mVertices << Vertex(shape.transformation().position()
                         + Position(rotatedX, rotatedY)
                         + shape.transformation().origin(),

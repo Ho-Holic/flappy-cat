@@ -9,7 +9,7 @@
 
 class CircleShape : public Shape {
 public:
-  CircleShape(const Position& position, float radius, std::size_t resolution);
+  CircleShape(const Position& position, Position::value_type radius, std::size_t resolution);
   CircleShape();
 
 public:

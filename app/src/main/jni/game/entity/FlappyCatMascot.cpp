@@ -39,7 +39,7 @@ void FlappyCatMascot::syncChildren() {
   const Position& pos = position();
   Position::value_type angle = rotation();
   
-  Position referenceSize(2000.f, 2000.f);
+  Position referenceSize(2000.f, 2000.f); // must be equal, 2000x2000 square
 
   Position scale = size() / referenceSize;
   

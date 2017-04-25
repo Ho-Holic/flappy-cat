@@ -20,11 +20,11 @@ Geometry::size_type CircleGeometry::points() const {
 
 Position CircleGeometry::pointAt(size_type index) const {
 
-  constexpr float pi = 3.141592654f;
+  constexpr Position::value_type pi = 3.141592654f;
 
-  float angle = index * 2.f * pi / mResolution - pi / 2.f;
-  float x = std::cos(angle) * mRadius;
-  float y = std::sin(angle) * mRadius;
+  Position::value_type angle = index * 2.f * pi / mResolution - pi / 2.f;
+  Position::value_type x = std::cos(angle) * mRadius;
+  Position::value_type y = std::sin(angle) * mRadius;
 
   return Position(mRadius + x, mRadius + y);
 }

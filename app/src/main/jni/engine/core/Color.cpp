@@ -55,7 +55,7 @@ Color Color::grayscale() const {
   return Color(mid, mid, mid, 255);
 }
 
-Color& Color::operator *= (float factor) {
+Color& Color::operator*= (Color::value_type factor) {
   mRed   = static_cast<uint8_t>(mRed   * factor);
   mGreen = static_cast<uint8_t>(mGreen * factor);
   mBlue  = static_cast<uint8_t>(mBlue  * factor);
@@ -66,7 +66,7 @@ Color& Color::operator *= (float factor) {
 // free functions
 
 
-Color operator + (const Color& left, const Color& right)  {
+Color operator+ (const Color& left, const Color& right)  {
 
   // explicit integer promotion 'int(left.mRed)'
 
@@ -76,7 +76,7 @@ Color operator + (const Color& left, const Color& right)  {
                       uint8_t(std::min(int(left.mAlpha) + right.mAlpha, 255)));
 }
 
-Color operator - (const Color& left, const Color& right) {
+Color operator- (const Color& left, const Color& right) {
 
   // explicit integer promotion 'int(left.mRed)'
 
@@ -88,7 +88,7 @@ Color operator - (const Color& left, const Color& right) {
 
 
 
-Color operator * (const Color& left, const Color& right)  {
+Color operator* (const Color& left, const Color& right)  {
 
   // explicit integer promotion 'int(left.mRed)'
 
@@ -98,12 +98,12 @@ Color operator * (const Color& left, const Color& right)  {
                       uint8_t(int(left.mAlpha) * right.mAlpha / 255));
 }
 
-Color operator * (float factor, const Color& right) {
+Color operator* (Color::value_type factor, const Color& right) {
 
   return Color(right) *= factor;
 }
 
-Color operator * (const Color& left, float factor) {
+Color operator* (const Color& left, Color::value_type factor) {
 
   return Color(left) *= factor;
 }

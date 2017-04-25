@@ -12,6 +12,7 @@ public:
 
 public:
   virtual void setOrigin(const Position& origin) override;
+  // little hack here 'position' is 'size'
   virtual void setPosition(const Position& position) override;
   virtual void setScale(const Position& factor) override;
   virtual void setRotation(Position::value_type angle) override;

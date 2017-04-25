@@ -24,6 +24,9 @@ struct AndroidInputQueueEvent {
   AInputQueue* pendingQueue;
 };
 
+// main structure for all events
+// it must contain all structures defined above
+
 union AndroidEventData {
 
   AndroidTouchEvent  touchEvent;

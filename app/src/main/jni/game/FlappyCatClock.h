@@ -9,7 +9,7 @@
 using FrameDuration = std::chrono::duration<Position::value_type,
                                             std::ratio<1, 60>>;
 
-using FloatSecond = std::chrono::duration<Position::value_type,
+using GameSecond = std::chrono::duration<Position::value_type,
                                           std::ratio<1,1>>;
 
 #endif //FLAPPY_CAT_FLAPPYCATCLOCK_H

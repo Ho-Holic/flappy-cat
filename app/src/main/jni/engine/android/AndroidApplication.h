@@ -67,7 +67,7 @@ private:
   void setInputQueue(const AndroidEvent& event);
 
 private:
-  virtual void main() = 0; // private because launched from 'exec' function
+  virtual void main() = 0; // private because launched from 'AndroidApplication::exec()'
 
 private: // android 'C' callbacks
   static void onDestroy(ANativeActivity* activity);

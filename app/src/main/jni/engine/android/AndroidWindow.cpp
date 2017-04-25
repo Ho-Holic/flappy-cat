@@ -398,6 +398,8 @@ void AndroidWindow::drawVertices(const Vertices& vertices,
 
     std::size_t stride = i * VERTEX_SIZE;
 
+    // TODO: add transformation rotation/origin later
+
     verticesData[VERTEX_X_INDEX + stride] = (2.f / transformation.position().x())
                                             * vertices[i].position().x()
                                             * transformation.scale().x();

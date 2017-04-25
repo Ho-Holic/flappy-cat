@@ -80,7 +80,6 @@ void FlappyCatColorScheme::generateNightScheme() {
 
 void FlappyCatColorScheme::generateDayScheme() {
 
-  //save1
   std::uniform_real_distribution<HslColor::value_type> distribution(0.0, 360.0);
   HslColor::value_type hue = distribution(mGenerator);
 
@@ -93,8 +92,6 @@ void FlappyCatColorScheme::generateDayScheme() {
   blockColor.setLuminance(40.0);
 
   HslColor dirtColor(blockColor);
-  //dirtColor.rotateHue(270.0);
-  //dirtColor.setSaturation(15.0);
   dirtColor.setLuminance(20.0);
 
 
@@ -104,7 +101,6 @@ void FlappyCatColorScheme::generateDayScheme() {
   backgroundColor.setLuminance(85.0);
 
   HslColor cloudColor(heroColor);
-  //cloudColor.setSaturation(100.0);
   cloudColor.setLuminance(100.0);
 
   HslColor houseColor(heroColor);

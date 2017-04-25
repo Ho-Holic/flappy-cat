@@ -68,7 +68,7 @@ void FlappyCatEntity::rotateTo(Position::value_type angle) {
  */
 void FlappyCatEntity::update(const FrameDuration& frameDuration) {
 
-  Position::value_type time = std::chrono::duration_cast<FloatSecond>(frameDuration).count();
+  Position::value_type time = std::chrono::duration_cast<GameSecond>(frameDuration).count();
 
   // TODO: make list of physical forces instead of gravity variable
   mAcceleration = mAcceleration - mGravity;

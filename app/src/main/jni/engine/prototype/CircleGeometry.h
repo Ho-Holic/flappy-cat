@@ -23,7 +23,7 @@ public:
   virtual Position pointAt(size_type index) const override;
 
 private:
-  float mRadius;
+  Position::value_type mRadius;
   std::size_t mResolution;
   OnUpdateSignal mOnUpdate;
 };

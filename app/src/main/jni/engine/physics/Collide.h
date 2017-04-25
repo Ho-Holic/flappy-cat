@@ -7,11 +7,9 @@
 class Collide {
 public:
   static bool circleRect(const Position& circleCenter,
-                         float circleRadius,
+                         Position::value_type circleRadius,
                          const Shape& rect);
 
-  // replace Shape w/ TransformMatrix and operate with this structure
-  // to eliminate code like 'rect.transformation().position() + rect.geometry().pointAt(0)'
   static bool pointRect(const Position& p,
                         const Position& a,
                         const Position& b,
@@ -19,7 +17,7 @@ public:
                         const Position& d);
 
   static bool lineCircle(const Position& circleCenter,
-                         float circleRadius,
+                         Position::value_type circleRadius,
                          const Position& a,
                          const Position& b);
   };

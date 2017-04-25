@@ -12,7 +12,8 @@
 
 //  Hello! This is a list of some conventions and decisions made for this project:
 //
-//    1. Namespaces not used - project too small
+//    1. Namespaces not used - project too small. One can easily auto-replace 'FlappyCat' prefix
+//       with 'flp::' namespace
 //
 //    2. Java   'Log::i(TAG, "Creating: %p\n", activity);' was prefered to
 //       C++ish 'log_i(TAG) << "Creating: " << activity << "\n";' because of confusion

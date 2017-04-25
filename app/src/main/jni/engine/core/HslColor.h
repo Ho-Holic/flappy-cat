@@ -10,9 +10,9 @@ public:
   typedef double value_type;
 
 public:
-  // hue (0 - 360)
+  // hue        (0 - 360)
   // saturation (0 - 100)
-  // luminace ( 0 - 100)
+  // luminace   (0 - 100)
   HslColor(value_type hue, value_type saturation, value_type luminance);
 
 public:

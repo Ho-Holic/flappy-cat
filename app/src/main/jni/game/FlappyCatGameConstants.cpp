@@ -104,8 +104,8 @@ void FlappyCatGameConstants::reset() {
 
   // physics
   mConstants[PhysicsGravity]                = Position(0.f, 100.f);
-  mConstants[PhysicsBackgroundDisplacement] = Position(-5.f, 0.f);
-  mConstants[PhysicsForegroundDisplacement] = Position(-8.f, 0.f);
+  mConstants[PhysicsBackgroundDisplacement] = Position(-2.8f, 0.f);
+  mConstants[PhysicsForegroundDisplacement] = Position(-7.f, 0.f);
   mConstants[PhysicsJumpAcceleration]       = Position(0.f, -800.f);
   mConstants[PhysicsJumpVelocity]           = Position(0.f, 800.f);
 }

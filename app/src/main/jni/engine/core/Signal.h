@@ -10,9 +10,10 @@
 // Simple signal slot system with one slot per signal
 // without collecting return values.
 //
-// Any copy of signal resets it, because you get error
-// accessing 'this' pointer of maybe deleted object
-// and other bad stuff can happen
+// Any copy of signal resets it, because you can get an error
+// accessing 'this' pointer of maybe deleted object passing various
+// lambda functions as a slot and other bad stuff can happen
+
 
 template <typename SlotFunction>
 class Signal {

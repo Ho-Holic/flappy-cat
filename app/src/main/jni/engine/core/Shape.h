@@ -7,6 +7,11 @@
 #include <core/Transformation.h>
 #include <core/Render.h>
 
+
+class Geometry;
+class Transformation;
+class Render;
+
 class Shape {
 public:
   Shape();

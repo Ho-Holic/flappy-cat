@@ -3,7 +3,7 @@
 
 class Position {
 public:
-  typedef float value_type;
+  using value_type = float;
 public:
   Position();
   Position(value_type x, value_type y);
