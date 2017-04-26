@@ -48,6 +48,11 @@ model {
             cppFlags.add('-Wextra')
             cppFlags.add('-Werror')
             cppFlags.add('-Wpedantic')
+
+            // disable formatted printf warning rises at 'Log::i(TAG, "some string");
+            // when we pass rvalue of a 'const char*' as argument and compiler
+            // thinks it can contain some unmatched format specifiers and can lead to
+            // security issues, but we are know what are we doing
             cppFlags.add('-Wno-format-security')
 
             // include path
