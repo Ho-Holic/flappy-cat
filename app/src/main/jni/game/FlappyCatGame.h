@@ -9,6 +9,7 @@
 
 // game
 #include "FlappyCatGameConstants.h"
+#include "entity/FlappyCatNode.h"
 #include "entity/FlappyCatWall.h"
 #include "entity/FlappyCatChain.h"
 #include "entity/FlappyCatSpike.h"
@@ -43,6 +44,7 @@ private:
 private:
   FlappyCatGameConstants mGameConstants;
   GameState mGameState;
+  FlappyCatNode mScene;
   FlappyCatBackground mBackground;
   FlappyCatFloor mFloor;
   FlappyCatChain<FlappyCatWall> mBarricade;

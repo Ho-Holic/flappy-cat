@@ -14,6 +14,7 @@
 FlappyCatGame::FlappyCatGame()
 : mGameConstants()
 , mGameState(PressButtonState)
+, mScene()
 , mBackground(mGameConstants)
 , mFloor(mGameConstants)
 , mBarricade(mGameConstants)
@@ -36,6 +37,10 @@ void FlappyCatGame::initialize() {
 
   using Constant = FlappyCatGameConstants::Constants;
   using ColorConstant = FlappyCatColorScheme::Colors;
+
+  // new code : testing
+  //mScene.addChild();
+
 
   // background
   mBackground.moveTo(-(mGameConstants[Constant::CameraSize] / 2.f));
