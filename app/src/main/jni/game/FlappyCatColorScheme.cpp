@@ -75,6 +75,7 @@ void FlappyCatColorScheme::generateNightScheme() {
   mScheme[MascotBodyColor] = Color(0, 0, 0);
   mScheme[MascotScarfColor] = Color(255, 255, 255);
   mScheme[MascotMouthColor] = Color(255, 128, 0);
+  mScheme[TextColor]        = Color(255, 255, 255);
 
 }
 
@@ -118,4 +119,5 @@ void FlappyCatColorScheme::generateDayScheme() {
   mScheme[MascotBodyColor] = Color(0, 0, 0);
   mScheme[MascotScarfColor] = Color(255, 255, 255);
   mScheme[MascotMouthColor] = Color(255, 128, 0);
+  mScheme[TextColor]        = Color(0, 0, 0);
 }

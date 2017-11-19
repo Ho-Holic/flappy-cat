@@ -42,6 +42,7 @@ enum FlappyCatColorScheme::Colors : size_t {
   MascotBodyColor,
   MascotScarfColor,
   MascotMouthColor,
+  TextColor,
 
   ColorsSize
 };

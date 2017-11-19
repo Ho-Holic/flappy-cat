@@ -47,6 +47,11 @@ void FlappyCatWall::setColor(const Color& color) {
   mBottomBlock.setColor(color);
 }
 
+
+const Color& FlappyCatWall::color() const {
+  return mTopBlock.color();
+}
+
 void FlappyCatWall::syncChildren() {
 
   Position::value_type A1 = position().y();
@@ -72,3 +77,4 @@ void FlappyCatWall::syncChildren() {
   mTopBlock.geometry().resize(Position(size().x(), (A4 - A3)));
 
 }
+

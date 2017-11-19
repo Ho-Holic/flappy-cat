@@ -18,6 +18,7 @@
 #include "entity/FlappyCatFloor.h"
 #include "entity/FlappyCatViewLimit.h"
 #include "entity/FlappyCatBackground.h"
+#include "entity/FlappyCatText.h"
 
 // stl
 #include <vector>
@@ -40,6 +41,8 @@ private:
 private:
   void initialize();
   void reset();
+  void incrementScore();
+  void resetScore();
 
 private:
   FlappyCatGameConstants mGameConstants;
@@ -52,6 +55,10 @@ private:
   FlappyCatCloud mBackgroundSky;
   FlappyCatHero mHero;
   FlappyCatViewLimit mLimit;
+  // score element
+  FlappyCatText mScore;
+  size_t mScoreCounter;
+
 };
 
 enum FlappyCatGame::GameState : int32_t {

@@ -11,6 +11,7 @@ public:
 
 public:
   void setBrushColor(const Color& color);
+  const Color& getBrushColor() const;
 
 public:
   virtual void update(const Shape& shape) override;

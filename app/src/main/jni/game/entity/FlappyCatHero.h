@@ -36,6 +36,7 @@ public:
 
   void setJumpConstants(const Position& acceleration, const Position& velocity);
   void jump();
+  void kill();
 
 private:
   virtual void syncChildren() override;
@@ -47,6 +48,7 @@ private:
   FlappyCatMascot mMascot;
   modifier_type mResetModifier;
   update_modifier_type mUpdateModifier;
+  bool mIsAlive;
 };
 
 

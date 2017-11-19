@@ -5,6 +5,9 @@
 #include <prototype/RectangleShape.h>
 #include <prototype/TriangleShape.h>
 
+// stl
+#include <memory>
+
 // game
 #include "FlappyCatEntity.h"
 
@@ -19,6 +22,8 @@ public:
   void setColor(const Color& bodyColor,
                 const Color& scarfColor,
                 const Color& mouthColor);
+  std::vector<std::shared_ptr<Geometry>> duplicateParts() const;
+
 
 private:
   virtual void syncChildren() override;

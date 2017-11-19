@@ -46,6 +46,7 @@ public:
 
 public:
   void setColor(const Color& color);
+  const Color& color() const;
 
 private:
   virtual void syncChildren() override;

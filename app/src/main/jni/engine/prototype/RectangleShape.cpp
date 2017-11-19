@@ -31,6 +31,11 @@ void RectangleShape::setColor(const Color& color) {
   update();
 }
 
+const Color& RectangleShape::color() const {
+  return render().getBrushColor();
+}
+
+
 RectangleGeometry& RectangleShape::geometry() {
   return mGeometry;
 }
@@ -58,5 +63,7 @@ const VertexBasedRender& RectangleShape::render() const {
 void RectangleShape::update() {
   render().update(*this);
 }
+
+
 
 

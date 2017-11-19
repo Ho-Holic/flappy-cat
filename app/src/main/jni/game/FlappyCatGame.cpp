@@ -7,9 +7,12 @@
 #include <physics/Collide.h>
 #include <physics/VectorMath.h>
 
+// stl
+#include <string>
+
 // style
 #include <style/BackportCpp17.h>
-
+#include <style/FixNdk.h>
 
 FlappyCatGame::FlappyCatGame()
 : mGameConstants()
@@ -21,7 +24,9 @@ FlappyCatGame::FlappyCatGame()
 , mBackgroundCity(mGameConstants)
 , mBackgroundSky(mGameConstants)
 , mHero(mGameConstants)
-, mLimit(mGameConstants){
+, mLimit(mGameConstants)
+, mScore(mGameConstants)
+, mScoreCounter(0) {
   initialize();
   reset();
 }
@@ -131,6 +136,29 @@ void FlappyCatGame::initialize() {
 
           mGameState = LoseState;
           mFloor.setMovementDisplacement(Position(0.f, 0.f));
+          mHero.kill();
+        }
+        if (wall.collideWithCircle(center, radius + 10.f)) {
+
+          const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
+
+          /**
+           * TODO: remove extra color changes after collision
+           *
+           * On collision occures there is more then one collision
+           * and you have grater color change
+           *
+           */
+          uint8_t wallAlpha = wall.color().alpha() - static_cast<uint8_t>(32);
+          if (wallAlpha <= 8) {
+            wallAlpha = 8;
+          }
+
+          Color newColor(colorScheme[ColorConstant::HeroColor].r(),
+                         colorScheme[ColorConstant::HeroColor].g(),
+                         colorScheme[ColorConstant::HeroColor].b(),
+                         wallAlpha);
+          wall.setColor(newColor);
         }
       }
     }
@@ -223,6 +251,9 @@ void FlappyCatGame::initialize() {
 
       hero.rotateTo(angle);
 
+      Position::value_type offset = mGameConstants[Constant::HeroSize].x();
+      mScore.moveTo(mHero.position() - Position(offset, offset / 4.f));
+
       UNUSED(frameDuration); // not need for time processing here
     }
   );
@@ -243,6 +274,9 @@ void FlappyCatGame::initialize() {
     }
   );
 
+  // score counter
+  mScore.setText("0");
+
   // initialize all stuff
   mBackground.initialize();
   mFloor.initialize();
@@ -251,6 +285,7 @@ void FlappyCatGame::initialize() {
   mBackgroundSky.initialize();
   mHero.initialize();
   mLimit.initialize();
+  mScore.initialize();
 }
 
 void FlappyCatGame::reset() {
@@ -264,6 +299,7 @@ void FlappyCatGame::reset() {
   mBackgroundCity.reset();
   mBackgroundSky.reset();
   mLimit.reset();
+  resetScore();
 
 }
 
@@ -275,6 +311,7 @@ void FlappyCatGame::processEvent(const Event& event) {
 
       mGameState = PlayState;
       mHero.jump();
+      incrementScore();
     }
     else if (mGameState == OnTheFloorState) {
 
@@ -289,6 +326,7 @@ void FlappyCatGame::processEvent(const Event& event) {
 
       if (isOffScreen) {
         mHero.jump();
+        incrementScore();
       }
     }
   }
@@ -331,6 +369,28 @@ void FlappyCatGame::render(const Window& window) const {
   mHero.drawOn(window);
   mFloor.drawOn(window);
   mLimit.drawOn(window);
+  mScore.drawOn(window);
 
   window.display();
+}
+
+void FlappyCatGame::incrementScore() {
+  mScoreCounter += 1;
+  mScore.setText(fix::ndk::std::to_string(mScoreCounter));
+}
+
+void FlappyCatGame::resetScore() {
+  mScoreCounter = 0;
+  mScore.setText(fix::ndk::std::to_string(mScoreCounter));
+
+  using Constant = FlappyCatGameConstants::Constants;
+  Position::value_type offset = mGameConstants[Constant::HeroSize].x();
+  mScore.moveTo(mHero.position() - Position(offset, offset / 4.f));
+
+  /**
+ * TODO: create own reset modifier for Score element
+ */
+  const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
+  using ColorConstant = FlappyCatColorScheme::Colors;
+  mScore.setColor(colorScheme[ColorConstant::TextColor]);
 }

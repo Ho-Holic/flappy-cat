@@ -67,3 +67,7 @@ void VertexBasedRender::update(const Shape& shape) {
   }
 
 }
+
+const Color& VertexBasedRender::getBrushColor() const {
+  return mBrushColor;
+}

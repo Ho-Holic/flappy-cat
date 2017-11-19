@@ -13,7 +13,8 @@ FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
 , mBall()
 , mMascot(gameConstants)
 , mResetModifier([](entity_type&){})
-, mUpdateModifier([](entity_type&, const FrameDuration&){}) {
+, mUpdateModifier([](entity_type&, const FrameDuration&){})
+, mIsAlive(true) {
   //
 }
 
@@ -76,6 +77,10 @@ void FlappyCatHero::jump() {
 
   setAcceleration(mJumpAcceleration);
   setVelocity(mJumpVelocity);
+}
+
+void FlappyCatHero::kill() {
+  mIsAlive = false;
 }
 
 void FlappyCatHero::syncChildren() {
