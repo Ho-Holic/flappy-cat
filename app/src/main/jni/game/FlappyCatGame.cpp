@@ -138,7 +138,8 @@ void FlappyCatGame::initialize() {
           mFloor.setMovementDisplacement(Position(0.f, 0.f));
           mHero.kill();
         }
-        if (wall.collideWithCircle(center, radius + 10.f)) {
+        else if (wall.collideWithCircle(center, radius + 10.f)) {
+          wall.activateWall();
 
           const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
 

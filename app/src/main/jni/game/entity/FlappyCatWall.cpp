@@ -13,7 +13,8 @@ FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
 , mGapInterval(0.f)
 , mGapDisplacement(0.f)
 , mTopBlock()
-, mBottomBlock() {
+, mBottomBlock()
+, mWallState(WallState::Normal) {
   //
 }
 
@@ -76,5 +77,10 @@ void FlappyCatWall::syncChildren() {
   mTopBlock.transformation().setPosition(Position(position().x(), A3));
   mTopBlock.geometry().resize(Position(size().x(), (A4 - A3)));
 
+}
+
+void FlappyCatWall::activateWall() {
+
+  mWallState = WallState::Activated;
 }
 

@@ -47,6 +47,13 @@ public:
 public:
   void setColor(const Color& color);
   const Color& color() const;
+  void activateWall();
+
+private:
+  enum class WallState {
+    Normal,
+    Activated
+  };
 
 private:
   virtual void syncChildren() override;
@@ -56,8 +63,7 @@ private:
   Position::value_type mGapDisplacement;
   RectangleShape mTopBlock;
   RectangleShape mBottomBlock;
-
-
+  WallState mWallState;
 };
 
 
