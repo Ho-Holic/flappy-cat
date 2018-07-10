@@ -26,7 +26,9 @@ FlappyCatGame::FlappyCatGame()
 , mHero(mGameConstants)
 , mLimit(mGameConstants)
 , mScore(mGameConstants)
-, mScoreCounter(0) {
+, mScoreCounter(0)
+, mFps(mGameConstants)
+, mFpsCounter(0) {
   initialize();
   reset();
 }
@@ -143,7 +145,7 @@ void FlappyCatGame::initialize() {
 
           const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
 
-          /**
+          /*
            * TODO: remove extra color changes after collision
            *
            * On collision occures there is more then one collision
@@ -278,6 +280,9 @@ void FlappyCatGame::initialize() {
   // score counter
   mScore.setText("0");
 
+  // fps counter
+  mFps.setText("0");
+
   // initialize all stuff
   mBackground.initialize();
   mFloor.initialize();
@@ -287,6 +292,7 @@ void FlappyCatGame::initialize() {
   mHero.initialize();
   mLimit.initialize();
   mScore.initialize();
+  mFps.initialize();
 }
 
 void FlappyCatGame::reset() {
@@ -355,6 +361,8 @@ void FlappyCatGame::update(const FrameDuration& time) {
     mFloor.update(time);
     mBackgroundCity.update(time);
   }
+
+  mFps.setText(fix::ndk::std::to_string(mFpsCounter));
 }
 
 void FlappyCatGame::render(const Window& window) const {
@@ -371,6 +379,7 @@ void FlappyCatGame::render(const Window& window) const {
   mFloor.drawOn(window);
   mLimit.drawOn(window);
   mScore.drawOn(window);
+  mFps.drawOn(window);
 
   window.display();
 }
@@ -388,10 +397,20 @@ void FlappyCatGame::resetScore() {
   Position::value_type offset = mGameConstants[Constant::HeroSize].x();
   mScore.moveTo(mHero.position() - Position(offset, offset / 4.f));
 
-  /**
- * TODO: create own reset modifier for Score element
- */
+  /*
+   * TODO: create own reset modifier for Score element
+   */
   const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
   using ColorConstant = FlappyCatColorScheme::Colors;
   mScore.setColor(colorScheme[ColorConstant::TextColor]);
+
+  /*
+   * TODO: create own reset modifier for Fps element
+   */
+  mFps.setColor(colorScheme[ColorConstant::TextColor]);
+  mFps.moveTo(mGameConstants[Constant::CameraSize] * 0.4f);
+}
+
+void FlappyCatGame::setFpsCounter(size_t fpsCount) {
+  mFpsCounter = fpsCount;
 }

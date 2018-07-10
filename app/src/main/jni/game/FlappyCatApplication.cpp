@@ -23,22 +23,30 @@ void FlappyCatApplication::main() {
   window().view().setScale(Position(scale, scale));
 
   // game loop
+  using std::chrono::duration_cast;
   constexpr FrameDuration TimePerFrame = FrameDuration(1);
 
   auto startTime = Clock::now();
   auto timeSinceLastUpdate = ClockDuration(0);
+  auto measurement = 0.f;
+  auto smoothing = 0.9f;
 
   while( ! isDestroyRequested()) {
 
     auto now = Clock::now();
     auto elapsedTime = now - startTime;
+
+    // fps counter
+    {
+      measurement = (measurement * smoothing) + duration_cast<GameSecond>(elapsedTime).count() * (1.f - smoothing);
+      game.setFpsCounter(static_cast<size_t>(1.f / measurement));
+    }
+
     startTime = now;
 
     timeSinceLastUpdate += elapsedTime;
 
     while (timeSinceLastUpdate > TimePerFrame) {
-
-      using std::chrono::duration_cast;
 
       timeSinceLastUpdate = timeSinceLastUpdate - duration_cast<ClockDuration>(TimePerFrame);
 

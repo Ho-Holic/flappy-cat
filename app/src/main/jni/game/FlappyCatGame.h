@@ -34,6 +34,7 @@ public:
   void update(const FrameDuration& time);
   void render(const Window&) const;
   Position cameraSize() const;
+  void setFpsCounter(size_t fpsCount);
 
 private:
   enum GameState : int32_t;
@@ -58,6 +59,9 @@ private:
   // score element
   FlappyCatText mScore;
   size_t mScoreCounter;
+  // fps element
+  FlappyCatText mFps;
+  size_t mFpsCounter;
 
 };
 
