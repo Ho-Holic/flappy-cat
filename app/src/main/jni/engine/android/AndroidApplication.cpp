@@ -5,6 +5,10 @@
 // stl
 #include <functional>
 
+//
+// Main Thread Functions
+//
+
 AndroidApplication::AndroidApplication(ANativeActivity* activity,
                                        void* savedState,
                                        size_t savedStateSize)
@@ -59,7 +63,7 @@ void AndroidApplication::onDestroy(ANativeActivity* activity) {
   Log::i(TAG, "Destroy: %p\n", activity);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
-  application->requestDestruction();
+  application->waitForDestruction();
 
   delete application;
 }
@@ -138,14 +142,14 @@ void AndroidApplication::onNativeWindowCreated(ANativeActivity* activity, ANativ
   Log::i(TAG, "NativeWindowCreated: %p -- %p\n", activity, window);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
-  application->setNativeWindow(window);
+  application->changeNativeWindow(window);
 }
 
 void AndroidApplication::onNativeWindowResized(ANativeActivity* activity, ANativeWindow* window) {
   Log::i(TAG, "NativeWindowResized: %p -- %p\n", activity, window);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
-  application->updateNativeWindowSize();
+  application->changeNativeWindowSize();
 }
 
 void AndroidApplication::onNativeWindowRedrawNeeded(ANativeActivity* activity,
@@ -162,7 +166,7 @@ void AndroidApplication::onNativeWindowDestroyed(ANativeActivity* activity, ANat
   Log::i(TAG, "NativeWindowDestroyed: %p -- %p\n", activity, window);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
-  application->setNativeWindow(nullptr);
+  application->changeNativeWindow(nullptr);
 }
 
 void AndroidApplication::onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue) {
@@ -170,7 +174,7 @@ void AndroidApplication::onInputQueueCreated(ANativeActivity* activity, AInputQu
   Log::i(TAG, "InputQueueCreated: %p -- %p\n", activity, queue);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
-  application->setInputQueue(queue);
+  application->changeInputQueue(queue);
 }
 
 void AndroidApplication::onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue) {
@@ -178,7 +182,7 @@ void AndroidApplication::onInputQueueDestroyed(ANativeActivity* activity, AInput
   Log::i(TAG, "InputQueueDestroyed: %p -- %p\n", activity, queue);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
-  application->setInputQueue(nullptr);
+  application->changeInputQueue(nullptr);
 }
 
 void AndroidApplication::onContentRectChanged(ANativeActivity* activity, const ARect* rect) {
@@ -187,11 +191,9 @@ void AndroidApplication::onContentRectChanged(ANativeActivity* activity, const A
          rect->left, rect->top, rect->right, rect->bottom);
 
   AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
-  application->updateNativeWindowSize();
+  application->changeNativeWindowSize();
 
 }
-
-// main code
 
 void AndroidApplication::waitForStarted() {
 
@@ -200,7 +202,7 @@ void AndroidApplication::waitForStarted() {
   mMutex.unlock();
 }
 
-void AndroidApplication::requestDestruction() {
+void AndroidApplication::waitForDestruction() { // waitForDestruction
 
   std::unique_lock<std::mutex> lock(mMutex);
 
@@ -209,6 +211,128 @@ void AndroidApplication::requestDestruction() {
   mConditionVariable.wait(lock, std::bind(&AndroidApplication::isDestroyed, std::ref(*this)));
   mMutex.unlock();
 }
+
+void AndroidApplication::changeActivityStateTo(AndroidApplication::ActivityState activityState) {
+
+  using EventType = AndroidEvent::EventType;
+
+  AndroidEvent event;
+  switch (activityState) {
+    case StartActivityState:  event.setEventType(EventType::ActivityStartEventType);  break;
+    case ResumeActivityState: event.setEventType(EventType::ActivityResumeEventType); break;
+    case PauseActivityState:  event.setEventType(EventType::ActivityPauseEventType);  break;
+    case StopActivityState:   event.setEventType(EventType::ActivityStopEventType);   break;
+    default: break;
+  }
+
+  auto isInState = [&activityState, this]() -> bool {
+
+    return this->activityState() == activityState;
+  };
+
+  // wait for state to change
+  std::unique_lock<std::mutex> lock(mMutex);
+
+  this->postEvent(event);
+
+  mConditionVariable.wait(lock, isInState);
+  mMutex.unlock();
+}
+
+void AndroidApplication::changeNativeWindow(ANativeWindow* window) {
+
+  AndroidEvent event(window ? AndroidEvent::EventType::NativeWindowCreatedEventType
+                            : AndroidEvent::EventType::NativeWindowDestroyedEventType);
+
+  event.setNativeWindowEventData(window);
+
+  auto isWindowChanged = [&window, this]() -> bool {
+
+    return this->mWindow.nativeWindow() == window;
+  };
+
+  // wait window to change
+  std::unique_lock<std::mutex> lock(mMutex);
+
+  mWindow.setReady(false);
+  this->postEvent(event);
+
+  mConditionVariable.wait(lock, isWindowChanged);
+  mMutex.unlock();
+}
+
+void AndroidApplication::changeInputQueue(AInputQueue* queue) {
+
+  AndroidEvent event(queue ? AndroidEvent::EventType::InputQueueCreatedEventType
+                           : AndroidEvent::EventType::InputQueueDestroyedEventType);
+
+  event.setInputQueueEventData(queue);
+
+  auto isQueueChanged = [&queue, this]() -> bool {
+
+    return this->mLooper.inputQueue() == queue;
+  };
+
+  std::unique_lock<std::mutex> lock(mMutex);
+
+  this->postEvent(event);
+
+  mConditionVariable.wait(lock, isQueueChanged);
+  mMutex.unlock();
+}
+
+void AndroidApplication::changeNativeWindowSize() {
+
+  using EventType = AndroidEvent::EventType;
+
+  AndroidEvent event(EventType::ResizedEventType);
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  event.setResizeEventData(window().requestWidth(), window().requestHeight());
+  this->postEvent(event);
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
+
+}
+
+void AndroidApplication::changeFocus(AndroidApplication::Focus focus) {
+
+  using EventType = AndroidEvent::EventType;
+
+  AndroidEvent event;
+  switch (focus) {
+    case GainFocus: event.setEventType(EventType::GainFocusEventType);  break;
+    case LostFocus: event.setEventType(EventType::LostFocusEventType);  break;
+    default: break;
+  }
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  this->postEvent(event);
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
+}
+
+void AndroidApplication::reloadConfiguration() {
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  mConfiguration.reload();
+  Log::i(TAG, mConfiguration.toString());
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
+}
+
+//
+// Game Thread Functions
+//
 
 bool AndroidApplication::isRunning() const {
 
@@ -314,125 +438,6 @@ void AndroidApplication::initialize() {
   // prepare looper for this thread to read events
   mLooper.prepare();
 
-}
-
-void AndroidApplication::changeActivityStateTo(AndroidApplication::ActivityState activityState) {
-
-  using EventType = AndroidEvent::EventType;
-
-  AndroidEvent event;
-  switch (activityState) {
-    case StartActivityState:  event.setEventType(EventType::ActivityStartEventType);  break;
-    case ResumeActivityState: event.setEventType(EventType::ActivityResumeEventType); break;
-    case PauseActivityState:  event.setEventType(EventType::ActivityPauseEventType);  break;
-    case StopActivityState:   event.setEventType(EventType::ActivityStopEventType);   break;
-    default: break;
-  }
-
-  auto isInState = [&activityState, this]() -> bool {
-
-    return this->activityState() == activityState;
-  };
-
-  // wait for state to change
-  std::unique_lock<std::mutex> lock(mMutex);
-
-  this->postEvent(event);
-
-  mConditionVariable.wait(lock, isInState);
-  mMutex.unlock();
-}
-
-void AndroidApplication::setNativeWindow(ANativeWindow* window) {
-
-  AndroidEvent event(window ? AndroidEvent::EventType::NativeWindowCreatedEventType
-                            : AndroidEvent::EventType::NativeWindowDestroyedEventType);
-
-  event.setNativeWindowEventData(window);
-
-  auto isWindowChanged = [&window, this]() -> bool {
-
-    return this->mWindow.nativeWindow() == window;
-  };
-
-  // wait window to change
-  std::unique_lock<std::mutex> lock(mMutex);
-
-  mWindow.setReady(false);
-  this->postEvent(event);
-
-  mConditionVariable.wait(lock, isWindowChanged);
-  mMutex.unlock();
-
-}
-
-void AndroidApplication::updateNativeWindowSize() {
-
-  using EventType = AndroidEvent::EventType;
-
-  AndroidEvent event(EventType::ResizedEventType);
-
-  std::lock_guard<std::mutex> lock(mMutex);
-
-  event.setResizeEventData(window().requestWidth(), window().requestHeight());
-  this->postEvent(event);
-
-  mConditionVariable.notify_all();
-
-  UNUSED(lock); // unlocks when goes out of a scope
-
-}
-
-void AndroidApplication::changeFocus(AndroidApplication::Focus focus) {
-
-  using EventType = AndroidEvent::EventType;
-
-  AndroidEvent event;
-  switch (focus) {
-    case GainFocus: event.setEventType(EventType::GainFocusEventType);  break;
-    case LostFocus: event.setEventType(EventType::LostFocusEventType);  break;
-    default: break;
-  }
-
-  std::lock_guard<std::mutex> lock(mMutex);
-
-  this->postEvent(event);
-
-  mConditionVariable.notify_all();
-
-  UNUSED(lock); // unlocks when goes out of a scope
-}
-
-void AndroidApplication::setInputQueue(AInputQueue* queue) {
-
-  AndroidEvent event(queue ? AndroidEvent::EventType::InputQueueCreatedEventType
-                           : AndroidEvent::EventType::InputQueueDestroyedEventType);
-
-  event.setInputQueueEventData(queue);
-
-  auto isQueueChanged = [&queue, this]() -> bool {
-
-    return this->mLooper.inputQueue() == queue;
-  };
-
-  std::unique_lock<std::mutex> lock(mMutex);
-
-  this->postEvent(event);
-
-  mConditionVariable.wait(lock, isQueueChanged);
-  mMutex.unlock();
-}
-
-void AndroidApplication::reloadConfiguration() {
-
-  std::lock_guard<std::mutex> lock(mMutex);
-
-  mConfiguration.reload();
-  Log::i(TAG, mConfiguration.toString());
-
-  mConditionVariable.notify_all();
-
-  UNUSED(lock); // unlocks when goes out of a scope
 }
 
 void AndroidApplication::terminate() {

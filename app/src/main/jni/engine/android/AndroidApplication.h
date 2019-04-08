@@ -34,8 +34,6 @@ public:
   virtual ~AndroidApplication();
 
 public:
-  void waitForStarted();
-  void requestDestruction();
   bool isRunning() const;
   bool isDestroyed() const;
   bool isDestroyRequested() const;
@@ -48,17 +46,7 @@ public:
 
 private:
   void initialize();
-
-  void changeActivityStateTo(ActivityState activityState);
-  void setNativeWindow(ANativeWindow* window);
-  void updateNativeWindowSize();
-  void changeFocus(Focus focus);
-  void setInputQueue(AInputQueue* queue);
-  void reloadConfiguration();
-
   void terminate();
-
-private:
   void processEvent(const AndroidEvent& event);
   void setActivityState(ActivityState activityState);
   void resizeNativeWindow(const AndroidEvent& event);
@@ -69,7 +57,10 @@ private:
 private:
   virtual void main() = 0; // private because launched from 'AndroidApplication::exec()'
 
-private: // android 'C' callbacks
+  //
+  // code called from main thread
+  //
+private:
   static void onDestroy(ANativeActivity* activity);
   static void onStart(ANativeActivity* activity);
   static void onResume(ANativeActivity* activity);
@@ -86,6 +77,18 @@ private: // android 'C' callbacks
   static void onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue);
   static void onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue);
   static void onContentRectChanged(ANativeActivity* activity, const ARect* rect);
+
+public:
+  void waitForStarted(); // temporary in public due to sketch design of 'main' function
+
+private:
+  void waitForDestruction();
+  void changeActivityStateTo(ActivityState activityState);
+  void changeNativeWindow(ANativeWindow* window);
+  void changeInputQueue(AInputQueue* queue);
+  void changeNativeWindowSize();
+  void changeFocus(Focus focus);
+  void reloadConfiguration();
 
 private:
   ANativeActivity* mActivity;
