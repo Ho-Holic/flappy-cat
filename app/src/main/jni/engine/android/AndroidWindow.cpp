@@ -250,24 +250,23 @@ void AndroidWindow::initializeOpengl() {
 
 void AndroidWindow::initializeProgram() {
 
-    static std::string strVertexShader(
-      "attribute vec4 a_position;   \n"
-      "attribute vec4 a_color;      \n"
-      "varying vec4 v_color;        \n"
-      "void main() {                \n"
-      "   v_color = a_color;        \n"
-      "   gl_Position = a_position; \n"
-      "}                            \n"
-    );
+    static std::string strVertexShader(R"(
+      attribute vec4 a_position;
+      attribute vec4 a_color;
+      varying vec4 v_color;
+      void main() {
+        v_color = a_color;
+        gl_Position = a_position;
+      }
+    )");
 
-    static std::string strFragmentShader(
-      "precision mediump float;                   \n"
-      "varying vec4 v_color;                      \n"
-      "void main() {                              \n"
-      "  gl_FragColor = v_color;                  \n"
-      "}                                          \n"
-    );
-
+    static std::string strFragmentShader(R"(
+      precision mediump float;
+      varying vec4 v_color;
+      void main() {
+        gl_FragColor = v_color;
+      }
+    )");
 
   std::vector<GLuint> shaderList = {
     createShader(GL_VERTEX_SHADER, strVertexShader),
