@@ -202,7 +202,7 @@ void AndroidApplication::waitForStarted() {
   mMutex.unlock();
 }
 
-void AndroidApplication::waitForDestruction() { // waitForDestruction
+void AndroidApplication::waitForDestruction() {
 
   std::unique_lock<std::mutex> lock(mMutex);
 
@@ -241,6 +241,25 @@ void AndroidApplication::changeActivityStateTo(AndroidApplication::ActivityState
 
 void AndroidApplication::changeNativeWindow(ANativeWindow* window) {
 
+
+  if (window == nullptr) {
+
+    AndroidEvent event{AndroidEvent::EventType::EventLoopEventType};
+    event.setEventLoopEventData(false);
+
+    auto isUserEventLoopFinished = [this]() -> bool {
+      return !this->mWindow.isReady();
+    };
+
+    // wait for finish of user event loop
+    std::unique_lock<std::mutex> lock(mMutex);
+
+    this->postEvent(event);
+
+    mConditionVariable.wait(lock, isUserEventLoopFinished);
+    mMutex.unlock();
+  }
+
   AndroidEvent event(window ? AndroidEvent::EventType::NativeWindowCreatedEventType
                             : AndroidEvent::EventType::NativeWindowDestroyedEventType);
 
@@ -254,7 +273,6 @@ void AndroidApplication::changeNativeWindow(ANativeWindow* window) {
   // wait window to change
   std::unique_lock<std::mutex> lock(mMutex);
 
-  mWindow.setReady(false);
   this->postEvent(event);
 
   mConditionVariable.wait(lock, isWindowChanged);
@@ -481,6 +499,8 @@ void AndroidApplication::processEvent(const AndroidEvent& event) {
 
     case EventType::ResizedEventType: resizeNativeWindow(event); break;
 
+    case EventType::EventLoopEventType: setEventLoopState(event); break;
+
     case EventType::EmptyEventType: break;
 
     default: break;
@@ -547,6 +567,17 @@ void AndroidApplication::setInputQueue(const AndroidEvent& event) {
   std::lock_guard<std::mutex> lock(mMutex);
 
   mLooper.setInputQueue(event.inputQueueEvent().pendingQueue);
+
+  mConditionVariable.notify_all();
+
+  UNUSED(lock); // unlocks when goes out of a scope
+}
+
+void AndroidApplication::setEventLoopState(const AndroidEvent& event) {
+
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  window().setReady(event.eventLoopEvent().windowReady);
 
   mConditionVariable.notify_all();
 

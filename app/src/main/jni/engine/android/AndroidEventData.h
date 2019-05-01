@@ -24,6 +24,10 @@ struct AndroidInputQueueEvent {
   AInputQueue* pendingQueue;
 };
 
+struct AndroidEventLoopEvent {
+  bool windowReady;
+};
+
 // main structure for all events
 // it must contain all structures defined above
 
@@ -33,6 +37,7 @@ union AndroidEventData {
   AndroidResizeEvent resizeEvent;
   AndroidNativeWindowEvent nativeWindowEvent;
   AndroidInputQueueEvent inputQueueEvent;
+  AndroidEventLoopEvent eventLoopEvent;
 };
 
 #endif //FLAPPY_CAT_ANDROIDEVENTDATA_H

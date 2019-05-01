@@ -30,12 +30,14 @@ public:
   void setResizeEventData(int32_t width, int32_t height);
   void setNativeWindowEventData(ANativeWindow* pendingWindow);
   void setInputQueueEventData(AInputQueue* pendingQueue);
+  void setEventLoopEventData(bool windowReady);
 
 public:
   const AndroidTouchEvent& touchEvent() const;
   const AndroidResizeEvent& resizeEvent() const;
   const AndroidNativeWindowEvent& nativeWindowEvent() const;
   const AndroidInputQueueEvent& inputQueueEvent() const;
+  const AndroidEventLoopEvent& eventLoopEvent() const;
 
 private:
   EventType mEventType;
@@ -62,7 +64,8 @@ enum AndroidEvent::EventType : int8_t {
   InputQueueDestroyedEventType,
 
   ResizedEventType,
-  TouchEventType
+  TouchEventType,
+  EventLoopEventType,
 };
 
 

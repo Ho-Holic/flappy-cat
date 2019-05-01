@@ -68,6 +68,12 @@ void AndroidEvent::setInputQueueEventData(AInputQueue* pendingQueue) {
   mEventData.inputQueueEvent.pendingQueue = pendingQueue;
 }
 
+void AndroidEvent::setEventLoopEventData(bool windowReady) {
+  REQUIRE(TAG, mEventType == EventLoopEventType, "Must be 'EventLoopEventType'");
+
+  mEventData.eventLoopEvent.windowReady = windowReady;
+}
+
 const AndroidResizeEvent& AndroidEvent::resizeEvent() const {
 
   REQUIRE(TAG, mEventType == ResizedEventType, "Must be 'ResizedEventType'");
@@ -92,3 +98,12 @@ const AndroidInputQueueEvent& AndroidEvent::inputQueueEvent() const {
 
   return mEventData.inputQueueEvent;
 }
+
+const AndroidEventLoopEvent& AndroidEvent::eventLoopEvent() const {
+
+  REQUIRE(TAG, mEventType == EventLoopEventType, "Must be 'EventLoopEventType'");
+
+  return mEventData.eventLoopEvent;
+}
+
+

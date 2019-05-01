@@ -57,6 +57,11 @@ void FlappyCatApplication::main() {
 
       game.update(TimePerFrame);
     }
+
+    if (!window().isReady()) {
+      break; // pollEvent processed window termination event and window is not ready and invalid
+    }
+
     game.render(window());
   }
 }

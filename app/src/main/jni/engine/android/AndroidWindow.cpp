@@ -54,7 +54,7 @@ void AndroidWindow::setNativeWindow(ANativeWindow* window) {
 
   Log::i(TAG, "Call to setNativeWindow: %p, ready: %d", window, mIsReady);
 
-  mIsReady = false;
+  REQUIRE(TAG, !mIsReady, "Must be inactive");
 
   mWindow = window;
 }
@@ -200,11 +200,9 @@ void AndroidWindow::initialize() {
 
 void AndroidWindow::terminate() {
 
-  CAUTION("Don't use mWindow here, this is already new window pointer")
-
   Log::i(TAG, "Call to terminate: %p, ready: %d", mWindow, mIsReady);
 
-  mIsReady = false;
+  REQUIRE(TAG, !mIsReady, "Must be inactive");
 
   if (mDisplay != EGL_NO_DISPLAY) {
 
@@ -356,10 +354,6 @@ GLuint AndroidWindow::createProgram(const std::vector<GLuint>& shaderList) {
 
 void AndroidWindow::display() const {
 
-  if ( ! isReady()) {
-    return;
-  }
-
   eglSwapBuffers(mDisplay, mSurface);
 }
 
@@ -385,10 +379,6 @@ int32_t AndroidWindow::requestHeight() const {
 
 void AndroidWindow::drawVertices(const Vertices& vertices,
                                  const Transformation& transformation) const {
-
-  if ( ! isReady()) {
-    return;
-  }
 
   std::size_t verticesDataSize = vertices.size() * VERTEX_SIZE;
 
@@ -437,10 +427,6 @@ void AndroidWindow::drawVertices(const Vertices& vertices,
 }
 
 void AndroidWindow::clear(const Color& color) const {
-
-  if ( ! isReady()) {
-    return;
-  }
 
   glClearColor(color.r()     / 255.f,
                color.g()     / 255.f,
