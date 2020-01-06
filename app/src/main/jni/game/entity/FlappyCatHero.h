@@ -31,8 +31,8 @@ public:
   void setResetModifier(const modifier_type& modifier);
   void setUpdateModifier(const update_modifier_type& modifier);
 
-  void setRadius(Position::value_type radius);
-  Position::value_type radius() const;
+  void setRadius(f32 radius);
+  f32 radius() const;
 
   void setJumpConstants(const Position& acceleration, const Position& velocity);
   void jump();

@@ -37,11 +37,11 @@ public:
   Position operator[](Constants index) const;
 
 public:
-  Position::value_type randomOffsetFrom(Position::value_type initial,
-                                        Position::value_type maxOffset);
+  f32 randomOffsetFrom(f32 initial,
+                                        f32 maxOffset);
 
-  Position::value_type clampedRandomOffsetFrom(Position::value_type initial,
-                                               Position::value_type maxOffset);
+  f32 clampedRandomOffsetFrom(f32 initial,
+                                               f32 maxOffset);
 private:
   Daytime chooseDaytime();
 

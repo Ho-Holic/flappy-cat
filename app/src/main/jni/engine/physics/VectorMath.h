@@ -6,8 +6,8 @@
 
 class VectorMath {
 public:
-  static Position::value_type dot(const Position& a, const Position& b);
-  static Position::value_type distance(const Position& a, const Position& b);
+  static f32 dot(const Position& a, const Position& b);
+  static f32 distance(const Position& a, const Position& b);
   static Position projectionPointLine(const Position& p, const Position& a, const Position& b);
 
   template <typename T>

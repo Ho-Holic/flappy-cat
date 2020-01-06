@@ -20,14 +20,14 @@ public:
   virtual void drawOn(const Window& window) const = 0;
 
   virtual const Position& position() const;
-  virtual Position::value_type rotation() const;
+  virtual f32 rotation() const;
   virtual const Position& size() const;
 
   virtual void moveTo(const Position& position);
   virtual void moveBy(const Position& offset);
 
   virtual void resize(const Position& size);
-  virtual void rotateTo(Position::value_type angle);
+  virtual void rotateTo(f32 angle);
 
 public:
   const FlappyCatGameConstants& gameConstants() const;
@@ -45,7 +45,7 @@ private:
   const FlappyCatGameConstants& mGameConstants;
   Position mPosition;
   Position mSize;
-  Position::value_type mAngle;
+  f32 mAngle;
   Position mGravity;
   Position mAcceleration;
   Position mVelocity;

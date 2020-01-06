@@ -37,9 +37,9 @@ public:
   FlappyCatWall(const FlappyCatGameConstants& gameConstants);
 
 public:
-  void setGapInterval(Position::value_type interval);
-  void setGapDisplacement(Position::value_type displacement);
-  bool collideWithCircle(const Position& center, Position::value_type radius);
+  void setGapInterval(f32 interval);
+  void setGapDisplacement(f32 displacement);
+  bool collideWithCircle(const Position& center, f32 radius);
 
 public:
   virtual void drawOn(const Window& window) const override;
@@ -59,8 +59,8 @@ private:
   virtual void syncChildren() override;
 
 private:
-  Position::value_type mGapInterval;
-  Position::value_type mGapDisplacement;
+  f32 mGapInterval;
+  f32 mGapDisplacement;
   RectangleShape mTopBlock;
   RectangleShape mBottomBlock;
   WallState mWallState;

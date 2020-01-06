@@ -1,6 +1,8 @@
 #ifndef FLAPPY_CAT_POSITION_H
 #define FLAPPY_CAT_POSITION_H
 
+#include <core/Type.h>
+
 class Position {
 public:
   using value_type = float;
@@ -29,32 +31,32 @@ inline Position operator- (const Position& left, const Position& right) {
                   left.y() - right.y());
 }
 
-inline Position operator* (const Position& left, Position::value_type scalar) {
+inline Position operator* (const Position& left, f32 scalar) {
 
   return Position(left.x() * scalar, left.y() * scalar);
 }
 
-inline Position operator* (Position::value_type scalar, const Position& right) {
+inline Position operator* (f32 scalar, const Position& right) {
 
   return Position(scalar * right.x(), scalar * right.y());
 }
 
-inline Position operator/ (const Position& left, Position::value_type scalar) {
+inline Position operator/ (const Position& left, f32 scalar) {
 
   return Position(left.x() / scalar, left.y() / scalar);
 }
 
-inline Position operator/ (Position::value_type scalar, const Position& right) {
+inline Position operator/ (f32 scalar, const Position& right) {
 
   return Position(scalar / right.x(), scalar / right.y());
 }
 
-inline Position operator+ (const Position& left, Position::value_type scalar) {
+inline Position operator+ (const Position& left, f32 scalar) {
 
   return Position(left.x() + scalar, left.y() + scalar);
 }
 
-inline Position operator+ (Position::value_type scalar, const Position& right) {
+inline Position operator+ (f32 scalar, const Position& right) {
 
   return Position(scalar + right.x(), scalar + right.y());
 }

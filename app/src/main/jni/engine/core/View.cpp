@@ -40,12 +40,12 @@ const Position& View::scale() const {
   return mScale;
 }
 
-void View::setRotation(Position::value_type angle) {
+void View::setRotation(f32 angle) {
 
   mAngle = angle;
 }
 
-Position::value_type View::rotation() const {
+f32 View::rotation() const {
 
   return mAngle;
 }

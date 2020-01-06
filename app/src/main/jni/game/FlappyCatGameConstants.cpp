@@ -55,10 +55,10 @@ void FlappyCatGameConstants::reset() {
 
   Position cameraSize = Position(1080.f, 1920.f);
 
-  Position::value_type plateWidth = 1000.f;
+  f32 plateWidth = 1000.f;
 
-  Position::value_type halfCameraY = cameraSize.y() / 2.f;
-  Position::value_type offsetFloorY = halfCameraY * 0.8f; // ground takes 20%
+  f32 halfCameraY = cameraSize.y() / 2.f;
+  f32 offsetFloorY = halfCameraY * 0.8f; // ground takes 20%
 
 
   // camera
@@ -115,18 +115,18 @@ const FlappyCatColorScheme& FlappyCatGameConstants::colorScheme() const {
   return mColorScheme;
 }
 
-Position::value_type
-FlappyCatGameConstants::randomOffsetFrom(Position::value_type initial,
-                                         Position::value_type maxOffset) {
+f32
+FlappyCatGameConstants::randomOffsetFrom(f32 initial,
+                                         f32 maxOffset) {
 
-  std::normal_distribution<Position::value_type> distribution(initial, maxOffset);
+  std::normal_distribution<f32> distribution(initial, maxOffset);
 
   return distribution(mGenerator);
 }
 
-Position::value_type
-FlappyCatGameConstants::clampedRandomOffsetFrom(Position::value_type initial,
-                                                Position::value_type maxOffset) {
+f32
+FlappyCatGameConstants::clampedRandomOffsetFrom(f32 initial,
+                                                f32 maxOffset) {
 
   return backport::std::clamp(randomOffsetFrom(initial, maxOffset),
                               initial - maxOffset,

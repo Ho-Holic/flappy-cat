@@ -1,7 +1,7 @@
 // engine
 #include "CircleShape.h"
 
-CircleShape::CircleShape(const Position& position, Position::value_type radius, std::size_t resolution)
+CircleShape::CircleShape(const Position& position, f32 radius, std::size_t resolution)
 : Shape()
 , mTransformation(position)
 , mGeometry(radius, resolution)

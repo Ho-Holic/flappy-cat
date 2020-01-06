@@ -12,12 +12,12 @@ Position::Position()
   //
 }
 
-Position::value_type Position::x() const {
+f32 Position::x() const {
 
   return mX;
 }
 
-Position::value_type Position::y() const {
+f32 Position::y() const {
 
   return mY;
 }

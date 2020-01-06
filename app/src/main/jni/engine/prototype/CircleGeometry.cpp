@@ -5,7 +5,7 @@
 // stl
 #include <cmath>
 
-CircleGeometry::CircleGeometry(Position::value_type radius, std::size_t resolution)
+CircleGeometry::CircleGeometry(f32 radius, std::size_t resolution)
 : Geometry()
 , mRadius(radius)
 , mResolution(resolution)
@@ -20,11 +20,11 @@ Geometry::size_type CircleGeometry::points() const {
 
 Position CircleGeometry::pointAt(size_type index) const {
 
-  constexpr Position::value_type pi = 3.141592654f;
+  constexpr f32 pi = 3.141592654f;
 
-  Position::value_type angle = index * 2.f * pi / mResolution - pi / 2.f;
-  Position::value_type x = std::cos(angle) * mRadius;
-  Position::value_type y = std::sin(angle) * mRadius;
+  f32 angle = index * 2.f * pi / mResolution - pi / 2.f;
+  f32 x = std::cos(angle) * mRadius;
+  f32 y = std::sin(angle) * mRadius;
 
   return Position(mRadius + x, mRadius + y);
 }
@@ -40,13 +40,13 @@ void CircleGeometry::setResolution(std::size_t resolution) {
   mOnUpdate.emit();
 }
 
-void CircleGeometry::setRadius(Position::value_type radius) {
+void CircleGeometry::setRadius(f32 radius) {
 
   mRadius = radius;
   mOnUpdate.emit();
 }
 
-Position::value_type CircleGeometry::radius() const {
+f32 CircleGeometry::radius() const {
 
   return mRadius;
 }

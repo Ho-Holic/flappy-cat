@@ -50,7 +50,7 @@ void FlappyCatEntity::syncChildren() {
   // intentionally left blank
 }
 
-void FlappyCatEntity::rotateTo(Position::value_type angle) {
+void FlappyCatEntity::rotateTo(f32 angle) {
 
   mAngle = angle;
   syncChildren();
@@ -68,7 +68,7 @@ void FlappyCatEntity::rotateTo(Position::value_type angle) {
  */
 void FlappyCatEntity::update(const FrameDuration& frameDuration) {
 
-  Position::value_type time = std::chrono::duration_cast<GameSecond>(frameDuration).count();
+  f32 time = std::chrono::duration_cast<GameSecond>(frameDuration).count();
 
   // TODO: make list of physical forces instead of gravity variable
   mAcceleration = mAcceleration - mGravity;
@@ -95,7 +95,7 @@ const Position& FlappyCatEntity::size() const {
   return mSize;
 }
 
-Position::value_type FlappyCatEntity::rotation() const {
+f32 FlappyCatEntity::rotation() const {
   return mAngle;
 }
 

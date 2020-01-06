@@ -37,7 +37,7 @@ void FlappyCatMascot::drawOn(const Window& window) const {
 void FlappyCatMascot::syncChildren() {
 
   const Position& pos = position();
-  Position::value_type angle = rotation();
+  f32 angle = rotation();
   
   Position referenceSize(2000.f, 2000.f); // must be equal, 2000x2000 square
 

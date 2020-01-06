@@ -58,7 +58,7 @@ void FlappyCatCloud::setColor(const Color& color) {
   }
 }
 
-void FlappyCatCloud::setParts(Position::value_type parts) {
+void FlappyCatCloud::setParts(f32 parts) {
 
   mParts = parts;
 }
