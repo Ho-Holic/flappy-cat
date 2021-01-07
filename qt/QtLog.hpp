@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <QDebug>
 
 class QtLog {
 public:
@@ -16,36 +17,42 @@ public:
 template <typename... Args>
 int QtLog::v(const char* tag, Args... args) {
 
+    (qDebug() << ... << args);
     return 0;
 }
 
 template <typename... Args>
 int QtLog::d(const char* tag, Args... args) {
 
+    (qDebug() << ... << args);
     return 0;
 }
 
 template <typename... Args>
 int QtLog::i(const char* tag, Args... args) {
 
+    (qDebug() << ... << args);
     return 0;
 }
 
 template <typename... Args>
 int QtLog::w(const char* tag, Args... args) {
 
+    (qDebug() << ... << args);
     return 0;
 }
 
 template <typename... Args>
 int QtLog::e(const char* tag, Args... args) {
 
+    (qDebug() << ... << args);
     return 0;
 }
 
 template <typename... Args>
 int QtLog::wtf(const char* tag, Args... args) {
 
+    (qDebug() << ... << args);
     return 0;
 }
 
