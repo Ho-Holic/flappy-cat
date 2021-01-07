@@ -43,7 +43,7 @@
 /**
  * REQUIRE - assert with fancy name =)
  */
-#define REQUIRE(tag, condition, ...) Log::assert(condition, #condition, tag, __VA_ARGS__)
+#define REQUIRE(tag, condition, ...) Log::assert_condition(condition, #condition, tag, __VA_ARGS__)
 
 /**
  * UNEXPECTED_SWITCH - Mark switch branch that must be unreachable

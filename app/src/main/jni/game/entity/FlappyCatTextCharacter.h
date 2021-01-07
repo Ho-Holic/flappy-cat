@@ -7,12 +7,15 @@
 // engine
 #include <prototype/RectangleShape.h>
 
+// stl
+#include <array>
+
 class FlappyCatTextCharacter : public FlappyCatEntity {
 public:
   FlappyCatTextCharacter(const FlappyCatGameConstants& gameConstants);
 public:
   virtual void drawOn(const Window& window) const override;
-  virtual const Position& size() const;
+  virtual const Position& size() const override;
 
 public:
   void setCharacter(char character);

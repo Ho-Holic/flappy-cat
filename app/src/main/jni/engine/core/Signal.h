@@ -14,6 +14,7 @@
 // accessing 'this' pointer of maybe deleted object passing various
 // lambda functions as a slot and other bad stuff can happen
 
+#undef emit
 
 template <typename SlotFunction>
 class Signal {

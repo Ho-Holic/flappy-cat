@@ -2,7 +2,7 @@
 #define FLAPPY_CAT_GEOMETRY_H
 
 // stl
-#include <cstdint>
+#include <cstddef>
 
 // engine
 #include "Position.h"
