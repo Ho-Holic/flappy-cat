@@ -8,3 +8,4 @@
 /captures
 build-*
 *.pro.user
+CMakeLists.txt.user
