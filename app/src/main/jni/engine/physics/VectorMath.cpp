@@ -2,6 +2,7 @@
 #include "VectorMath.h"
 
 // stl
+#include <cmath>
 #include <algorithm>
 
 Position::value_type VectorMath::dot(const Position& a, const Position& b) {
