@@ -17,6 +17,7 @@ private:
     void shouldRepaint();
     bool event(QEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
+    void keyReleaseEvent(QKeyEvent* event) override;
 private:
     void clear(const Color& color) const override;
     void draw(const Shape& shape) const override;

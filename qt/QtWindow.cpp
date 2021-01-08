@@ -143,6 +143,19 @@ void QtWindow::mouseReleaseEvent(QMouseEvent*)
     this->postEvent(event);
 }
 
+void QtWindow::keyReleaseEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Space) {
+        using EventType = QtEvent::EventType;
+
+        QtEvent event(EventType::TouchEventType);
+
+        event.setTouchEventData(0.f, 0.f);
+
+        this->postEvent(event);
+    }
+}
+
 void QtWindow::clear(const Color &color) const
 {
     // do nothing in qt build
