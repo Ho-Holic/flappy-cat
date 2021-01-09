@@ -1,8 +1,9 @@
 // game
 #include "FlappyCatGameConstants.h"
 
-// style
-#include <style/BackportCpp17.h>
+// engine
+#include <style/Guidelines.h>
+#include <core/Log.h>
 
 FlappyCatGameConstants::FlappyCatGameConstants()
 : mRandomDevice()
@@ -128,7 +129,7 @@ f32
 FlappyCatGameConstants::clampedRandomOffsetFrom(f32 initial,
                                                 f32 maxOffset) {
 
-  return backport::std::clamp(randomOffsetFrom(initial, maxOffset),
+  return std::clamp(randomOffsetFrom(initial, maxOffset),
                               initial - maxOffset,
                               initial + maxOffset);
 }

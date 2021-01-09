@@ -10,10 +10,6 @@
 // stl
 #include <string>
 
-// style
-#include <style/BackportCpp17.h>
-#include <style/FixNdk.h>
-
 FlappyCatGame::FlappyCatGame()
 : mGameConstants()
 , mGameState(PressButtonState)
@@ -362,7 +358,7 @@ void FlappyCatGame::update(const FrameDuration& time) {
     mBackgroundCity.update(time);
   }
 
-  mFps.setText(fix::ndk::std::to_string(mFpsCounter));
+  mFps.setText(std::to_string(mFpsCounter));
 }
 
 void FlappyCatGame::render(const Window& window) const {
@@ -386,12 +382,12 @@ void FlappyCatGame::render(const Window& window) const {
 
 void FlappyCatGame::incrementScore() {
   mScoreCounter += 1;
-  mScore.setText(fix::ndk::std::to_string(mScoreCounter));
+  mScore.setText(std::to_string(mScoreCounter));
 }
 
 void FlappyCatGame::resetScore() {
   mScoreCounter = 0;
-  mScore.setText(fix::ndk::std::to_string(mScoreCounter));
+  mScore.setText(std::to_string(mScoreCounter));
 
   using Constant = FlappyCatGameConstants::Constants;
   f32 offset = mGameConstants[Constant::HeroSize].x();
