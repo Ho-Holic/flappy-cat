@@ -157,7 +157,7 @@ void FlappyCatTextCharacter::syncChildren() {
 
     UNUSED(characterData);
     body.transformation().setPosition(position() + Position((x * CharacterPartWidth),
-             -static_cast<f32>(y * CharacterPartHeight)));
+             -static_cast<float>(y * CharacterPartHeight)));
 
     body.geometry().resize(Position(CharacterPartWidth, CharacterPartHeight));
   });

@@ -71,9 +71,9 @@ void QtWindow::shouldRepaint()
                 auto smoothing = 0.9f;
 
                 FlappyCatGame game;
-                f32 windowHeight = static_cast<f32>(size().height());
-                f32 cameraHeight = game.cameraSize().y();
-                f32 scale = windowHeight / cameraHeight;
+                float windowHeight = static_cast<float>(size().height());
+                float cameraHeight = game.cameraSize().y();
+                float scale = windowHeight / cameraHeight;
                 view().setScale(Position(scale, scale));
 
                 while (!m_windowCloseRequested) {
@@ -116,7 +116,7 @@ void QtWindow::shouldRepaint()
     if (m_paintDevice->size() != size()) {
 
         m_paintDevice->setSize(size());
-        view().setPosition(Position(static_cast<f32>(size().width()), static_cast<f32>(size().height())));
+        view().setPosition(Position(static_cast<float>(size().width()), static_cast<float>(size().height())));
     }
 
     m_context->makeCurrent(this);

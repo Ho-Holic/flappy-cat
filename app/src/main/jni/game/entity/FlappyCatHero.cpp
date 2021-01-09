@@ -18,12 +18,12 @@ FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
   //
 }
 
-f32 FlappyCatHero::radius() const {
+float FlappyCatHero::radius() const {
 
   return mBall.geometry().radius();
 }
 
-void FlappyCatHero::setRadius(f32 radius) {
+void FlappyCatHero::setRadius(float radius) {
 
   mBall.geometry().setRadius(radius);
   syncChildren();
@@ -95,7 +95,7 @@ void FlappyCatHero::syncChildren() {
 
   mBall.transformation().setPosition(position());
 
-  f32 diameter = mBall.geometry().radius() * 2.f;
+  float diameter = mBall.geometry().radius() * 2.f;
 
   Position mascotPos = mBall.transformation().position()
                        + Position(diameter * 0.25f, diameter * 0.3f);

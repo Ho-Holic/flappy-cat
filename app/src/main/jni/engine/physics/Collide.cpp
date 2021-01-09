@@ -10,7 +10,7 @@
 #include <algorithm>
 
 bool Collide::circleRect(const Position& circleCenter,
-                         f32 circleRadius,
+                         float circleRadius,
                          const Shape& rect) {
 
   // TODO: actually algorithm can ran on any convex polygon, just need to generalize it
@@ -45,7 +45,7 @@ bool Collide::pointRect(const Position& p,
   return (0 <= apab && apab <= ab2) && (0 <= apad && apad <= ad2);
 }
 
-bool Collide::lineCircle(const Position& circleCenter, f32 circleRadius,
+bool Collide::lineCircle(const Position& circleCenter, float circleRadius,
                          const Position& a,
                          const Position& b) {
 

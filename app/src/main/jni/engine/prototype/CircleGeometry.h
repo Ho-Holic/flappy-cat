@@ -10,20 +10,20 @@ public:
   using OnUpdateSignal = Signal<void()>;
 
 public:
-  CircleGeometry(f32 radius, std::size_t resolution);
+  CircleGeometry(float radius, std::size_t resolution);
 
 public:
   OnUpdateSignal& onUpdate();
   void setResolution(std::size_t resolution);
-  void setRadius(f32 radius);
-  f32 radius() const;
+  void setRadius(float radius);
+  float radius() const;
 
 public:
   virtual size_type points() const override;
   virtual Position pointAt(size_type index) const override;
 
 private:
-  f32 mRadius;
+  float mRadius;
   std::size_t mResolution;
   OnUpdateSignal mOnUpdate;
 };

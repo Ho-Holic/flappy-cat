@@ -27,9 +27,9 @@ public:
 public:
   void setResetModifier(const modifier_type& modifier);
   void setColor(const Color& color);
-  void setParts(f32 parts);
+  void setParts(float parts);
 public:
-  f32 mParts;
+  float mParts;
   std::vector<entity_type> mCloudParts;
   modifier_type mResetModifier;
 };

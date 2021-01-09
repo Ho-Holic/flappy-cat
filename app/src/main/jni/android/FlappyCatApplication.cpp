@@ -14,11 +14,11 @@ void FlappyCatApplication::main() {
   // set apropriate view
   FlappyCatGame game;
 
-  f32 windowHeight = static_cast<f32>(window().height());
+  float windowHeight = static_cast<float>(window().height());
 
-  f32 cameraHeight = game.cameraSize().y();
+  float cameraHeight = game.cameraSize().y();
 
-  f32 scale = windowHeight / cameraHeight;
+  float scale = windowHeight / cameraHeight;
 
   window().view().setScale(Position(scale, scale));
 

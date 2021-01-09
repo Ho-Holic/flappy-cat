@@ -37,19 +37,19 @@ void VertexBasedRender::update(const Shape& shape) {
 
   for (Geometry::size_type index = 0; index < points; ++index) {
 
-    constexpr f32 pi = 3.141592654f;
+    constexpr float pi = 3.141592654f;
 
     // TODO: remove this part and make transform matrix
     // rotate
-    f32 angle = shape.transformation().rotation() * pi / 180.f;
+    float angle = shape.transformation().rotation() * pi / 180.f;
 
-    f32 sinValue = std::sin(angle);
-    f32 cosValue = std::cos(angle);
+    float sinValue = std::sin(angle);
+    float cosValue = std::cos(angle);
 
     Position p = shape.geometry().pointAt(index) - shape.transformation().origin();
 
-    f32 rotatedX = p.x() * cosValue - p.y() * sinValue;
-    f32 rotatedY = p.x() * sinValue + p.y() * cosValue;
+    float rotatedX = p.x() * cosValue - p.y() * sinValue;
+    float rotatedY = p.x() * sinValue + p.y() * cosValue;
 
     /** TODO: add scale/origin later
      *

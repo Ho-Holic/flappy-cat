@@ -80,7 +80,7 @@ void FlappyCatGame::initialize() {
   mFloor.setUpdateModifier(
     [this](FlappyCatFloor& floor, const FrameDuration& frameDuration) {
 
-      f32 radius = mHero.radius();
+      float radius = mHero.radius();
       // TODO: implement proper origin in 'transformation' and remove this line
       // circle origin in bottom left so we shift by radius
       Position center = mHero.position() + Position(radius, radius);
@@ -123,7 +123,7 @@ void FlappyCatGame::initialize() {
   mBarricade.setUpdateModifier(
     [this](FlappyCatWall& wall) {
 
-      f32 radius = mHero.radius();
+      float radius = mHero.radius();
       // TODO: implement proper origin in 'transformation' and remove this code
       // circle origin in bottom left so we shift by radius
       Position center = mHero.position() + Position(radius, radius);
@@ -235,7 +235,7 @@ void FlappyCatGame::initialize() {
       hero.moveBy(hero.distance());
 
       // tilt the hero
-      f32 angle = hero.rotation();
+      float angle = hero.rotation();
 
       if (hero.distance().y() > 0.f) {
         if (angle < 35.f) {
@@ -250,7 +250,7 @@ void FlappyCatGame::initialize() {
 
       hero.rotateTo(angle);
 
-      f32 offset = mGameConstants[Constant::HeroSize].x();
+      float offset = mGameConstants[Constant::HeroSize].x();
       mScore.moveTo(mHero.position() - Position(offset, offset / 4.f));
 
       UNUSED(frameDuration); // not need for time processing here
@@ -390,7 +390,7 @@ void FlappyCatGame::resetScore() {
   mScore.setText(std::to_string(mScoreCounter));
 
   using Constant = FlappyCatGameConstants::Constants;
-  f32 offset = mGameConstants[Constant::HeroSize].x();
+  float offset = mGameConstants[Constant::HeroSize].x();
   mScore.moveTo(mHero.position() - Position(offset, offset / 4.f));
 
   /*

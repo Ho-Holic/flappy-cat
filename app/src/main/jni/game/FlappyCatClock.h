@@ -6,10 +6,10 @@
 #include <core/Position.h>
 
 // '1/60' of a second
-using FrameDuration = std::chrono::duration<f32,
+using FrameDuration = std::chrono::duration<float,
                                             std::ratio<1, 60>>;
 
-using GameSecond = std::chrono::duration<f32,
+using GameSecond = std::chrono::duration<float,
                                           std::ratio<1,1>>;
 
 #endif //FLAPPY_CAT_FLAPPYCATCLOCK_H

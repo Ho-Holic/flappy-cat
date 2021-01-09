@@ -7,7 +7,7 @@
 class Collide {
 public:
   static bool circleRect(const Position& circleCenter,
-                         f32 circleRadius,
+                         float circleRadius,
                          const Shape& rect);
 
   static bool pointRect(const Position& p,
@@ -17,7 +17,7 @@ public:
                         const Position& d);
 
   static bool lineCircle(const Position& circleCenter,
-                         f32 circleRadius,
+                         float circleRadius,
                          const Position& a,
                          const Position& b);
   };

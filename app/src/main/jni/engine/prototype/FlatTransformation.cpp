@@ -36,7 +36,7 @@ const Position& FlatTransformation::scale() const {
   return mScale;
 }
 
-f32 FlatTransformation::rotation() const {
+float FlatTransformation::rotation() const {
 
   return mAngle;
 }
@@ -63,7 +63,7 @@ void FlatTransformation::setScale(const Position& factor) {
 }
 
 
-void FlatTransformation::setRotation(f32 angle) {
+void FlatTransformation::setRotation(float angle) {
 
   mAngle = angle;
   mOnUpdate.emit();

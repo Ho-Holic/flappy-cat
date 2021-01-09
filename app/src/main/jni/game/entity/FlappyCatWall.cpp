@@ -18,19 +18,19 @@ FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
   //
 }
 
-void FlappyCatWall::setGapInterval(f32 interval) {
+void FlappyCatWall::setGapInterval(float interval) {
 
   mGapInterval = interval;
   syncChildren();
 }
 
-void FlappyCatWall::setGapDisplacement(f32 displacement) {
+void FlappyCatWall::setGapDisplacement(float displacement) {
 
   mGapDisplacement = displacement;
   syncChildren();
 }
 
-bool FlappyCatWall::collideWithCircle(const Position& center, f32 radius) {
+bool FlappyCatWall::collideWithCircle(const Position& center, float radius) {
 
   return Collide::circleRect(center, radius, mTopBlock)
       || Collide::circleRect(center, radius, mBottomBlock);
@@ -55,16 +55,16 @@ const Color& FlappyCatWall::color() const {
 
 void FlappyCatWall::syncChildren() {
 
-  f32 A1 = position().y();
+  float A1 = position().y();
 
-  f32 A2 = A1 + size().y()
+  float A2 = A1 + size().y()
                             - mGapInterval / 2.f
                             - size().y() / 2.f
                             - mGapDisplacement;
 
-  f32 A3 = A2 + mGapInterval;
+  float A3 = A2 + mGapInterval;
 
-  f32 A4 = A3 + size().y() / 2.f
+  float A4 = A3 + size().y() / 2.f
                             + mGapDisplacement
                             - mGapInterval / 2.f;
 

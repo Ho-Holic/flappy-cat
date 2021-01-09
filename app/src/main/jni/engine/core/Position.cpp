@@ -12,12 +12,12 @@ Position::Position()
   //
 }
 
-f32 Position::x() const {
+float Position::x() const {
 
   return mX;
 }
 
-f32 Position::y() const {
+float Position::y() const {
 
   return mY;
 }

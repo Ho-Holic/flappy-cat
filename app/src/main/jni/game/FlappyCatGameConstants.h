@@ -37,11 +37,11 @@ public:
   Position operator[](Constants index) const;
 
 public:
-  f32 randomOffsetFrom(f32 initial,
-                                        f32 maxOffset);
+  float randomOffsetFrom(float initial,
+                                        float maxOffset);
 
-  f32 clampedRandomOffsetFrom(f32 initial,
-                                               f32 maxOffset);
+  float clampedRandomOffsetFrom(float initial,
+                                               float maxOffset);
 private:
   Daytime chooseDaytime();
 

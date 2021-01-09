@@ -46,7 +46,7 @@ public:
   void foreachLink(const modifier_type& modifier);
 
 private:
-  f32 chainLength() const;
+  float chainLength() const;
   bool isWarpNeeded(const Position& point) const;
   Position section() const;
 
@@ -79,7 +79,7 @@ FlappyCatChain<Link>::FlappyCatChain(const FlappyCatGameConstants& gameConstants
 }
 
 template <typename Link>
-f32 FlappyCatChain<Link>::chainLength() const {
+float FlappyCatChain<Link>::chainLength() const {
 
   /*
    * TODO: Math functions does not work properly
