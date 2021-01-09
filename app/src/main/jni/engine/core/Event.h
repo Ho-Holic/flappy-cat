@@ -3,10 +3,10 @@
 
 #ifdef FLAPPYCAT_QT
 
-#include "QtEvent.h"
+#include "qt/QtEvent.h"
 using Event = QtEvent;
 
-#else
+#elif FLAPPYCAT_ANDROID
 
 // engine
 #include <android/AndroidEvent.h>
@@ -15,6 +15,10 @@ using Event = QtEvent;
 // where user would create 'Event event; pollEvent(event);'
 
 using Event = AndroidEvent;
+
+#else
+
+using Event = void;
 
 #endif
 

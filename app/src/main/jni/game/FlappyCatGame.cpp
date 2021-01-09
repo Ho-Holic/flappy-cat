@@ -408,7 +408,7 @@ void FlappyCatGame::resetScore() {
    * TODO: create own reset modifier for Fps element
    */
   mFps.setColor(colorScheme[ColorConstant::TextColor]);
-  mFps.moveTo(mGameConstants[Constant::CameraSize] * 0.4f);
+  mFps.moveTo(mGameConstants[Constant::CameraSize] * 0.2f);
 }
 
 void FlappyCatGame::setFpsCounter(size_t fpsCount) {

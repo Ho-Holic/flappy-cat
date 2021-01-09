@@ -4,13 +4,17 @@
 // engine
 #ifdef FLAPPYCAT_QT
 
-#include "QtLog.hpp"
+#include "qt/QtLog.hpp"
 using Log = QtLog;
 
-#else
+#elif FLAPPYCAT_ANDROID
 
 #include <android/AndroidLog.h>
 using Log = AndroidLog;
+
+#else
+
+using Log = void;
 
 #endif
 
