@@ -15,7 +15,7 @@ public:
   template <typename... Args> static int w(const char* tag, Args... args);
   template <typename... Args> static int e(const char* tag, Args... args);
   template <typename... Args> static int wtf(const char* tag, Args... args);
-  template <typename... Args> static void assert(bool cond, const char* condAsString,
+  template <typename... Args> static void assert_condition(bool cond, const char* condAsString,
                                                  const char* tag, Args... args);
 };
 
@@ -85,7 +85,7 @@ int AndroidLog::wtf(const char* tag, Args... args) {
 }
 
 template<typename... Args>
-void AndroidLog::assert(bool cond, const char* condAsString, const char* tag, Args... args) {
+void AndroidLog::assert_condition(bool cond, const char* condAsString, const char* tag, Args... args) {
 
   if (! cond) {
     android_log_assert(condAsString, tag, args...);

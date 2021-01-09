@@ -1,17 +1,29 @@
 cmake_minimum_required(VERSION 3.8)
 project(flappycat LANGUAGES CXX)
 
-file(GLOB_RECURSE FLAPPYCAT_GAME_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
-file(GLOB_RECURSE FLAPPYCAT_GAME_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+file(GLOB_RECURSE FLAPPYCAT_GAME_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/game/*.h")
+file(GLOB_RECURSE FLAPPYCAT_GAME_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/game/*.cpp")
+
+file(GLOB_RECURSE FLAPPYCAT_ENGINE_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/engine/*.h")
+file(GLOB_RECURSE FLAPPYCAT_ENGINE_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/engine/*.cpp")
+
+file(GLOB_RECURSE FLAPPYCAT_ANDROID_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/android/*.h")
+file(GLOB_RECURSE FLAPPYCAT_ANDROID_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/android/*.cpp")
 
 add_library(flappycat SHARED
     ${FLAPPYCAT_GAME_HEADERS}
     ${FLAPPYCAT_GAME_SOURCE}
+    
+    ${FLAPPYCAT_ENGINE_HEADERS}
+    ${FLAPPYCAT_ENGINE_SOURCE}
+
+    ${FLAPPYCAT_ANDROID_HEADERS}
+    ${FLAPPYCAT_ANDROID_SOURCE}        
 )
 
-target_include_directories(flappycat PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/")
 target_include_directories(flappycat PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/game/")
 target_include_directories(flappycat PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/engine/")
+target_include_directories(flappycat PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/")
 
 #
 # NOTE: -Wno-format-security
@@ -26,4 +38,4 @@ target_compile_features(flappycat PRIVATE cxx_std_17)
 
 target_link_libraries(flappycat PRIVATE EGL GLESv2 android log)
 
-target_compile_definitions(flappycat PRIVATE FLAPPYCAT_QT TAG=\"FlappyCat\")
+target_compile_definitions(flappycat PRIVATE FLAPPYCAT_ANDROID TAG=\"FlappyCat\")
