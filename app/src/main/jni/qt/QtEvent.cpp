@@ -1,6 +1,6 @@
-#include "QtEvent.h"
+#include "QtEvent.hpp"
 
-#include <core/Log.h>
+#include <core/Log.hpp>
 
 QtEvent::QtEvent()
 : QtEvent(EmptyEventType) {

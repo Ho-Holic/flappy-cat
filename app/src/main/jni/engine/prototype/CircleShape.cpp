@@ -1,5 +1,5 @@
 // engine
-#include "CircleShape.h"
+#include "CircleShape.hpp"
 
 CircleShape::CircleShape(const Position& position, float radius, std::size_t resolution)
 : Shape()

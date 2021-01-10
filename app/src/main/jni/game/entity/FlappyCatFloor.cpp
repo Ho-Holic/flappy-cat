@@ -1,5 +1,5 @@
 // game
-#include "FlappyCatFloor.h"
+#include "FlappyCatFloor.hpp"
 
 FlappyCatFloor::FlappyCatFloor(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)

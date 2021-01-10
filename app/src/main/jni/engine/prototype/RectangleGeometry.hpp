@@ -2,8 +2,8 @@
 #define FLAPPY_CAT_RECTANGLEGEOMETRY_H
 
 // engine
-#include <core/Geometry.h>
-#include <core/Signal.h>
+#include <core/Geometry.hpp>
+#include <core/Signal.hpp>
 
 class RectangleGeometry : public Geometry {
 public:

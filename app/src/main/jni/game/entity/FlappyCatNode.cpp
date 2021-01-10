@@ -1,4 +1,4 @@
-#include "FlappyCatNode.h"
+#include "FlappyCatNode.hpp"
 
 FlappyCatNode::FlappyCatNode()
 : mChildren() {

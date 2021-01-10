@@ -1,7 +1,7 @@
 // engine
-#include "AndroidWindow.h"
-#include <core/Log.h>
-#include <prototype/FlatTransformation.h>
+#include "AndroidWindow.hpp"
+#include <core/Log.hpp>
+#include <prototype/FlatTransformation.hpp>
 
 // stl
 #include <memory>

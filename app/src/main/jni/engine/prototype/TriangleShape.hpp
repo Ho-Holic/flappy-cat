@@ -2,10 +2,10 @@
 #define FLAPPY_CAT_TRIANGLESHAPE_H
 
 // engine
-#include <core/Shape.h>
-#include <prototype/TriangleGeometry.h>
-#include <prototype/FlatTransformation.h>
-#include <prototype/VertexBasedRender.h>
+#include <core/Shape.hpp>
+#include <prototype/TriangleGeometry.hpp>
+#include <prototype/FlatTransformation.hpp>
+#include <prototype/VertexBasedRender.hpp>
 
 class TriangleShape : public Shape  {
 public:

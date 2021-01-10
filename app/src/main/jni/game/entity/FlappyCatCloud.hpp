@@ -2,10 +2,10 @@
 #define FLAPPY_CAT_FLAPPYCATCLOUD_H
 
 // engine
-#include <prototype/CircleShape.h>
+#include <prototype/CircleShape.hpp>
 
 // game
-#include "FlappyCatEntity.h"
+#include "FlappyCatEntity.hpp"
 
 // stl
 #include <vector>

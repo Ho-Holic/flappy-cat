@@ -1,5 +1,5 @@
 // engine
-#include "Vertex.h"
+#include "Vertex.hpp"
 
 
 Vertex::Vertex(const Position& position, const Color& color)

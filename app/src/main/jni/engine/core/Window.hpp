@@ -2,9 +2,9 @@
 #define FLAPPY_CAT_WINDOW_H
 
 // engine
-#include <core/Color.h>
-#include <core/Shape.h>
-#include <core/View.h>
+#include <core/Color.hpp>
+#include <core/Shape.hpp>
+#include <core/View.hpp>
 
 class Window {
 public:

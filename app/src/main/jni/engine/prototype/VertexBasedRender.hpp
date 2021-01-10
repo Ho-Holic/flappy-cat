@@ -2,8 +2,8 @@
 #define FLAPPY_CAT_VERTEXBASEDRENDER_H
 
 // engine
-#include <core/Render.h>
-#include <core/Vertices.h>
+#include <core/Render.hpp>
+#include <core/Vertices.hpp>
 
 class VertexBasedRender : public Render {
 public:

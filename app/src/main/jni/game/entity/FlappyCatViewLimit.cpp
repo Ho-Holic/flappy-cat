@@ -1,6 +1,6 @@
 
 // game
-#include "FlappyCatViewLimit.h"
+#include "FlappyCatViewLimit.hpp"
 
 FlappyCatViewLimit::FlappyCatViewLimit(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)

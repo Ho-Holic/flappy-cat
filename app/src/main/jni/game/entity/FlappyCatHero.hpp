@@ -2,11 +2,11 @@
 #define FLAPPY_CAT_FLAPPYCATHERO_H
 
 // engine
-#include <prototype/CircleShape.h>
+#include <prototype/CircleShape.hpp>
 
 // game
-#include "FlappyCatEntity.h"
-#include "FlappyCatMascot.h"
+#include "FlappyCatEntity.hpp"
+#include "FlappyCatMascot.hpp"
 
 class FlappyCatHero : public FlappyCatEntity {
 public:

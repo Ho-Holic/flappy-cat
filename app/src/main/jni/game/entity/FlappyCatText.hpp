@@ -2,8 +2,8 @@
 #define FLAPPY_CAT_FLAPPYCATTEXT_H
 
 // game
-#include "FlappyCatEntity.h"
-#include "FlappyCatTextCharacter.h"
+#include "FlappyCatEntity.hpp"
+#include "FlappyCatTextCharacter.hpp"
 
 class FlappyCatText : public FlappyCatEntity {
 public:

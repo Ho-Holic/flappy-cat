@@ -2,7 +2,7 @@
 #define FLAPPY_CAT_HSLCOLOR_H
 
 // engine
-#include <core/Color.h>
+#include <core/Color.hpp>
 
 
 class HslColor {

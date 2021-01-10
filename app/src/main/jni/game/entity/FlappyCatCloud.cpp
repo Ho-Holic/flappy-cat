@@ -1,11 +1,11 @@
 // game
-#include "FlappyCatCloud.h"
+#include "FlappyCatCloud.hpp"
 
 // engine
-#include <core/Log.h>
+#include <core/Log.hpp>
 
 // style
-#include <style/Guidelines.h>
+#include <style/Guidelines.hpp>
 
 FlappyCatCloud::FlappyCatCloud(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)

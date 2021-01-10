@@ -1,10 +1,10 @@
 // engine
-#include "Collide.h"
-#include <core/Log.h>
-#include <physics/VectorMath.h>
+#include "Collide.hpp"
+#include <core/Log.hpp>
+#include <physics/VectorMath.hpp>
 
 // style
-#include <style/Guidelines.h>
+#include <style/Guidelines.hpp>
 
 // stl
 #include <algorithm>

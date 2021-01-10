@@ -1,6 +1,6 @@
 
 // game
-#include "FlappyCatBackground.h"
+#include "FlappyCatBackground.hpp"
 
 FlappyCatBackground::FlappyCatBackground(const FlappyCatGameConstants& gameConstants)
   : FlappyCatEntity(gameConstants)

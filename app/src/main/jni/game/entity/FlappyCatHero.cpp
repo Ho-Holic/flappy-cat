@@ -1,10 +1,9 @@
-// engine
-#include <prototype/RectangleShape.h>
-#include <prototype/TriangleShape.h>
-#include <core/Log.h>
+#include "FlappyCatHero.hpp"
 
-// game
-#include "FlappyCatHero.h"
+// engine
+#include <prototype/RectangleShape.hpp>
+#include <prototype/TriangleShape.hpp>
+#include <core/Log.hpp>
 
 FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)

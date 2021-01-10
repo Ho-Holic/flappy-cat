@@ -1,6 +1,6 @@
 
 // engine
-#include "TriangleGeometry.h"
+#include "TriangleGeometry.hpp"
 
 TriangleGeometry::TriangleGeometry(const Position& size)
 : Geometry()

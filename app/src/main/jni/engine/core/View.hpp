@@ -2,8 +2,8 @@
 #define FLAPPY_CAT_VIEW_H
 
 // engine
-#include <core/Transformation.h>
-#include <core/Signal.h>
+#include <core/Transformation.hpp>
+#include <core/Signal.hpp>
 
 class View : public Transformation {
 public:

@@ -1,5 +1,5 @@
 // engine
-#include "AndroidConfiguration.h"
+#include "AndroidConfiguration.hpp"
 
 // stl
 #include <sstream>

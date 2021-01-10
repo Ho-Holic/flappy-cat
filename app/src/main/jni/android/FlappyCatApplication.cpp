@@ -1,5 +1,5 @@
 // game
-#include "FlappyCatApplication.h"
+#include "FlappyCatApplication.hpp"
 
 FlappyCatApplication::FlappyCatApplication(ANativeActivity* activity,
                                            void* savedState,

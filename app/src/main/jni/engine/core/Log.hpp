@@ -9,7 +9,7 @@ using Log = QtLog;
 
 #elif FLAPPYCAT_ANDROID
 
-#include <android/AndroidLog.h>
+#include <android/AndroidLog.hpp>
 using Log = AndroidLog;
 
 #else

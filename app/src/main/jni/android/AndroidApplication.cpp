@@ -1,6 +1,6 @@
 // engine
-#include "AndroidApplication.h"
-#include <core/Log.h>
+#include "AndroidApplication.hpp"
+#include <core/Log.hpp>
 
 // stl
 #include <functional>

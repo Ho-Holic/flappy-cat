@@ -1,9 +1,9 @@
 
 // self
-#include "FlappyCatText.h"
+#include "FlappyCatText.hpp"
 
 // engine
-#include <core/Log.h>
+#include <core/Log.hpp>
 
 FlappyCatText::FlappyCatText(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)

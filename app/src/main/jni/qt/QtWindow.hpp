@@ -1,9 +1,9 @@
 #pragma once
 
 #include <QWindow>
-#include <core/Window.h>
+#include <core/Window.hpp>
 #include <queue>
-#include "QtEvent.h"
+#include "QtEvent.hpp"
 
 class QtOpenGLRender;
 class QOpenGLPaintDevice;

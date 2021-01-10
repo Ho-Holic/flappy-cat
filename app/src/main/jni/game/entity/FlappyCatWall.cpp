@@ -1,12 +1,12 @@
 // game
-#include "FlappyCatWall.h"
+#include "FlappyCatWall.hpp"
 
 // engine
-#include <physics/Collide.h>
-#include <core/Log.h>
+#include <physics/Collide.hpp>
+#include <core/Log.hpp>
 
 // style
-#include <style/Guidelines.h>
+#include <style/Guidelines.hpp>
 
 FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
 : FlappyCatEntity(gameConstants)

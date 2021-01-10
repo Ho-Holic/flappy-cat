@@ -1,5 +1,5 @@
 // engine
-#include "Color.h"
+#include "Color.hpp"
 
 // stl
 #include <algorithm>

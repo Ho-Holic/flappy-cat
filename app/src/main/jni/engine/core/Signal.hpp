@@ -5,7 +5,7 @@
 #include <functional>
 
 // style
-#include <style/Guidelines.h>
+#include <style/Guidelines.hpp>
 
 // Simple signal slot system with one slot per signal
 // without collecting return values.

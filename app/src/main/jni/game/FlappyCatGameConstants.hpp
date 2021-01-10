@@ -2,10 +2,10 @@
 #define FLAPPY_CAT_FLAPPYCATGAMECONSTANT_H
 
 // game
-#include "FlappyCatColorScheme.h"
+#include "FlappyCatColorScheme.hpp"
 
 // engine
-#include <core/Position.h>
+#include <core/Position.hpp>
 
 // stl
 #include <random>
@@ -28,7 +28,7 @@ public:
   // If you have error 'Error: 'FlappyCatColorScheme' does not name a type'
   // Then Android Studio accidentally insert following line
   //
-  //     #include "FlappyCatGameConstants.h"
+  //     #include "FlappyCatGameConstants.hpp"
   //
   // to 'FlappyCatColorScheme.h'. Android studio really wants this line there
   // and don't want to deal with forward declarations of modern enums =)

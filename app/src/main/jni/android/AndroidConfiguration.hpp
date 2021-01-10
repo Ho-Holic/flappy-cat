@@ -5,7 +5,7 @@
 #include <android/configuration.h>
 
 // style
-#include "style/Guidelines.h"
+#include "style/Guidelines.hpp"
 
 // std
 #include <memory>

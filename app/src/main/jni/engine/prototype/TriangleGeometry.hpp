@@ -2,8 +2,8 @@
 #define FLAPPY_CAT_TRIANGLEGEOMETRY_H
 
 // engine
-#include <core/Geometry.h>
-#include <core/Signal.h>
+#include <core/Geometry.hpp>
+#include <core/Signal.hpp>
 
 class TriangleGeometry : public Geometry {
 public:

@@ -1,7 +1,7 @@
 #ifndef FLAPPY_CAT_FLAPPYCATSTATENODE_H
 #define FLAPPY_CAT_FLAPPYCATSTATENODE_H
 
-#include "FlappyCatNode.h"
+#include "FlappyCatNode.hpp"
 
 template <typename T>
 class FlappyCatStateNode : public FlappyCatNode {

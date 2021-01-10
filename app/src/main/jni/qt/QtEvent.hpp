@@ -4,10 +4,10 @@
 #include <cstdint>
 
 // engine
-#include "QtEventData.h"
+#include "QtEventData.hpp"
 
 // style
-#include "style/Guidelines.h"
+#include "style/Guidelines.hpp"
 
 class QtEvent {
 public:

@@ -1,7 +1,7 @@
 
 // engine
-#include "RectangleShape.h"
-#include <core/Log.h>
+#include "RectangleShape.hpp"
+#include <core/Log.hpp>
 
 // stl
 #include <functional>

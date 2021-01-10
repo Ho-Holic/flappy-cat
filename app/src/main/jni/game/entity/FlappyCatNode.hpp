@@ -2,14 +2,14 @@
 #define FLAPPY_CAT_FLAPPYCATNODE_H
 
 // engine
-#include <core/Window.h>
+#include <core/Window.hpp>
 
 // stl
 #include <vector>
 #include <memory>
 
 // game
-#include <game/FlappyCatClock.h>
+#include <game/FlappyCatClock.hpp>
 
 class FlappyCatNode {
 public:

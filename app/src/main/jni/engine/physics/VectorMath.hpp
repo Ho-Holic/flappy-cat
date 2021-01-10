@@ -2,7 +2,7 @@
 #define FLAPPY_CAT_VECTORMATH_H
 
 // engine
-#include <core/Position.h>
+#include <core/Position.hpp>
 
 class VectorMath {
 public:

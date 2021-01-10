@@ -2,10 +2,10 @@
 #define FLAPPY_CAT_ANDROIDRECTANGLESHAPE_H
 
 // engine
-#include <core/Shape.h>
-#include <prototype/RectangleGeometry.h>
-#include <prototype/FlatTransformation.h>
-#include <prototype/VertexBasedRender.h>
+#include <core/Shape.hpp>
+#include <prototype/RectangleGeometry.hpp>
+#include <prototype/FlatTransformation.hpp>
+#include <prototype/VertexBasedRender.hpp>
 
 class RectangleShape : public Shape {
 public:

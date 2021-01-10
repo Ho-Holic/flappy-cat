@@ -11,12 +11,12 @@
 #include <queue>
 
 // style
-#include <style/Guidelines.h>
+#include <style/Guidelines.hpp>
 
 // engine
-#include "AndroidConfiguration.h"
-#include "AndroidLooper.h"
-#include "AndroidWindow.h"
+#include "AndroidConfiguration.hpp"
+#include "AndroidLooper.hpp"
+#include "AndroidWindow.hpp"
 
 class AndroidApplication {
 

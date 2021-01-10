@@ -2,10 +2,10 @@
 #define FLAPPY_CAT_FLAPPYCATTEXTCHARACTER_H
 
 // game
-#include "FlappyCatEntity.h"
+#include "FlappyCatEntity.hpp"
 
 // engine
-#include <prototype/RectangleShape.h>
+#include <prototype/RectangleShape.hpp>
 
 // stl
 #include <array>

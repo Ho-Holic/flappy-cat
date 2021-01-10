@@ -1,8 +1,8 @@
 // game
-#include "FlappyCatEntity.h"
+#include "FlappyCatEntity.hpp"
 
 // engine
-#include <core/Log.h>
+#include <core/Log.hpp>
 
 FlappyCatEntity::FlappyCatEntity(const FlappyCatGameConstants& gameConstants)
 : mGameConstants(gameConstants)

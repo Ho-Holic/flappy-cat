@@ -2,14 +2,14 @@
 #define FLAPPY_CAT_FLAPPYCATMASCOT_H
 
 // engine
-#include <prototype/RectangleShape.h>
-#include <prototype/TriangleShape.h>
+#include <prototype/RectangleShape.hpp>
+#include <prototype/TriangleShape.hpp>
 
 // stl
 #include <memory>
 
 // game
-#include "FlappyCatEntity.h"
+#include "FlappyCatEntity.hpp"
 
 class FlappyCatMascot : public FlappyCatEntity {
 public:

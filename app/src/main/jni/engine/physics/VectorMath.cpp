@@ -1,5 +1,5 @@
 // engine
-#include "VectorMath.h"
+#include "VectorMath.hpp"
 
 // stl
 #include <cmath>

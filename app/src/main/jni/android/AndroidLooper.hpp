@@ -6,10 +6,10 @@
 #include <android/input.h>
 
 // style
-#include "style/Guidelines.h"
+#include "style/Guidelines.hpp"
 
 // engine
-#include "AndroidEvent.h"
+#include "AndroidEvent.hpp"
 
 // stl
 #include <cstdint>

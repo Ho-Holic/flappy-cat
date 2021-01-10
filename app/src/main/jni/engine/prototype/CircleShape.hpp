@@ -2,10 +2,10 @@
 #define FLAPPY_CAT_ANDROIDCIRCLESHAPE_H
 
 // engine
-#include <core/Shape.h>
-#include <prototype/CircleGeometry.h>
-#include <prototype/FlatTransformation.h>
-#include <prototype/VertexBasedRender.h>
+#include <core/Shape.hpp>
+#include <prototype/CircleGeometry.hpp>
+#include <prototype/FlatTransformation.hpp>
+#include <prototype/VertexBasedRender.hpp>
 
 class CircleShape : public Shape {
 public:

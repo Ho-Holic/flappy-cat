@@ -2,7 +2,7 @@
 #define FLAPPY_CAT_FLAPPYCATCOLORSCHEME_H
 
 // game
-#include <core/Color.h>
+#include <core/Color.hpp>
 
 // stl
 #include <random>

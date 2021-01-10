@@ -5,8 +5,8 @@
 #include <vector>
 
 // engine
-#include "core/Vertices.h"
-#include "core/Transformation.h"
+#include "core/Vertices.hpp"
+#include "core/Transformation.hpp"
 
 struct Polygon {
     Vertices vertices;

@@ -2,10 +2,10 @@
 #define FLAPPY_CAT_FLAPPYCATBACKGROUND_H
 
 // engine
-#include <prototype/RectangleShape.h>
+#include <prototype/RectangleShape.hpp>
 
 // game
-#include "FlappyCatEntity.h"
+#include "FlappyCatEntity.hpp"
 
 class FlappyCatBackground : public FlappyCatEntity {
 public:

@@ -2,13 +2,13 @@
 #define FLAPPY_CAT_FLAPPYCATAPPLICATION_H
 
 // engine
-#include <android/AndroidApplication.h>
-#include <prototype/RectangleShape.h>
-#include <prototype/CircleShape.h>
+#include <android/AndroidApplication.hpp>
+#include <prototype/RectangleShape.hpp>
+#include <prototype/CircleShape.hpp>
 
 // game
-#include "FlappyCatGame.h"
-#include "FlappyCatClock.h"
+#include "FlappyCatGame.hpp"
+#include "FlappyCatClock.hpp"
 
 class FlappyCatApplication : public AndroidApplication {
 public:

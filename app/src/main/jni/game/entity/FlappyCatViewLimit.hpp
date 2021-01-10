@@ -2,10 +2,10 @@
 #define FLAPPY_CAT_FLAPPYCATVIEWLIMIT_H
 
 // engine
-#include <prototype/RectangleShape.h>
+#include <prototype/RectangleShape.hpp>
 
 // game
-#include "FlappyCatEntity.h"
+#include "FlappyCatEntity.hpp"
 
 class FlappyCatViewLimit : public FlappyCatEntity {
 public:

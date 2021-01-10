@@ -1,5 +1,5 @@
-#include "QtWindow.h"
-#include "QtOpenGLRender.h"
+#include "QtWindow.hpp"
+#include "QtOpenGLRender.hpp"
 #include <QEvent>
 #include <QGuiApplication>
 #include <QMouseEvent>
@@ -8,9 +8,9 @@
 #include <thread>
 
 // engine
-#include <core/Clock.h>
-#include "FlappyCatClock.h"
-#include "FlappyCatGame.h"
+#include <core/Clock.hpp>
+#include "FlappyCatClock.hpp"
+#include "FlappyCatGame.hpp"
 
 
 QtWindow::QtWindow(QWindow* parent)

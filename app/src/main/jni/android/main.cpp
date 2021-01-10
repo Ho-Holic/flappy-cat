@@ -2,10 +2,10 @@
 #include <android/native_activity.h>
 
 // game
-#include "android/FlappyCatApplication.h"
+#include "android/FlappyCatApplication.hpp"
 
 // engine
-#include <core/Log.h>
+#include <core/Log.hpp>
 
 // stl
 #include <thread>

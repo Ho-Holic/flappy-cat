@@ -2,7 +2,7 @@
 #define FLAPPY_CAT_COLLIDE_H
 
 // engine
-#include <core/Shape.h>
+#include <core/Shape.hpp>
 
 class Collide {
 public:

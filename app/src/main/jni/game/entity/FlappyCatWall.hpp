@@ -2,13 +2,13 @@
 #define FLAPPY_CAT_FLAPPYCATWALL_H
 
 // engine
-#include <core/Position.h>
-#include <core/Window.h>
-#include <prototype/RectangleShape.h>
-#include <core/Clock.h>
+#include <core/Position.hpp>
+#include <core/Window.hpp>
+#include <prototype/RectangleShape.hpp>
+#include <core/Clock.hpp>
 
 // game
-#include "FlappyCatEntity.h"
+#include "FlappyCatEntity.hpp"
 
 //
 //  A4    .----.

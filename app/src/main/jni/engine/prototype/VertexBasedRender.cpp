@@ -1,8 +1,8 @@
 
 // engine
-#include "VertexBasedRender.h"
-#include <core/Window.h>
-#include <core/Log.h>
+#include "VertexBasedRender.hpp"
+#include <core/Window.hpp>
+#include <core/Log.hpp>
 
 // stl
 #include <cmath>

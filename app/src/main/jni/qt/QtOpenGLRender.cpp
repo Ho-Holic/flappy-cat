@@ -1,6 +1,6 @@
-#include "QtOpenGLRender.h"
+#include "QtOpenGLRender.hpp"
 #include <memory>
-#include <core/Log.h>
+#include <core/Log.hpp>
 
 enum : GLuint {
     AttributePosition,

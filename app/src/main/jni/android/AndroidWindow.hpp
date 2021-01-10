@@ -2,14 +2,14 @@
 #define FLAPPY_CAT_ANDROIDWINDOW_H
 
 // engine
-#include <core/Color.h>
-#include <core/Vertices.h>
-#include <core/Shape.h>
-#include <core/Window.h>
-#include <core/View.h>
+#include <core/Color.hpp>
+#include <core/Vertices.hpp>
+#include <core/Shape.hpp>
+#include <core/Window.hpp>
+#include <core/View.hpp>
 
 // style
-#include <style/Guidelines.h>
+#include <style/Guidelines.hpp>
 
 // ndk
 #include <android/native_window.h>

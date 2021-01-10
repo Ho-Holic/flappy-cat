@@ -2,8 +2,8 @@
 #define FLAPPY_CAT_VERTEX_H
 
 // engine
-#include "Color.h"
-#include "Position.h"
+#include "Color.hpp"
+#include "Position.hpp"
 
 class Vertex {
 public:

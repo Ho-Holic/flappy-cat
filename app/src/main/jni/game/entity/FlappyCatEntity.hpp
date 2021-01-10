@@ -2,11 +2,11 @@
 #define FLAPPY_CAT_FLAPPYCATENTITY_H
 
 // engine
-#include <core/Window.h>
+#include <core/Window.hpp>
 
 // game
-#include <game/FlappyCatGameConstants.h>
-#include <game/FlappyCatClock.h>
+#include <game/FlappyCatGameConstants.hpp>
+#include <game/FlappyCatClock.hpp>
 
 class FlappyCatEntity {
 public:

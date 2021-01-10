@@ -1,6 +1,6 @@
 
 // engine
-#include "CircleGeometry.h"
+#include "CircleGeometry.hpp"
 
 // stl
 #include <cmath>

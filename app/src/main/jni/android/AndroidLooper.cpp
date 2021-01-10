@@ -1,8 +1,8 @@
 // engine
-#include "AndroidLooper.h"
+#include "AndroidLooper.hpp"
 
 // engine
-#include <core/Log.h>
+#include <core/Log.hpp>
 
 AndroidLooper::AndroidLooper()
 : mLooper(nullptr)

@@ -2,8 +2,8 @@
 #define FLAPPY_CAT_FLATTRANSFROM_H
 
 // engine
-#include <core/Transformation.h>
-#include <core/Signal.h>
+#include <core/Transformation.hpp>
+#include <core/Signal.hpp>
 
 class FlatTransformation : public Transformation {
 public:

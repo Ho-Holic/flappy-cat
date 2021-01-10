@@ -5,10 +5,10 @@
 #include <cstdint>
 
 // engine
-#include "AndroidEventData.h"
+#include "AndroidEventData.hpp"
 
 // style
-#include "style/Guidelines.h"
+#include "style/Guidelines.hpp"
 
 // ndk
 #include <android/native_activity.h>

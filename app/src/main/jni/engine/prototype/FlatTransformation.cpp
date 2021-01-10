@@ -1,5 +1,5 @@
 // engine
-#include "FlatTransformation.h"
+#include "FlatTransformation.hpp"
 
 FlatTransformation::FlatTransformation(const Position& position)
 : Transformation()

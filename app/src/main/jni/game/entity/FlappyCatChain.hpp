@@ -2,18 +2,18 @@
 #define FLAPPY_CAT_FLAPPYCATCHAIN_H
 
 // engine
-#include <core/Position.h>
-#include <core/Color.h>
-#include <core/Clock.h>
-#include <core/Log.h>
-#include <core/Window.h>
+#include <core/Position.hpp>
+#include <core/Color.hpp>
+#include <core/Clock.hpp>
+#include <core/Log.hpp>
+#include <core/Window.hpp>
 
 // stl
 #include <vector>
 #include <cmath>
 
 // style
-#include <style/Guidelines.h>
+#include <style/Guidelines.hpp>
 
 template <typename Link>
 class FlappyCatChain : public FlappyCatEntity {

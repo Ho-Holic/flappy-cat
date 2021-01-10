@@ -2,12 +2,12 @@
 #define FLAPPY_CAT_FLAPPYCATGROUND_H
 
 // game
-#include "FlappyCatEntity.h"
-#include "FlappyCatSpike.h"
-#include "FlappyCatChain.h"
+#include "FlappyCatEntity.hpp"
+#include "FlappyCatSpike.hpp"
+#include "FlappyCatChain.hpp"
 
 // engine
-#include <prototype/RectangleShape.h>
+#include <prototype/RectangleShape.hpp>
 
 class FlappyCatFloor : public FlappyCatEntity {
 public:

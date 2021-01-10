@@ -1,8 +1,8 @@
 // engine
-#include "RectangleGeometry.h"
+#include "RectangleGeometry.hpp"
 
 // style
-#include <style/Guidelines.h>
+#include <style/Guidelines.hpp>
 
 RectangleGeometry::RectangleGeometry(const Position& size)
 : Geometry()

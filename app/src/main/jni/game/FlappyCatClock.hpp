@@ -2,8 +2,8 @@
 #define FLAPPY_CAT_FLAPPYCATCLOCK_H
 
 // engine
-#include <core/Clock.h>
-#include <core/Position.h>
+#include <core/Clock.hpp>
+#include <core/Position.hpp>
 
 // '1/60' of a second
 using FrameDuration = std::chrono::duration<float,

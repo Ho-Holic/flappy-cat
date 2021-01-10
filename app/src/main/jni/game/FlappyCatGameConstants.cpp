@@ -1,9 +1,9 @@
 // game
-#include "FlappyCatGameConstants.h"
+#include "FlappyCatGameConstants.hpp"
 
 // engine
-#include <style/Guidelines.h>
-#include <core/Log.h>
+#include <style/Guidelines.hpp>
+#include <core/Log.hpp>
 
 FlappyCatGameConstants::FlappyCatGameConstants()
 : mRandomDevice()

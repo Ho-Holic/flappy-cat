@@ -2,7 +2,7 @@
 #define FLAPPY_CAT_TRANSFORMATION_H
 
 // engine
-#include "Position.h"
+#include "Position.hpp"
 
 class Transformation {
 public:

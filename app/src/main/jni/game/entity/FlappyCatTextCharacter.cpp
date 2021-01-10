@@ -1,11 +1,11 @@
 // self
-#include "FlappyCatTextCharacter.h"
+#include "FlappyCatTextCharacter.hpp"
 
 // stl
 #include <map>
 
 // engine
-#include <core/Log.h>
+#include <core/Log.hpp>
 
 namespace {
   /**

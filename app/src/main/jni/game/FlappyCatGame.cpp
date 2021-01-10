@@ -1,11 +1,11 @@
 // game
-#include "FlappyCatGame.h"
-#include "FlappyCatClock.h"
+#include "FlappyCatGame.hpp"
+#include "FlappyCatClock.hpp"
 
 // engine
-#include <core/Log.h>
-#include <physics/Collide.h>
-#include <physics/VectorMath.h>
+#include <core/Log.hpp>
+#include <physics/Collide.hpp>
+#include <physics/VectorMath.hpp>
 
 // stl
 #include <string>

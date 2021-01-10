@@ -2,23 +2,23 @@
 #define FLAPPY_CAT_FLAPPYCATGAME_H
 
 // engine
-#include <core/Clock.h>
-#include <core/Event.h>
-#include <core/Window.h>
-#include <prototype/RectangleShape.h>
+#include <core/Clock.hpp>
+#include <core/Event.hpp>
+#include <core/Window.hpp>
+#include <prototype/RectangleShape.hpp>
 
 // game
-#include "FlappyCatGameConstants.h"
-#include "entity/FlappyCatNode.h"
-#include "entity/FlappyCatWall.h"
-#include "entity/FlappyCatChain.h"
-#include "entity/FlappyCatSpike.h"
-#include "entity/FlappyCatHero.h"
-#include "entity/FlappyCatCloud.h"
-#include "entity/FlappyCatFloor.h"
-#include "entity/FlappyCatViewLimit.h"
-#include "entity/FlappyCatBackground.h"
-#include "entity/FlappyCatText.h"
+#include "FlappyCatGameConstants.hpp"
+#include "entity/FlappyCatNode.hpp"
+#include "entity/FlappyCatWall.hpp"
+#include "entity/FlappyCatChain.hpp"
+#include "entity/FlappyCatSpike.hpp"
+#include "entity/FlappyCatHero.hpp"
+#include "entity/FlappyCatCloud.hpp"
+#include "entity/FlappyCatFloor.hpp"
+#include "entity/FlappyCatViewLimit.hpp"
+#include "entity/FlappyCatBackground.hpp"
+#include "entity/FlappyCatText.hpp"
 
 // stl
 #include <vector>

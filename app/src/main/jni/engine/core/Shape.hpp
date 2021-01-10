@@ -2,10 +2,10 @@
 #define FLAPPY_CAT_ANDROIDSHAPE_H
 
 // engine
-#include <core/Vertices.h>
-#include <core/Geometry.h>
-#include <core/Transformation.h>
-#include <core/Render.h>
+#include <core/Vertices.hpp>
+#include <core/Geometry.hpp>
+#include <core/Transformation.hpp>
+#include <core/Render.hpp>
 
 
 class Geometry;

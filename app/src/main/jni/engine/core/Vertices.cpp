@@ -1,5 +1,5 @@
 // engine
-#include "Vertices.h"
+#include "Vertices.hpp"
 
 Vertices::Vertices()
   : mVertices() {

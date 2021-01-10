@@ -1,14 +1,14 @@
 
 // game
-#include "FlappyCatColorScheme.h"
-#include "FlappyCatGameConstants.h"
+#include "FlappyCatColorScheme.hpp"
+#include "FlappyCatGameConstants.hpp"
 
 // engine
-#include <core/HslColor.h>
-#include <core/Log.h>
+#include <core/HslColor.hpp>
+#include <core/Log.hpp>
 
 // style
-#include <style/Guidelines.h>
+#include <style/Guidelines.hpp>
 
 FlappyCatColorScheme::FlappyCatColorScheme()
 : mRandomDevice()

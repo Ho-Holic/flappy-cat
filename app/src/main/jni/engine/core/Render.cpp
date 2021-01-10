@@ -1,7 +1,7 @@
 // engine
-#include "Render.h"
-#include <core/Window.h>
-#include <core/Shape.h>
+#include "Render.hpp"
+#include <core/Window.hpp>
+#include <core/Shape.hpp>
 
 Render::Render() {
   // intentionally left blank

@@ -1,12 +1,12 @@
 // engine
-#include "HslColor.h"
+#include "HslColor.hpp"
 
 // stl
 #include <cmath>
-#include <core/Log.h>
+#include <core/Log.hpp>
 
 // style
-#include <style/Guidelines.h>
+#include <style/Guidelines.hpp>
 
 HslColor::HslColor(value_type hue, value_type saturation, value_type luminance)
   : mHue(hue)

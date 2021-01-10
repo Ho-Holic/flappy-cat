@@ -1,5 +1,5 @@
 // engine
-#include "TriangleShape.h"
+#include "TriangleShape.hpp"
 
 TriangleShape::TriangleShape(const Position& position, const Position& size)
 : Shape()
