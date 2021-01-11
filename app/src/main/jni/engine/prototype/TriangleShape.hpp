@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_TRIANGLESHAPE_H
-#define FLAPPY_CAT_TRIANGLESHAPE_H
+#pragma once
+
 
 // engine
 #include <core/Shape.hpp>
@@ -35,4 +35,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_TRIANGLESHAPE_H
+

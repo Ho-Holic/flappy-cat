@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_FLATTRANSFROM_H
-#define FLAPPY_CAT_FLATTRANSFROM_H
+#pragma once
+
 
 // engine
 #include <core/Transformation.hpp>
@@ -35,4 +35,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_FLATTRANSFROM_H
+

@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_FLAPPYCATGAME_H
-#define FLAPPY_CAT_FLAPPYCATGAME_H
+#pragma once
+
 
 // engine
 #include <core/Clock.hpp>
@@ -72,4 +72,4 @@ enum FlappyCatGame::GameState : int32_t {
   OnTheFloorState
 };
 
-#endif //FLAPPY_CAT_FLAPPYCATGAME_H
+

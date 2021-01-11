@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_ANDROIDLOOPER_H
-#define FLAPPY_CAT_ANDROIDLOOPER_H
+#pragma once
+
 
 // ndk
 #include <android/looper.h>
@@ -62,4 +62,4 @@ enum AndroidLooper::Timeout : int {
   ImmediatelyWithoutBlockingTimeout    = 0,
 };
 
-#endif //FLAPPY_CAT_ANDROIDLOOPER_H
+

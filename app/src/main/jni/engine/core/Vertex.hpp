@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_VERTEX_H
-#define FLAPPY_CAT_VERTEX_H
+#pragma once
+
 
 // engine
 #include "Color.hpp"
@@ -19,4 +19,4 @@ private:
   Color mColor;
 };
 
-#endif //FLAPPY_CAT_VERTEX_H
+

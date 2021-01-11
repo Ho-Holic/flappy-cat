@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_ANDROIDLOG_H
-#define FLAPPY_CAT_ANDROIDLOG_H
+#pragma once
+
 
 // ndk
 #include <android/log.h>
@@ -92,6 +92,6 @@ void AndroidLog::assert_condition(bool cond, const char* condAsString, const cha
   }
 }
 
-#endif //FLAPPY_CAT_ANDROIDLOG_H
+
 
 

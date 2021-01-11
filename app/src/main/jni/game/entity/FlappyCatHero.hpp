@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_FLAPPYCATHERO_H
-#define FLAPPY_CAT_FLAPPYCATHERO_H
+#pragma once
+
 
 // engine
 #include <prototype/CircleShape.hpp>
@@ -52,4 +52,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_FLAPPYCATHERO_H
+

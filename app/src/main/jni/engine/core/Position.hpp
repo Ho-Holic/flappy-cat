@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_POSITION_H
-#define FLAPPY_CAT_POSITION_H
+#pragma once
+
 
 class Position {
 public:
@@ -78,4 +78,4 @@ inline Position operator/ (const Position& left, const Position& right) {
                   left.y() / right.y());
 }
 
-#endif //FLAPPY_CAT_POSITION_H
+

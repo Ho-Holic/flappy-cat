@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_WINDOW_H
-#define FLAPPY_CAT_WINDOW_H
+#pragma once
+
 
 // engine
 #include <core/Color.hpp>
@@ -27,4 +27,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_WINDOW_H
+

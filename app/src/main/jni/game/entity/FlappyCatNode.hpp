@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_FLAPPYCATNODE_H
-#define FLAPPY_CAT_FLAPPYCATNODE_H
+#pragma once
+
 
 // engine
 #include <core/Window.hpp>
@@ -33,4 +33,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_FLAPPYCATNODE_H
+

@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_ANDROIDWINDOW_H
-#define FLAPPY_CAT_ANDROIDWINDOW_H
+#pragma once
+
 
 // engine
 #include <core/Color.hpp>
@@ -75,4 +75,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_ANDROIDWINDOW_H
+

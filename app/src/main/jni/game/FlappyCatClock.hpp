@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_FLAPPYCATCLOCK_H
-#define FLAPPY_CAT_FLAPPYCATCLOCK_H
+#pragma once
+
 
 // engine
 #include <core/Clock.hpp>
@@ -12,4 +12,4 @@ using FrameDuration = std::chrono::duration<float,
 using GameSecond = std::chrono::duration<float,
                                           std::ratio<1,1>>;
 
-#endif //FLAPPY_CAT_FLAPPYCATCLOCK_H
+

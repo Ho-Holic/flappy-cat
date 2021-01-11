@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_VERTEXBASEDRENDER_H
-#define FLAPPY_CAT_VERTEXBASEDRENDER_H
+#pragma once
+
 
 // engine
 #include <core/Render.hpp>
@@ -23,4 +23,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_VERTEXBASEDRENDER_H
+

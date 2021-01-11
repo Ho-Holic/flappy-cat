@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_FLAPPYCATSPIKE_H
-#define FLAPPY_CAT_FLAPPYCATSPIKE_H
+#pragma once
+
 
 // engine
 #include <prototype/RectangleShape.hpp>
@@ -34,4 +34,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_FLAPPYCATSPIKE_H
+

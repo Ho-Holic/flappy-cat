@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_ANDROIDCOLOR_H
-#define FLAPPY_CAT_ANDROIDCOLOR_H
+#pragma once
+
 
 // stl
 #include <cstdint>
@@ -40,4 +40,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_ANDROIDCOLOR_H
+

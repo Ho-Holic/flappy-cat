@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_FLAPPYCATCHAIN_H
-#define FLAPPY_CAT_FLAPPYCATCHAIN_H
+#pragma once
+
 
 // engine
 #include <core/Position.hpp>
@@ -233,4 +233,4 @@ void FlappyCatChain<Link>::foreachLink(const modifier_type& modifier) {
   }
 }
 
-#endif //FLAPPY_CAT_FLAPPYCATCHAIN_H
+

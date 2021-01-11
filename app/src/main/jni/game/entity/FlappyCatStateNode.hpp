@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_FLAPPYCATSTATENODE_H
-#define FLAPPY_CAT_FLAPPYCATSTATENODE_H
+#pragma once
+
 
 #include "FlappyCatNode.hpp"
 
@@ -86,4 +86,4 @@ void FlappyCatStateNode<T>::setInitializeModifier(initialize_modifier_type modif
   mInitializeModifier = modifier;
 }
 
-#endif //FLAPPY_CAT_FLAPPYCATSTATENODE_H
+

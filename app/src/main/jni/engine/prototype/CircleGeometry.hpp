@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_CIRCLEGEOMETRY_H
-#define FLAPPY_CAT_CIRCLEGEOMETRY_H
+#pragma once
+
 
 // engine
 #include <core/Geometry.hpp>
@@ -29,4 +29,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_CIRCLEGEOMETRY_H
+

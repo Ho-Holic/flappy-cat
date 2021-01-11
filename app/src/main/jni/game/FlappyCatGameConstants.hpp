@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_FLAPPYCATGAMECONSTANT_H
-#define FLAPPY_CAT_FLAPPYCATGAMECONSTANT_H
+#pragma once
+
 
 // game
 #include "FlappyCatColorScheme.hpp"
@@ -91,4 +91,4 @@ enum FlappyCatGameConstants::Constants : size_t {
   ConstantsSize
 };
 
-#endif //FLAPPY_CAT_FLAPPYCATSIZECONSTANTS_H
+

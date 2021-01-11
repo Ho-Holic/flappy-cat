@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_ANDROIDEVENT_H
-#define FLAPPY_CAT_ANDROIDEVENT_H
+#pragma once
+
 
 // stl
 #include <cstdint>
@@ -69,4 +69,4 @@ enum AndroidEvent::EventType : int8_t {
 };
 
 
-#endif //FLAPPY_CAT_ANDROIDEVENT_H
+

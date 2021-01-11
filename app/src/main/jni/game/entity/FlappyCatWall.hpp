@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_FLAPPYCATWALL_H
-#define FLAPPY_CAT_FLAPPYCATWALL_H
+#pragma once
+
 
 // engine
 #include <core/Position.hpp>
@@ -68,4 +68,4 @@ private:
 
 
 
-#endif //FLAPPY_CAT_FLAPPYCATWALL_H
+

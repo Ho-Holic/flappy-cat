@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_VIEW_H
-#define FLAPPY_CAT_VIEW_H
+#pragma once
+
 
 // engine
 #include <core/Transformation.hpp>
@@ -29,4 +29,4 @@ public:
 };
 
 
-#endif //FLAPPY_CAT_VIEW_H
+

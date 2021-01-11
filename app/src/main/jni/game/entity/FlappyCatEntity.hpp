@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_FLAPPYCATENTITY_H
-#define FLAPPY_CAT_FLAPPYCATENTITY_H
+#pragma once
+
 
 // engine
 #include <core/Window.hpp>
@@ -53,4 +53,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_FLAPPYCATENTITY_H
+

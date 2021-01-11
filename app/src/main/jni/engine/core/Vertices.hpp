@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_ANDROIDVERTICES_H
-#define FLAPPY_CAT_ANDROIDVERTICES_H
+#pragma once
+
 
 //engine
 #include "Vertex.hpp"
@@ -27,4 +27,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_ANDROIDVERTICES_H
+

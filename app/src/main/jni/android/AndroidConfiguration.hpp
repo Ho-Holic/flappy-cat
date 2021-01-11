@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_ANDROIDCONFIGURATION_H
-#define FLAPPY_CAT_ANDROIDCONFIGURATION_H
+#pragma once
+
 
 // ndk
 #include <android/configuration.h>
@@ -37,4 +37,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_ANDROIDCONFIGURATION_H
+

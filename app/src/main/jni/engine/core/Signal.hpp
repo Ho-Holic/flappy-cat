@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_SIGNAL_H
-#define FLAPPY_CAT_SIGNAL_H
+#pragma once
+
 
 // stl
 #include <functional>
@@ -73,4 +73,4 @@ void Signal<SlotFunction>::emit(Args... args) {
 }
 
 
-#endif //FLAPPY_CAT_SIGNAL_H
+

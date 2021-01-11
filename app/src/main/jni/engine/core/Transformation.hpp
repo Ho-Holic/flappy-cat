@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_TRANSFORMATION_H
-#define FLAPPY_CAT_TRANSFORMATION_H
+#pragma once
+
 
 // engine
 #include "Position.hpp"
@@ -22,4 +22,4 @@ public:
 };
 
 
-#endif //FLAPPY_CAT_TRANSFORMATION_H
+

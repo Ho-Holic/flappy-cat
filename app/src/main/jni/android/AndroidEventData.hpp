@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_ANDROIDEVENTDATA_H
-#define FLAPPY_CAT_ANDROIDEVENTDATA_H
+#pragma once
+
 
 
 // ndk
@@ -40,4 +40,4 @@ union AndroidEventData {
   AndroidEventLoopEvent eventLoopEvent;
 };
 
-#endif //FLAPPY_CAT_ANDROIDEVENTDATA_H
+

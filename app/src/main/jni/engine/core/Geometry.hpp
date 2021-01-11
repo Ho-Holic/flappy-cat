@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_GEOMETRY_H
-#define FLAPPY_CAT_GEOMETRY_H
+#pragma once
+
 
 // stl
 #include <cstddef>
@@ -20,4 +20,4 @@ public:
 };
 
 
-#endif //FLAPPY_CAT_GEOMETRY_H
+

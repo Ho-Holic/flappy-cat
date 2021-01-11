@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_ANDROIDAPPLICATION_H
-#define FLAPPY_CAT_ANDROIDAPPLICATION_H
+#pragma once
+
 
 // ndk
 #include <android/native_activity.h>
@@ -120,4 +120,4 @@ enum AndroidApplication::Focus: int {
   LostFocus,
 };
 
-#endif //FLAPPY_CAT_ANDROIDAPPLICATION_H
+

@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_RECTANGLEGEOMETRY_H
-#define FLAPPY_CAT_RECTANGLEGEOMETRY_H
+#pragma once
+
 
 // engine
 #include <core/Geometry.hpp>
@@ -27,4 +27,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_RECTANGLEGEOMETRY_H
+

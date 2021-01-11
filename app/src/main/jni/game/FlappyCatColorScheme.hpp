@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_FLAPPYCATCOLORSCHEME_H
-#define FLAPPY_CAT_FLAPPYCATCOLORSCHEME_H
+#pragma once
+
 
 // game
 #include <core/Color.hpp>
@@ -48,4 +48,4 @@ enum FlappyCatColorScheme::Colors : size_t {
 };
 
 
-#endif //FLAPPY_CAT_FLAPPYCATCOLORSCHEME_H
+

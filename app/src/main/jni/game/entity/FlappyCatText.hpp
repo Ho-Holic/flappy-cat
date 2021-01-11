@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_FLAPPYCATTEXT_H
-#define FLAPPY_CAT_FLAPPYCATTEXT_H
+#pragma once
+
 
 // game
 #include "FlappyCatEntity.hpp"
@@ -26,4 +26,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_FLAPPYCATTEXT_H
+

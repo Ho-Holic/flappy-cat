@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_RENDER_H
-#define FLAPPY_CAT_RENDER_H
+#pragma once
+
 
 class Window;
 class Shape;
@@ -16,4 +16,4 @@ public:
 };
 
 
-#endif //FLAPPY_CAT_RENDER_H
+

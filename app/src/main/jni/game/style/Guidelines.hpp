@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_GUIDELINES_H
-#define FLAPPY_CAT_GUIDELINES_H
+#pragma once
+
 
 /**
  * UNUSED - document that variable is unused and programmer know this
@@ -66,4 +66,4 @@
   throw std::logic_error("ASSERT: this code must be unreachable"); \
   return RETURN_VALUE;
 
-#endif //FLAPPY_CAT_GUIDELINES_H
+

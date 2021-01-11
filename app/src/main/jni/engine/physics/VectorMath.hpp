@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_VECTORMATH_H
-#define FLAPPY_CAT_VECTORMATH_H
+#pragma once
+
 
 // engine
 #include <core/Position.hpp>
@@ -22,4 +22,4 @@ T VectorMath::linearInterpolation(const T& x, const T& x0, const T& x1,
 }
 
 
-#endif //FLAPPY_CAT_VECTORMATH_H
+

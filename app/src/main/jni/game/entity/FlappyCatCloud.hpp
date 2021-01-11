@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_FLAPPYCATCLOUD_H
-#define FLAPPY_CAT_FLAPPYCATCLOUD_H
+#pragma once
+
 
 // engine
 #include <prototype/CircleShape.hpp>
@@ -35,4 +35,4 @@ public:
 };
 
 
-#endif //FLAPPY_CAT_FLAPPYCATCLOUD_H
+

@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_COLLIDE_H
-#define FLAPPY_CAT_COLLIDE_H
+#pragma once
+
 
 // engine
 #include <core/Shape.hpp>
@@ -23,4 +23,4 @@ public:
   };
 
 
-#endif //FLAPPY_CAT_COLLIDE_H
+

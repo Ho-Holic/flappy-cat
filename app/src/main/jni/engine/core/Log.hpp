@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_LOG_H_H
-#define FLAPPY_CAT_LOG_H_H
+#pragma once
+
 
 // engine
 #ifdef FLAPPYCAT_QT
@@ -27,4 +27,4 @@ using Log = void;
 //  Log::assert(condition, "", tag, args...);
 //}
 
-#endif //FLAPPY_CAT_LOG_H_H
+

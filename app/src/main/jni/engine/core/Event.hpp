@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_EVENT_H
-#define FLAPPY_CAT_EVENT_H
+#pragma once
+
 
 #ifdef FLAPPYCAT_QT
 
@@ -22,4 +22,4 @@ using Event = void;
 
 #endif
 
-#endif //FLAPPY_CAT_EVENT_H
+

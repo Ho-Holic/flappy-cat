@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_ANDROIDSHAPE_H
-#define FLAPPY_CAT_ANDROIDSHAPE_H
+#pragma once
+
 
 // engine
 #include <core/Vertices.hpp>
@@ -28,4 +28,4 @@ public:
 };
 
 
-#endif //FLAPPY_CAT_ANDROIDSHAPE_H
+

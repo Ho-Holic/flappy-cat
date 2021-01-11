@@ -1,5 +1,5 @@
-#ifndef FLAPPY_CAT_FLAPPYCATAPPLICATION_H
-#define FLAPPY_CAT_FLAPPYCATAPPLICATION_H
+#pragma once
+
 
 // engine
 #include <android/AndroidApplication.hpp>
@@ -21,4 +21,4 @@ private:
 };
 
 
-#endif //FLAPPY_CAT_FLAPPYCATAPPLICATION_H
+
