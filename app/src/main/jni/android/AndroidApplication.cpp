@@ -376,7 +376,8 @@ void AndroidApplication::exec() {
 
   initialize();
 
-  SCOPE("application is initialized now") {
+  // application is initialized now
+  {
 
     std::lock_guard<std::mutex> lock(mMutex);
     mIsRunning = true;
@@ -409,7 +410,8 @@ void AndroidApplication::exec() {
 
 bool AndroidApplication::pollEvent(AndroidEvent& event) {
 
-  SCOPE("looper event") {
+  // looper event
+  {
 
     AndroidEvent looperEvent;
     bool hasEventsInLooper = mLooper.pollEvent(looperEvent);
