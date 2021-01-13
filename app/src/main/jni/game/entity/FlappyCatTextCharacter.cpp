@@ -8,184 +8,288 @@
 #include <core/Log.hpp>
 
 namespace {
-  /**
+/**
    * TODO: consider to implement visitor font
    *
    * https://www.myfonts.com/fonts/cheapprofonts/visitor-brk-ten-pro/
    *
    */
-  static std::map<char, std::vector<size_t>> g_characterTable = {
-    {'0',
-      { 1,1,1,
-        1,0,1,
-        1,0,1,
-        1,0,1,
-        1,1,1,
-      }
-    },
-    {'1',
-      { 0,1,1,
-        0,0,1,
-        0,0,1,
-        0,0,1,
-        0,0,1,
-      }
-    },
-    {'2',
-      { 1,1,1,
-        0,0,1,
-        1,1,1,
-        1,0,0,
-        1,1,1,
-      }
-    },
-    {'3',
-      { 1,1,1,
-        0,0,1,
-        0,1,1,
-        0,0,1,
-        1,1,1,
-      }
-    },
-    {'4',
-      { 1,0,1,
-        1,0,1,
-        1,1,1,
-        0,0,1,
-        0,0,1,
-      }
-    },
-    {'5',
-      { 1,1,1,
-        1,0,0,
-        1,1,1,
-        0,0,1,
-        1,1,1,
-      }
-    },
-    {'6',
-      { 1,1,1,
-        1,0,0,
-        1,1,1,
-        1,0,1,
-        1,1,1,
-      }
-    },
-    {'7',
-      { 1,1,1,
-        0,0,1,
-        0,0,1,
-        0,0,1,
-        0,0,1,
-      }
-    },
-    {'8',
-      { 1,1,1,
-        1,0,1,
-        1,1,1,
-        1,0,1,
-        1,1,1,
-      }
-    },
-    {'9',
-      { 1,1,1,
-        1,0,1,
-        1,1,1,
-        0,0,1,
-        0,0,1,
-      }
-    },
-  };
+static std::map<char, std::vector<size_t>> g_characterTable = {
+    { '0',
+        {
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+        } },
+    { '1',
+        {
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+        } },
+    { '2',
+        {
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+        } },
+    { '3',
+        {
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+        } },
+    { '4',
+        {
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+        } },
+    { '5',
+        {
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+        } },
+    { '6',
+        {
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+        } },
+    { '7',
+        {
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+        } },
+    { '8',
+        {
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+        } },
+    { '9',
+        {
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+        } },
+};
 }
 
 FlappyCatTextCharacter::FlappyCatTextCharacter(const FlappyCatGameConstants& gameConstants)
-  : FlappyCatEntity(gameConstants)
-  , mCharacter('\0')
-  , mCharacterBody()
-  , mSize(CharacterPartWidth * CharacterWidth,
-          CharacterPartHeight * CharacterHeight) {
-  //
+    : FlappyCatEntity(gameConstants)
+    , mCharacter('\0')
+    , mCharacterBody()
+    , mSize(CharacterPartWidth * CharacterWidth,
+          CharacterPartHeight * CharacterHeight)
+{
+    //
 }
 
-void FlappyCatTextCharacter::processCharacterWith(rearrange_modifier modifier) {
+void FlappyCatTextCharacter::processCharacterWith(rearrange_modifier modifier)
+{
 
-  auto found = g_characterTable.find(mCharacter);
+    auto found = g_characterTable.find(mCharacter);
 
-  REQUIRE(TAG, found != g_characterTable.end(), "Try to rearrange to non existing character");
+    REQUIRE(TAG, found != g_characterTable.end(), "Try to rearrange to non existing character");
 
-  const CharacterParts& characterParts = (*found).second;
+    const CharacterParts& characterParts = (*found).second;
 
-  for (size_t y = 0; y < CharacterHeight; ++y) {
-    for (size_t x = 0; x < CharacterWidth; ++x) {
+    for (size_t y = 0; y < CharacterHeight; ++y) {
+        for (size_t x = 0; x < CharacterWidth; ++x) {
 
-      size_t accessIndex = y * CharacterWidth + x;
+            size_t accessIndex = y * CharacterWidth + x;
 
-      modifier(x, y, characterParts[accessIndex], mCharacterBody[accessIndex]);
+            modifier(x, y, characterParts[accessIndex], mCharacterBody[accessIndex]);
+        }
     }
-  }
 }
 
-void FlappyCatTextCharacter::processCharacterWith(const_rearrange_modifier modifier) const {
+void FlappyCatTextCharacter::processCharacterWith(const_rearrange_modifier modifier) const
+{
 
-  auto found = g_characterTable.find(mCharacter);
+    auto found = g_characterTable.find(mCharacter);
 
-  REQUIRE(TAG, found != g_characterTable.end(), "Try to rearrange to non existing character");
+    REQUIRE(TAG, found != g_characterTable.end(), "Try to rearrange to non existing character");
 
-  const CharacterParts& characterParts = (*found).second;
+    const CharacterParts& characterParts = (*found).second;
 
-  for (size_t y = 0; y < CharacterHeight; ++y) {
-    for (size_t x = 0; x < CharacterWidth; ++x) {
+    for (size_t y = 0; y < CharacterHeight; ++y) {
+        for (size_t x = 0; x < CharacterWidth; ++x) {
 
-      size_t accessIndex = y * CharacterWidth + x;
+            size_t accessIndex = y * CharacterWidth + x;
 
-      modifier(x, y, characterParts[accessIndex], mCharacterBody[accessIndex]);
+            modifier(x, y, characterParts[accessIndex], mCharacterBody[accessIndex]);
+        }
     }
-  }
 }
 
-void FlappyCatTextCharacter::setCharacter(char character) {
+void FlappyCatTextCharacter::setCharacter(char character)
+{
 
-  mCharacter = character;
-  syncChildren();
+    mCharacter = character;
+    syncChildren();
 }
 
-void FlappyCatTextCharacter::syncChildren() {
+void FlappyCatTextCharacter::syncChildren()
+{
 
-  processCharacterWith([this](size_t x, size_t y,
-                              const CharacterData& characterData,
-                              RectangleShape& body){
+    processCharacterWith([this](size_t x, size_t y,
+                             const CharacterData& characterData,
+                             RectangleShape& body) {
+        UNUSED(characterData);
+        body.transformation().setPosition(position() + Position((x * CharacterPartWidth), -static_cast<float>(y * CharacterPartHeight)));
 
-    UNUSED(characterData);
-    body.transformation().setPosition(position() + Position((x * CharacterPartWidth),
-             -static_cast<float>(y * CharacterPartHeight)));
-
-    body.geometry().resize(Position(CharacterPartWidth, CharacterPartHeight));
-  });
+        body.geometry().resize(Position(CharacterPartWidth, CharacterPartHeight));
+    });
 }
 
-void FlappyCatTextCharacter::drawOn(const Window& window) const {
+void FlappyCatTextCharacter::drawOn(const Window& window) const
+{
 
-  processCharacterWith([this, &window](size_t x, size_t y,
-                                       const CharacterData& characterData,
-                                       const RectangleShape& body){
-    UNUSED(x);
-    UNUSED(y);
-    if (characterData > 0) {
-      window.draw(body);
+    processCharacterWith([this, &window](size_t x, size_t y,
+                             const CharacterData& characterData,
+                             const RectangleShape& body) {
+        UNUSED(x);
+        UNUSED(y);
+        if (characterData > 0) {
+            window.draw(body);
+        }
+    });
+}
+
+const Position& FlappyCatTextCharacter::size() const
+{
+
+    return mSize;
+}
+
+void FlappyCatTextCharacter::setColor(const Color& textColor)
+{
+
+    for (RectangleShape& body : mCharacterBody) {
+        body.setColor(textColor);
     }
-  });
 }
-
-const Position& FlappyCatTextCharacter::size() const {
-
-  return mSize;
-}
-
-void FlappyCatTextCharacter::setColor(const Color& textColor) {
-
-  for (RectangleShape& body : mCharacterBody) {
-    body.setColor(textColor);
-  }
-}
-
-

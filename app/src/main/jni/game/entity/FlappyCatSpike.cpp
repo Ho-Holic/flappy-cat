@@ -2,25 +2,27 @@
 #include "FlappyCatSpike.hpp"
 
 FlappyCatSpike::FlappyCatSpike(const FlappyCatGameConstants& gameConstants)
-: FlappyCatEntity(gameConstants)
-, mSpike() {
-  //
+    : FlappyCatEntity(gameConstants)
+    , mSpike()
+{
+    //
 }
 
-void FlappyCatSpike::drawOn(const Window& window) const {
+void FlappyCatSpike::drawOn(const Window& window) const
+{
 
-  window.draw(mSpike);
+    window.draw(mSpike);
 }
 
-void FlappyCatSpike::setColor(const Color& color) {
+void FlappyCatSpike::setColor(const Color& color)
+{
 
-  mSpike.setColor(color);
+    mSpike.setColor(color);
 }
 
-void FlappyCatSpike::syncChildren() {
+void FlappyCatSpike::syncChildren()
+{
 
-  mSpike.transformation().setPosition(position());
-  mSpike.geometry().resize(size());
+    mSpike.transformation().setPosition(position());
+    mSpike.geometry().resize(size());
 }
-
-

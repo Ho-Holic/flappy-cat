@@ -2,29 +2,26 @@
 #include "Position.hpp"
 
 Position::Position(value_type x, value_type y)
-: mX(x)
-, mY(y) {
-  //
+    : mX(x)
+    , mY(y)
+{
+    //
 }
 
 Position::Position()
-: Position(0.f, 0.f) {
-  //
+    : Position(0.f, 0.f)
+{
+    //
 }
 
-float Position::x() const {
+float Position::x() const
+{
 
-  return mX;
+    return mX;
 }
 
-float Position::y() const {
+float Position::y() const
+{
 
-  return mY;
+    return mY;
 }
-
-
-
-
-
-
-

@@ -5,55 +5,63 @@
 #include <core/Log.hpp>
 
 FlappyCatEntity::FlappyCatEntity(const FlappyCatGameConstants& gameConstants)
-: mGameConstants(gameConstants)
-, mPosition()
-, mSize()
-, mAngle(0.f)
-, mGravity(0.f, 0.f)
-, mAcceleration()
-, mVelocity()
-, mDistance() {
-  //
+    : mGameConstants(gameConstants)
+    , mPosition()
+    , mSize()
+    , mAngle(0.f)
+    , mGravity(0.f, 0.f)
+    , mAcceleration()
+    , mVelocity()
+    , mDistance()
+{
+    //
 }
 
-FlappyCatEntity::~FlappyCatEntity() {
-  // intentionally left blank
+FlappyCatEntity::~FlappyCatEntity()
+{
+    // intentionally left blank
 }
 
-void FlappyCatEntity::reset() {
+void FlappyCatEntity::reset()
+{
 
-  mPosition     = Position(0.f, 0.f);
-  mSize         = Position(0.f, 0.f);
-  mAcceleration = Position(0.f, 0.f);
-  mVelocity     = Position(0.f, 0.f);
-  mDistance     = Position(0.f, 0.f);
+    mPosition = Position(0.f, 0.f);
+    mSize = Position(0.f, 0.f);
+    mAcceleration = Position(0.f, 0.f);
+    mVelocity = Position(0.f, 0.f);
+    mDistance = Position(0.f, 0.f);
 }
 
-void FlappyCatEntity::moveBy(const Position& offset) {
+void FlappyCatEntity::moveBy(const Position& offset)
+{
 
-  moveTo(position() + offset);
+    moveTo(position() + offset);
 }
 
-void FlappyCatEntity::moveTo(const Position& position) {
+void FlappyCatEntity::moveTo(const Position& position)
+{
 
-  mPosition = position;
-  syncChildren();
+    mPosition = position;
+    syncChildren();
 }
 
-void FlappyCatEntity::resize(const Position& size) {
+void FlappyCatEntity::resize(const Position& size)
+{
 
-  mSize = size;
-  syncChildren();
+    mSize = size;
+    syncChildren();
 }
 
-void FlappyCatEntity::syncChildren() {
-  // intentionally left blank
+void FlappyCatEntity::syncChildren()
+{
+    // intentionally left blank
 }
 
-void FlappyCatEntity::rotateTo(float angle) {
+void FlappyCatEntity::rotateTo(float angle)
+{
 
-  mAngle = angle;
-  syncChildren();
+    mAngle = angle;
+    syncChildren();
 }
 
 /**
@@ -66,67 +74,76 @@ void FlappyCatEntity::rotateTo(float angle) {
  * omit call to this function, but if you don't provide default one
  * this code would be called
  */
-void FlappyCatEntity::update(const FrameDuration& frameDuration) {
+void FlappyCatEntity::update(const FrameDuration& frameDuration)
+{
 
-  float time = std::chrono::duration_cast<GameSecond>(frameDuration).count();
+    float time = std::chrono::duration_cast<GameSecond>(frameDuration).count();
 
-  // TODO: make list of physical forces instead of gravity variable
-  mAcceleration = mAcceleration - mGravity;
-  mVelocity = mVelocity + (mAcceleration * time);
+    // TODO: make list of physical forces instead of gravity variable
+    mAcceleration = mAcceleration - mGravity;
+    mVelocity = mVelocity + (mAcceleration * time);
 
-  mDistance = mVelocity * time; // distance passed by last update
-
+    mDistance = mVelocity * time; // distance passed by last update
 }
 
-void FlappyCatEntity::initialize() {
-  // intentionally left blank
+void FlappyCatEntity::initialize()
+{
+    // intentionally left blank
 }
 
-const FlappyCatGameConstants& FlappyCatEntity::gameConstants() const {
+const FlappyCatGameConstants& FlappyCatEntity::gameConstants() const
+{
 
-  return mGameConstants;
+    return mGameConstants;
 }
 
-const Position& FlappyCatEntity::position() const {
-  return mPosition;
+const Position& FlappyCatEntity::position() const
+{
+    return mPosition;
 }
 
-const Position& FlappyCatEntity::size() const {
-  return mSize;
+const Position& FlappyCatEntity::size() const
+{
+    return mSize;
 }
 
-float FlappyCatEntity::rotation() const {
-  return mAngle;
+float FlappyCatEntity::rotation() const
+{
+    return mAngle;
 }
 
-const Position& FlappyCatEntity::acceleration() const {
+const Position& FlappyCatEntity::acceleration() const
+{
 
-  return mAcceleration;
+    return mAcceleration;
 }
 
-const Position& FlappyCatEntity::velocity() const {
+const Position& FlappyCatEntity::velocity() const
+{
 
-  return mVelocity;
+    return mVelocity;
 }
 
-const Position& FlappyCatEntity::distance() const {
+const Position& FlappyCatEntity::distance() const
+{
 
-  return mDistance;
+    return mDistance;
 }
 
-void FlappyCatEntity::setAcceleration(const Position& acceleration) {
+void FlappyCatEntity::setAcceleration(const Position& acceleration)
+{
 
-  mAcceleration = acceleration;
+    mAcceleration = acceleration;
 }
 
-void FlappyCatEntity::setVelocity(const Position& velocity) {
+void FlappyCatEntity::setVelocity(const Position& velocity)
+{
 
-  mVelocity = velocity;
+    mVelocity = velocity;
 }
 
-void FlappyCatEntity::setGravity(const Position& gravity) {
+void FlappyCatEntity::setGravity(const Position& gravity)
+{
 
-  mGravity = gravity;
+    mGravity = gravity;
 }
-
-

@@ -41,18 +41,19 @@
 
 extern "C" {
 
-  void ANativeActivity_onCreate(ANativeActivity* activity,
-                                void* savedState,
-                                size_t savedStateSize) {
+void ANativeActivity_onCreate(ANativeActivity* activity,
+    void* savedState,
+    size_t savedStateSize)
+{
 
     Log::i(TAG, "Creating: %p\n", activity);
 
     FlappyCatApplication* application = new FlappyCatApplication(activity,
-                                                                 savedState, savedStateSize);
+        savedState, savedStateSize);
     // Create 'event handler' thread
     //   - don't capture 'application' pointer, this would produce less readable code
     auto eventLoopWorker = [](FlappyCatApplication* app) -> void {
-      app->exec();
+        app->exec();
     };
 
     std::thread eventLoopThread(std::ref(eventLoopWorker), std::ref(application));
@@ -60,6 +61,5 @@ extern "C" {
 
     // Wait until 'eventLoopWorker' properly lunch the event loop
     application->waitForStarted();
-  }
 }
-
+}

@@ -3,12 +3,14 @@
 #include <core/Log.hpp>
 
 QtEvent::QtEvent()
-: QtEvent(EmptyEventType) {
+    : QtEvent(EmptyEventType)
+{
     //
 }
 
 QtEvent::QtEvent(EventType eventType)
-: mEventType(eventType) {
+    : mEventType(eventType)
+{
     //
 }
 QtEvent::EventType QtEvent::type() const

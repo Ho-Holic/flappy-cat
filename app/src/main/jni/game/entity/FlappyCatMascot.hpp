@@ -1,6 +1,5 @@
 #pragma once
 
-
 // engine
 #include <prototype/RectangleShape.hpp>
 #include <prototype/TriangleShape.hpp>
@@ -13,36 +12,31 @@
 
 class FlappyCatMascot : public FlappyCatEntity {
 public:
-  FlappyCatMascot(const FlappyCatGameConstants& gameConstants);
+    FlappyCatMascot(const FlappyCatGameConstants& gameConstants);
 
 public:
-  virtual void drawOn(const Window& window) const override;
+    virtual void drawOn(const Window& window) const override;
 
 public:
-  void setColor(const Color& bodyColor,
-                const Color& scarfColor,
-                const Color& mouthColor);
-  std::vector<std::shared_ptr<Geometry>> duplicateParts() const;
-
-
-private:
-  virtual void syncChildren() override;
+    void setColor(const Color& bodyColor,
+        const Color& scarfColor,
+        const Color& mouthColor);
+    std::vector<std::shared_ptr<Geometry>> duplicateParts() const;
 
 private:
+    virtual void syncChildren() override;
 
-  RectangleShape mBody;
-  RectangleShape mBackLeg;
-  RectangleShape mFrontLeg;
-  RectangleShape mTail;
-  RectangleShape mScarf;
-  RectangleShape mScarfTail;
-  RectangleShape mHead;
-  TriangleShape  mLeftEar;
-  TriangleShape  mRightEar;
-  RectangleShape mLeftEye;
-  RectangleShape mRightEye;
-  RectangleShape mMouth;
+private:
+    RectangleShape mBody;
+    RectangleShape mBackLeg;
+    RectangleShape mFrontLeg;
+    RectangleShape mTail;
+    RectangleShape mScarf;
+    RectangleShape mScarfTail;
+    RectangleShape mHead;
+    TriangleShape mLeftEar;
+    TriangleShape mRightEar;
+    RectangleShape mLeftEye;
+    RectangleShape mRightEye;
+    RectangleShape mMouth;
 };
-
-
-

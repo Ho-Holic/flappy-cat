@@ -1,106 +1,117 @@
 #include "FlappyCatHero.hpp"
 
 // engine
+#include <core/Log.hpp>
 #include <prototype/RectangleShape.hpp>
 #include <prototype/TriangleShape.hpp>
-#include <core/Log.hpp>
 
 FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
-: FlappyCatEntity(gameConstants)
-, mJumpAcceleration()
-, mJumpVelocity()
-, mBall()
-, mMascot(gameConstants)
-, mResetModifier([](entity_type&){})
-, mUpdateModifier([](entity_type&, const FrameDuration&){})
-, mIsAlive(true) {
-  //
+    : FlappyCatEntity(gameConstants)
+    , mJumpAcceleration()
+    , mJumpVelocity()
+    , mBall()
+    , mMascot(gameConstants)
+    , mResetModifier([](entity_type&) {})
+    , mUpdateModifier([](entity_type&, const FrameDuration&) {})
+    , mIsAlive(true)
+{
+    //
 }
 
-float FlappyCatHero::radius() const {
+float FlappyCatHero::radius() const
+{
 
-  return mBall.geometry().radius();
+    return mBall.geometry().radius();
 }
 
-void FlappyCatHero::setRadius(float radius) {
+void FlappyCatHero::setRadius(float radius)
+{
 
-  mBall.geometry().setRadius(radius);
-  syncChildren();
+    mBall.geometry().setRadius(radius);
+    syncChildren();
 }
 
-void FlappyCatHero::update(const FrameDuration& time) {
+void FlappyCatHero::update(const FrameDuration& time)
+{
 
-  FlappyCatEntity::update(time);
-  mUpdateModifier(*this, time);
+    FlappyCatEntity::update(time);
+    mUpdateModifier(*this, time);
 }
 
-void FlappyCatHero::drawOn(const Window& window) const {
+void FlappyCatHero::drawOn(const Window& window) const
+{
 
-  window.draw(mBall);
-  mMascot.drawOn(window);
-
+    window.draw(mBall);
+    mMascot.drawOn(window);
 }
 
-void FlappyCatHero::reset() {
+void FlappyCatHero::reset()
+{
 
-  FlappyCatEntity::reset();
-  mResetModifier(*this);
+    FlappyCatEntity::reset();
+    mResetModifier(*this);
 }
 
-void FlappyCatHero::setResetModifier(const modifier_type& modifier) {
+void FlappyCatHero::setResetModifier(const modifier_type& modifier)
+{
 
-  mResetModifier = modifier;
+    mResetModifier = modifier;
 }
 
 void FlappyCatHero::setColor(const Color& backgroundColor,
-                             const Color& bodyColor,
-                             const Color& scarfColor,
-                             const Color& mouthColor) {
+    const Color& bodyColor,
+    const Color& scarfColor,
+    const Color& mouthColor)
+{
 
-  mBall.setColor(backgroundColor);
-  mMascot.setColor(bodyColor, scarfColor, mouthColor);
+    mBall.setColor(backgroundColor);
+    mMascot.setColor(bodyColor, scarfColor, mouthColor);
 }
 
-void FlappyCatHero::setUpdateModifier(const update_modifier_type& modifier) {
+void FlappyCatHero::setUpdateModifier(const update_modifier_type& modifier)
+{
 
-  mUpdateModifier = modifier;
+    mUpdateModifier = modifier;
 }
 
-void FlappyCatHero::setJumpConstants(const Position& acceleration, const Position& velocity) {
+void FlappyCatHero::setJumpConstants(const Position& acceleration, const Position& velocity)
+{
 
-  mJumpAcceleration = acceleration;
-  mJumpVelocity = velocity;
+    mJumpAcceleration = acceleration;
+    mJumpVelocity = velocity;
 }
 
-void FlappyCatHero::jump() {
+void FlappyCatHero::jump()
+{
 
-  setAcceleration(mJumpAcceleration);
-  setVelocity(mJumpVelocity);
+    setAcceleration(mJumpAcceleration);
+    setVelocity(mJumpVelocity);
 }
 
-void FlappyCatHero::kill() {
-  mIsAlive = false;
+void FlappyCatHero::kill()
+{
+    mIsAlive = false;
 }
 
-void FlappyCatHero::syncChildren() {
+void FlappyCatHero::syncChildren()
+{
 
-/**
+    /**
    * TODO: add rotation to mBall
    * Currently origin of ball is not in the center of the ball
    * so rotation would cause bad render, fix origin code
    * and uncomment rotation line
    */
-  //mBall.transformation().setRotation(mAngle);
+    //mBall.transformation().setRotation(mAngle);
 
-  mBall.transformation().setPosition(position());
+    mBall.transformation().setPosition(position());
 
-  float diameter = mBall.geometry().radius() * 2.f;
+    float diameter = mBall.geometry().radius() * 2.f;
 
-  Position mascotPos = mBall.transformation().position()
-                       + Position(diameter * 0.25f, diameter * 0.3f);
+    Position mascotPos = mBall.transformation().position()
+        + Position(diameter * 0.25f, diameter * 0.3f);
 
-  mMascot.moveTo(mascotPos);
-  mMascot.resize(Position(diameter, diameter));
-  mMascot.rotateTo(rotation());
-
+    mMascot.moveTo(mascotPos);
+    mMascot.resize(Position(diameter, diameter));
+    mMascot.rotateTo(rotation());
 }

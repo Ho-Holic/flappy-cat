@@ -8,5 +8,5 @@ struct QtTouchEvent {
 
 union QtEventData {
 
-    QtTouchEvent  touchEvent;
+    QtTouchEvent touchEvent;
 };

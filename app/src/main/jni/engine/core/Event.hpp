@@ -1,6 +1,5 @@
 #pragma once
 
-
 #ifdef FLAPPYCAT_QT
 
 #include "qt/QtEvent.hpp"
@@ -21,5 +20,3 @@ using Event = AndroidEvent;
 using Event = void;
 
 #endif
-
-

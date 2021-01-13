@@ -1,6 +1,5 @@
 #pragma once
 
-
 // game
 #include <core/Color.hpp>
 
@@ -12,40 +11,37 @@ enum class Daytime;
 
 class FlappyCatColorScheme {
 public:
-  enum Colors : size_t;
+    enum Colors : size_t;
 
 public:
-  FlappyCatColorScheme();
+    FlappyCatColorScheme();
 
 public:
-  Color random() const;
-  void generateNewScheme(Daytime daytime);
-  Color operator[](Colors index) const;
+    Color random() const;
+    void generateNewScheme(Daytime daytime);
+    Color operator[](Colors index) const;
 
 private:
-  void generateDayScheme();
-  void generateNightScheme();
+    void generateDayScheme();
+    void generateNightScheme();
 
 private:
-  mutable std::random_device mRandomDevice;
-  mutable std::mt19937 mGenerator;
-  std::vector<Color> mScheme;
+    mutable std::random_device mRandomDevice;
+    mutable std::mt19937 mGenerator;
+    std::vector<Color> mScheme;
 };
 
 enum FlappyCatColorScheme::Colors : size_t {
-  BackgroundColor,
-  BlockColor,
-  HeroColor,
-  HouseColor,
-  CloudColor,
-  DirtColor,
-  MascotBodyColor,
-  MascotScarfColor,
-  MascotMouthColor,
-  TextColor,
+    BackgroundColor,
+    BlockColor,
+    HeroColor,
+    HouseColor,
+    CloudColor,
+    DirtColor,
+    MascotBodyColor,
+    MascotScarfColor,
+    MascotMouthColor,
+    TextColor,
 
-  ColorsSize
+    ColorsSize
 };
-
-
-

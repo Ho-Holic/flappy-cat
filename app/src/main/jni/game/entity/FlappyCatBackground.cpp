@@ -3,34 +3,40 @@
 #include "FlappyCatBackground.hpp"
 
 FlappyCatBackground::FlappyCatBackground(const FlappyCatGameConstants& gameConstants)
-  : FlappyCatEntity(gameConstants)
-  , mBackground()
-  , mResetModifier([](entity_type&){}) {
-  //
+    : FlappyCatEntity(gameConstants)
+    , mBackground()
+    , mResetModifier([](entity_type&) {})
+{
+    //
 }
 
-void FlappyCatBackground::drawOn(const Window& window) const {
+void FlappyCatBackground::drawOn(const Window& window) const
+{
 
-  window.draw(mBackground);
+    window.draw(mBackground);
 }
 
-void FlappyCatBackground::setResetModifier(const FlappyCatBackground::modifier_type& modifier) {
+void FlappyCatBackground::setResetModifier(const FlappyCatBackground::modifier_type& modifier)
+{
 
-  mResetModifier = modifier;
+    mResetModifier = modifier;
 }
 
-void FlappyCatBackground::reset() {
+void FlappyCatBackground::reset()
+{
 
-  mResetModifier(*this);
+    mResetModifier(*this);
 }
 
-void FlappyCatBackground::setColor(const Color& color) {
+void FlappyCatBackground::setColor(const Color& color)
+{
 
-  mBackground.setColor(color);
+    mBackground.setColor(color);
 }
 
-void FlappyCatBackground::syncChildren() {
+void FlappyCatBackground::syncChildren()
+{
 
-  mBackground.transformation().setPosition(position());
-  mBackground.geometry().resize(size());
+    mBackground.transformation().setPosition(position());
+    mBackground.geometry().resize(size());
 }

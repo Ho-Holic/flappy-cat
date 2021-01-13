@@ -5,8 +5,8 @@
 #include <vector>
 
 // engine
-#include "core/Vertices.hpp"
 #include "core/Transformation.hpp"
+#include "core/Vertices.hpp"
 
 struct Polygon {
     Vertices vertices;
@@ -21,8 +21,8 @@ public:
     void requestSwapBuffers();
     bool isSwapBuffersRequested() const;
 
-public:    
-    void enqueue(int layerIndex, const Vertices &vertices, const Transformation &transformation);
+public:
+    void enqueue(int layerIndex, const Vertices& vertices, const Transformation& transformation);
     void render();
     void clearQueue();
 
@@ -35,5 +35,5 @@ private:
     std::map<int, std::vector<Polygon>> m_layersFrontBuffer;
     std::map<int, std::vector<Polygon>> m_layersBackBuffer;
 
-    GLuint m_program = 0;    
+    GLuint m_program = 0;
 };

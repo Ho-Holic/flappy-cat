@@ -1,31 +1,29 @@
 #pragma once
 
-
-
 // ndk
 #include <android/native_activity.h>
 
 struct AndroidTouchEvent {
 
-  float x;
-  float y;
+    float x;
+    float y;
 };
 
 struct AndroidResizeEvent {
-  int32_t width;
-  int32_t height;
+    int32_t width;
+    int32_t height;
 };
 
 struct AndroidNativeWindowEvent {
-  ANativeWindow* pendingWindow;
+    ANativeWindow* pendingWindow;
 };
 
 struct AndroidInputQueueEvent {
-  AInputQueue* pendingQueue;
+    AInputQueue* pendingQueue;
 };
 
 struct AndroidEventLoopEvent {
-  bool windowReady;
+    bool windowReady;
 };
 
 // main structure for all events
@@ -33,11 +31,9 @@ struct AndroidEventLoopEvent {
 
 union AndroidEventData {
 
-  AndroidTouchEvent  touchEvent;
-  AndroidResizeEvent resizeEvent;
-  AndroidNativeWindowEvent nativeWindowEvent;
-  AndroidInputQueueEvent inputQueueEvent;
-  AndroidEventLoopEvent eventLoopEvent;
+    AndroidTouchEvent touchEvent;
+    AndroidResizeEvent resizeEvent;
+    AndroidNativeWindowEvent nativeWindowEvent;
+    AndroidInputQueueEvent inputQueueEvent;
+    AndroidEventLoopEvent eventLoopEvent;
 };
-
-

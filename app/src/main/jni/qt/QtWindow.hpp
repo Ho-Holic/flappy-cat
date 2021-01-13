@@ -1,9 +1,9 @@
 #pragma once
 
+#include "QtEvent.hpp"
 #include <QWindow>
 #include <core/Window.hpp>
 #include <queue>
-#include "QtEvent.hpp"
 
 class QtOpenGLRender;
 class QOpenGLPaintDevice;
@@ -18,11 +18,13 @@ private:
     bool event(QEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
     void keyReleaseEvent(QKeyEvent* event) override;
+
 private:
     void clear(const Color& color) const override;
     void draw(const Shape& shape) const override;
     void drawVertices(const Vertices& vertices, const Transformation& transformation) const override;
     void display() const override;
+
 private:
     void postEvent(const QtEvent& event);
     bool pollEvent(QtEvent& event);

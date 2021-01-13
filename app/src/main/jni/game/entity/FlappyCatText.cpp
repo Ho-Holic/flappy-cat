@@ -6,57 +6,60 @@
 #include <core/Log.hpp>
 
 FlappyCatText::FlappyCatText(const FlappyCatGameConstants& gameConstants)
-: FlappyCatEntity(gameConstants)
-, mText("")
-, mTextBody()
-, mTextColor() {
-  //
+    : FlappyCatEntity(gameConstants)
+    , mText("")
+    , mTextBody()
+    , mTextColor()
+{
+    //
 }
 
-void FlappyCatText::setText(const std::string& text) {
-  mText = text;
-  syncChildren();
+void FlappyCatText::setText(const std::string& text)
+{
+    mText = text;
+    syncChildren();
 }
 
-void FlappyCatText::syncChildren() {
-  mTextBody.clear();
-  mTextBody.reserve(mText.size());
+void FlappyCatText::syncChildren()
+{
+    mTextBody.clear();
+    mTextBody.reserve(mText.size());
 
-  Position moveOffset(0.f, 0.f);
+    Position moveOffset(0.f, 0.f);
 
-  enum {
-    Spacing = 10
-  };
+    enum {
+        Spacing = 10
+    };
 
-  for (char character : mText) {
+    for (char character : mText) {
 
-    mTextBody.emplace_back(gameConstants());
+        mTextBody.emplace_back(gameConstants());
 
-    REQUIRE(TAG, !mTextBody.empty(), "Character must exist!");
+        REQUIRE(TAG, !mTextBody.empty(), "Character must exist!");
 
-    FlappyCatTextCharacter& characterBody = mTextBody.back();
-    characterBody.setCharacter(character);
-    characterBody.setColor(mTextColor);
+        FlappyCatTextCharacter& characterBody = mTextBody.back();
+        characterBody.setCharacter(character);
+        characterBody.setColor(mTextColor);
 
-    characterBody.moveBy(position() + Position(moveOffset.x(), 0.f));
-    moveOffset = moveOffset + characterBody.size() + Spacing;
-  }
+        characterBody.moveBy(position() + Position(moveOffset.x(), 0.f));
+        moveOffset = moveOffset + characterBody.size() + Spacing;
+    }
 }
 
+void FlappyCatText::drawOn(const Window& window) const
+{
 
-void FlappyCatText::drawOn(const Window& window) const {
-
-  for (const FlappyCatTextCharacter& character : mTextBody) {
-    character.drawOn(window);
-  }
+    for (const FlappyCatTextCharacter& character : mTextBody) {
+        character.drawOn(window);
+    }
 }
 
-void FlappyCatText::setColor(const Color& textColor) {
+void FlappyCatText::setColor(const Color& textColor)
+{
 
-  mTextColor = textColor;
+    mTextColor = textColor;
 
-  for (FlappyCatTextCharacter& character : mTextBody) {
-    character.setColor(textColor);
-  }
+    for (FlappyCatTextCharacter& character : mTextBody) {
+        character.setColor(textColor);
+    }
 }
-

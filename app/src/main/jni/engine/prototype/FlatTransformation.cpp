@@ -2,69 +2,76 @@
 #include "FlatTransformation.hpp"
 
 FlatTransformation::FlatTransformation(const Position& position)
-: Transformation()
-, mPosition(position)
-, mOrigin(0.f, 0.f)
-, mScale(1.f, 1.f)
-, mAngle(0.f)
-, mOnUpdate() {
-  //
+    : Transformation()
+    , mPosition(position)
+    , mOrigin(0.f, 0.f)
+    , mScale(1.f, 1.f)
+    , mAngle(0.f)
+    , mOnUpdate()
+{
+    //
 }
 
 FlatTransformation::FlatTransformation()
-: FlatTransformation(Position(0.f, 0.f)) {
-  //
+    : FlatTransformation(Position(0.f, 0.f))
+{
+    //
 }
 
-FlatTransformation::OnUpdateSignal& FlatTransformation::onUpdate() {
+FlatTransformation::OnUpdateSignal& FlatTransformation::onUpdate()
+{
 
-  return mOnUpdate;
+    return mOnUpdate;
 }
 
-const Position& FlatTransformation::position() const {
+const Position& FlatTransformation::position() const
+{
 
-  return mPosition;
+    return mPosition;
 }
 
-const Position& FlatTransformation::origin() const {
+const Position& FlatTransformation::origin() const
+{
 
-  return mOrigin;
+    return mOrigin;
 }
 
-const Position& FlatTransformation::scale() const {
+const Position& FlatTransformation::scale() const
+{
 
-  return mScale;
+    return mScale;
 }
 
-float FlatTransformation::rotation() const {
+float FlatTransformation::rotation() const
+{
 
-  return mAngle;
+    return mAngle;
 }
 
-void FlatTransformation::setPosition(const Position& position) {
+void FlatTransformation::setPosition(const Position& position)
+{
 
-  mPosition = position;
-  mOnUpdate.emit();
+    mPosition = position;
+    mOnUpdate.emit();
 }
 
+void FlatTransformation::setOrigin(const Position& origin)
+{
 
-
-void FlatTransformation::setOrigin(const Position& origin) {
-
-  mOrigin = origin;
-  mOnUpdate.emit();
+    mOrigin = origin;
+    mOnUpdate.emit();
 }
 
+void FlatTransformation::setScale(const Position& factor)
+{
 
-void FlatTransformation::setScale(const Position& factor) {
-
-  mScale = factor;
-  mOnUpdate.emit();
+    mScale = factor;
+    mOnUpdate.emit();
 }
 
+void FlatTransformation::setRotation(float angle)
+{
 
-void FlatTransformation::setRotation(float angle) {
-
-  mAngle = angle;
-  mOnUpdate.emit();
+    mAngle = angle;
+    mOnUpdate.emit();
 }

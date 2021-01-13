@@ -1,6 +1,6 @@
 #include "QtOpenGLRender.hpp"
-#include <memory>
 #include <core/Log.hpp>
+#include <memory>
 
 enum : GLuint {
     AttributePosition,
@@ -79,7 +79,7 @@ void QtOpenGLRender::clearQueue()
     m_layersBackBuffer.clear();
 }
 
-void QtOpenGLRender::enqueue(int layerIndex, const Vertices &vertices, const Transformation &transformation)
+void QtOpenGLRender::enqueue(int layerIndex, const Vertices& vertices, const Transformation& transformation)
 {
     Polygon polygon;
 
@@ -106,7 +106,6 @@ void QtOpenGLRender::render()
 
     glUseProgram(m_program);
 
-
     for (auto layer : m_layersFrontBuffer) {
 
         const auto& polygons = layer.second;
@@ -124,7 +123,7 @@ void QtOpenGLRender::render()
                 buffer[AttributePositionY + stride] = polygon.vertices[i].position().y();
 
                 buffer[AttributeColorR + stride] = polygon.vertices[i].color().r() / 255.f;
-                buffer[AttributeColorG + stride] = polygon.vertices[i].color().g()  / 255.f;
+                buffer[AttributeColorG + stride] = polygon.vertices[i].color().g() / 255.f;
                 buffer[AttributeColorB + stride] = polygon.vertices[i].color().b() / 255.f;
                 buffer[AttributeColorA + stride] = polygon.vertices[i].color().alpha() / 255.f;
             }

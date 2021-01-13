@@ -1,6 +1,5 @@
 #pragma once
 
-
 // game
 #include "FlappyCatColorScheme.hpp"
 
@@ -11,84 +10,83 @@
 #include <random>
 
 enum class Daytime {
-  Day,
-  Night
+    Day,
+    Night
 };
 
 class FlappyCatGameConstants {
 public:
-  enum Constants : size_t;
+    enum Constants : size_t;
 
 public:
-  FlappyCatGameConstants();
+    FlappyCatGameConstants();
 
 public:
-  void reset();
+    void reset();
 
-  // If you have error 'Error: 'FlappyCatColorScheme' does not name a type'
-  // Then Android Studio accidentally insert following line
-  //
-  //     #include "FlappyCatGameConstants.hpp"
-  //
-  // to 'FlappyCatColorScheme.h'. Android studio really wants this line there
-  // and don't want to deal with forward declarations of modern enums =)
-  const FlappyCatColorScheme& colorScheme() const;
+    // If you have error 'Error: 'FlappyCatColorScheme' does not name a type'
+    // Then Android Studio accidentally insert following line
+    //
+    //     #include "FlappyCatGameConstants.hpp"
+    //
+    // to 'FlappyCatColorScheme.h'. Android studio really wants this line there
+    // and don't want to deal with forward declarations of modern enums =)
+    const FlappyCatColorScheme& colorScheme() const;
 
-  Position operator[](Constants index) const;
+    Position operator[](Constants index) const;
 
 public:
-  float randomOffsetFrom(float initial,
-                                        float maxOffset);
+    float randomOffsetFrom(float initial,
+        float maxOffset);
 
-  float clampedRandomOffsetFrom(float initial,
-                                               float maxOffset);
-private:
-  Daytime chooseDaytime();
+    float clampedRandomOffsetFrom(float initial,
+        float maxOffset);
 
 private:
-  std::random_device mRandomDevice;
-  std::mt19937 mGenerator;
-  FlappyCatColorScheme mColorScheme;
-  std::vector<Position> mConstants;
-  int32_t mDaytimeFactor;
+    Daytime chooseDaytime();
+
+private:
+    std::random_device mRandomDevice;
+    std::mt19937 mGenerator;
+    FlappyCatColorScheme mColorScheme;
+    std::vector<Position> mConstants;
+    int32_t mDaytimeFactor;
 };
 
 enum FlappyCatGameConstants::Constants : size_t {
 
-  CameraSize,
+    CameraSize,
 
-  BarricadePosition,
-  BarricadeSize,
-  BarricadeWallSize,
-  BarricadeBetweenWallOffset,
-  BarricadeWallGapDisplacement,
-  BarricadeStartOffset,
+    BarricadePosition,
+    BarricadeSize,
+    BarricadeWallSize,
+    BarricadeBetweenWallOffset,
+    BarricadeWallGapDisplacement,
+    BarricadeStartOffset,
 
-  CityPosition,
-  CitySize,
-  CityHouseSize,
-  CityHouseOffset,
+    CityPosition,
+    CitySize,
+    CityHouseSize,
+    CityHouseOffset,
 
-  FloorPosition,
-  FloorSize,
-  FloorOrganicSurfaceSize,
-  FloorSpikesSize,
+    FloorPosition,
+    FloorSize,
+    FloorOrganicSurfaceSize,
+    FloorSpikesSize,
 
-  HeroPosition,
-  HeroSize,
+    HeroPosition,
+    HeroSize,
 
-  SkyCloudSize,
-  SkyCloudOffset,
-  SkyOffset,
-  SkyCloudParts,
+    SkyCloudSize,
+    SkyCloudOffset,
+    SkyOffset,
+    SkyCloudParts,
 
-  PhysicsGravity,
-  PhysicsBackgroundDisplacement,
-  PhysicsForegroundDisplacement,
-  PhysicsJumpAcceleration,
-  PhysicsJumpVelocity,
+    PhysicsGravity,
+    PhysicsBackgroundDisplacement,
+    PhysicsForegroundDisplacement,
+    PhysicsJumpAcceleration,
+    PhysicsJumpVelocity,
 
-  ConstantsSize
+    ConstantsSize
 };
-
-

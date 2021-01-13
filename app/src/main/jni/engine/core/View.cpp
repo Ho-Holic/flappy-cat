@@ -2,50 +2,59 @@
 #include "View.hpp"
 
 View::View()
-: Transformation()
-, mOrigin(0.f, 0.f)
-, mSize(0.f, 0.f)
-, mScale(1.f, 1.f)
-, mAngle(0.f) {
-  //
+    : Transformation()
+    , mOrigin(0.f, 0.f)
+    , mSize(0.f, 0.f)
+    , mScale(1.f, 1.f)
+    , mAngle(0.f)
+{
+    //
 }
 
-void View::setOrigin(const Position& origin) {
+void View::setOrigin(const Position& origin)
+{
 
-  mOrigin = origin;
+    mOrigin = origin;
 }
 
-const Position& View::origin() const {
+const Position& View::origin() const
+{
 
-  return mOrigin;
+    return mOrigin;
 }
 
-void View::setPosition(const Position& position) {
+void View::setPosition(const Position& position)
+{
 
-  mSize = position;
+    mSize = position;
 }
 
-const Position& View::position() const {
+const Position& View::position() const
+{
 
-  return mSize;
+    return mSize;
 }
 
-void View::setScale(const Position& factor) {
+void View::setScale(const Position& factor)
+{
 
-  mScale = factor;
+    mScale = factor;
 }
 
-const Position& View::scale() const {
+const Position& View::scale() const
+{
 
-  return mScale;
+    return mScale;
 }
 
-void View::setRotation(float angle) {
+void View::setRotation(float angle)
+{
 
-  mAngle = angle;
+    mAngle = angle;
 }
 
-float View::rotation() const {
+float View::rotation() const
+{
 
-  return mAngle;
+    return mAngle;
 }

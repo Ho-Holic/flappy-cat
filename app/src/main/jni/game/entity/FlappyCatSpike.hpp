@@ -1,6 +1,5 @@
 #pragma once
 
-
 // engine
 #include <prototype/RectangleShape.hpp>
 
@@ -9,7 +8,7 @@
 
 class FlappyCatSpike : public FlappyCatEntity {
 public:
-  /*
+    /*
    * TODO: Problem with emplace_back() with no args
    *
    * It has some bug with call to empty constructor
@@ -18,20 +17,17 @@ public:
    * Seems this is not final version of header
    * Need to check this bug in Ndk r15
    */
-  FlappyCatSpike(const FlappyCatGameConstants& gameConstants);
+    FlappyCatSpike(const FlappyCatGameConstants& gameConstants);
 
 public:
-  virtual void drawOn(const Window& window) const override;
+    virtual void drawOn(const Window& window) const override;
 
 public:
-  void setColor(const Color& color);
+    void setColor(const Color& color);
 
 private:
-  virtual void syncChildren() override;
+    virtual void syncChildren() override;
 
 private:
-  RectangleShape mSpike;
+    RectangleShape mSpike;
 };
-
-
-

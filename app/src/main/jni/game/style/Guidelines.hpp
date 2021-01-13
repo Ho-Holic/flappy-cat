@@ -1,6 +1,5 @@
 #pragma once
 
-
 /**
  * UNUSED - document that variable is unused and programmer know this
  */
@@ -9,9 +8,9 @@
 /**
  * DISABLE_COPY - disable copy construction and assignment operations
  */
-#define DISABLE_COPY(Class) \
-  Class(const Class&) = delete;\
-  Class& operator=(const Class&) = delete;
+#define DISABLE_COPY(Class)       \
+    Class(const Class&) = delete; \
+    Class& operator=(const Class&) = delete;
 
 /**
  * CAUTION(message) - document critical sections of code

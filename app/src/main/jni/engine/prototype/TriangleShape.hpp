@@ -1,38 +1,34 @@
 #pragma once
 
-
 // engine
 #include <core/Shape.hpp>
-#include <prototype/TriangleGeometry.hpp>
 #include <prototype/FlatTransformation.hpp>
+#include <prototype/TriangleGeometry.hpp>
 #include <prototype/VertexBasedRender.hpp>
 
-class TriangleShape : public Shape  {
+class TriangleShape : public Shape {
 public:
-  // TODO: only right triangle now, later add tilt angle
-  TriangleShape(const Position& position, const Position& size);
-  TriangleShape();
+    // TODO: only right triangle now, later add tilt angle
+    TriangleShape(const Position& position, const Position& size);
+    TriangleShape();
 
 public:
-  void setColor(const Color& color);
+    void setColor(const Color& color);
 
 public:
-  virtual TriangleGeometry& geometry() override;
-  virtual FlatTransformation& transformation() override;
-  virtual VertexBasedRender& render() override;
+    virtual TriangleGeometry& geometry() override;
+    virtual FlatTransformation& transformation() override;
+    virtual VertexBasedRender& render() override;
 
-  virtual const TriangleGeometry& geometry() const override;
-  virtual const FlatTransformation& transformation() const override;
-  virtual const VertexBasedRender& render() const override;
+    virtual const TriangleGeometry& geometry() const override;
+    virtual const FlatTransformation& transformation() const override;
+    virtual const VertexBasedRender& render() const override;
 
 private:
-  void update();
+    void update();
 
 private:
-  FlatTransformation mTransformation;
-  TriangleGeometry mGeometry;
-  VertexBasedRender mRender;
+    FlatTransformation mTransformation;
+    TriangleGeometry mGeometry;
+    VertexBasedRender mRender;
 };
-
-
-

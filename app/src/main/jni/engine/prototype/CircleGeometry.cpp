@@ -6,62 +6,54 @@
 #include <cmath>
 
 CircleGeometry::CircleGeometry(float radius, std::size_t resolution)
-: Geometry()
-, mRadius(radius)
-, mResolution(resolution)
-, mOnUpdate() {
-  //
+    : Geometry()
+    , mRadius(radius)
+    , mResolution(resolution)
+    , mOnUpdate()
+{
+    //
 }
 
-Geometry::size_type CircleGeometry::points() const {
+Geometry::size_type CircleGeometry::points() const
+{
 
-  return mResolution;
+    return mResolution;
 }
 
-Position CircleGeometry::pointAt(size_type index) const {
+Position CircleGeometry::pointAt(size_type index) const
+{
 
-  constexpr float pi = 3.141592654f;
+    constexpr float pi = 3.141592654f;
 
-  float angle = index * 2.f * pi / mResolution - pi / 2.f;
-  float x = std::cos(angle) * mRadius;
-  float y = std::sin(angle) * mRadius;
+    float angle = index * 2.f * pi / mResolution - pi / 2.f;
+    float x = std::cos(angle) * mRadius;
+    float y = std::sin(angle) * mRadius;
 
-  return Position(mRadius + x, mRadius + y);
+    return Position(mRadius + x, mRadius + y);
 }
 
-CircleGeometry::OnUpdateSignal& CircleGeometry::onUpdate() {
+CircleGeometry::OnUpdateSignal& CircleGeometry::onUpdate()
+{
 
-  return mOnUpdate;
+    return mOnUpdate;
 }
 
-void CircleGeometry::setResolution(std::size_t resolution) {
+void CircleGeometry::setResolution(std::size_t resolution)
+{
 
-  mResolution = resolution;
-  mOnUpdate.emit();
+    mResolution = resolution;
+    mOnUpdate.emit();
 }
 
-void CircleGeometry::setRadius(float radius) {
+void CircleGeometry::setRadius(float radius)
+{
 
-  mRadius = radius;
-  mOnUpdate.emit();
+    mRadius = radius;
+    mOnUpdate.emit();
 }
 
-float CircleGeometry::radius() const {
+float CircleGeometry::radius() const
+{
 
-  return mRadius;
+    return mRadius;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

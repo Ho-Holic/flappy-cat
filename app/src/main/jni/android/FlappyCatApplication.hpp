@@ -1,24 +1,20 @@
 #pragma once
 
-
 // engine
 #include <android/AndroidApplication.hpp>
-#include <prototype/RectangleShape.hpp>
 #include <prototype/CircleShape.hpp>
+#include <prototype/RectangleShape.hpp>
 
 // game
-#include "FlappyCatGame.hpp"
 #include "FlappyCatClock.hpp"
+#include "FlappyCatGame.hpp"
 
 class FlappyCatApplication : public AndroidApplication {
 public:
-  FlappyCatApplication(ANativeActivity* activity,
-                       void* savedState,
-                       size_t savedStateSize);
+    FlappyCatApplication(ANativeActivity* activity,
+        void* savedState,
+        size_t savedStateSize);
 
 private:
-  virtual void main();
+    virtual void main();
 };
-
-
-

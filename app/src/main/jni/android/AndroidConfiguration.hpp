@@ -1,6 +1,5 @@
 #pragma once
 
-
 // ndk
 #include <android/configuration.h>
 
@@ -13,28 +12,25 @@
 
 class AndroidConfiguration {
 private:
-  using ConfigurationDeleter = void (*)(AConfiguration*);
-  enum { AproximateToStringLength = 150 };
+    using ConfigurationDeleter = void (*)(AConfiguration*);
+    enum { AproximateToStringLength = 150 };
 
 private:
-  DISABLE_COPY(AndroidConfiguration)
+    DISABLE_COPY(AndroidConfiguration)
 
 public:
-  AndroidConfiguration(AAssetManager* manager);
+    AndroidConfiguration(AAssetManager* manager);
 
 public:
-  std::string toString() const;
-  void reload();
-  void reset();
+    std::string toString() const;
+    void reload();
+    void reset();
 
 private:
-  void reloadCacheForToString();
+    void reloadCacheForToString();
 
 private:
-  AAssetManager* mManager;
-  std::unique_ptr<AConfiguration, ConfigurationDeleter> mConfiguration;
-  std::string mCacheForToString;
+    AAssetManager* mManager;
+    std::unique_ptr<AConfiguration, ConfigurationDeleter> mConfiguration;
+    std::string mCacheForToString;
 };
-
-
-

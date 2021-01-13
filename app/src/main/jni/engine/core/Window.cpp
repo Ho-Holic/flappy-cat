@@ -2,21 +2,19 @@
 #include "Window.hpp"
 
 Window::Window()
-: mView() {
-  //
+    : mView()
+{
+    //
 }
 
-const View& Window::view() const {
+const View& Window::view() const
+{
 
-  return mView;
+    return mView;
 }
 
-View& Window::view() {
+View& Window::view()
+{
 
-  return mView;
+    return mView;
 }
-
-
-
-
-

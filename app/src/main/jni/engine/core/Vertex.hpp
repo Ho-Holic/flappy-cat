@@ -1,22 +1,19 @@
 #pragma once
 
-
 // engine
 #include "Color.hpp"
 #include "Position.hpp"
 
 class Vertex {
 public:
-  Vertex(const Position& position, const Color& color);
-  Vertex();
+    Vertex(const Position& position, const Color& color);
+    Vertex();
 
 public:
-  const Position& position() const;
-  const Color& color() const;
+    const Position& position() const;
+    const Color& color() const;
 
 private:
-  Position mPosition;
-  Color mColor;
+    Position mPosition;
+    Color mColor;
 };
-
-

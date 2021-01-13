@@ -1,13 +1,12 @@
 #pragma once
 
-
 // ndk
-#include <android/native_activity.h>
 #include <android/configuration.h>
+#include <android/native_activity.h>
 
 // std
-#include <mutex>
 #include <condition_variable>
+#include <mutex>
 #include <queue>
 
 // style
@@ -21,103 +20,101 @@
 class AndroidApplication {
 
 private:
-  enum ActivityState : int8_t;
-  enum Focus: int;
+    enum ActivityState : int8_t;
+    enum Focus : int;
 
 private:
-  DISABLE_COPY(AndroidApplication)
+    DISABLE_COPY(AndroidApplication)
 
 public:
-  AndroidApplication(ANativeActivity* activity,
-                     void* savedState,
-                     size_t savedStateSize);
-  virtual ~AndroidApplication();
+    AndroidApplication(ANativeActivity* activity,
+        void* savedState,
+        size_t savedStateSize);
+    virtual ~AndroidApplication();
 
 public:
-  bool isRunning() const;
-  bool isDestroyed() const;
-  bool isDestroyRequested() const;
-  ActivityState activityState() const;
-  void exec();
-  bool pollEvent(AndroidEvent& event);
-  void postEvent(const AndroidEvent& event);
-  const AndroidWindow& window() const;
-  AndroidWindow& window();
+    bool isRunning() const;
+    bool isDestroyed() const;
+    bool isDestroyRequested() const;
+    ActivityState activityState() const;
+    void exec();
+    bool pollEvent(AndroidEvent& event);
+    void postEvent(const AndroidEvent& event);
+    const AndroidWindow& window() const;
+    AndroidWindow& window();
 
 private:
-  void initialize();
-  void terminate();
-  void processEvent(const AndroidEvent& event);
-  void setActivityState(ActivityState activityState);
-  void resizeNativeWindow(const AndroidEvent& event);
-  void initializeNativeWindow(const AndroidEvent& event);
-  void terminateNativeWindow(const AndroidEvent& event);
-  void setInputQueue(const AndroidEvent& event);
-  void setEventLoopState(const AndroidEvent& event);
+    void initialize();
+    void terminate();
+    void processEvent(const AndroidEvent& event);
+    void setActivityState(ActivityState activityState);
+    void resizeNativeWindow(const AndroidEvent& event);
+    void initializeNativeWindow(const AndroidEvent& event);
+    void terminateNativeWindow(const AndroidEvent& event);
+    void setInputQueue(const AndroidEvent& event);
+    void setEventLoopState(const AndroidEvent& event);
 
 private:
-  virtual void main() = 0; // private because launched from 'AndroidApplication::exec()'
+    virtual void main() = 0; // private because launched from 'AndroidApplication::exec()'
 
-  //
-  // code called from main thread
-  //
+    //
+    // code called from main thread
+    //
 private:
-  static void onDestroy(ANativeActivity* activity);
-  static void onStart(ANativeActivity* activity);
-  static void onResume(ANativeActivity* activity);
-  static void* onSaveInstanceState(ANativeActivity* activity, size_t* outLen);
-  static void onPause(ANativeActivity* activity);
-  static void onStop(ANativeActivity* activity);
-  static void onConfigurationChanged(ANativeActivity* activity);
-  static void onLowMemory(ANativeActivity* activity);
-  static void onWindowFocusChanged(ANativeActivity* activity, int hasFocus);
-  static void onNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window);
-  static void onNativeWindowResized(ANativeActivity* activity, ANativeWindow* window);
-  static void onNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window);
-  static void onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window);
-  static void onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue);
-  static void onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue);
-  static void onContentRectChanged(ANativeActivity* activity, const ARect* rect);
+    static void onDestroy(ANativeActivity* activity);
+    static void onStart(ANativeActivity* activity);
+    static void onResume(ANativeActivity* activity);
+    static void* onSaveInstanceState(ANativeActivity* activity, size_t* outLen);
+    static void onPause(ANativeActivity* activity);
+    static void onStop(ANativeActivity* activity);
+    static void onConfigurationChanged(ANativeActivity* activity);
+    static void onLowMemory(ANativeActivity* activity);
+    static void onWindowFocusChanged(ANativeActivity* activity, int hasFocus);
+    static void onNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window);
+    static void onNativeWindowResized(ANativeActivity* activity, ANativeWindow* window);
+    static void onNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window);
+    static void onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window);
+    static void onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue);
+    static void onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue);
+    static void onContentRectChanged(ANativeActivity* activity, const ARect* rect);
 
 public:
-  void waitForStarted(); // temporary in public due to sketch design of 'main' function
+    void waitForStarted(); // temporary in public due to sketch design of 'main' function
 
 private:
-  void waitForDestruction();
-  void changeActivityStateTo(ActivityState activityState);
-  void changeNativeWindow(ANativeWindow* window);
-  void changeInputQueue(AInputQueue* queue);
-  void changeNativeWindowSize();
-  void changeFocus(Focus focus);
-  void reloadConfiguration();
+    void waitForDestruction();
+    void changeActivityStateTo(ActivityState activityState);
+    void changeNativeWindow(ANativeWindow* window);
+    void changeInputQueue(AInputQueue* queue);
+    void changeNativeWindowSize();
+    void changeFocus(Focus focus);
+    void reloadConfiguration();
 
 private:
-  ANativeActivity* mActivity;
-  ActivityState mActivityState;
-  std::mutex mMutex;
-  std::condition_variable mConditionVariable;
-  bool mIsRunning;
-  bool mIsDestroyed;
-  bool mIsDestroyRequested;
-  AndroidConfiguration mConfiguration;
-  AndroidLooper mLooper;
-  AndroidWindow mWindow;
-  std::queue<AndroidEvent> mEvents; // TODO: add thread safe queue
+    ANativeActivity* mActivity;
+    ActivityState mActivityState;
+    std::mutex mMutex;
+    std::condition_variable mConditionVariable;
+    bool mIsRunning;
+    bool mIsDestroyed;
+    bool mIsDestroyRequested;
+    AndroidConfiguration mConfiguration;
+    AndroidLooper mLooper;
+    AndroidWindow mWindow;
+    std::queue<AndroidEvent> mEvents; // TODO: add thread safe queue
 };
 
 // enums
 
 enum AndroidApplication::ActivityState : int8_t {
-  InitializationActivityState,
-  StartActivityState,
-  ResumeActivityState,
-  PauseActivityState,
-  StopActivityState,
+    InitializationActivityState,
+    StartActivityState,
+    ResumeActivityState,
+    PauseActivityState,
+    StopActivityState,
 };
 
-enum AndroidApplication::Focus: int {
-  GainFocus,
-  LostFocus,
+enum AndroidApplication::Focus : int {
+    GainFocus,
+    LostFocus,
 };
-
-

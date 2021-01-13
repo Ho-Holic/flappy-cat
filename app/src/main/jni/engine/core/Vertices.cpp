@@ -2,37 +2,31 @@
 #include "Vertices.hpp"
 
 Vertices::Vertices()
-  : mVertices() {
-  //
+    : mVertices()
+{
+    //
 }
 
-size_t Vertices::size() const {
+size_t Vertices::size() const
+{
 
-  return mVertices.size();
+    return mVertices.size();
 }
 
-const Vertex& Vertices::operator [] (std::size_t index) const {
+const Vertex& Vertices::operator[](std::size_t index) const
+{
 
-  return mVertices[index];
+    return mVertices[index];
 }
 
-Vertices& Vertices::operator << (const Vertex& vertex) {
+Vertices& Vertices::operator<<(const Vertex& vertex)
+{
 
-  mVertices.push_back(vertex);
-  return *this;
+    mVertices.push_back(vertex);
+    return *this;
 }
 
-void Vertices::reset() {
-  mVertices.resize(0);
+void Vertices::reset()
+{
+    mVertices.resize(0);
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -8,10 +8,9 @@
 #include <thread>
 
 // engine
-#include <core/Clock.hpp>
 #include "FlappyCatClock.hpp"
 #include "FlappyCatGame.hpp"
-
+#include <core/Clock.hpp>
 
 QtWindow::QtWindow(QWindow* parent)
     : QWindow(parent)
@@ -59,7 +58,6 @@ void QtWindow::shouldRepaint()
         // run game thread
         {
             std::thread gameModelThread([this]() -> void {
-
                 using std::chrono::duration_cast;
 
                 constexpr auto timePerFrame = FrameDuration { 1 };
@@ -143,7 +141,7 @@ void QtWindow::mouseReleaseEvent(QMouseEvent*)
     this->postEvent(event);
 }
 
-void QtWindow::keyReleaseEvent(QKeyEvent *event)
+void QtWindow::keyReleaseEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Space) {
         using EventType = QtEvent::EventType;
@@ -156,17 +154,17 @@ void QtWindow::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
-void QtWindow::clear(const Color &color) const
+void QtWindow::clear(const Color& color) const
 {
     // do nothing in qt build
 }
 
-void QtWindow::draw(const Shape &shape) const
+void QtWindow::draw(const Shape& shape) const
 {
     shape.render().drawOn(*this, view());
 }
 
-void QtWindow::drawVertices(const Vertices &vertices, const Transformation &transformation) const
+void QtWindow::drawVertices(const Vertices& vertices, const Transformation& transformation) const
 {
     m_render->enqueue(0, vertices, transformation);
 }
@@ -176,14 +174,15 @@ void QtWindow::display() const
     // do nothing in qt build
 }
 
-void QtWindow::postEvent(const QtEvent& event) {
+void QtWindow::postEvent(const QtEvent& event)
+{
 
     m_events.push(event);
 }
 
-bool QtWindow::pollEvent(QtEvent &event)
+bool QtWindow::pollEvent(QtEvent& event)
 {
-    if ( ! m_events.empty()) {
+    if (!m_events.empty()) {
 
         event = m_events.front();
         m_events.pop();

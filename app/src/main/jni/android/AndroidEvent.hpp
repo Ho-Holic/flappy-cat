@@ -1,6 +1,5 @@
 #pragma once
 
-
 // stl
 #include <cstdint>
 
@@ -15,58 +14,55 @@
 
 class AndroidEvent {
 public:
-  enum EventType : int8_t;
+    enum EventType : int8_t;
 
 public:
-  AndroidEvent();
-  AndroidEvent(EventType eventType);
+    AndroidEvent();
+    AndroidEvent(EventType eventType);
 
 public:
-  EventType type() const;
-  void setEventType(EventType eventType);
+    EventType type() const;
+    void setEventType(EventType eventType);
 
 public:
-  void setTouchEventData(float x, float y);
-  void setResizeEventData(int32_t width, int32_t height);
-  void setNativeWindowEventData(ANativeWindow* pendingWindow);
-  void setInputQueueEventData(AInputQueue* pendingQueue);
-  void setEventLoopEventData(bool windowReady);
+    void setTouchEventData(float x, float y);
+    void setResizeEventData(int32_t width, int32_t height);
+    void setNativeWindowEventData(ANativeWindow* pendingWindow);
+    void setInputQueueEventData(AInputQueue* pendingQueue);
+    void setEventLoopEventData(bool windowReady);
 
 public:
-  const AndroidTouchEvent& touchEvent() const;
-  const AndroidResizeEvent& resizeEvent() const;
-  const AndroidNativeWindowEvent& nativeWindowEvent() const;
-  const AndroidInputQueueEvent& inputQueueEvent() const;
-  const AndroidEventLoopEvent& eventLoopEvent() const;
+    const AndroidTouchEvent& touchEvent() const;
+    const AndroidResizeEvent& resizeEvent() const;
+    const AndroidNativeWindowEvent& nativeWindowEvent() const;
+    const AndroidInputQueueEvent& inputQueueEvent() const;
+    const AndroidEventLoopEvent& eventLoopEvent() const;
 
 private:
-  EventType mEventType;
-  AndroidEventData mEventData;
+    EventType mEventType;
+    AndroidEventData mEventData;
 };
 
 // enums
 
 enum AndroidEvent::EventType : int8_t {
-  EmptyEventType,
+    EmptyEventType,
 
-  ActivityStartEventType,
-  ActivityResumeEventType,
-  ActivityPauseEventType,
-  ActivityStopEventType,
+    ActivityStartEventType,
+    ActivityResumeEventType,
+    ActivityPauseEventType,
+    ActivityStopEventType,
 
-  GainFocusEventType,
-  LostFocusEventType,
+    GainFocusEventType,
+    LostFocusEventType,
 
-  NativeWindowCreatedEventType,
-  NativeWindowDestroyedEventType,
+    NativeWindowCreatedEventType,
+    NativeWindowDestroyedEventType,
 
-  InputQueueCreatedEventType,
-  InputQueueDestroyedEventType,
+    InputQueueCreatedEventType,
+    InputQueueDestroyedEventType,
 
-  ResizedEventType,
-  TouchEventType,
-  EventLoopEventType,
+    ResizedEventType,
+    TouchEventType,
+    EventLoopEventType,
 };
-
-
-
