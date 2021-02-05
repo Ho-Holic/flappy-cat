@@ -7,26 +7,23 @@ file(GLOB_RECURSE FLAPPYCAT_GAME_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/game/*.cpp"
 file(GLOB_RECURSE FLAPPYCAT_ENGINE_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/engine/*.hpp")
 file(GLOB_RECURSE FLAPPYCAT_ENGINE_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/engine/*.cpp")
 
-file(GLOB_RECURSE FLAPPYCAT_ANDROID_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/android/*.hpp")
-file(GLOB_RECURSE FLAPPYCAT_ANDROID_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/android/*.cpp")
+source_group("game" FILES ${FLAPPYCAT_GAME_HEADERS} ${FLAPPYCAT_GAME_SOURCE})
+source_group("engine" FILES ${FLAPPYCAT_ENGINE_HEADERS} ${FLAPPYCAT_ENGINE_SOURCE})
 
 add_library(flappycat SHARED
     ${FLAPPYCAT_GAME_HEADERS}
     ${FLAPPYCAT_GAME_SOURCE}
     
     ${FLAPPYCAT_ENGINE_HEADERS}
-    ${FLAPPYCAT_ENGINE_SOURCE}
-
-    ${FLAPPYCAT_ANDROID_HEADERS}
-    ${FLAPPYCAT_ANDROID_SOURCE}        
+    ${FLAPPYCAT_ENGINE_SOURCE}  
 )
 
-target_include_directories(flappycat PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/game/")
-target_include_directories(flappycat PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/engine/")
-target_include_directories(flappycat PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/")
+target_include_directories(flappycat PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/game/")
+target_include_directories(flappycat PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/engine/")
+target_include_directories(flappycat PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/")
 
 #
-# NOTE: -Wno-format-security
+# -Wno-format-security
 #
 # disable formatted printf warning rises at 'Log::i(TAG, "some string");
 # when we pass rvalue of a 'const char*' as argument and compiler
@@ -36,6 +33,4 @@ target_include_directories(flappycat PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/")
 target_compile_options(flappycat PRIVATE -fno-rtti -Wall -Werror -Wno-unused-variable -Wno-unused-lambda-capture -Wno-format-security)
 target_compile_features(flappycat PRIVATE cxx_std_17)
 
-target_link_libraries(flappycat PRIVATE EGL GLESv2 android log)
-
-target_compile_definitions(flappycat PRIVATE FLAPPYCAT_ANDROID TAG=\"FlappyCat\")
+target_compile_definitions(flappycat PRIVATE TAG=\"FlappyCat\")
