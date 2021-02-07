@@ -24,7 +24,8 @@ private:
     enum Focus : int;
 
 private:
-    DISABLE_COPY(AndroidApplication)
+    AndroidApplication(const AndroidApplication&) = delete;
+    AndroidApplication& operator=(const AndroidApplication&) = delete;
 
 public:
     AndroidApplication(ANativeActivity* activity,

@@ -25,7 +25,8 @@
 
 class AndroidWindow : public Window {
 private:
-    DISABLE_COPY(AndroidWindow)
+    AndroidWindow(const AndroidWindow&) = delete;
+    AndroidWindow& operator=(const AndroidWindow&) = delete;
 
 public:
     AndroidWindow();

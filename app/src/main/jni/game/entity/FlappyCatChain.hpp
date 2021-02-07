@@ -20,7 +20,8 @@
 template <typename Link>
 class FlappyCatChain : public FlappyCatEntity {
 private:
-    DISABLE_COPY(FlappyCatChain)
+    FlappyCatChain(const FlappyCatChain&) = delete;
+    FlappyCatChain& operator=(const FlappyCatChain&) = delete;
 
 public:
     using entity_type = Link;

@@ -257,9 +257,8 @@ void FlappyCatTextCharacter::syncChildren()
 {
 
     processCharacterWith([this](size_t x, size_t y,
-                             const CharacterData& characterData,
+                             const CharacterData&,
                              RectangleShape& body) {
-        UNUSED(characterData);
         body.transformation().setPosition(position() + Position((x * CharacterPartWidth), -static_cast<float>(y * CharacterPartHeight)));
 
         body.geometry().resize(Position(CharacterPartWidth, CharacterPartHeight));
@@ -269,11 +268,9 @@ void FlappyCatTextCharacter::syncChildren()
 void FlappyCatTextCharacter::drawOn(const Window& window) const
 {
 
-    processCharacterWith([this, &window](size_t x, size_t y,
+    processCharacterWith([this, &window](size_t, size_t,
                              const CharacterData& characterData,
                              const RectangleShape& body) {
-        UNUSED(x);
-        UNUSED(y);
         if (characterData > 0) {
             window.draw(body);
         }

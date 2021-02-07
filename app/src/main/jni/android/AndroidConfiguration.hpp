@@ -16,7 +16,8 @@ private:
     enum { AproximateToStringLength = 150 };
 
 private:
-    DISABLE_COPY(AndroidConfiguration)
+    AndroidConfiguration(const AndroidConfiguration&) = delete;
+    AndroidConfiguration& operator=(const AndroidConfiguration&) = delete;
 
 public:
     AndroidConfiguration(AAssetManager* manager);

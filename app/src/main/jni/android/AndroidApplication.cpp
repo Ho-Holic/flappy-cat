@@ -97,7 +97,7 @@ void* AndroidApplication::onSaveInstanceState(ANativeActivity* activity, size_t*
     Log::i(TAG, "SaveInstanceState: %p\n", activity);
 
     AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
-    UNUSED(application); // not needed
+    UNUSED(application); // TODO: add game state saving to prevent visual glitches
 
     *outLen = 0;
     return nullptr;
@@ -136,7 +136,7 @@ void AndroidApplication::onLowMemory(ANativeActivity* activity)
     Log::i(TAG, "LowMemory: %p\n", activity);
 
     AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
-    UNUSED(application); // not needed
+    UNUSED(application); // TODO: clean up any unused data in game or log low memory warning
 }
 
 void AndroidApplication::onWindowFocusChanged(ANativeActivity* activity, int hasFocus)
@@ -172,7 +172,9 @@ void AndroidApplication::onNativeWindowRedrawNeeded(ANativeActivity* activity,
     Log::i(TAG, "NativeWindowRedrawNeeded: %p -- %p\n", activity, window);
 
     AndroidApplication* application = static_cast<AndroidApplication*>(activity->instance);
-    UNUSED(application); // for later usage
+    UNUSED(application); // To avoid transient artifacts during screen changes (such resizing after rotation),
+        // applications should not return from this function until they have finished
+        // drawing their window in its current state.
 }
 
 void AndroidApplication::onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window)
@@ -339,8 +341,6 @@ void AndroidApplication::changeNativeWindowSize()
     this->postEvent(event);
 
     mConditionVariable.notify_all();
-
-    UNUSED(lock); // unlocks when goes out of a scope
 }
 
 void AndroidApplication::changeFocus(AndroidApplication::Focus focus)
@@ -365,8 +365,6 @@ void AndroidApplication::changeFocus(AndroidApplication::Focus focus)
     this->postEvent(event);
 
     mConditionVariable.notify_all();
-
-    UNUSED(lock); // unlocks when goes out of a scope
 }
 
 void AndroidApplication::reloadConfiguration()
@@ -378,8 +376,6 @@ void AndroidApplication::reloadConfiguration()
     Log::i(TAG, mConfiguration.toString());
 
     mConditionVariable.notify_all();
-
-    UNUSED(lock); // unlocks when goes out of a scope
 }
 
 //
@@ -421,8 +417,6 @@ void AndroidApplication::exec()
         std::lock_guard<std::mutex> lock(mMutex);
         mIsRunning = true;
         mConditionVariable.notify_all();
-
-        UNUSED(lock); // unlocks when goes out of a scope
     }
 
     // start 'system event loop'
@@ -516,8 +510,6 @@ void AndroidApplication::terminate()
 
     mConditionVariable.notify_all();
 
-    UNUSED(lock); // unlocks when goes out of a scope
-
     CAUTION("If you 'unlock' mutex, you can't touch 'this' object");
 }
 
@@ -586,8 +578,6 @@ void AndroidApplication::setActivityState(AndroidApplication::ActivityState acti
     mActivityState = activityState;
 
     mConditionVariable.notify_all();
-
-    UNUSED(lock); // unlocks when goes out of a scope
 }
 
 void AndroidApplication::initializeNativeWindow(const AndroidEvent& event)
@@ -602,8 +592,6 @@ void AndroidApplication::initializeNativeWindow(const AndroidEvent& event)
     mWindow.initialize();
 
     mConditionVariable.notify_all();
-
-    UNUSED(lock); // unlocks when goes out of a scope
 }
 
 void AndroidApplication::terminateNativeWindow(const AndroidEvent& event)
@@ -618,8 +606,6 @@ void AndroidApplication::terminateNativeWindow(const AndroidEvent& event)
     mWindow.setNativeWindow(event.nativeWindowEvent().pendingWindow);
 
     mConditionVariable.notify_all();
-
-    UNUSED(lock); // unlocks when goes out of a scope
 }
 
 void AndroidApplication::resizeNativeWindow(const AndroidEvent& event)
@@ -630,8 +616,6 @@ void AndroidApplication::resizeNativeWindow(const AndroidEvent& event)
     mWindow.resize(event.resizeEvent().width, event.resizeEvent().height);
 
     mConditionVariable.notify_all();
-
-    UNUSED(lock); // unlocks when goes out of a scope
 }
 
 void AndroidApplication::setInputQueue(const AndroidEvent& event)
@@ -642,8 +626,6 @@ void AndroidApplication::setInputQueue(const AndroidEvent& event)
     mLooper.setInputQueue(event.inputQueueEvent().pendingQueue);
 
     mConditionVariable.notify_all();
-
-    UNUSED(lock); // unlocks when goes out of a scope
 }
 
 void AndroidApplication::setEventLoopState(const AndroidEvent& event)
@@ -654,6 +636,4 @@ void AndroidApplication::setEventLoopState(const AndroidEvent& event)
     window().setReady(event.eventLoopEvent().windowReady);
 
     mConditionVariable.notify_all();
-
-    UNUSED(lock); // unlocks when goes out of a scope
 }

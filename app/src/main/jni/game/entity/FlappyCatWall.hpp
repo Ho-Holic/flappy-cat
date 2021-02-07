@@ -47,6 +47,7 @@ public:
     void setColor(const Color& color);
     const Color& color() const;
     void activateWall();
+    bool isActivated() const;
 
 private:
     enum class WallState {

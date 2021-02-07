@@ -42,19 +42,15 @@ Signal<SlotFunction>::Signal()
 }
 
 template <typename SlotFunction>
-Signal<SlotFunction>::Signal(const Signal& that)
+Signal<SlotFunction>::Signal(const Signal&)
     : mEmit(nullptr)
 {
-
-    UNUSED(that);
     CAUTION("Variable 'mEmit' intentionally set to 'nullptr'");
 }
 
 template <typename SlotFunction>
-Signal<SlotFunction>& Signal<SlotFunction>::operator=(Signal<SlotFunction>& that)
+Signal<SlotFunction>& Signal<SlotFunction>::operator=(Signal<SlotFunction>&)
 {
-
-    UNUSED(that);
     CAUTION("Variable 'mEmit' intentionally set to 'nullptr'");
 
     mEmit = nullptr;

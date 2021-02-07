@@ -76,7 +76,7 @@ void FlappyCatGame::initialize()
         });
 
     mFloor.setUpdateModifier(
-        [this](FlappyCatFloor& floor, const FrameDuration& frameDuration) {
+        [this](FlappyCatFloor&, const FrameDuration&) {
             float radius = mHero.radius();
             // TODO: implement proper origin in 'transformation' and remove this line
             // circle origin in bottom left so we shift by radius
@@ -89,9 +89,6 @@ void FlappyCatGame::initialize()
                     mHero.moveTo(Position(mHero.position().x(), mFloor.position().y()));
                 }
             }
-
-            UNUSED(floor); // this update function process 'mHere' as a real target, not floor
-            UNUSED(frameDuration); // not need for time processing here
         });
 
     // moving walls
@@ -128,28 +125,11 @@ void FlappyCatGame::initialize()
                     mGameState = LoseState;
                     mFloor.setMovementDisplacement(Position(0.f, 0.f));
                     mHero.kill();
-                } else if (wall.collideWithCircle(center, radius + 10.f)) {
+                } else if (!wall.isActivated() && wall.collideWithCircle(center, radius + radius * 0.2f)) {
+
                     wall.activateWall();
-
                     const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
-
-                    /*
-           * TODO: remove extra color changes after collision
-           *
-           * On collision occures there is more then one collision
-           * and you have grater color change
-           *
-           */
-                    uint8_t wallAlpha = wall.color().alpha() - static_cast<uint8_t>(32);
-                    if (wallAlpha <= 8) {
-                        wallAlpha = 8;
-                    }
-
-                    Color newColor(colorScheme[ColorConstant::HeroColor].r(),
-                        colorScheme[ColorConstant::HeroColor].g(),
-                        colorScheme[ColorConstant::HeroColor].b(),
-                        wallAlpha);
-                    wall.setColor(newColor);
+                    wall.setColor(colorScheme[ColorConstant::HeroColor]);
                 }
             }
         });
@@ -211,7 +191,7 @@ void FlappyCatGame::initialize()
     mHero.setGravity(mGameConstants[Constant::PhysicsGravity]);
 
     mHero.setUpdateModifier(
-        [this](FlappyCatHero& hero, const FrameDuration& frameDuration) {
+        [this](FlappyCatHero& hero, const FrameDuration&) {
             hero.moveBy(hero.distance());
 
             // tilt the hero
@@ -231,8 +211,6 @@ void FlappyCatGame::initialize()
 
             float offset = mGameConstants[Constant::HeroSize].x();
             mScore.moveTo(mHero.position() - Position(offset, offset / 4.f));
-
-            UNUSED(frameDuration); // not need for time processing here
         });
 
     mHero.setResetModifier(

@@ -15,7 +15,9 @@
 #include <memory>
 
 class AndroidLooper {
-    DISABLE_COPY(AndroidLooper)
+private:
+    AndroidLooper(const AndroidLooper&) = delete;
+    AndroidLooper& operator=(const AndroidLooper&) = delete;
 
 public:
     enum Id : int;

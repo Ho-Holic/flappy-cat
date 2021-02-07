@@ -126,12 +126,8 @@ int32_t AndroidLooper::dispatchTouchEvent(AInputEvent* inputEvent, AndroidEvent&
     return 1;
 }
 
-int32_t AndroidLooper::dispatchKeyEvent(AInputEvent* inputEvent, AndroidEvent& event)
+int32_t AndroidLooper::dispatchKeyEvent(AInputEvent*, AndroidEvent&)
 {
-
-    UNUSED(inputEvent); // for later usage
-    UNUSED(event); // for later usage
-
     Log::i(TAG, "Key event");
 
     return 0;

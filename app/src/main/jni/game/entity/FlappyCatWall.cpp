@@ -90,3 +90,8 @@ void FlappyCatWall::activateWall()
 
     mWallState = WallState::Activated;
 }
+
+bool FlappyCatWall::isActivated() const
+{
+    return mWallState == WallState::Activated;
+}

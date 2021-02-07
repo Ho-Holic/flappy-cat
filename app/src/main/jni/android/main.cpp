@@ -19,13 +19,8 @@
 //       C++ish 'log_i(TAG) << "Creating: " << activity << "\n";' because of confusion
 //       more simple implementation
 //
-//    3. Macro 'DISABLE_COPY' prefered to manual '= delete' because of direct intent to disable copy
-//
-//    4. Initialize smart pointers  'shared_ptr(nullptr)' instead of 'shared_ptr()'
+//    3. Initialize smart pointers  'shared_ptr(nullptr)' instead of 'shared_ptr()'
 //       for readability and back compatibility with raw pointers
-//
-//    5. Use of UNUSED macro for every case, even if I can omit it in well
-//       known places like 'std::lock_guard'
 //
 
 //  Known errors, glitches and strange behaviour
