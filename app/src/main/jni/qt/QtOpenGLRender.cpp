@@ -175,7 +175,7 @@ GLuint QtOpenGLRender::createProgram(const std::vector<GLuint>& shaders)
 
     for (auto shader : shaders) {
         glAttachShader(program, shader);
-    }
+    }    
 
     {
         glBindAttribLocation(program, AttributePosition, "a_position_modelspace");

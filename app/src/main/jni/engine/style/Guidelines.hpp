@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core/Log.hpp"
+
 /**
  * UNUSED - document that variable is unused and programmer know this
  */

@@ -2,78 +2,18 @@
 
 #include <QDebug>
 #include <string>
+#include <core/Log.hpp>
 
-class QtLog {
+class QtLog : public ILog {
 public:
-    template <typename... Args>
-    static int v(const char* tag, Args... args);
-    template <typename... Args>
-    static int d(const char* tag, Args... args);
-    template <typename... Args>
-    static int i(const char* tag, Args... args);
-    template <typename... Args>
-    static int w(const char* tag, Args... args);
-    template <typename... Args>
-    static int e(const char* tag, Args... args);
-    template <typename... Args>
-    static int wtf(const char* tag, Args... args);
-    template <typename... Args>
-    static void assert_condition(bool cond, const char* condAsString, const char* tag, Args... args);
-};
-
-template <typename... Args>
-int QtLog::v(const char* tag, Args... args)
-{
-
-    (qDebug() << ... << args);
-    return 0;
-}
-
-template <typename... Args>
-int QtLog::d(const char* tag, Args... args)
-{
-
-    (qDebug() << ... << args);
-    return 0;
-}
-
-template <typename... Args>
-int QtLog::i(const char* tag, Args... args)
-{
-
-    (qDebug() << ... << args);
-    return 0;
-}
-
-template <typename... Args>
-int QtLog::w(const char* tag, Args... args)
-{
-
-    (qDebug() << ... << args);
-    return 0;
-}
-
-template <typename... Args>
-int QtLog::e(const char* tag, Args... args)
-{
-
-    (qDebug() << ... << args);
-    return 0;
-}
-
-template <typename... Args>
-int QtLog::wtf(const char* tag, Args... args)
-{
-
-    (qDebug() << ... << args);
-    return 0;
-}
-
-template <typename... Args>
-void QtLog::assert_condition(bool cond, const char* condAsString, const char* tag, Args... args)
-{
-
-    if (!cond) {
-        //assert(false);
+    void writeMessage(std::string tag, std::string message) override
+    {
+        qDebug() << tag.c_str() << "|" << message.c_str();
     }
-}
+
+    void assert_condition(bool condition, std::string conditionAsString, std::string tag, std::string message) override
+    {
+        qDebug() << tag.c_str() << "|" << conditionAsString.c_str() << ", " << message.c_str();
+        assert(condition);
+    }
+};
