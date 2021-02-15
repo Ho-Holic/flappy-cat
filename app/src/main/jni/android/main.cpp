@@ -5,6 +5,7 @@
 #include "android/FlappyCatApplication.hpp"
 
 // engine
+#include <android/AndroidLog.hpp>
 #include <core/Log.hpp>
 
 // stl
@@ -40,6 +41,8 @@ void ANativeActivity_onCreate(ANativeActivity* activity,
     void* savedState,
     size_t savedStateSize)
 {
+
+    Log::setHandler(new AndroidLog2());
 
     Log::i(TAG, "Creating: %p\n", activity);
 

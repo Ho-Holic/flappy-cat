@@ -25,6 +25,19 @@ public:
         const char* tag, Args... args);
 };
 
+class AndroidLog2 : public ILog {
+public:
+    void writeMessage(std::string tag, std::string message) override
+    {
+        AndroidLog::i(tag.c_str(), message);
+    }
+
+    void assert_condition(bool condition, std::string conditionAsString, std::string tag, std::string message) override
+    {
+        AndroidLog::assert_condition(condition, conditionAsString.c_str(), tag.c_str(), message);
+    }
+};
+
 // implementation
 
 namespace {
