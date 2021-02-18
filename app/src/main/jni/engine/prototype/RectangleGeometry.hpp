@@ -10,6 +10,7 @@ public:
 
 public:
     RectangleGeometry(const Position& size);
+    RectangleGeometry();
 
 public:
     OnUpdateSignal& onUpdate();

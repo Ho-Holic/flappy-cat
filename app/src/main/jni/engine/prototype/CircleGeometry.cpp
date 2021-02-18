@@ -14,6 +14,12 @@ CircleGeometry::CircleGeometry(float radius, std::size_t resolution)
     //
 }
 
+CircleGeometry::CircleGeometry()
+    : CircleGeometry(1.f, 32u)
+{
+    //
+}
+
 Geometry::size_type CircleGeometry::points() const
 {
 

@@ -10,6 +10,7 @@ public:
 
 public:
     CircleGeometry(float radius, std::size_t resolution);
+    CircleGeometry();
 
 public:
     OnUpdateSignal& onUpdate();

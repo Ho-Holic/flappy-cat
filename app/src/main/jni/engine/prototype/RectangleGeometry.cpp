@@ -12,6 +12,12 @@ RectangleGeometry::RectangleGeometry(const Position& size)
     //
 }
 
+RectangleGeometry::RectangleGeometry()
+    : RectangleGeometry(Position())
+{
+    //
+}
+
 Geometry::size_type RectangleGeometry::points() const
 {
     return 4;

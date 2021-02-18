@@ -10,6 +10,12 @@ TriangleGeometry::TriangleGeometry(const Position& size)
     //
 }
 
+TriangleGeometry::TriangleGeometry()
+    : TriangleGeometry(Position())
+{
+    //
+}
+
 TriangleGeometry::OnUpdateSignal& TriangleGeometry::onUpdate()
 {
     return mOnUpdate;

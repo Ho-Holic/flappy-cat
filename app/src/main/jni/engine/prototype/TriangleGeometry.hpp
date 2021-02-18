@@ -10,6 +10,7 @@ public:
 
 public:
     TriangleGeometry(const Position& size);
+    TriangleGeometry();
 
 public:
     OnUpdateSignal& onUpdate();
