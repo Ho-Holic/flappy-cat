@@ -55,14 +55,15 @@ void VertexBasedRender::update(const Shape& shape)
         float rotatedX = p.x() * cosValue - p.y() * sinValue;
         float rotatedY = p.x() * sinValue + p.y() * cosValue;
 
-        /** TODO: add scale/origin later
-     *
-     * When object is moved, origin doesn't take into account
-     * only for rotation.
-     *
-     * Scale is implemented only for 'View' to change all objects
-     * representation on the screen, but local scale is not implemented
-     */
+        //
+        // TODO: add scale/origin later
+        //
+        // When object is moved, origin doesn't take into account
+        // only for rotation.
+        //
+        // Scale is implemented only for 'View' to change all objects
+        // representation on the screen, but local scale is not implemented
+        //
 
         mVertices << Vertex(shape.transformation().position()
                 + Position(rotatedX, rotatedY)

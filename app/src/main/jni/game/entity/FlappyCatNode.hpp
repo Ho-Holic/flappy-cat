@@ -12,14 +12,10 @@
 
 class FlappyCatNode {
 public:
-    using shared = std::shared_ptr<FlappyCatNode>;
-    using children = std::vector<FlappyCatNode::shared>;
-
-public:
     FlappyCatNode();
 
 public:
-    void addChild(const FlappyCatNode::shared& child);
+    void addChild(const std::shared_ptr<FlappyCatNode>& child);
 
 public:
     virtual void initialize();
@@ -28,5 +24,5 @@ public:
     virtual void update(const FrameDuration& frameDuration);
 
 private:
-    FlappyCatNode::children mChildren;
+    std::vector<std::shared_ptr<FlappyCatNode>> mChildren;
 };

@@ -5,8 +5,6 @@
 template <typename T>
 class FlappyCatStateNode : public FlappyCatNode {
 public:
-    using shared = std::shared_ptr<T>;
-    using children = std::vector<typename T::shared>;
     using entity_type = T;
     using reset_modifier_type = std::function<void(entity_type&)>;
     using update_modifier_type = std::function<void(entity_type&, const FrameDuration&)>;
@@ -41,12 +39,14 @@ template <typename T>
 void FlappyCatStateNode<T>::initialize()
 {
     mInitializeModifier(*static_cast<entity_type*>(this));
+    FlappyCatNode::initialize();
 }
 
 template <typename T>
 void FlappyCatStateNode<T>::reset()
 {
     mResetModifier(*static_cast<entity_type*>(this));
+    FlappyCatNode::reset();
 }
 
 template <typename T>

@@ -48,6 +48,8 @@ private:
     FlappyCatGameConstants mGameConstants;
     GameState mGameState;
     FlappyCatNode mScene;
+
+    // elements
     FlappyCatBackground mBackground;
     FlappyCatFloor mFloor;
     FlappyCatChain<FlappyCatWall> mBarricade;
@@ -55,9 +57,11 @@ private:
     FlappyCatCloud mBackgroundSky;
     FlappyCatHero mHero;
     FlappyCatViewLimit mLimit;
+
     // score element
     FlappyCatText mScore;
     size_t mScoreCounter;
+
     // fps element
     FlappyCatText mFps;
     size_t mFpsCounter;

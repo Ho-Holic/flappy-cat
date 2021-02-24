@@ -16,7 +16,7 @@ void FlappyCatNode::reset()
     // intentionally left blank
 }
 
-void FlappyCatNode::addChild(const FlappyCatNode::shared& child)
+void FlappyCatNode::addChild(const std::shared_ptr<FlappyCatNode>& child)
 {
 
     mChildren.push_back(child);
