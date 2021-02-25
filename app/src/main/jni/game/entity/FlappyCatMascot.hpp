@@ -1,21 +1,16 @@
 #pragma once
 
-// engine
+#include "entity/FlappyCatStateNode.hpp"
+#include <memory>
 #include <prototype/RectangleShape.hpp>
 #include <prototype/TriangleShape.hpp>
 
-// stl
-#include <memory>
-
-// game
-#include "FlappyCatEntity.hpp"
-
-class FlappyCatMascot : public FlappyCatEntity {
+class FlappyCatMascot : public FlappyCatStateNode<FlappyCatMascot> {
 public:
     FlappyCatMascot(const FlappyCatGameConstants& gameConstants);
 
 public:
-    virtual void drawOn(const Window& window) const override;
+    void drawOn(const Window& window) const override;
 
 public:
     void setColor(const Color& bodyColor,
@@ -24,7 +19,7 @@ public:
     std::vector<std::shared_ptr<Geometry>> duplicateParts() const;
 
 private:
-    virtual void syncChildren() override;
+    void syncChildren() override;
 
 private:
     RectangleShape mBody;

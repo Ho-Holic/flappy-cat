@@ -1,9 +1,6 @@
 #pragma once
 
-// engine
 #include <core/Window.hpp>
-
-// game
 #include <game/FlappyCatClock.hpp>
 #include <game/FlappyCatGameConstants.hpp>
 

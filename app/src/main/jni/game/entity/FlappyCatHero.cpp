@@ -1,60 +1,33 @@
 #include "FlappyCatHero.hpp"
-
-// engine
 #include <core/Log.hpp>
 #include <prototype/RectangleShape.hpp>
 #include <prototype/TriangleShape.hpp>
 
 FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
-    : FlappyCatEntity(gameConstants)
+    : FlappyCatStateNode<FlappyCatHero>(gameConstants)
     , mJumpAcceleration()
     , mJumpVelocity()
     , mBall()
     , mMascot(gameConstants)
-    , mResetModifier([](entity_type&) {})
-    , mUpdateModifier([](entity_type&, const FrameDuration&) {})
 {
     //
 }
 
 float FlappyCatHero::radius() const
 {
-
     return mBall.geometry().radius();
 }
 
 void FlappyCatHero::setRadius(float radius)
 {
-
     mBall.geometry().setRadius(radius);
     syncChildren();
 }
 
-void FlappyCatHero::update(const FrameDuration& time)
-{
-
-    FlappyCatEntity::update(time);
-    mUpdateModifier(*this, time);
-}
-
 void FlappyCatHero::drawOn(const Window& window) const
 {
-
     window.draw(mBall);
     mMascot.drawOn(window);
-}
-
-void FlappyCatHero::reset()
-{
-
-    FlappyCatEntity::reset();
-    mResetModifier(*this);
-}
-
-void FlappyCatHero::setResetModifier(const modifier_type& modifier)
-{
-
-    mResetModifier = modifier;
 }
 
 void FlappyCatHero::setColor(const Color& backgroundColor,
@@ -62,41 +35,32 @@ void FlappyCatHero::setColor(const Color& backgroundColor,
     const Color& scarfColor,
     const Color& mouthColor)
 {
-
     mBall.setColor(backgroundColor);
     mMascot.setColor(bodyColor, scarfColor, mouthColor);
 }
 
-void FlappyCatHero::setUpdateModifier(const update_modifier_type& modifier)
-{
-
-    mUpdateModifier = modifier;
-}
-
 void FlappyCatHero::setJumpConstants(const Position& acceleration, const Position& velocity)
 {
-
     mJumpAcceleration = acceleration;
     mJumpVelocity = velocity;
 }
 
 void FlappyCatHero::jump()
 {
-
     setAcceleration(mJumpAcceleration);
     setVelocity(mJumpVelocity);
 }
 
 void FlappyCatHero::syncChildren()
 {
-
-    /**
-   * TODO: add rotation to mBall
-   * Currently origin of ball is not in the center of the ball
-   * so rotation would cause bad render, fix origin code
-   * and uncomment rotation line
-   */
-    //mBall.transformation().setRotation(mAngle);
+    //
+    // TODO: add rotation to mBall
+    // Currently origin of ball is not in the center of the ball
+    // so rotation would cause bad render, fix origin code
+    // and uncomment rotation line
+    //
+    // mBall.transformation().setRotation(mAngle);
+    //
 
     mBall.transformation().setPosition(position());
 

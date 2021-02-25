@@ -1,7 +1,4 @@
-// game
 #include "FlappyCatEntity.hpp"
-
-// engine
 #include <core/Log.hpp>
 
 FlappyCatEntity::FlappyCatEntity(const FlappyCatGameConstants& gameConstants)

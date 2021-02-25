@@ -1,8 +1,7 @@
-// game
 #include "FlappyCatMascot.hpp"
 
 FlappyCatMascot::FlappyCatMascot(const FlappyCatGameConstants& gameConstants)
-    : FlappyCatEntity(gameConstants)
+    : FlappyCatStateNode<FlappyCatMascot>(gameConstants)
     , mBody()
     , mBackLeg()
     , mFrontLeg()
@@ -21,7 +20,6 @@ FlappyCatMascot::FlappyCatMascot(const FlappyCatGameConstants& gameConstants)
 
 void FlappyCatMascot::drawOn(const Window& window) const
 {
-
     window.draw(mBody);
     window.draw(mBackLeg);
     window.draw(mFrontLeg);
@@ -38,7 +36,6 @@ void FlappyCatMascot::drawOn(const Window& window) const
 
 void FlappyCatMascot::syncChildren()
 {
-
     const Position& pos = position();
     float angle = rotation();
 
@@ -150,7 +147,6 @@ void FlappyCatMascot::setColor(const Color& bodyColor,
     const Color& scarfColor,
     const Color& mouthColor)
 {
-
     mBody.setColor(bodyColor);
     mBackLeg.setColor(bodyColor);
     mFrontLeg.setColor(bodyColor);
