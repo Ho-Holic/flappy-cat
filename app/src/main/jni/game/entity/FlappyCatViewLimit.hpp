@@ -1,20 +1,17 @@
 #pragma once
 
-// engine
+#include "entity/FlappyCatStateNode.hpp"
 #include <prototype/RectangleShape.hpp>
 
-// game
-#include "FlappyCatEntity.hpp"
-
-class FlappyCatViewLimit : public FlappyCatEntity {
+class FlappyCatViewLimit : public FlappyCatStateNode<FlappyCatViewLimit> {
 public:
     FlappyCatViewLimit(const FlappyCatGameConstants& gameConstants);
 
 public:
-    virtual void drawOn(const Window& window) const override;
+    void drawOn(const Window& window) const override;
 
 private:
-    virtual void syncChildren() override;
+    void syncChildren() override;
 
 private:
     RectangleShape mTop;

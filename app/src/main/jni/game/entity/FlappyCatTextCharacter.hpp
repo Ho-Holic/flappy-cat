@@ -1,21 +1,16 @@
 #pragma once
 
-// game
-#include "FlappyCatEntity.hpp"
-
-// engine
+#include "entity/FlappyCatStateNode.hpp"
+#include <array>
 #include <prototype/RectangleShape.hpp>
 
-// stl
-#include <array>
-
-class FlappyCatTextCharacter : public FlappyCatEntity {
+class FlappyCatTextCharacter : public FlappyCatStateNode<FlappyCatTextCharacter> {
 public:
     FlappyCatTextCharacter(const FlappyCatGameConstants& gameConstants);
 
 public:
-    virtual void drawOn(const Window& window) const override;
-    virtual const Position& size() const override;
+    void drawOn(const Window& window) const override;
+    const Position& size() const override;
 
 public:
     void setCharacter(char character);
@@ -45,7 +40,7 @@ private:
         const RectangleShape&)>;
 
 private:
-    virtual void syncChildren() override;
+    void syncChildren() override;
 
 private:
     void processCharacterWith(rearrange_modifier modifier);

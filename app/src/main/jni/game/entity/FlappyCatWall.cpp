@@ -1,15 +1,10 @@
-// game
 #include "FlappyCatWall.hpp"
-
-// engine
 #include <core/Log.hpp>
 #include <physics/Collide.hpp>
-
-// style
 #include <style/Guidelines.hpp>
 
 FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
-    : FlappyCatEntity(gameConstants)
+    : FlappyCatStateNode<FlappyCatWall>(gameConstants)
     , mGapInterval(0.f)
     , mGapDisplacement(0.f)
     , mTopBlock()
@@ -21,35 +16,30 @@ FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
 
 void FlappyCatWall::setGapInterval(float interval)
 {
-
     mGapInterval = interval;
     syncChildren();
 }
 
 void FlappyCatWall::setGapDisplacement(float displacement)
 {
-
     mGapDisplacement = displacement;
     syncChildren();
 }
 
 bool FlappyCatWall::collideWithCircle(const Position& center, float radius)
 {
-
     return Collide::circleRect(center, radius, mTopBlock)
         || Collide::circleRect(center, radius, mBottomBlock);
 }
 
 void FlappyCatWall::drawOn(const Window& window) const
 {
-
     window.draw(mTopBlock);
     window.draw(mBottomBlock);
 }
 
 void FlappyCatWall::setColor(const Color& color)
 {
-
     mTopBlock.setColor(color);
     mBottomBlock.setColor(color);
 }
@@ -61,7 +51,6 @@ const Color& FlappyCatWall::color() const
 
 void FlappyCatWall::syncChildren()
 {
-
     float A1 = position().y();
 
     float A2 = A1 + size().y()
@@ -87,7 +76,6 @@ void FlappyCatWall::syncChildren()
 
 void FlappyCatWall::activateWall()
 {
-
     mWallState = WallState::Activated;
 }
 

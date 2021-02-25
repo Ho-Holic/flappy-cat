@@ -1,22 +1,21 @@
 #pragma once
 
-// game
-#include "FlappyCatEntity.hpp"
 #include "FlappyCatTextCharacter.hpp"
+#include "entity/FlappyCatStateNode.hpp"
 
-class FlappyCatText : public FlappyCatEntity {
+class FlappyCatText : public FlappyCatStateNode<FlappyCatText> {
 public:
     FlappyCatText(const FlappyCatGameConstants& gameConstants);
 
 public:
-    virtual void drawOn(const Window& window) const override;
+    void drawOn(const Window& window) const override;
 
 public:
     void setText(const std::string& text);
     void setColor(const Color& textColor);
 
 private:
-    virtual void syncChildren() override;
+    void syncChildren() override;
 
 private:
     std::string mText;

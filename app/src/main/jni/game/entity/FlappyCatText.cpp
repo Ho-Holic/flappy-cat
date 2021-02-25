@@ -1,12 +1,8 @@
-
-// self
 #include "FlappyCatText.hpp"
-
-// engine
 #include <core/Log.hpp>
 
 FlappyCatText::FlappyCatText(const FlappyCatGameConstants& gameConstants)
-    : FlappyCatEntity(gameConstants)
+    : FlappyCatStateNode<FlappyCatText>(gameConstants)
     , mText("")
     , mTextBody()
     , mTextColor()
@@ -48,7 +44,6 @@ void FlappyCatText::syncChildren()
 
 void FlappyCatText::drawOn(const Window& window) const
 {
-
     for (const FlappyCatTextCharacter& character : mTextBody) {
         character.drawOn(window);
     }
@@ -56,7 +51,6 @@ void FlappyCatText::drawOn(const Window& window) const
 
 void FlappyCatText::setColor(const Color& textColor)
 {
-
     mTextColor = textColor;
 
     for (FlappyCatTextCharacter& character : mTextBody) {

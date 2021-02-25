@@ -163,21 +163,23 @@ void FlappyCatGame::initialize()
     // sky with clouds
     mBackgroundSky.setParts(mGameConstants[Constant::SkyCloudParts].x());
     mBackgroundSky.setResetModifier(
-        [this](FlappyCatCloud::entity_type& cloud) {
-            const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
+        [this](FlappyCatCloud& sky) {
+            sky.foreachCloud([this](CircleShape& cloud) {
+                const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
 
-            Position cloudOffset = mGameConstants[Constant::SkyCloudOffset];
-            Position skyOffset = mGameConstants[Constant::SkyOffset];
+                Position cloudOffset = mGameConstants[Constant::SkyCloudOffset];
+                Position skyOffset = mGameConstants[Constant::SkyOffset];
 
-            cloud.geometry().setRadius(mGameConstants[Constant::SkyCloudSize].x()
-                + std::abs(mGameConstants.randomOffsetFrom(cloudOffset.x(),
-                    cloudOffset.y())));
+                cloud.geometry().setRadius(mGameConstants[Constant::SkyCloudSize].x()
+                    + std::abs(mGameConstants.randomOffsetFrom(cloudOffset.x(),
+                        cloudOffset.y())));
 
-            Position pos(mGameConstants.randomOffsetFrom(skyOffset.x(), skyOffset.y()),
-                mGameConstants.randomOffsetFrom(skyOffset.x(), skyOffset.y()));
+                Position pos(mGameConstants.randomOffsetFrom(skyOffset.x(), skyOffset.y()),
+                    mGameConstants.randomOffsetFrom(skyOffset.x(), skyOffset.y()));
 
-            cloud.transformation().setPosition(pos);
-            cloud.setColor(colorScheme[ColorConstant::CloudColor]);
+                cloud.transformation().setPosition(pos);
+                cloud.setColor(colorScheme[ColorConstant::CloudColor]);
+            });
         });
 
     // cat hero!

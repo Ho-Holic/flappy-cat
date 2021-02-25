@@ -1,9 +1,7 @@
-
-// game
 #include "FlappyCatViewLimit.hpp"
 
 FlappyCatViewLimit::FlappyCatViewLimit(const FlappyCatGameConstants& gameConstants)
-    : FlappyCatEntity(gameConstants)
+    : FlappyCatStateNode<FlappyCatViewLimit>(gameConstants)
     , mTop()
     , mTopRight()
     , mRight()
@@ -18,7 +16,6 @@ FlappyCatViewLimit::FlappyCatViewLimit(const FlappyCatGameConstants& gameConstan
 
 void FlappyCatViewLimit::syncChildren()
 {
-
     const Position& position = this->position();
     const Position& size = this->size();
 
@@ -45,7 +42,6 @@ void FlappyCatViewLimit::syncChildren()
 
 void FlappyCatViewLimit::drawOn(const Window& window) const
 {
-
     window.draw(mTop);
     window.draw(mTopRight);
     window.draw(mRight);

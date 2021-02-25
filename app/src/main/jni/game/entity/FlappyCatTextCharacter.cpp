@@ -1,205 +1,104 @@
-// self
 #include "FlappyCatTextCharacter.hpp"
-
-// stl
+#include <core/Log.hpp>
 #include <map>
 
-// engine
-#include <core/Log.hpp>
-
+// clang-format off
 namespace {
-/**
-   * TODO: consider to implement visitor font
-   *
-   * https://www.myfonts.com/fonts/cheapprofonts/visitor-brk-ten-pro/
-   *
-   */
+
+//
+// TODO: consider to implement visitor font
+//
+// https://www.myfonts.com/fonts/cheapprofonts/visitor-brk-ten-pro/
+//
+//
+
 static std::map<char, std::vector<size_t>> g_characterTable = {
     { '0',
         {
-            1,
-            1,
-            1,
-            1,
-            0,
-            1,
-            1,
-            0,
-            1,
-            1,
-            0,
-            1,
-            1,
-            1,
-            1,
+            1,1,1,
+            1,0,1,
+            1,0,1,
+            1,0,1,
+            1,1,1,
         } },
     { '1',
         {
-            0,
-            1,
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-            1,
+            0,1,1,
+            0,0,1,
+            0,0,1,
+            0,0,1,
+            0,0,1,
         } },
     { '2',
         {
-            1,
-            1,
-            1,
-            0,
-            0,
-            1,
-            1,
-            1,
-            1,
-            1,
-            0,
-            0,
-            1,
-            1,
-            1,
+            1,1,1,
+            0,0,1,
+            1,1,1,
+            1,0,0,
+            1,1,1,
         } },
     { '3',
         {
-            1,
-            1,
-            1,
-            0,
-            0,
-            1,
-            0,
-            1,
-            1,
-            0,
-            0,
-            1,
-            1,
-            1,
-            1,
+            1,1,1,
+            0,0,1,
+            0,1,1,
+            0,0,1,
+            1,1,1,
         } },
     { '4',
         {
-            1,
-            0,
-            1,
-            1,
-            0,
-            1,
-            1,
-            1,
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-            1,
+            1,0,1,
+            1,0,1,
+            1,1,1,
+            0,0,1,
+            0,0,1,
         } },
     { '5',
         {
-            1,
-            1,
-            1,
-            1,
-            0,
-            0,
-            1,
-            1,
-            1,
-            0,
-            0,
-            1,
-            1,
-            1,
-            1,
+            1,1,1,
+            1,0,0,
+            1,1,1,
+            0,0,1,
+            1,1,1,
         } },
     { '6',
         {
-            1,
-            1,
-            1,
-            1,
-            0,
-            0,
-            1,
-            1,
-            1,
-            1,
-            0,
-            1,
-            1,
-            1,
-            1,
+            1,1,1,
+            1,0,0,
+            1,1,1,
+            1,0,1,
+            1,1,1,
         } },
     { '7',
         {
-            1,
-            1,
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-            1,
+            1,1,1,
+            0,0,1,
+            0,0,1,
+            0,0,1,
+            0,0,1,
         } },
     { '8',
         {
-            1,
-            1,
-            1,
-            1,
-            0,
-            1,
-            1,
-            1,
-            1,
-            1,
-            0,
-            1,
-            1,
-            1,
-            1,
+            1,1,1,
+            1,0,1,
+            1,1,1,
+            1,0,1,
+            1,1,1,
         } },
     { '9',
         {
-            1,
-            1,
-            1,
-            1,
-            0,
-            1,
-            1,
-            1,
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-            1,
+            1,1,1,
+            1,0,1,
+            1,1,1,
+            0,0,1,
+            0,0,1,
         } },
 };
 }
+// clang-format on
 
 FlappyCatTextCharacter::FlappyCatTextCharacter(const FlappyCatGameConstants& gameConstants)
-    : FlappyCatEntity(gameConstants)
+    : FlappyCatStateNode<FlappyCatTextCharacter>(gameConstants)
     , mCharacter('\0')
     , mCharacterBody()
     , mSize(CharacterPartWidth * CharacterWidth,
@@ -210,7 +109,6 @@ FlappyCatTextCharacter::FlappyCatTextCharacter(const FlappyCatGameConstants& gam
 
 void FlappyCatTextCharacter::processCharacterWith(rearrange_modifier modifier)
 {
-
     auto found = g_characterTable.find(mCharacter);
 
     REQUIRE(TAG, found != g_characterTable.end(), "Try to rearrange to non existing character");
@@ -229,7 +127,6 @@ void FlappyCatTextCharacter::processCharacterWith(rearrange_modifier modifier)
 
 void FlappyCatTextCharacter::processCharacterWith(const_rearrange_modifier modifier) const
 {
-
     auto found = g_characterTable.find(mCharacter);
 
     REQUIRE(TAG, found != g_characterTable.end(), "Try to rearrange to non existing character");
@@ -248,14 +145,12 @@ void FlappyCatTextCharacter::processCharacterWith(const_rearrange_modifier modif
 
 void FlappyCatTextCharacter::setCharacter(char character)
 {
-
     mCharacter = character;
     syncChildren();
 }
 
 void FlappyCatTextCharacter::syncChildren()
 {
-
     processCharacterWith([this](size_t x, size_t y,
                              const CharacterData&,
                              RectangleShape& body) {
@@ -267,7 +162,6 @@ void FlappyCatTextCharacter::syncChildren()
 
 void FlappyCatTextCharacter::drawOn(const Window& window) const
 {
-
     processCharacterWith([this, &window](size_t, size_t,
                              const CharacterData& characterData,
                              const RectangleShape& body) {
@@ -279,13 +173,11 @@ void FlappyCatTextCharacter::drawOn(const Window& window) const
 
 const Position& FlappyCatTextCharacter::size() const
 {
-
     return mSize;
 }
 
 void FlappyCatTextCharacter::setColor(const Color& textColor)
 {
-
     for (RectangleShape& body : mCharacterBody) {
         body.setColor(textColor);
     }

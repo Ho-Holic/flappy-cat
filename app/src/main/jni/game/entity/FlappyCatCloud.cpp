@@ -1,24 +1,17 @@
-// game
 #include "FlappyCatCloud.hpp"
-
-// engine
 #include <core/Log.hpp>
-
-// style
 #include <style/Guidelines.hpp>
 
 FlappyCatCloud::FlappyCatCloud(const FlappyCatGameConstants& gameConstants)
-    : FlappyCatEntity(gameConstants)
+    : FlappyCatStateNode<FlappyCatCloud>(gameConstants)
     , mParts(0.f)
     , mCloudParts()
-    , mResetModifier([](entity_type&) {})
 {
     //
 }
 
 void FlappyCatCloud::initialize()
 {
-
     mCloudParts.reserve(static_cast<size_t>(mParts));
 
     for (size_t i = 0; i < mParts; ++i) {
@@ -26,37 +19,18 @@ void FlappyCatCloud::initialize()
     }
 }
 
-void FlappyCatCloud::reset()
-{
-
-    for (entity_type& part : mCloudParts) {
-
-        REQUIRE(TAG, mResetModifier != nullptr, "Reset modifier must be not null");
-
-        mResetModifier(part);
-    }
-}
-
 void FlappyCatCloud::drawOn(const Window& window) const
 {
-
-    for (const entity_type& part : mCloudParts) {
+    for (const CircleShape& part : mCloudParts) {
         // TODO: make game circle abstraction from entity
         // part.drawOn(window);
         window.draw(part);
     }
 }
 
-void FlappyCatCloud::setResetModifier(const modifier_type& modifier)
-{
-
-    mResetModifier = modifier;
-}
-
 void FlappyCatCloud::setColor(const Color& color)
 {
-
-    for (entity_type& part : mCloudParts) {
+    for (CircleShape& part : mCloudParts) {
 
         part.setColor(color);
     }
@@ -64,6 +38,14 @@ void FlappyCatCloud::setColor(const Color& color)
 
 void FlappyCatCloud::setParts(float parts)
 {
-
     mParts = parts;
+}
+
+void FlappyCatCloud::foreachCloud(const std::function<void(CircleShape&)>& modifier)
+{
+    for (CircleShape& part : mCloudParts) {
+
+        REQUIRE(TAG, modifier != nullptr, "foreach modifier must be not null");
+        modifier(part);
+    }
 }

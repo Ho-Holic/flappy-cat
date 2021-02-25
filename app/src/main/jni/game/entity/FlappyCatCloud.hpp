@@ -1,34 +1,23 @@
 #pragma once
 
-// engine
+#include "entity/FlappyCatStateNode.hpp"
 #include <prototype/CircleShape.hpp>
-
-// game
-#include "FlappyCatEntity.hpp"
-
-// stl
 #include <vector>
 
-class FlappyCatCloud : public FlappyCatEntity {
-public:
-    using entity_type = CircleShape;
-    using modifier_type = std::function<void(entity_type&)>;
-
+class FlappyCatCloud : public FlappyCatStateNode<FlappyCatCloud> {
 public:
     FlappyCatCloud(const FlappyCatGameConstants& gameConstants);
 
 public:
-    virtual void initialize() override;
-    virtual void drawOn(const Window& window) const override;
-    virtual void reset() override;
+    void initialize() override;
+    void drawOn(const Window& window) const override;
 
 public:
-    void setResetModifier(const modifier_type& modifier);
     void setColor(const Color& color);
     void setParts(float parts);
+    void foreachCloud(const std::function<void(CircleShape&)>& modifier);
 
 public:
     float mParts;
-    std::vector<entity_type> mCloudParts;
-    modifier_type mResetModifier;
+    std::vector<CircleShape> mCloudParts;
 };
