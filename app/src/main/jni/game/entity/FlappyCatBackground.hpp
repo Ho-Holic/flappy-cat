@@ -1,31 +1,21 @@
 #pragma once
 
-// engine
+#include "entity/FlappyCatStateNode.hpp"
 #include <prototype/RectangleShape.hpp>
 
-// game
-#include "FlappyCatEntity.hpp"
-
-class FlappyCatBackground : public FlappyCatEntity {
-public:
-    using entity_type = FlappyCatBackground;
-    using modifier_type = std::function<void(entity_type&)>;
-
+class FlappyCatBackground : public FlappyCatStateNode<FlappyCatBackground> {
 public:
     FlappyCatBackground(const FlappyCatGameConstants& gameConstants);
 
 public:
-    virtual void drawOn(const Window& window) const override;
-    virtual void reset() override;
+    void drawOn(const Window& window) const override;
 
 public:
     void setColor(const Color& color);
-    void setResetModifier(const modifier_type& modifier);
 
 private:
-    virtual void syncChildren() override;
+    void syncChildren() override;
 
 private:
     RectangleShape mBackground;
-    modifier_type mResetModifier;
 };

@@ -9,13 +9,16 @@
 
 // game
 #include <game/FlappyCatClock.hpp>
+#include <game/entity/FlappyCatEntity.hpp>
 
-class FlappyCatNode {
+using FlappyCatNode = FlappyCatEntity; // tmp
+
+class FlappyCatNode2 {
 public:
-    FlappyCatNode();
+    FlappyCatNode2();
 
 public:
-    void addChild(const std::shared_ptr<FlappyCatNode>& child);
+    void addChild(const std::shared_ptr<FlappyCatNode2>& child);
 
 public:
     virtual void initialize();
@@ -24,5 +27,5 @@ public:
     virtual void update(const FrameDuration& frameDuration);
 
 private:
-    std::vector<std::shared_ptr<FlappyCatNode>> mChildren;
+    std::vector<std::shared_ptr<FlappyCatNode2>> mChildren;
 };

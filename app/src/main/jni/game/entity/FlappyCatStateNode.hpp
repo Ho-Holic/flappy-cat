@@ -8,11 +8,11 @@ public:
     using entity_type = T;
     using reset_modifier_type = std::function<void(entity_type&)>;
     using update_modifier_type = std::function<void(entity_type&, const FrameDuration&)>;
-    using draw_modifier_type = std::function<void(entity_type&, const Window&)>;
+    using draw_modifier_type = std::function<void(const entity_type&, const Window&)>;
     using initialize_modifier_type = std::function<void(entity_type&)>;
 
 public:
-    FlappyCatStateNode();
+    FlappyCatStateNode(const FlappyCatGameConstants& gameConstants);
 
 public:
     void setResetModifier(reset_modifier_type modifier);
@@ -38,38 +38,37 @@ private:
 template <typename T>
 void FlappyCatStateNode<T>::initialize()
 {
-    mInitializeModifier(*static_cast<entity_type*>(this));
     FlappyCatNode::initialize();
+    mInitializeModifier(*static_cast<entity_type*>(this));
 }
 
 template <typename T>
 void FlappyCatStateNode<T>::reset()
 {
-    mResetModifier(*static_cast<entity_type*>(this));
     FlappyCatNode::reset();
+    mResetModifier(*static_cast<entity_type*>(this));
 }
 
 template <typename T>
 void FlappyCatStateNode<T>::drawOn(const Window& window) const
 {
-    mDrawModifier(*static_cast<entity_type*>(this), window);
-    FlappyCatNode::drawOn(window);
+    mDrawModifier(*static_cast<const entity_type*>(this), window);
 }
 
 template <typename T>
 void FlappyCatStateNode<T>::update(const FrameDuration& frameDuration)
 {
-
-    mUpdateModifier(*static_cast<entity_type*>(this), frameDuration);
     FlappyCatNode::update(frameDuration);
+    mUpdateModifier(*static_cast<entity_type*>(this), frameDuration);
 }
 
 template <typename T>
-FlappyCatStateNode<T>::FlappyCatStateNode()
-    : mResetModifier([](entity_type&) {})
+FlappyCatStateNode<T>::FlappyCatStateNode(const FlappyCatGameConstants& gameConstants)
+    : FlappyCatNode(gameConstants)
+    , mResetModifier([](entity_type&) {})
     , mUpdateModifier([](entity_type&, const FrameDuration&) {})
     , mInitializeModifier([](entity_type&) {})
-    , mDrawModifier([](entity_type&, const Window&) {})
+    , mDrawModifier([](const entity_type&, const Window&) {})
 {
     //
 }

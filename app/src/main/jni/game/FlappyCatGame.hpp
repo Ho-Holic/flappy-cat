@@ -47,7 +47,6 @@ private:
 private:
     FlappyCatGameConstants mGameConstants;
     GameState mGameState;
-    FlappyCatNode mScene;
 
     // elements
     FlappyCatBackground mBackground;

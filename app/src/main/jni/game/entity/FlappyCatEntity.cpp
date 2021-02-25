@@ -22,11 +22,15 @@ FlappyCatEntity::~FlappyCatEntity()
     // intentionally left blank
 }
 
+void FlappyCatEntity::initialize()
+{
+    // intentionally left blank
+}
+
 void FlappyCatEntity::reset()
 {
-
-    mPosition = Position(0.f, 0.f);
-    mSize = Position(0.f, 0.f);
+    //mPosition = Position(0.f, 0.f);
+    //mSize = Position(0.f, 0.f);
     mAcceleration = Position(0.f, 0.f);
     mVelocity = Position(0.f, 0.f);
     mDistance = Position(0.f, 0.f);
@@ -34,20 +38,17 @@ void FlappyCatEntity::reset()
 
 void FlappyCatEntity::moveBy(const Position& offset)
 {
-
     moveTo(position() + offset);
 }
 
 void FlappyCatEntity::moveTo(const Position& position)
 {
-
     mPosition = position;
     syncChildren();
 }
 
 void FlappyCatEntity::resize(const Position& size)
 {
-
     mSize = size;
     syncChildren();
 }
@@ -59,7 +60,6 @@ void FlappyCatEntity::syncChildren()
 
 void FlappyCatEntity::rotateTo(float angle)
 {
-
     mAngle = angle;
     syncChildren();
 }
@@ -76,7 +76,6 @@ void FlappyCatEntity::rotateTo(float angle)
  */
 void FlappyCatEntity::update(const FrameDuration& frameDuration)
 {
-
     float time = std::chrono::duration_cast<GameSecond>(frameDuration).count();
 
     // TODO: make list of physical forces instead of gravity variable
@@ -86,14 +85,8 @@ void FlappyCatEntity::update(const FrameDuration& frameDuration)
     mDistance = mVelocity * time; // distance passed by last update
 }
 
-void FlappyCatEntity::initialize()
-{
-    // intentionally left blank
-}
-
 const FlappyCatGameConstants& FlappyCatEntity::gameConstants() const
 {
-
     return mGameConstants;
 }
 
@@ -114,36 +107,30 @@ float FlappyCatEntity::rotation() const
 
 const Position& FlappyCatEntity::acceleration() const
 {
-
     return mAcceleration;
 }
 
 const Position& FlappyCatEntity::velocity() const
 {
-
     return mVelocity;
 }
 
 const Position& FlappyCatEntity::distance() const
 {
-
     return mDistance;
 }
 
 void FlappyCatEntity::setAcceleration(const Position& acceleration)
 {
-
     mAcceleration = acceleration;
 }
 
 void FlappyCatEntity::setVelocity(const Position& velocity)
 {
-
     mVelocity = velocity;
 }
 
 void FlappyCatEntity::setGravity(const Position& gravity)
 {
-
     mGravity = gravity;
 }

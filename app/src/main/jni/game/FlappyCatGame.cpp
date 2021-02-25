@@ -13,7 +13,6 @@
 FlappyCatGame::FlappyCatGame()
     : mGameConstants()
     , mGameState(PressButtonState)
-    , mScene()
     , mBackground(mGameConstants)
     , mFloor(mGameConstants)
     , mBarricade(mGameConstants)
@@ -44,9 +43,6 @@ void FlappyCatGame::initialize()
     using Constant = FlappyCatGameConstants::Constants;
     using ColorConstant = FlappyCatColorScheme::Colors;
 
-    // new code : testing
-    //mScene.addChild();
-
     // background
     mBackground.moveTo(-(mGameConstants[Constant::CameraSize] / 2.f));
     mBackground.resize(mGameConstants[Constant::CameraSize]);
@@ -76,7 +72,7 @@ void FlappyCatGame::initialize()
         });
 
     mFloor.setUpdateModifier(
-        [this](FlappyCatFloor&, const FrameDuration&) {
+        [this](FlappyCatFloor& floor, const FrameDuration&) {
             float radius = mHero.radius();
             // TODO: implement proper origin in 'transformation' and remove this line
             // circle origin in bottom left so we shift by radius
@@ -124,7 +120,6 @@ void FlappyCatGame::initialize()
 
                     mGameState = LoseState;
                     mFloor.setMovementDisplacement(Position(0.f, 0.f));
-                    mHero.kill();
                 } else if (!wall.isActivated() && wall.collideWithCircle(center, radius + radius * 0.2f)) {
 
                     wall.activateWall();
