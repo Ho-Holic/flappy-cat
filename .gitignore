@@ -10,3 +10,4 @@ build-*
 *.pro.user
 CMakeLists.txt.user
 /app/.cxx/
+*.autosave

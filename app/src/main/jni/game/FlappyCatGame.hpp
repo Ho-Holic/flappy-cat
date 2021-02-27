@@ -1,12 +1,5 @@
 #pragma once
 
-// engine
-#include <core/Clock.hpp>
-#include <core/Event.hpp>
-#include <core/Window.hpp>
-#include <prototype/RectangleShape.hpp>
-
-// game
 #include "FlappyCatGameConstants.hpp"
 #include "entity/FlappyCatBackground.hpp"
 #include "entity/FlappyCatChain.hpp"
@@ -18,10 +11,12 @@
 #include "entity/FlappyCatText.hpp"
 #include "entity/FlappyCatViewLimit.hpp"
 #include "entity/FlappyCatWall.hpp"
-
-// stl
 #include <cmath>
+#include <core/Clock.hpp>
+#include <core/Event.hpp>
+#include <core/Window.hpp>
 #include <memory>
+#include <prototype/RectangleShape.hpp>
 #include <vector>
 
 class FlappyCatGame {

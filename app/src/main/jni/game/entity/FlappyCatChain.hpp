@@ -1,24 +1,17 @@
 #pragma once
 
-// game
-#include "FlappyCatEntity.hpp"
-
-// engine
+#include "entity/FlappyCatStateNode.hpp"
+#include <cmath>
 #include <core/Clock.hpp>
 #include <core/Color.hpp>
 #include <core/Log.hpp>
 #include <core/Position.hpp>
 #include <core/Window.hpp>
-
-// stl
-#include <cmath>
+#include <style/Guidelines.hpp>
 #include <vector>
 
-// style
-#include <style/Guidelines.hpp>
-
 template <typename Link>
-class FlappyCatChain : public FlappyCatEntity {
+class FlappyCatChain : public FlappyCatStateNode<FlappyCatChain<Link>> {
 private:
     FlappyCatChain(const FlappyCatChain&) = delete;
     FlappyCatChain& operator=(const FlappyCatChain&) = delete;
@@ -41,12 +34,11 @@ public:
     void setOffsetBetweenLinks(const Position& offset);
     void setStartOffset(const Position& offset);
     void setMovementDisplacement(const Position& movementDisplacement);
-    void setResetModifier(const modifier_type& modifier);
-    void setUpdateModifier(const modifier_type& modifier);
     void setWrapAroundModifier(const modifier_type& modifier);
 
 public:
-    void foreachLink(const modifier_type& modifier);
+    template <typename Fn>
+    void foreachLink(const Fn& modifier);
 
 private:
     float chainLength() const;
@@ -59,8 +51,6 @@ private:
     Position mStartOffset;
     Position mMovementDisplacement;
     std::vector<entity_type> mLinks;
-    modifier_type mResetModifier;
-    modifier_type mUpdateModifier;
     modifier_type mWrapAroundModifier;
 };
 
@@ -68,24 +58,20 @@ private:
 
 template <typename Link>
 FlappyCatChain<Link>::FlappyCatChain(const FlappyCatGameConstants& gameConstants)
-    : FlappyCatEntity(gameConstants)
+    : FlappyCatStateNode<FlappyCatChain<Link>>(gameConstants)
     , mLinkSize()
     , mOffsetBetweenLinks(0.f, 0.f)
     , mStartOffset(0.f, 0.f)
     , mMovementDisplacement(0.f, 0.f)
     , mLinks()
-    , mResetModifier([](entity_type&) {})
-    , mUpdateModifier([](entity_type&) {})
     , mWrapAroundModifier([](entity_type&) {})
 {
-
     static_assert(std::is_base_of<FlappyCatEntity, Link>::value, "Must be derived from Entity");
 }
 
 template <typename Link>
 float FlappyCatChain<Link>::chainLength() const
 {
-
     /*
    * TODO: Math functions does not work properly
    *
@@ -100,7 +86,7 @@ float FlappyCatChain<Link>::chainLength() const
    * https://code.google.com/p/android/issues/detail?id=82734
    */
 
-    return static_cast<size_t>(size().x() / section().x()) * section().x();
+    return static_cast<size_t>(this->size().x() / section().x()) * section().x();
 }
 
 template <typename Link>
@@ -112,14 +98,12 @@ Position FlappyCatChain<Link>::section() const
 template <typename Link>
 bool FlappyCatChain<Link>::isWarpNeeded(const Position& point) const
 {
-
-    return point.x() < position().x();
+    return point.x() < this->position().x();
 }
 
 template <typename Link>
 void FlappyCatChain<Link>::initialize()
 {
-
     /*
    * TODO: Write code for better offset usage
    *
@@ -136,41 +120,34 @@ void FlappyCatChain<Link>::initialize()
 
     for (std::size_t i = 0; i < linkCount; ++i) {
 
-        mLinks.emplace_back(gameConstants());
+        mLinks.emplace_back(this->gameConstants());
     }
 }
 
 template <typename Link>
 void FlappyCatChain<Link>::reset()
 {
+    FlappyCatStateNode<FlappyCatChain<Link>>::reset();
 
     for (std::size_t i = 0; i < mLinks.size(); ++i) {
 
-        mLinks[i].reset();
-
         // TODO: replace with Position pos(position + Position(i * section().x(), 0.f));
-        Position pos(position().x() + i * section().x(), position().y());
+        Position pos(this->position().x() + i * section().x(), this->position().y());
 
         mLinks[i].moveTo(pos + mStartOffset); // shift off-screen if needed by mStartOffset
         mLinks[i].resize(mLinkSize);
 
-        REQUIRE(TAG, mResetModifier != nullptr, "Reset modifier must be not null");
-
-        mResetModifier(mLinks[i]);
+        mLinks[i].reset();
     }
 }
 
 template <typename Link>
 void FlappyCatChain<Link>::update(const FrameDuration& time)
 {
-
     for (Link& link : mLinks) {
 
         link.moveBy(mMovementDisplacement);
         link.update(time);
-
-        REQUIRE(TAG, mUpdateModifier != nullptr, "Update modifier must be not null");
-        mUpdateModifier(link);
 
         Position p = link.position();
 
@@ -188,51 +165,32 @@ void FlappyCatChain<Link>::update(const FrameDuration& time)
 template <typename Link>
 void FlappyCatChain<Link>::drawOn(const Window& window) const
 {
-
     for (const entity_type& link : mLinks) {
         link.drawOn(window);
     }
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::setResetModifier(const modifier_type& modifier)
-{
-
-    mResetModifier = modifier;
-}
-
-template <typename Link>
-void FlappyCatChain<Link>::setUpdateModifier(const modifier_type& modifier)
-{
-
-    mUpdateModifier = modifier;
-}
-
-template <typename Link>
 void FlappyCatChain<Link>::setWrapAroundModifier(const modifier_type& modifier)
 {
-
     mWrapAroundModifier = modifier;
 }
 
 template <typename Link>
 void FlappyCatChain<Link>::setLinkSize(const Position& linkSize)
 {
-
     mLinkSize = linkSize;
 }
 
 template <typename Link>
 void FlappyCatChain<Link>::setMovementDisplacement(const Position& movementDisplacement)
 {
-
     mMovementDisplacement = movementDisplacement;
 }
 
 template <typename Link>
 void FlappyCatChain<Link>::setOffsetBetweenLinks(const Position& offset)
 {
-
     mOffsetBetweenLinks = offset;
 }
 
@@ -243,10 +201,10 @@ void FlappyCatChain<Link>::setStartOffset(const Position& offset)
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::foreachLink(const modifier_type& modifier)
+template <typename Fn>
+void FlappyCatChain<Link>::foreachLink(const Fn& modifier)
 {
-
-    for (entity_type& link : mLinks) {
+    for (Link& link : mLinks) {
         modifier(link);
     }
 }
