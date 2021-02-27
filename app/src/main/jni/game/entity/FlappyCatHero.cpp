@@ -13,9 +13,28 @@ FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
     //
 }
 
+void FlappyCatHero::reset()
+{
+    mBallBody.reset();
+    FlappyCatStateNode<FlappyCatHero>::reset();
+}
+
+void FlappyCatHero::update(const FrameDuration& frameDuration)
+{
+    float time = std::chrono::duration_cast<GameSecond>(frameDuration).count();
+    mBallBody.update(time);
+
+    FlappyCatStateNode<FlappyCatHero>::update(frameDuration);
+}
+
 float FlappyCatHero::radius() const
 {
     return mBall.geometry().radius();
+}
+
+void FlappyCatHero::setGravity(const Position& gravity)
+{
+    mBallBody.setGravity(gravity);
 }
 
 void FlappyCatHero::setRadius(float radius)
@@ -47,8 +66,13 @@ void FlappyCatHero::setJumpConstants(const Position& acceleration, const Positio
 
 void FlappyCatHero::jump()
 {
-    setAcceleration(mJumpAcceleration);
-    setVelocity(mJumpVelocity);
+    mBallBody.setAcceleration(mJumpAcceleration);
+    mBallBody.setVelocity(mJumpVelocity);
+}
+
+const Position& FlappyCatHero::distance() const
+{
+    return mBallBody.distance();
 }
 
 void FlappyCatHero::syncChildren()

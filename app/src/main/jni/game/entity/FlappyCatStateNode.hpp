@@ -23,8 +23,8 @@ public:
 public:
     void initialize() override;
     void reset() override;
-    void drawOn(const Window& window) const override;
     void update(const FrameDuration& frameDuration) override;
+    void drawOn(const Window& window) const override;
 
 private:
     initialize_modifier_type mInitializeModifier;
@@ -38,21 +38,18 @@ private:
 template <typename T>
 void FlappyCatStateNode<T>::initialize()
 {
-    FlappyCatEntity::initialize();
     mInitializeModifier(*static_cast<entity_type*>(this));
 }
 
 template <typename T>
 void FlappyCatStateNode<T>::reset()
 {
-    FlappyCatEntity::reset();
     mResetModifier(*static_cast<entity_type*>(this));
 }
 
 template <typename T>
 void FlappyCatStateNode<T>::update(const FrameDuration& frameDuration)
 {
-    FlappyCatEntity::update(frameDuration);
     mUpdateModifier(*static_cast<entity_type*>(this), frameDuration);
 }
 
