@@ -1,35 +1,35 @@
 #pragma once
 
-#include "FlappyCatNode.hpp"
+#include "FlappyCatEntity.hpp"
 
 template <typename T>
-class FlappyCatStateNode : public FlappyCatNode {
+class FlappyCatStateNode : public FlappyCatEntity {
 public:
     using entity_type = T;
+    using initialize_modifier_type = std::function<void(entity_type&)>;
     using reset_modifier_type = std::function<void(entity_type&)>;
     using update_modifier_type = std::function<void(entity_type&, const FrameDuration&)>;
     using draw_modifier_type = std::function<void(const entity_type&, const Window&)>;
-    using initialize_modifier_type = std::function<void(entity_type&)>;
 
 public:
     FlappyCatStateNode(const FlappyCatGameConstants& gameConstants);
 
 public:
+    void setInitializeModifier(initialize_modifier_type modifier);
     void setResetModifier(reset_modifier_type modifier);
     void setUpdateModifier(update_modifier_type modifier);
     void setDrawModifier(draw_modifier_type modifier);
-    void setInitializeModifier(initialize_modifier_type modifier);
 
 public:
-    virtual void initialize();
-    virtual void reset();
-    virtual void drawOn(const Window& window) const;
-    virtual void update(const FrameDuration& frameDuration);
+    void initialize() override;
+    void reset() override;
+    void drawOn(const Window& window) const override;
+    void update(const FrameDuration& frameDuration) override;
 
 private:
+    initialize_modifier_type mInitializeModifier;
     reset_modifier_type mResetModifier;
     update_modifier_type mUpdateModifier;
-    initialize_modifier_type mInitializeModifier;
     draw_modifier_type mDrawModifier;
 };
 
@@ -38,15 +38,22 @@ private:
 template <typename T>
 void FlappyCatStateNode<T>::initialize()
 {
-    FlappyCatNode::initialize();
+    FlappyCatEntity::initialize();
     mInitializeModifier(*static_cast<entity_type*>(this));
 }
 
 template <typename T>
 void FlappyCatStateNode<T>::reset()
 {
-    FlappyCatNode::reset();
+    FlappyCatEntity::reset();
     mResetModifier(*static_cast<entity_type*>(this));
+}
+
+template <typename T>
+void FlappyCatStateNode<T>::update(const FrameDuration& frameDuration)
+{
+    FlappyCatEntity::update(frameDuration);
+    mUpdateModifier(*static_cast<entity_type*>(this), frameDuration);
 }
 
 template <typename T>
@@ -56,27 +63,20 @@ void FlappyCatStateNode<T>::drawOn(const Window& window) const
 }
 
 template <typename T>
-void FlappyCatStateNode<T>::update(const FrameDuration& frameDuration)
-{
-    FlappyCatNode::update(frameDuration);
-    mUpdateModifier(*static_cast<entity_type*>(this), frameDuration);
-}
-
-template <typename T>
 FlappyCatStateNode<T>::FlappyCatStateNode(const FlappyCatGameConstants& gameConstants)
-    : FlappyCatNode(gameConstants)
+    : FlappyCatEntity(gameConstants)
+    , mInitializeModifier([](entity_type&) {})
     , mResetModifier([](entity_type&) {})
     , mUpdateModifier([](entity_type&, const FrameDuration&) {})
-    , mInitializeModifier([](entity_type&) {})
     , mDrawModifier([](const entity_type&, const Window&) {})
 {
     //
 }
 
 template <typename T>
-void FlappyCatStateNode<T>::setDrawModifier(draw_modifier_type modifier)
+void FlappyCatStateNode<T>::setInitializeModifier(initialize_modifier_type modifier)
 {
-    mDrawModifier = modifier;
+    mInitializeModifier = modifier;
 }
 
 template <typename T>
@@ -92,7 +92,7 @@ void FlappyCatStateNode<T>::setUpdateModifier(update_modifier_type modifier)
 }
 
 template <typename T>
-void FlappyCatStateNode<T>::setInitializeModifier(initialize_modifier_type modifier)
+void FlappyCatStateNode<T>::setDrawModifier(draw_modifier_type modifier)
 {
-    mInitializeModifier = modifier;
+    mDrawModifier = modifier;
 }
