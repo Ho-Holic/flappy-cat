@@ -10,8 +10,8 @@ public:
     virtual ~FlappyCatEntity();
 
 public:
-    virtual void initialize();
-    virtual void reset();
+    virtual void initialize() = 0;
+    virtual void reset() = 0;
     virtual void update(const FrameDuration& frameDuration);
     virtual void drawOn(const Window& window) const = 0;
 
@@ -35,7 +35,7 @@ public:
     void setGravity(const Position& gravity);
 
 private:
-    virtual void syncChildren();
+    virtual void syncChildren() = 0;
 
 private:
     const FlappyCatGameConstants& mGameConstants;

@@ -14,10 +14,7 @@ FlappyCatEntity::FlappyCatEntity(const FlappyCatGameConstants& gameConstants)
     //
 }
 
-FlappyCatEntity::~FlappyCatEntity()
-{
-    // intentionally left blank
-}
+FlappyCatEntity::~FlappyCatEntity() = default;
 
 void FlappyCatEntity::initialize()
 {
