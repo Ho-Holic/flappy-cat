@@ -39,8 +39,8 @@ public:
     const AndroidEventLoopEvent& eventLoopEvent() const;
 
 private:
-    EventType mEventType;
-    AndroidEventData mEventData;
+    EventType m_eventType;
+    AndroidEventData m_eventData;
 };
 
 // enums

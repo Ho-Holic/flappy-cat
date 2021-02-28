@@ -20,8 +20,8 @@ public:
     void setTouchEventData(float x, float y);
 
 private:
-    EventType mEventType;
-    QtEventData mEventData;
+    EventType m_eventType;
+    QtEventData m_eventData;
 };
 
 enum QtEvent::EventType : int8_t {

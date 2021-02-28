@@ -9,19 +9,19 @@ QtEvent::QtEvent()
 }
 
 QtEvent::QtEvent(EventType eventType)
-    : mEventType(eventType)
+    : m_eventType(eventType)
 {
     //
 }
 QtEvent::EventType QtEvent::type() const
 {
-    return mEventType;
+    return m_eventType;
 }
 
 void QtEvent::setTouchEventData(float x, float y)
 {
-    REQUIRE(TAG, mEventType == TouchEventType, "Must be 'MotionEventType'");
+    REQUIRE(TAG, m_eventType == TouchEventType, "Must be 'MotionEventType'");
 
-    mEventData.touchEvent.x = x;
-    mEventData.touchEvent.y = y;
+    m_eventData.touchEvent.x = x;
+    m_eventData.touchEvent.y = y;
 }

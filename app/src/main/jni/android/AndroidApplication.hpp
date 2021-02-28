@@ -102,7 +102,7 @@ private:
     AndroidConfiguration m_configuration;
     AndroidLooper mLooper;
     AndroidWindow mWindow;
-    std::queue<AndroidEvent> mEvents; // TODO: add thread safe queue
+    std::queue<AndroidEvent> m_events; // TODO: add thread safe queue
 };
 
 // enums

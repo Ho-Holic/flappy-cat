@@ -29,31 +29,31 @@ public:
     void emit(Args... args);
 
 private:
-    std::function<SlotFunction> mEmit;
+    std::function<SlotFunction> m_emit;
 };
 
 // implementation
 
 template <typename SlotFunction>
 Signal<SlotFunction>::Signal()
-    : mEmit(nullptr)
+    : m_emit(nullptr)
 {
     //
 }
 
 template <typename SlotFunction>
 Signal<SlotFunction>::Signal(const Signal&)
-    : mEmit(nullptr)
+    : m_emit(nullptr)
 {
-    CAUTION("Variable 'mEmit' intentionally set to 'nullptr'");
+    CAUTION("Variable 'm_emit' intentionally set to 'nullptr'");
 }
 
 template <typename SlotFunction>
 Signal<SlotFunction>& Signal<SlotFunction>::operator=(Signal<SlotFunction>&)
 {
-    CAUTION("Variable 'mEmit' intentionally set to 'nullptr'");
+    CAUTION("Variable 'm_emit' intentionally set to 'nullptr'");
 
-    mEmit = nullptr;
+    m_emit = nullptr;
 
     return *this;
 }
@@ -61,7 +61,7 @@ Signal<SlotFunction>& Signal<SlotFunction>::operator=(Signal<SlotFunction>&)
 template <typename SlotFunction>
 void Signal<SlotFunction>::connect(const std::function<SlotFunction>& slot)
 {
-    mEmit = slot;
+    m_emit = slot;
 }
 
 template <typename SlotFunction>
@@ -69,7 +69,7 @@ template <typename... Args>
 void Signal<SlotFunction>::emit(Args... args)
 {
 
-    if (mEmit != nullptr) {
-        mEmit(args...);
+    if (m_emit != nullptr) {
+        m_emit(args...);
     }
 }

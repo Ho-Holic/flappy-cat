@@ -11,7 +11,7 @@ AndroidEvent::AndroidEvent()
 }
 
 AndroidEvent::AndroidEvent(EventType eventType)
-    : mEventType(eventType)
+    : m_eventType(eventType)
 {
     //
 }
@@ -19,96 +19,96 @@ AndroidEvent::AndroidEvent(EventType eventType)
 AndroidEvent::EventType AndroidEvent::type() const
 {
 
-    return mEventType;
+    return m_eventType;
 }
 
 void AndroidEvent::setEventType(EventType eventType)
 {
 
-    mEventType = eventType;
+    m_eventType = eventType;
 }
 
 void AndroidEvent::setTouchEventData(float x, float y)
 {
 
-    REQUIRE(TAG, mEventType == TouchEventType, "Must be 'MotionEventType'");
+    REQUIRE(TAG, m_eventType == TouchEventType, "Must be 'MotionEventType'");
 
-    mEventData.touchEvent.x = x;
-    mEventData.touchEvent.y = y;
+    m_eventData.touchEvent.x = x;
+    m_eventData.touchEvent.y = y;
 }
 
 const AndroidTouchEvent& AndroidEvent::touchEvent() const
 {
 
-    REQUIRE(TAG, mEventType == TouchEventType, "Must be 'MotionEventType'");
+    REQUIRE(TAG, m_eventType == TouchEventType, "Must be 'MotionEventType'");
 
-    return mEventData.touchEvent;
+    return m_eventData.touchEvent;
 }
 
 void AndroidEvent::setResizeEventData(int32_t width, int32_t height)
 {
 
-    REQUIRE(TAG, mEventType == ResizedEventType, "Must be 'ResizedEventType'");
+    REQUIRE(TAG, m_eventType == ResizedEventType, "Must be 'ResizedEventType'");
 
-    mEventData.resizeEvent.width = width;
-    mEventData.resizeEvent.height = height;
+    m_eventData.resizeEvent.width = width;
+    m_eventData.resizeEvent.height = height;
 }
 
 void AndroidEvent::setNativeWindowEventData(ANativeWindow* pendingWindow)
 {
 
-    REQUIRE(TAG, mEventType == NativeWindowCreatedEventType || mEventType == NativeWindowDestroyedEventType,
+    REQUIRE(TAG, m_eventType == NativeWindowCreatedEventType || m_eventType == NativeWindowDestroyedEventType,
         "Must be 'NativeWindowCreatedEventType' or 'NativeWindowDestroyedEventType'");
 
-    mEventData.nativeWindowEvent.pendingWindow = pendingWindow;
+    m_eventData.nativeWindowEvent.pendingWindow = pendingWindow;
 }
 
 void AndroidEvent::setInputQueueEventData(AInputQueue* pendingQueue)
 {
 
-    REQUIRE(TAG, mEventType == InputQueueCreatedEventType || mEventType == InputQueueDestroyedEventType,
+    REQUIRE(TAG, m_eventType == InputQueueCreatedEventType || m_eventType == InputQueueDestroyedEventType,
         "Must be 'InputQueueCreatedEventType' or 'InputQueueDestroyedEventType'");
 
-    mEventData.inputQueueEvent.pendingQueue = pendingQueue;
+    m_eventData.inputQueueEvent.pendingQueue = pendingQueue;
 }
 
 void AndroidEvent::setEventLoopEventData(bool windowReady)
 {
-    REQUIRE(TAG, mEventType == EventLoopEventType, "Must be 'EventLoopEventType'");
+    REQUIRE(TAG, m_eventType == EventLoopEventType, "Must be 'EventLoopEventType'");
 
-    mEventData.eventLoopEvent.windowReady = windowReady;
+    m_eventData.eventLoopEvent.windowReady = windowReady;
 }
 
 const AndroidResizeEvent& AndroidEvent::resizeEvent() const
 {
 
-    REQUIRE(TAG, mEventType == ResizedEventType, "Must be 'ResizedEventType'");
+    REQUIRE(TAG, m_eventType == ResizedEventType, "Must be 'ResizedEventType'");
 
-    return mEventData.resizeEvent;
+    return m_eventData.resizeEvent;
 }
 
 const AndroidNativeWindowEvent& AndroidEvent::nativeWindowEvent() const
 {
 
-    REQUIRE(TAG, mEventType == NativeWindowCreatedEventType || mEventType == NativeWindowDestroyedEventType,
+    REQUIRE(TAG, m_eventType == NativeWindowCreatedEventType || m_eventType == NativeWindowDestroyedEventType,
         "Must be 'NativeWindowCreatedEventType' or 'NativeWindowDestroyedEventType'");
 
-    return mEventData.nativeWindowEvent;
+    return m_eventData.nativeWindowEvent;
 }
 
 const AndroidInputQueueEvent& AndroidEvent::inputQueueEvent() const
 {
 
-    REQUIRE(TAG, mEventType == InputQueueCreatedEventType || mEventType == InputQueueDestroyedEventType,
+    REQUIRE(TAG, m_eventType == InputQueueCreatedEventType || m_eventType == InputQueueDestroyedEventType,
         "Must be 'InputQueueCreatedEventType' or 'InputQueueDestroyedEventType'");
 
-    return mEventData.inputQueueEvent;
+    return m_eventData.inputQueueEvent;
 }
 
 const AndroidEventLoopEvent& AndroidEvent::eventLoopEvent() const
 {
 
-    REQUIRE(TAG, mEventType == EventLoopEventType, "Must be 'EventLoopEventType'");
+    REQUIRE(TAG, m_eventType == EventLoopEventType, "Must be 'EventLoopEventType'");
 
-    return mEventData.eventLoopEvent;
+    return m_eventData.eventLoopEvent;
 }

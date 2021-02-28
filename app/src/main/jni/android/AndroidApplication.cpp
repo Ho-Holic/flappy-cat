@@ -22,7 +22,7 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
     , m_configuration(activity->assetManager)
     , mLooper()
     , mWindow()
-    , mEvents()
+    , m_events()
 {
     UNUSED(savedState); // we don't save and load state for now
     UNUSED(savedStateSize); // --/--
@@ -455,10 +455,10 @@ bool AndroidApplication::pollEvent(AndroidEvent& event)
         }
     }
 
-    if (!mEvents.empty()) {
+    if (!m_events.empty()) {
 
-        event = mEvents.front();
-        mEvents.pop();
+        event = m_events.front();
+        m_events.pop();
 
         processEvent(event);
 
@@ -471,7 +471,7 @@ bool AndroidApplication::pollEvent(AndroidEvent& event)
 void AndroidApplication::postEvent(const AndroidEvent& event)
 {
 
-    mEvents.push(event);
+    m_events.push(event);
 }
 
 const AndroidWindow& AndroidApplication::window() const
