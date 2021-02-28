@@ -32,6 +32,11 @@ float FlappyCatHero::radius() const
     return m_ball.geometry().radius();
 }
 
+void FlappyCatHero::setJumpModifier(jump_modifier_type modifier)
+{
+    m_jumpModifier = modifier;
+}
+
 void FlappyCatHero::setGravity(const Position& gravity)
 {
     m_ballBody.setGravity(gravity);
@@ -68,6 +73,9 @@ void FlappyCatHero::jump()
 {
     m_ballBody.setAcceleration(m_jumpAcceleration);
     m_ballBody.setVelocity(m_jumpVelocity);
+    if (m_jumpModifier) {
+        m_jumpModifier(*this);
+    }
 }
 
 const Position& FlappyCatHero::distance() const

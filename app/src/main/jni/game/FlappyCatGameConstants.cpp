@@ -1,7 +1,4 @@
-// game
 #include "FlappyCatGameConstants.hpp"
-
-// engine
 #include <core/Log.hpp>
 #include <style/Guidelines.hpp>
 
@@ -12,23 +9,21 @@ FlappyCatGameConstants::FlappyCatGameConstants()
     , m_constants(ConstantsSize, Position())
     , m_daytimeFactor(0)
 {
-
-    /**
-   * TODO: Remove 'reset()' and 'm_daytimeFactor = 0'
-   *
-   * Call is not needed but directly we can't remove it
-   * This would cause all objects to disappear
-   * because 'initialize()' function uses 'm_constants'
-   * Seems this is deep arch issue, figure out how to
-   * improve the design
-   */
+    //
+    // TODO: Remove 'reset()' and 'm_daytimeFactor = 0'
+    //
+    // Call is not needed but directly we can't remove it
+    // This would cause all objects to disappear
+    // because 'initialize()' function uses 'm_constants'
+    // Seems this is deep arch issue, figure out how to
+    // improve the design
+    //
     reset();
     m_daytimeFactor = 0;
 }
 
 Daytime FlappyCatGameConstants::chooseDaytime()
 {
-
     // small code for day/night cycling
 
     enum {
@@ -36,7 +31,7 @@ Daytime FlappyCatGameConstants::chooseDaytime()
     };
 
     Daytime daytime = (m_daytimeFactor < Period) ? Daytime::Day
-                                                : Daytime::Night;
+                                                 : Daytime::Night;
 
     m_daytimeFactor = (m_daytimeFactor + 1) % (Period * 2);
 
@@ -45,14 +40,12 @@ Daytime FlappyCatGameConstants::chooseDaytime()
 
 Position FlappyCatGameConstants::operator[](FlappyCatGameConstants::Constants index) const
 {
-
     REQUIRE(TAG, index < ConstantsSize, "m_constants out of bounds");
     return m_constants[index];
 }
 
 void FlappyCatGameConstants::reset()
 {
-
     Daytime daytime = chooseDaytime();
 
     m_colorScheme.generateNewScheme(daytime);
@@ -115,14 +108,12 @@ void FlappyCatGameConstants::reset()
 
 const FlappyCatColorScheme& FlappyCatGameConstants::colorScheme() const
 {
-
     return m_colorScheme;
 }
 
 float FlappyCatGameConstants::randomOffsetFrom(float initial,
     float maxOffset)
 {
-
     std::normal_distribution<float> distribution(initial, maxOffset);
 
     return distribution(m_generator);
@@ -131,7 +122,6 @@ float FlappyCatGameConstants::randomOffsetFrom(float initial,
 float FlappyCatGameConstants::clampedRandomOffsetFrom(float initial,
     float maxOffset)
 {
-
     return std::clamp(randomOffsetFrom(initial, maxOffset),
         initial - maxOffset,
         initial + maxOffset);

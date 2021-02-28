@@ -188,6 +188,10 @@ void FlappyCatGame::initialize()
     m_hero.setJumpConstants(m_gameConstants[Constant::PhysicsJumpAcceleration],
         m_gameConstants[Constant::PhysicsJumpVelocity]);
     m_hero.setGravity(m_gameConstants[Constant::PhysicsGravity]);
+    m_hero.setJumpModifier([this](FlappyCatHero&) {
+        m_scoreCounter += 1;
+        m_score.setText(std::to_string(m_scoreCounter));
+    });
 
     m_hero.setUpdateModifier(
         [this](FlappyCatHero& hero, const FrameDuration&) {
@@ -228,9 +232,26 @@ void FlappyCatGame::initialize()
 
     // score counter
     m_score.setText("0");
+    m_score.setResetModifier([this](FlappyCatText& score) {
+        const FlappyCatColorScheme& colorScheme = m_gameConstants.colorScheme();
+
+        m_scoreCounter = 0;
+        score.setText(std::to_string(m_scoreCounter));
+
+        float offset = m_gameConstants[Constant::HeroSize].x();
+        score.moveTo(m_hero.position() - Position(offset, offset / 4.f));
+
+        score.setColor(colorScheme[ColorConstant::TextColor]);
+    });
 
     // fps counter
     m_fps.setText("0");
+    m_fps.setResetModifier([this](FlappyCatText& fps) {
+        const FlappyCatColorScheme& colorScheme = m_gameConstants.colorScheme();
+
+        fps.setColor(colorScheme[ColorConstant::TextColor]);
+        fps.moveTo(m_gameConstants[Constant::CameraSize] * 0.2f);
+    });
 
     // initialize all stuff
     m_background.initialize();
@@ -246,7 +267,6 @@ void FlappyCatGame::initialize()
 
 void FlappyCatGame::reset()
 {
-
     m_gameConstants.reset();
 
     m_background.reset();
@@ -256,19 +276,18 @@ void FlappyCatGame::reset()
     m_backgroundCity.reset();
     m_backgroundSky.reset();
     m_limit.reset();
-    resetScore();
+    m_score.reset();
+    m_fps.reset();
 }
 
 void FlappyCatGame::processEvent(const Event& event)
 {
-
     if (event.type() == Event::EventType::TouchEventType) {
 
         if (m_gameState == PressButtonState) {
 
             m_gameState = PlayState;
             m_hero.jump();
-            incrementScore();
         } else if (m_gameState == OnTheFloorState) {
 
             m_gameState = PressButtonState;
@@ -279,7 +298,6 @@ void FlappyCatGame::processEvent(const Event& event)
 
             if (isOffScreen) {
                 m_hero.jump();
-                incrementScore();
             }
         }
     }
@@ -287,7 +305,6 @@ void FlappyCatGame::processEvent(const Event& event)
 
 void FlappyCatGame::update(const FrameDuration& time)
 {
-
     if (m_gameState == PlayState) {
 
         m_hero.update(time);
@@ -311,7 +328,6 @@ void FlappyCatGame::update(const FrameDuration& time)
 
 void FlappyCatGame::render(const Window& window) const
 {
-
     window.clear(Color(0, 0, 0));
 
     m_background.drawOn(window);
@@ -327,35 +343,6 @@ void FlappyCatGame::render(const Window& window) const
     m_fps.drawOn(window);
 
     window.display();
-}
-
-void FlappyCatGame::incrementScore()
-{
-    m_scoreCounter += 1;
-    m_score.setText(std::to_string(m_scoreCounter));
-}
-
-void FlappyCatGame::resetScore()
-{
-    m_scoreCounter = 0;
-    m_score.setText(std::to_string(m_scoreCounter));
-
-    using Constant = FlappyCatGameConstants::Constants;
-    float offset = m_gameConstants[Constant::HeroSize].x();
-    m_score.moveTo(m_hero.position() - Position(offset, offset / 4.f));
-
-    /*
-   * TODO: create own reset modifier for Score element
-   */
-    const FlappyCatColorScheme& colorScheme = m_gameConstants.colorScheme();
-    using ColorConstant = FlappyCatColorScheme::Colors;
-    m_score.setColor(colorScheme[ColorConstant::TextColor]);
-
-    /*
-   * TODO: create own reset modifier for Fps element
-   */
-    m_fps.setColor(colorScheme[ColorConstant::TextColor]);
-    m_fps.moveTo(m_gameConstants[Constant::CameraSize] * 0.2f);
 }
 
 void FlappyCatGame::setFpsCounter(size_t fpsCount)

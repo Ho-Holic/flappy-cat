@@ -36,8 +36,6 @@ private:
 private:
     void initialize();
     void reset();
-    void incrementScore();
-    void resetScore();
 
 private:
     FlappyCatGameConstants m_gameConstants;
