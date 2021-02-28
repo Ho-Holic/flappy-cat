@@ -94,7 +94,7 @@ private:
 private:
     ANativeActivity* m_activity;
     ActivityState m_activityState;
-    std::mutex mMutex;
+    std::mutex m_mutex;
     std::condition_variable m_conditionVariable;
     bool m_isRunning;
     bool m_isDestroyed;

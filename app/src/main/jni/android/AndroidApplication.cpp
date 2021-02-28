@@ -14,7 +14,7 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
     size_t savedStateSize)
     : m_activity(activity)
     , m_activityState(InitializationActivityState)
-    , mMutex()
+    , m_mutex()
     , m_conditionVariable()
     , m_isRunning(false)
     , m_isDestroyed(false)
@@ -217,20 +217,20 @@ void AndroidApplication::onContentRectChanged(ANativeActivity* activity, const A
 void AndroidApplication::waitForStarted()
 {
 
-    std::unique_lock<std::mutex> lock(mMutex);
+    std::unique_lock<std::mutex> lock(m_mutex);
     m_conditionVariable.wait(lock, std::bind(&AndroidApplication::isRunning, std::ref(*this)));
-    mMutex.unlock();
+    m_mutex.unlock();
 }
 
 void AndroidApplication::waitForDestruction()
 {
 
-    std::unique_lock<std::mutex> lock(mMutex);
+    std::unique_lock<std::mutex> lock(m_mutex);
 
     m_isDestroyRequested = true;
 
     m_conditionVariable.wait(lock, std::bind(&AndroidApplication::isDestroyed, std::ref(*this)));
-    mMutex.unlock();
+    m_mutex.unlock();
 }
 
 void AndroidApplication::changeActivityStateTo(AndroidApplication::ActivityState activityState)
@@ -261,12 +261,12 @@ void AndroidApplication::changeActivityStateTo(AndroidApplication::ActivityState
     };
 
     // wait for state to change
-    std::unique_lock<std::mutex> lock(mMutex);
+    std::unique_lock<std::mutex> lock(m_mutex);
 
     this->postEvent(event);
 
     m_conditionVariable.wait(lock, isInState);
-    mMutex.unlock();
+    m_mutex.unlock();
 }
 
 void AndroidApplication::changeNativeWindow(ANativeWindow* window)
@@ -282,12 +282,12 @@ void AndroidApplication::changeNativeWindow(ANativeWindow* window)
         };
 
         // wait for finish of user event loop
-        std::unique_lock<std::mutex> lock(mMutex);
+        std::unique_lock<std::mutex> lock(m_mutex);
 
         this->postEvent(event);
 
         m_conditionVariable.wait(lock, isUserEventLoopFinished);
-        mMutex.unlock();
+        m_mutex.unlock();
     }
 
     AndroidEvent event(window ? AndroidEvent::EventType::NativeWindowCreatedEventType
@@ -300,12 +300,12 @@ void AndroidApplication::changeNativeWindow(ANativeWindow* window)
     };
 
     // wait window to change
-    std::unique_lock<std::mutex> lock(mMutex);
+    std::unique_lock<std::mutex> lock(m_mutex);
 
     this->postEvent(event);
 
     m_conditionVariable.wait(lock, isWindowChanged);
-    mMutex.unlock();
+    m_mutex.unlock();
 }
 
 void AndroidApplication::changeInputQueue(AInputQueue* queue)
@@ -320,12 +320,12 @@ void AndroidApplication::changeInputQueue(AInputQueue* queue)
         return this->m_looper.inputQueue() == queue;
     };
 
-    std::unique_lock<std::mutex> lock(mMutex);
+    std::unique_lock<std::mutex> lock(m_mutex);
 
     this->postEvent(event);
 
     m_conditionVariable.wait(lock, isQueueChanged);
-    mMutex.unlock();
+    m_mutex.unlock();
 }
 
 void AndroidApplication::changeNativeWindowSize()
@@ -335,7 +335,7 @@ void AndroidApplication::changeNativeWindowSize()
 
     AndroidEvent event(EventType::ResizedEventType);
 
-    std::lock_guard<std::mutex> lock(mMutex);
+    std::lock_guard<std::mutex> lock(m_mutex);
 
     event.setResizeEventData(window().requestWidth(), window().requestHeight());
     this->postEvent(event);
@@ -360,7 +360,7 @@ void AndroidApplication::changeFocus(AndroidApplication::Focus focus)
         break;
     }
 
-    std::lock_guard<std::mutex> lock(mMutex);
+    std::lock_guard<std::mutex> lock(m_mutex);
 
     this->postEvent(event);
 
@@ -370,7 +370,7 @@ void AndroidApplication::changeFocus(AndroidApplication::Focus focus)
 void AndroidApplication::reloadConfiguration()
 {
 
-    std::lock_guard<std::mutex> lock(mMutex);
+    std::lock_guard<std::mutex> lock(m_mutex);
 
     m_configuration.reload();
     Log::i(TAG, m_configuration.toString());
@@ -414,7 +414,7 @@ void AndroidApplication::exec()
     // application is initialized now
     {
 
-        std::lock_guard<std::mutex> lock(mMutex);
+        std::lock_guard<std::mutex> lock(m_mutex);
         m_isRunning = true;
         m_conditionVariable.notify_all();
     }
@@ -502,7 +502,7 @@ void AndroidApplication::terminate()
 
     Log::i(TAG, "android_app_destroy!");
 
-    std::lock_guard<std::mutex> lock(mMutex);
+    std::lock_guard<std::mutex> lock(m_mutex);
 
     m_configuration.reset();
 
@@ -573,7 +573,7 @@ void AndroidApplication::setActivityState(AndroidApplication::ActivityState acti
 
     Log::i(TAG, "Set activityState = %d\n", activityState);
 
-    std::lock_guard<std::mutex> lock(mMutex);
+    std::lock_guard<std::mutex> lock(m_mutex);
 
     m_activityState = activityState;
 
@@ -585,7 +585,7 @@ void AndroidApplication::initializeNativeWindow(const AndroidEvent& event)
 
     Log::i(TAG, "Initialize native window\n");
 
-    std::lock_guard<std::mutex> lock(mMutex);
+    std::lock_guard<std::mutex> lock(m_mutex);
 
     mWindow.setNativeWindow(event.nativeWindowEvent().pendingWindow);
 
@@ -599,7 +599,7 @@ void AndroidApplication::terminateNativeWindow(const AndroidEvent& event)
 
     Log::i(TAG, "Terminate native window\n");
 
-    std::lock_guard<std::mutex> lock(mMutex);
+    std::lock_guard<std::mutex> lock(m_mutex);
 
     mWindow.terminate();
 
@@ -611,7 +611,7 @@ void AndroidApplication::terminateNativeWindow(const AndroidEvent& event)
 void AndroidApplication::resizeNativeWindow(const AndroidEvent& event)
 {
 
-    std::lock_guard<std::mutex> lock(mMutex);
+    std::lock_guard<std::mutex> lock(m_mutex);
 
     mWindow.resize(event.resizeEvent().width, event.resizeEvent().height);
 
@@ -621,7 +621,7 @@ void AndroidApplication::resizeNativeWindow(const AndroidEvent& event)
 void AndroidApplication::setInputQueue(const AndroidEvent& event)
 {
 
-    std::lock_guard<std::mutex> lock(mMutex);
+    std::lock_guard<std::mutex> lock(m_mutex);
 
     m_looper.setInputQueue(event.inputQueueEvent().pendingQueue);
 
@@ -631,7 +631,7 @@ void AndroidApplication::setInputQueue(const AndroidEvent& event)
 void AndroidApplication::setEventLoopState(const AndroidEvent& event)
 {
 
-    std::lock_guard<std::mutex> lock(mMutex);
+    std::lock_guard<std::mutex> lock(m_mutex);
 
     window().setReady(event.eventLoopEvent().windowReady);
 

@@ -33,5 +33,5 @@ private:
     TriangleShape mRightEar;
     RectangleShape m_leftEye;
     RectangleShape mRightEye;
-    RectangleShape mMouth;
+    RectangleShape m_mouth;
 };

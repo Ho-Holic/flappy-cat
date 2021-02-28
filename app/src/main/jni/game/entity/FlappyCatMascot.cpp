@@ -13,7 +13,7 @@ FlappyCatMascot::FlappyCatMascot(const FlappyCatGameConstants& gameConstants)
     , mRightEar()
     , m_leftEye()
     , mRightEye()
-    , mMouth()
+    , m_mouth()
 {
     //
 }
@@ -31,7 +31,7 @@ void FlappyCatMascot::drawOn(const Window& window) const
     window.draw(mRightEar);
     window.draw(m_leftEye);
     window.draw(mRightEye);
-    window.draw(mMouth);
+    window.draw(m_mouth);
 }
 
 void FlappyCatMascot::syncChildren()
@@ -96,7 +96,7 @@ void FlappyCatMascot::syncChildren()
     mRightEye.transformation().setPosition(pos + rightEyePosRes * scale);
     mScarf.transformation().setPosition(pos + scarfPosRes * scale);
     mScarfTail.transformation().setPosition(pos + scarfTailPosRes * scale);
-    mMouth.transformation().setPosition(pos + mouthPosRes * scale);
+    m_mouth.transformation().setPosition(pos + mouthPosRes * scale);
 
     // resize objects
     m_body.geometry().resize(bodySize * scale);
@@ -110,7 +110,7 @@ void FlappyCatMascot::syncChildren()
     mRightEye.geometry().resize(eyeSize * scale);
     mScarf.geometry().resize(scarfSize * scale);
     mScarfTail.geometry().resize(scarfTailSize * scale);
-    mMouth.geometry().resize(mouthSize * scale);
+    m_mouth.geometry().resize(mouthSize * scale);
 
     // rotate
 
@@ -127,7 +127,7 @@ void FlappyCatMascot::syncChildren()
     mRightEye.transformation().setOrigin((center - rightEyePosRes) * scale);
     mScarf.transformation().setOrigin((center - scarfPosRes) * scale);
     mScarfTail.transformation().setOrigin((center - scarfTailPosRes) * scale);
-    mMouth.transformation().setOrigin((center - mouthPosRes) * scale);
+    m_mouth.transformation().setOrigin((center - mouthPosRes) * scale);
 
     m_body.transformation().setRotation(angle);
     m_head.transformation().setRotation(angle);
@@ -140,7 +140,7 @@ void FlappyCatMascot::syncChildren()
     mRightEye.transformation().setRotation(angle);
     mScarf.transformation().setRotation(angle);
     mScarfTail.transformation().setRotation(angle);
-    mMouth.transformation().setRotation(angle);
+    m_mouth.transformation().setRotation(angle);
 }
 
 void FlappyCatMascot::setColor(const Color& bodyColor,
@@ -160,7 +160,7 @@ void FlappyCatMascot::setColor(const Color& bodyColor,
     m_leftEye.setColor(scarfColor);
     mRightEye.setColor(scarfColor);
 
-    mMouth.setColor(mouthColor);
+    m_mouth.setColor(mouthColor);
 }
 
 std::vector<std::shared_ptr<Geometry>> FlappyCatMascot::duplicateParts() const

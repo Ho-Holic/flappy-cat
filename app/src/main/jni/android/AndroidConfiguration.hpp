@@ -31,7 +31,7 @@ private:
     void reloadCacheForToString();
 
 private:
-    AAssetManager* mManager;
+    AAssetManager* m_manager;
     std::unique_ptr<AConfiguration, ConfigurationDeleter> m_configuration;
     std::string m_cacheForToString;
 };

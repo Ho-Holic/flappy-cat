@@ -49,7 +49,7 @@ private:
     Position m_linkSize;
     Position mOffsetBetweenLinks;
     Position mStartOffset;
-    Position mMovementDisplacement;
+    Position m_movementDisplacement;
     std::vector<entity_type> m_links;
     modifier_type mWrapAroundModifier;
 };
@@ -62,7 +62,7 @@ FlappyCatChain<Link>::FlappyCatChain(const FlappyCatGameConstants& gameConstants
     , m_linkSize()
     , mOffsetBetweenLinks(0.f, 0.f)
     , mStartOffset(0.f, 0.f)
-    , mMovementDisplacement(0.f, 0.f)
+    , m_movementDisplacement(0.f, 0.f)
     , m_links()
     , mWrapAroundModifier([](entity_type&) {})
 {
@@ -146,7 +146,7 @@ void FlappyCatChain<Link>::update(const FrameDuration& time)
 {
     for (Link& link : m_links) {
 
-        link.moveBy(mMovementDisplacement);
+        link.moveBy(m_movementDisplacement);
         link.update(time);
 
         Position p = link.position();
@@ -185,7 +185,7 @@ void FlappyCatChain<Link>::setLinkSize(const Position& linkSize)
 template <typename Link>
 void FlappyCatChain<Link>::setMovementDisplacement(const Position& movementDisplacement)
 {
-    mMovementDisplacement = movementDisplacement;
+    m_movementDisplacement = movementDisplacement;
 }
 
 template <typename Link>

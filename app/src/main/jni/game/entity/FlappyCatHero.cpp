@@ -8,7 +8,7 @@ FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
     , m_jumpAcceleration()
     , m_jumpVelocity()
     , m_ball()
-    , mMascot(gameConstants)
+    , m_mascot(gameConstants)
 {
     //
 }
@@ -46,7 +46,7 @@ void FlappyCatHero::setRadius(float radius)
 void FlappyCatHero::drawOn(const Window& window) const
 {
     window.draw(m_ball);
-    mMascot.drawOn(window);
+    m_mascot.drawOn(window);
 }
 
 void FlappyCatHero::setColor(const Color& backgroundColor,
@@ -55,7 +55,7 @@ void FlappyCatHero::setColor(const Color& backgroundColor,
     const Color& mouthColor)
 {
     m_ball.setColor(backgroundColor);
-    mMascot.setColor(bodyColor, scarfColor, mouthColor);
+    m_mascot.setColor(bodyColor, scarfColor, mouthColor);
 }
 
 void FlappyCatHero::setJumpConstants(const Position& acceleration, const Position& velocity)
@@ -93,7 +93,7 @@ void FlappyCatHero::syncChildren()
     Position mascotPos = m_ball.transformation().position()
         + Position(diameter * 0.25f, diameter * 0.3f);
 
-    mMascot.moveTo(mascotPos);
-    mMascot.resize(Position(diameter, diameter));
-    mMascot.rotateTo(rotation());
+    m_mascot.moveTo(mascotPos);
+    m_mascot.resize(Position(diameter, diameter));
+    m_mascot.rotateTo(rotation());
 }

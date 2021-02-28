@@ -5,7 +5,7 @@
 #include <sstream>
 
 AndroidConfiguration::AndroidConfiguration(AAssetManager* manager)
-    : mManager(manager)
+    : m_manager(manager)
     , m_configuration(AConfiguration_new(), &AConfiguration_delete)
     , m_cacheForToString()
 {
@@ -15,7 +15,7 @@ AndroidConfiguration::AndroidConfiguration(AAssetManager* manager)
 void AndroidConfiguration::reload()
 {
 
-    AConfiguration_fromAssetManager(m_configuration.get(), mManager);
+    AConfiguration_fromAssetManager(m_configuration.get(), m_manager);
     reloadCacheForToString();
 }
 
