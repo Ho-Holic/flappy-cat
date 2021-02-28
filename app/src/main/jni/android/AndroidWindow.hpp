@@ -64,11 +64,11 @@ private:
 
 private:
     bool m_isReady;
-    ANativeWindow* mWindow;
+    ANativeWindow* m_window;
     EGLDisplay m_display;
     EGLContext m_context;
     EGLSurface m_surface;
-    EGLint mWidth;
+    EGLint m_width;
     EGLint m_height;
     GLuint m_program;
 };

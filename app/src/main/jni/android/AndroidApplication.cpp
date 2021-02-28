@@ -21,7 +21,7 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
     , m_isDestroyRequested(false)
     , m_configuration(activity->assetManager)
     , m_looper()
-    , mWindow()
+    , m_window()
     , m_events()
 {
     UNUSED(savedState); // we don't save and load state for now
@@ -278,7 +278,7 @@ void AndroidApplication::changeNativeWindow(ANativeWindow* window)
         event.setEventLoopEventData(false);
 
         auto isUserEventLoopFinished = [this]() -> bool {
-            return !this->mWindow.isReady();
+            return !this->m_window.isReady();
         };
 
         // wait for finish of user event loop
@@ -296,7 +296,7 @@ void AndroidApplication::changeNativeWindow(ANativeWindow* window)
     event.setNativeWindowEventData(window);
 
     auto isWindowChanged = [&window, this]() -> bool {
-        return this->mWindow.nativeWindow() == window;
+        return this->m_window.nativeWindow() == window;
     };
 
     // wait window to change
@@ -430,7 +430,7 @@ void AndroidApplication::exec()
         AndroidEvent event;
         pollEvent(event); // we call 'pollEvent' to run 'processEvent' function
 
-        if (mWindow.isReady()) {
+        if (m_window.isReady()) {
 
             // start 'user event loop'
             main();
@@ -477,13 +477,13 @@ void AndroidApplication::postEvent(const AndroidEvent& event)
 const AndroidWindow& AndroidApplication::window() const
 {
 
-    return mWindow;
+    return m_window;
 }
 
 AndroidWindow& AndroidApplication::window()
 {
 
-    return mWindow;
+    return m_window;
 }
 
 void AndroidApplication::initialize()
@@ -587,9 +587,9 @@ void AndroidApplication::initializeNativeWindow(const AndroidEvent& event)
 
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    mWindow.setNativeWindow(event.nativeWindowEvent().pendingWindow);
+    m_window.setNativeWindow(event.nativeWindowEvent().pendingWindow);
 
-    mWindow.initialize();
+    m_window.initialize();
 
     m_conditionVariable.notify_all();
 }
@@ -601,9 +601,9 @@ void AndroidApplication::terminateNativeWindow(const AndroidEvent& event)
 
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    mWindow.terminate();
+    m_window.terminate();
 
-    mWindow.setNativeWindow(event.nativeWindowEvent().pendingWindow);
+    m_window.setNativeWindow(event.nativeWindowEvent().pendingWindow);
 
     m_conditionVariable.notify_all();
 }
@@ -613,7 +613,7 @@ void AndroidApplication::resizeNativeWindow(const AndroidEvent& event)
 
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    mWindow.resize(event.resizeEvent().width, event.resizeEvent().height);
+    m_window.resize(event.resizeEvent().width, event.resizeEvent().height);
 
     m_conditionVariable.notify_all();
 }

@@ -52,5 +52,5 @@ private:
     float m_gapDisplacement;
     RectangleShape m_topBlock;
     RectangleShape m_bottomBlock;
-    WallState mWallState;
+    WallState m_wallState;
 };

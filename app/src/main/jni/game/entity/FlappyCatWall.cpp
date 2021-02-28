@@ -9,7 +9,7 @@ FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
     , m_gapDisplacement(0.f)
     , m_topBlock()
     , m_bottomBlock()
-    , mWallState(WallState::Normal)
+    , m_wallState(WallState::Normal)
 {
     //
 }
@@ -76,10 +76,10 @@ void FlappyCatWall::syncChildren()
 
 void FlappyCatWall::activateWall()
 {
-    mWallState = WallState::Activated;
+    m_wallState = WallState::Activated;
 }
 
 bool FlappyCatWall::isActivated() const
 {
-    return mWallState == WallState::Activated;
+    return m_wallState == WallState::Activated;
 }

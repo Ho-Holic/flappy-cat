@@ -51,7 +51,7 @@ private:
     Position m_startOffset;
     Position m_movementDisplacement;
     std::vector<entity_type> m_links;
-    modifier_type mWrapAroundModifier;
+    modifier_type m_wrapAroundModifier;
 };
 
 // implementation
@@ -64,7 +64,7 @@ FlappyCatChain<Link>::FlappyCatChain(const FlappyCatGameConstants& gameConstants
     , m_startOffset(0.f, 0.f)
     , m_movementDisplacement(0.f, 0.f)
     , m_links()
-    , mWrapAroundModifier([](entity_type&) {})
+    , m_wrapAroundModifier([](entity_type&) {})
 {
     static_assert(std::is_base_of<FlappyCatEntity, Link>::value, "Must be derived from Entity");
 }
@@ -156,8 +156,8 @@ void FlappyCatChain<Link>::update(const FrameDuration& time)
             // TODO: If 'p.x()' bigger then '2.f * chainLength' then wrap fails, need a loop
             link.moveTo(Position(p.x() + chainLength(), p.y()));
 
-            REQUIRE(TAG, mWrapAroundModifier != nullptr, "WrapAround modifier must be not null");
-            mWrapAroundModifier(link);
+            REQUIRE(TAG, m_wrapAroundModifier != nullptr, "WrapAround modifier must be not null");
+            m_wrapAroundModifier(link);
         }
     }
 }
@@ -173,7 +173,7 @@ void FlappyCatChain<Link>::drawOn(const Window& window) const
 template <typename Link>
 void FlappyCatChain<Link>::setWrapAroundModifier(const modifier_type& modifier)
 {
-    mWrapAroundModifier = modifier;
+    m_wrapAroundModifier = modifier;
 }
 
 template <typename Link>

@@ -30,11 +30,11 @@ enum : GLsizei {
 AndroidWindow::AndroidWindow()
     : Window()
     , m_isReady(false)
-    , mWindow(nullptr)
+    , m_window(nullptr)
     , m_display(EGL_NO_DISPLAY)
     , m_context(EGL_NO_CONTEXT)
     , m_surface(EGL_NO_SURFACE)
-    , mWidth(0)
+    , m_width(0)
     , m_height(0)
     , m_program(0)
 {
@@ -60,19 +60,19 @@ void AndroidWindow::setNativeWindow(ANativeWindow* window)
 
     REQUIRE(TAG, !m_isReady, "Must be inactive");
 
-    mWindow = window;
+    m_window = window;
 }
 
 ANativeWindow* AndroidWindow::nativeWindow() const
 {
 
-    return mWindow;
+    return m_window;
 }
 
 void AndroidWindow::initialize()
 {
 
-    Log::i(TAG, "Call to initialize: %p, ready: %d", mWindow, m_isReady);
+    Log::i(TAG, "Call to initialize: %p, ready: %d", m_window, m_isReady);
 
     // get display and init it
     EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
@@ -164,7 +164,7 @@ void AndroidWindow::initialize()
     EGLBoolean nativeVisualStatus = eglGetConfigAttrib(display, config,
         EGL_NATIVE_VISUAL_ID, &format);
 
-    EGLSurface surface = eglCreateWindowSurface(display, config, mWindow, nullptr);
+    EGLSurface surface = eglCreateWindowSurface(display, config, m_window, nullptr);
 
     // context configuration
     EGLint contextAttribs[] = {
@@ -192,7 +192,7 @@ void AndroidWindow::initialize()
     m_surface = surface;
 
     // set window size
-    mWidth = requestWidth();
+    m_width = requestWidth();
     m_height = requestHeight();
 
     // deal with opengl now
@@ -204,7 +204,7 @@ void AndroidWindow::initialize()
 void AndroidWindow::terminate()
 {
 
-    Log::i(TAG, "Call to terminate: %p, ready: %d", mWindow, m_isReady);
+    Log::i(TAG, "Call to terminate: %p, ready: %d", m_window, m_isReady);
 
     REQUIRE(TAG, !m_isReady, "Must be inactive");
 
@@ -368,7 +368,7 @@ void AndroidWindow::display() const
 int32_t AndroidWindow::width() const
 {
 
-    return mWidth;
+    return m_width;
 }
 
 int32_t AndroidWindow::height() const
@@ -380,13 +380,13 @@ int32_t AndroidWindow::height() const
 int32_t AndroidWindow::requestWidth() const
 {
 
-    return ANativeWindow_getWidth(mWindow);
+    return ANativeWindow_getWidth(m_window);
 }
 
 int32_t AndroidWindow::requestHeight() const
 {
 
-    return ANativeWindow_getHeight(mWindow);
+    return ANativeWindow_getHeight(m_window);
 }
 
 void AndroidWindow::drawVertices(const Vertices& vertices,
@@ -452,14 +452,14 @@ void AndroidWindow::resize(int32_t width, int32_t height)
 
     Log::i(TAG, "New size (%d - %d)\n", width, height);
 
-    mWidth = width;
+    m_width = width;
     m_height = height;
 
-    view().setPosition(Position(static_cast<float>(mWidth),
+    view().setPosition(Position(static_cast<float>(m_width),
         static_cast<float>(m_height)));
 
     // Set the viewport
-    glViewport(0, 0, mWidth, m_height);
+    glViewport(0, 0, m_width, m_height);
 }
 
 void AndroidWindow::draw(const Shape& shape) const
