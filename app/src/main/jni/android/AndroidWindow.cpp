@@ -35,7 +35,7 @@ AndroidWindow::AndroidWindow()
     , m_context(EGL_NO_CONTEXT)
     , mSurface(EGL_NO_SURFACE)
     , mWidth(0)
-    , mHeight(0)
+    , m_height(0)
     , mProgram(0)
 {
     //
@@ -193,7 +193,7 @@ void AndroidWindow::initialize()
 
     // set window size
     mWidth = requestWidth();
-    mHeight = requestHeight();
+    m_height = requestHeight();
 
     // deal with opengl now
     initializeOpengl();
@@ -374,7 +374,7 @@ int32_t AndroidWindow::width() const
 int32_t AndroidWindow::height() const
 {
 
-    return mHeight;
+    return m_height;
 }
 
 int32_t AndroidWindow::requestWidth() const
@@ -453,13 +453,13 @@ void AndroidWindow::resize(int32_t width, int32_t height)
     Log::i(TAG, "New size (%d - %d)\n", width, height);
 
     mWidth = width;
-    mHeight = height;
+    m_height = height;
 
     view().setPosition(Position(static_cast<float>(mWidth),
-        static_cast<float>(mHeight)));
+        static_cast<float>(m_height)));
 
     // Set the viewport
-    glViewport(0, 0, mWidth, mHeight);
+    glViewport(0, 0, mWidth, m_height);
 }
 
 void AndroidWindow::draw(const Shape& shape) const

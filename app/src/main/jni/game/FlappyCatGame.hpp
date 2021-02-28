@@ -49,7 +49,7 @@ private:
     FlappyCatChain<FlappyCatWall> m_barricade;
     FlappyCatChain<FlappyCatSpike> m_backgroundCity;
     FlappyCatCloud m_backgroundSky;
-    FlappyCatHero mHero;
+    FlappyCatHero m_hero;
     FlappyCatViewLimit mLimit;
 
     // score element

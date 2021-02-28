@@ -13,7 +13,7 @@ FlappyCatGame::FlappyCatGame()
     , m_barricade(m_gameConstants)
     , m_backgroundCity(m_gameConstants)
     , m_backgroundSky(m_gameConstants)
-    , mHero(m_gameConstants)
+    , m_hero(m_gameConstants)
     , mLimit(m_gameConstants)
     , mScore(m_gameConstants)
     , mScoreCounter(0)
@@ -66,16 +66,16 @@ void FlappyCatGame::initialize()
 
     m_floor.setUpdateModifier(
         [this](FlappyCatFloor& floor, const FrameDuration&) {
-            float radius = mHero.radius();
+            float radius = m_hero.radius();
             // TODO: implement proper origin in 'transformation' and remove this line
             // circle origin in bottom left so we shift by radius
-            Position center = mHero.position() + Position(radius, radius);
+            Position center = m_hero.position() + Position(radius, radius);
 
             if (m_gameState == PlayState || m_gameState == LoseState) {
 
                 if (Collide::circleRect(center, radius, m_floor.boundingBox())) {
                     m_gameState = OnTheFloorState;
-                    mHero.moveTo(Position(mHero.position().x(), m_floor.position().y()));
+                    m_hero.moveTo(Position(m_hero.position().x(), m_floor.position().y()));
                 }
             }
         });
@@ -94,7 +94,7 @@ void FlappyCatGame::initialize()
             wall.setResetModifier([this](FlappyCatWall& wall) {
                 const FlappyCatColorScheme& colorScheme = m_gameConstants.colorScheme();
 
-                wall.setGapInterval(mHero.radius() * 2.f * 4.f);
+                wall.setGapInterval(m_hero.radius() * 2.f * 4.f);
 
                 Position offset = m_gameConstants[Constant::BarricadeWallGapDisplacement];
                 wall.setGapDisplacement(m_gameConstants.clampedRandomOffsetFrom(offset.x(), offset.y()));
@@ -104,10 +104,10 @@ void FlappyCatGame::initialize()
 
             // update
             wall.setUpdateModifier([this](FlappyCatWall& wall, const FrameDuration&) {
-                float radius = mHero.radius();
+                float radius = m_hero.radius();
                 // TODO: implement proper origin in 'transformation' and remove this code
                 // circle origin in bottom left so we shift by radius
-                Position center = mHero.position() + Position(radius, radius);
+                Position center = m_hero.position() + Position(radius, radius);
 
                 if (m_gameState == PlayState) {
 
@@ -185,11 +185,11 @@ void FlappyCatGame::initialize()
         });
 
     // cat hero!
-    mHero.setJumpConstants(m_gameConstants[Constant::PhysicsJumpAcceleration],
+    m_hero.setJumpConstants(m_gameConstants[Constant::PhysicsJumpAcceleration],
         m_gameConstants[Constant::PhysicsJumpVelocity]);
-    mHero.setGravity(m_gameConstants[Constant::PhysicsGravity]);
+    m_hero.setGravity(m_gameConstants[Constant::PhysicsGravity]);
 
-    mHero.setUpdateModifier(
+    m_hero.setUpdateModifier(
         [this](FlappyCatHero& hero, const FrameDuration&) {
             hero.moveBy(hero.distance());
 
@@ -209,10 +209,10 @@ void FlappyCatGame::initialize()
             hero.rotateTo(angle);
 
             float offset = m_gameConstants[Constant::HeroSize].x();
-            mScore.moveTo(mHero.position() - Position(offset, offset / 4.f));
+            mScore.moveTo(m_hero.position() - Position(offset, offset / 4.f));
         });
 
-    mHero.setResetModifier(
+    m_hero.setResetModifier(
         [this](FlappyCatHero& hero) {
             const FlappyCatColorScheme& colorScheme = m_gameConstants.colorScheme();
 
@@ -238,7 +238,7 @@ void FlappyCatGame::initialize()
     m_barricade.initialize();
     m_backgroundCity.initialize();
     m_backgroundSky.initialize();
-    mHero.initialize();
+    m_hero.initialize();
     mLimit.initialize();
     mScore.initialize();
     m_fps.initialize();
@@ -250,7 +250,7 @@ void FlappyCatGame::reset()
     m_gameConstants.reset();
 
     m_background.reset();
-    mHero.reset();
+    m_hero.reset();
     m_barricade.reset();
     m_floor.reset();
     m_backgroundCity.reset();
@@ -267,7 +267,7 @@ void FlappyCatGame::processEvent(const Event& event)
         if (m_gameState == PressButtonState) {
 
             m_gameState = PlayState;
-            mHero.jump();
+            m_hero.jump();
             incrementScore();
         } else if (m_gameState == OnTheFloorState) {
 
@@ -275,10 +275,10 @@ void FlappyCatGame::processEvent(const Event& event)
             reset();
         } else if (m_gameState == PlayState) {
 
-            bool isOffScreen = (mHero.position().y() < ((cameraSize().y() / 2.f) - mHero.radius() * 4.f));
+            bool isOffScreen = (m_hero.position().y() < ((cameraSize().y() / 2.f) - m_hero.radius() * 4.f));
 
             if (isOffScreen) {
-                mHero.jump();
+                m_hero.jump();
                 incrementScore();
             }
         }
@@ -290,13 +290,13 @@ void FlappyCatGame::update(const FrameDuration& time)
 
     if (m_gameState == PlayState) {
 
-        mHero.update(time);
+        m_hero.update(time);
         m_barricade.update(time);
         m_floor.update(time);
         m_backgroundCity.update(time);
     } else if (m_gameState == LoseState) {
 
-        mHero.update(time);
+        m_hero.update(time);
         m_floor.update(time);
     } else if (m_gameState == OnTheFloorState) {
         // nothing to do here now
@@ -320,7 +320,7 @@ void FlappyCatGame::render(const Window& window) const
     m_backgroundCity.drawOn(window);
 
     m_barricade.drawOn(window);
-    mHero.drawOn(window);
+    m_hero.drawOn(window);
     m_floor.drawOn(window);
     mLimit.drawOn(window);
     mScore.drawOn(window);
@@ -342,7 +342,7 @@ void FlappyCatGame::resetScore()
 
     using Constant = FlappyCatGameConstants::Constants;
     float offset = m_gameConstants[Constant::HeroSize].x();
-    mScore.moveTo(mHero.position() - Position(offset, offset / 4.f));
+    mScore.moveTo(m_hero.position() - Position(offset, offset / 4.f));
 
     /*
    * TODO: create own reset modifier for Score element

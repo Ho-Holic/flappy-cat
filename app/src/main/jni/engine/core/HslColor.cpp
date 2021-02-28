@@ -9,7 +9,7 @@
 #include <style/Guidelines.hpp>
 
 HslColor::HslColor(value_type hue, value_type saturation, value_type luminance)
-    : mHue(hue)
+    : m_hue(hue)
     , mSaturation(saturation)
     , mLuminance(luminance)
 {
@@ -26,7 +26,7 @@ Color HslColor::toRgb(uint8_t alpha)
 {
 
     // normalization
-    value_type hue = mHue / 360.0;
+    value_type hue = m_hue / 360.0;
     value_type luminance = mLuminance / 100.0;
     value_type saturation = mSaturation / 100.0;
 
@@ -80,7 +80,7 @@ Color HslColor::toRgb(uint8_t alpha)
 
 HslColor::value_type HslColor::hue() const
 {
-    return mHue;
+    return m_hue;
 }
 
 HslColor::value_type HslColor::saturation() const
@@ -99,7 +99,7 @@ void HslColor::setHue(value_type hue)
     // TODO: write correct asserts for 'setHue/Saturation/Luminance' and 'rotateHue'
     //REQUIRE(TAG, saturation >= 0.0 && saturation <= 360.0, "hue out of bounds");
 
-    mHue = hue;
+    m_hue = hue;
 }
 
 void HslColor::setSaturation(value_type saturation)
@@ -123,11 +123,11 @@ void HslColor::rotateHue(value_type shift)
 
     //REQUIRE(TAG, shift >= 0.0, "only positive shift for now");
 
-    mHue += shift;
+    m_hue += shift;
 
-    while (mHue > 360.0) {
+    while (m_hue > 360.0) {
 
-        mHue -= 360.0;
+        m_hue -= 360.0;
     }
 }
 

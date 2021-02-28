@@ -32,7 +32,7 @@ public:
     Color toRgb(uint8_t alpha);
 
 private:
-    value_type mHue;
+    value_type m_hue;
     value_type mSaturation;
     value_type mLuminance;
 };

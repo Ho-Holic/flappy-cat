@@ -69,6 +69,6 @@ private:
     EGLContext m_context;
     EGLSurface mSurface;
     EGLint mWidth;
-    EGLint mHeight;
+    EGLint m_height;
     GLuint mProgram;
 };
