@@ -9,7 +9,7 @@ FlappyCatGame::FlappyCatGame()
     : mGameConstants()
     , mGameState(PressButtonState)
     , m_background(mGameConstants)
-    , mFloor(mGameConstants)
+    , m_floor(mGameConstants)
     , m_barricade(mGameConstants)
     , m_backgroundCity(mGameConstants)
     , m_backgroundSky(mGameConstants)
@@ -17,8 +17,8 @@ FlappyCatGame::FlappyCatGame()
     , mLimit(mGameConstants)
     , mScore(mGameConstants)
     , mScoreCounter(0)
-    , mFps(mGameConstants)
-    , mFpsCounter(0)
+    , m_fps(mGameConstants)
+    , m_fpsCounter(0)
 {
     initialize();
     reset();
@@ -51,12 +51,12 @@ void FlappyCatGame::initialize()
     mLimit.resize(mGameConstants[Constant::CameraSize]);
 
     // floor
-    mFloor.moveTo(mGameConstants[Constant::FloorPosition]);
-    mFloor.resize(mGameConstants[Constant::FloorSize]);
-    mFloor.setDecorationSizes(mGameConstants[Constant::FloorOrganicSurfaceSize],
+    m_floor.moveTo(mGameConstants[Constant::FloorPosition]);
+    m_floor.resize(mGameConstants[Constant::FloorSize]);
+    m_floor.setDecorationSizes(mGameConstants[Constant::FloorOrganicSurfaceSize],
         mGameConstants[Constant::FloorSpikesSize]);
 
-    mFloor.setResetModifier(
+    m_floor.setResetModifier(
         [this](FlappyCatFloor& floor) {
             const FlappyCatColorScheme& colorScheme = mGameConstants.colorScheme();
 
@@ -64,7 +64,7 @@ void FlappyCatGame::initialize()
             floor.setColor(colorScheme[ColorConstant::BlockColor], colorScheme[ColorConstant::DirtColor]);
         });
 
-    mFloor.setUpdateModifier(
+    m_floor.setUpdateModifier(
         [this](FlappyCatFloor& floor, const FrameDuration&) {
             float radius = mHero.radius();
             // TODO: implement proper origin in 'transformation' and remove this line
@@ -73,9 +73,9 @@ void FlappyCatGame::initialize()
 
             if (mGameState == PlayState || mGameState == LoseState) {
 
-                if (Collide::circleRect(center, radius, mFloor.boundingBox())) {
+                if (Collide::circleRect(center, radius, m_floor.boundingBox())) {
                     mGameState = OnTheFloorState;
-                    mHero.moveTo(Position(mHero.position().x(), mFloor.position().y()));
+                    mHero.moveTo(Position(mHero.position().x(), m_floor.position().y()));
                 }
             }
         });
@@ -114,7 +114,7 @@ void FlappyCatGame::initialize()
                     if (wall.collideWithCircle(center, radius)) {
 
                         mGameState = LoseState;
-                        mFloor.setMovementDisplacement(Position(0.f, 0.f));
+                        m_floor.setMovementDisplacement(Position(0.f, 0.f));
                     } else if (!wall.isActivated() && wall.collideWithCircle(center, radius + radius * 0.2f)) {
 
                         wall.activateWall();
@@ -230,18 +230,18 @@ void FlappyCatGame::initialize()
     mScore.setText("0");
 
     // fps counter
-    mFps.setText("0");
+    m_fps.setText("0");
 
     // initialize all stuff
     m_background.initialize();
-    mFloor.initialize();
+    m_floor.initialize();
     m_barricade.initialize();
     m_backgroundCity.initialize();
     m_backgroundSky.initialize();
     mHero.initialize();
     mLimit.initialize();
     mScore.initialize();
-    mFps.initialize();
+    m_fps.initialize();
 }
 
 void FlappyCatGame::reset()
@@ -252,7 +252,7 @@ void FlappyCatGame::reset()
     m_background.reset();
     mHero.reset();
     m_barricade.reset();
-    mFloor.reset();
+    m_floor.reset();
     m_backgroundCity.reset();
     m_backgroundSky.reset();
     mLimit.reset();
@@ -292,21 +292,21 @@ void FlappyCatGame::update(const FrameDuration& time)
 
         mHero.update(time);
         m_barricade.update(time);
-        mFloor.update(time);
+        m_floor.update(time);
         m_backgroundCity.update(time);
     } else if (mGameState == LoseState) {
 
         mHero.update(time);
-        mFloor.update(time);
+        m_floor.update(time);
     } else if (mGameState == OnTheFloorState) {
         // nothing to do here now
     } else if (mGameState == PressButtonState) {
 
-        mFloor.update(time);
+        m_floor.update(time);
         m_backgroundCity.update(time);
     }
 
-    mFps.setText(std::to_string(mFpsCounter));
+    m_fps.setText(std::to_string(m_fpsCounter));
 }
 
 void FlappyCatGame::render(const Window& window) const
@@ -321,10 +321,10 @@ void FlappyCatGame::render(const Window& window) const
 
     m_barricade.drawOn(window);
     mHero.drawOn(window);
-    mFloor.drawOn(window);
+    m_floor.drawOn(window);
     mLimit.drawOn(window);
     mScore.drawOn(window);
-    mFps.drawOn(window);
+    m_fps.drawOn(window);
 
     window.display();
 }
@@ -354,11 +354,11 @@ void FlappyCatGame::resetScore()
     /*
    * TODO: create own reset modifier for Fps element
    */
-    mFps.setColor(colorScheme[ColorConstant::TextColor]);
-    mFps.moveTo(mGameConstants[Constant::CameraSize] * 0.2f);
+    m_fps.setColor(colorScheme[ColorConstant::TextColor]);
+    m_fps.moveTo(mGameConstants[Constant::CameraSize] * 0.2f);
 }
 
 void FlappyCatGame::setFpsCounter(size_t fpsCount)
 {
-    mFpsCounter = fpsCount;
+    m_fpsCounter = fpsCount;
 }

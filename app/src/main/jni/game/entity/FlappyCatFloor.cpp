@@ -4,8 +4,8 @@ FlappyCatFloor::FlappyCatFloor(const FlappyCatGameConstants& gameConstants)
     : FlappyCatStateNode<FlappyCatFloor>(gameConstants)
     , mOrganicSurfaceSize()
     , mSpikesSize()
-    , mFloor()
-    , mFloorSpikes(gameConstants)
+    , m_floor()
+    , m_floorSpikes(gameConstants)
     , m_backgroundDirt()
 {
     //
@@ -13,22 +13,22 @@ FlappyCatFloor::FlappyCatFloor(const FlappyCatGameConstants& gameConstants)
 
 void FlappyCatFloor::initialize()
 {
-    mFloorSpikes.initialize();
+    m_floorSpikes.initialize();
 }
 
 void FlappyCatFloor::syncChildren()
 {
     // floor for collide
-    mFloor.transformation().setPosition(position());
-    mFloor.geometry().resize(Position(size().x(), mOrganicSurfaceSize.y()));
+    m_floor.transformation().setPosition(position());
+    m_floor.geometry().resize(Position(size().x(), mOrganicSurfaceSize.y()));
 
     // spikes for movement effect
-    mFloorSpikes.moveTo(position() - Position(0.f, mSpikesSize.y()));
+    m_floorSpikes.moveTo(position() - Position(0.f, mSpikesSize.y()));
 
-    mFloorSpikes.setLinkSize(mSpikesSize);
-    mFloorSpikes.setOffsetBetweenLinks(mSpikesSize);
+    m_floorSpikes.setLinkSize(mSpikesSize);
+    m_floorSpikes.setOffsetBetweenLinks(mSpikesSize);
 
-    mFloorSpikes.resize(Position(size().x(), 0.f));
+    m_floorSpikes.resize(Position(size().x(), 0.f));
 
     // dirt under floor
     m_backgroundDirt.transformation().setPosition(position() - Position(0.f, size().y()));
@@ -38,32 +38,32 @@ void FlappyCatFloor::syncChildren()
 void FlappyCatFloor::drawOn(const Window& window) const
 {
     window.draw(m_backgroundDirt);
-    mFloorSpikes.drawOn(window);
-    window.draw(mFloor);
+    m_floorSpikes.drawOn(window);
+    window.draw(m_floor);
 }
 
 void FlappyCatFloor::update(const FrameDuration& time)
 {
     FlappyCatStateNode<FlappyCatFloor>::update(time);
-    mFloorSpikes.update(time);
+    m_floorSpikes.update(time);
 }
 
 void FlappyCatFloor::reset()
 {
     FlappyCatStateNode<FlappyCatFloor>::reset();
-    mFloorSpikes.reset();
+    m_floorSpikes.reset();
 }
 
 const RectangleShape& FlappyCatFloor::boundingBox() const
 {
-    return mFloor;
+    return m_floor;
 }
 
 void FlappyCatFloor::setColor(const Color& floorColor, const Color& dirtColor)
 {
-    mFloor.setColor(floorColor);
+    m_floor.setColor(floorColor);
 
-    mFloorSpikes.foreachLink(
+    m_floorSpikes.foreachLink(
         [&floorColor](FlappyCatSpike& spike) {
             spike.setColor(floorColor);
         });
@@ -73,7 +73,7 @@ void FlappyCatFloor::setColor(const Color& floorColor, const Color& dirtColor)
 
 void FlappyCatFloor::setMovementDisplacement(const Position& movementDisplacement)
 {
-    mFloorSpikes.setMovementDisplacement(movementDisplacement);
+    m_floorSpikes.setMovementDisplacement(movementDisplacement);
 }
 
 void FlappyCatFloor::setDecorationSizes(const Position& surfaceSize,

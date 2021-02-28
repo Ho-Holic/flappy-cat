@@ -29,7 +29,7 @@ private:
 private:
     Position mOrganicSurfaceSize;
     Position mSpikesSize;
-    RectangleShape mFloor;
-    FlappyCatChain<FlappyCatSpike> mFloorSpikes;
+    RectangleShape m_floor;
+    FlappyCatChain<FlappyCatSpike> m_floorSpikes;
     RectangleShape m_backgroundDirt;
 };

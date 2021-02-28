@@ -45,7 +45,7 @@ private:
 
     // elements
     FlappyCatBackground m_background;
-    FlappyCatFloor mFloor;
+    FlappyCatFloor m_floor;
     FlappyCatChain<FlappyCatWall> m_barricade;
     FlappyCatChain<FlappyCatSpike> m_backgroundCity;
     FlappyCatCloud m_backgroundSky;
@@ -57,8 +57,8 @@ private:
     size_t mScoreCounter;
 
     // fps element
-    FlappyCatText mFps;
-    size_t mFpsCounter;
+    FlappyCatText m_fps;
+    size_t m_fpsCounter;
 };
 
 enum FlappyCatGame::GameState : int32_t {
