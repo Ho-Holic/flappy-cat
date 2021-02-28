@@ -12,7 +12,7 @@
 
 FlappyCatColorScheme::FlappyCatColorScheme()
     : mRandomDevice()
-    , mGenerator(mRandomDevice())
+    , m_generator(mRandomDevice())
     , mScheme(ColorsSize, Color())
 {
     //
@@ -23,7 +23,7 @@ Color FlappyCatColorScheme::random() const
 
     std::uniform_int_distribution<uint32_t> distribution; // from 0 to 2^32
 
-    uint32_t fullColor = distribution(mGenerator);
+    uint32_t fullColor = distribution(m_generator);
 
     return Color(fullColor | 0xff); // set alpha channel to 255
 }
@@ -52,7 +52,7 @@ void FlappyCatColorScheme::generateNightScheme()
 {
 
     std::uniform_real_distribution<HslColor::value_type> distribution(0.0, 360.0);
-    HslColor::value_type hue = distribution(mGenerator);
+    HslColor::value_type hue = distribution(m_generator);
 
     HslColor heroColor(hue, 100.0, 50.0);
 
@@ -90,7 +90,7 @@ void FlappyCatColorScheme::generateDayScheme()
 {
 
     std::uniform_real_distribution<HslColor::value_type> distribution(0.0, 360.0);
-    HslColor::value_type hue = distribution(mGenerator);
+    HslColor::value_type hue = distribution(m_generator);
 
     HslColor heroColor(hue, 100.0, 50.0);
 

@@ -5,8 +5,8 @@
 
 FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
     : FlappyCatStateNode<FlappyCatWall>(gameConstants)
-    , mGapInterval(0.f)
-    , mGapDisplacement(0.f)
+    , m_gapInterval(0.f)
+    , m_gapDisplacement(0.f)
     , mTopBlock()
     , m_bottomBlock()
     , mWallState(WallState::Normal)
@@ -16,13 +16,13 @@ FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
 
 void FlappyCatWall::setGapInterval(float interval)
 {
-    mGapInterval = interval;
+    m_gapInterval = interval;
     syncChildren();
 }
 
 void FlappyCatWall::setGapDisplacement(float displacement)
 {
-    mGapDisplacement = displacement;
+    m_gapDisplacement = displacement;
     syncChildren();
 }
 
@@ -54,15 +54,15 @@ void FlappyCatWall::syncChildren()
     float A1 = position().y();
 
     float A2 = A1 + size().y()
-        - mGapInterval / 2.f
+        - m_gapInterval / 2.f
         - size().y() / 2.f
-        - mGapDisplacement;
+        - m_gapDisplacement;
 
-    float A3 = A2 + mGapInterval;
+    float A3 = A2 + m_gapInterval;
 
     float A4 = A3 + size().y() / 2.f
-        + mGapDisplacement
-        - mGapInterval / 2.f;
+        + m_gapDisplacement
+        - m_gapInterval / 2.f;
 
     // Need to deal with situation when all values are 0.f to make assert work
     //REQUIRE(TAG, ((A1 < A2) && (A2 < A3) && (A3 < A4)), "Vectors must not overlap");

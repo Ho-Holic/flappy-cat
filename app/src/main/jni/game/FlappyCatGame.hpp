@@ -40,8 +40,8 @@ private:
     void resetScore();
 
 private:
-    FlappyCatGameConstants mGameConstants;
-    GameState mGameState;
+    FlappyCatGameConstants m_gameConstants;
+    GameState m_gameState;
 
     // elements
     FlappyCatBackground m_background;

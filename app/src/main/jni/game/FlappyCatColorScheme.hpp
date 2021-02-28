@@ -27,7 +27,7 @@ private:
 
 private:
     mutable std::random_device mRandomDevice;
-    mutable std::mt19937 mGenerator;
+    mutable std::mt19937 m_generator;
     std::vector<Color> mScheme;
 };
 

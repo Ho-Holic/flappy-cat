@@ -2,7 +2,7 @@
 #include <core/Log.hpp>
 
 FlappyCatEntity::FlappyCatEntity(const FlappyCatGameConstants& gameConstants)
-    : mGameConstants(gameConstants)
+    : m_gameConstants(gameConstants)
     , mPosition()
     , mSize()
     , m_angle(0.f)
@@ -42,7 +42,7 @@ void FlappyCatEntity::rotateTo(float angle)
 
 const FlappyCatGameConstants& FlappyCatEntity::gameConstants() const
 {
-    return mGameConstants;
+    return m_gameConstants;
 }
 
 const Position& FlappyCatEntity::position() const

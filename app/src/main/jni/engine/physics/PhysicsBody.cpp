@@ -1,7 +1,7 @@
 #include "PhysicsBody.hpp"
 
 PhysicsBody::PhysicsBody()
-    : mGravity(0.f, 0.f)
+    : m_gravity(0.f, 0.f)
     , m_acceleration()
     , mVelocity()
     , m_distance()
@@ -19,7 +19,7 @@ void PhysicsBody::reset()
 void PhysicsBody::update(float time)
 {
     // TODO: make list of physical forces instead of gravity variable
-    m_acceleration = m_acceleration - mGravity;
+    m_acceleration = m_acceleration - m_gravity;
     mVelocity = mVelocity + (m_acceleration * time);
 
     m_distance = mVelocity * time; // distance passed by last update
@@ -52,5 +52,5 @@ void PhysicsBody::setVelocity(const Position& velocity)
 
 void PhysicsBody::setGravity(const Position& gravity)
 {
-    mGravity = gravity;
+    m_gravity = gravity;
 }

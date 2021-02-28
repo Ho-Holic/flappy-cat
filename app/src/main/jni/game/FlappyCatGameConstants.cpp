@@ -7,7 +7,7 @@
 
 FlappyCatGameConstants::FlappyCatGameConstants()
     : mRandomDevice()
-    , mGenerator(mRandomDevice())
+    , m_generator(mRandomDevice())
     , m_colorScheme()
     , m_constants(ConstantsSize, Position())
     , m_daytimeFactor(0)
@@ -125,7 +125,7 @@ float FlappyCatGameConstants::randomOffsetFrom(float initial,
 
     std::normal_distribution<float> distribution(initial, maxOffset);
 
-    return distribution(mGenerator);
+    return distribution(m_generator);
 }
 
 float FlappyCatGameConstants::clampedRandomOffsetFrom(float initial,

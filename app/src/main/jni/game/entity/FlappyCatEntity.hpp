@@ -33,7 +33,7 @@ private:
     virtual void syncChildren();
 
 private:
-    const FlappyCatGameConstants& mGameConstants;
+    const FlappyCatGameConstants& m_gameConstants;
     Position mPosition;
     Position mSize;
     float m_angle;

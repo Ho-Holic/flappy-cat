@@ -48,8 +48,8 @@ private:
     void syncChildren() override;
 
 private:
-    float mGapInterval;
-    float mGapDisplacement;
+    float m_gapInterval;
+    float m_gapDisplacement;
     RectangleShape mTopBlock;
     RectangleShape m_bottomBlock;
     WallState mWallState;

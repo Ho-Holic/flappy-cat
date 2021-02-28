@@ -17,7 +17,7 @@ public:
     void setGravity(const Position& gravity);
 
 private:
-    Position mGravity;
+    Position m_gravity;
     Position m_acceleration;
     Position mVelocity;
     Position m_distance;
