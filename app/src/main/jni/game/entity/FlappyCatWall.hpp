@@ -50,7 +50,7 @@ private:
 private:
     float m_gapInterval;
     float m_gapDisplacement;
-    RectangleShape mTopBlock;
+    RectangleShape m_topBlock;
     RectangleShape m_bottomBlock;
     WallState mWallState;
 };

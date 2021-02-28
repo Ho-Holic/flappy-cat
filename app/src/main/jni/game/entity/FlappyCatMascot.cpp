@@ -5,7 +5,7 @@ FlappyCatMascot::FlappyCatMascot(const FlappyCatGameConstants& gameConstants)
     , m_body()
     , m_backLeg()
     , m_frontLeg()
-    , mTail()
+    , m_tail()
     , m_scarf()
     , m_scarfTail()
     , m_head()
@@ -23,7 +23,7 @@ void FlappyCatMascot::drawOn(const Window& window) const
     window.draw(m_body);
     window.draw(m_backLeg);
     window.draw(m_frontLeg);
-    window.draw(mTail);
+    window.draw(m_tail);
     window.draw(m_scarf);
     window.draw(m_scarfTail);
     window.draw(m_head);
@@ -89,7 +89,7 @@ void FlappyCatMascot::syncChildren()
     m_head.transformation().setPosition(pos + headPosRes * scale);
     m_backLeg.transformation().setPosition(pos + backLegPosRes * scale);
     m_frontLeg.transformation().setPosition(pos + frontLegPosRes * scale);
-    mTail.transformation().setPosition(pos + tailPosRes * scale);
+    m_tail.transformation().setPosition(pos + tailPosRes * scale);
     m_leftEar.transformation().setPosition(pos + leftEarPosRes * scale);
     m_rightEar.transformation().setPosition(pos + rightEarPosRes * scale);
     m_leftEye.transformation().setPosition(pos + leftEyePosRes * scale);
@@ -103,7 +103,7 @@ void FlappyCatMascot::syncChildren()
     m_head.geometry().resize(headSize * scale);
     m_backLeg.geometry().resize(legAndTailSize * scale);
     m_frontLeg.geometry().resize(legAndTailSize * scale);
-    mTail.geometry().resize(legAndTailSize * scale);
+    m_tail.geometry().resize(legAndTailSize * scale);
     m_leftEar.geometry().resize(earSize * scale);
     m_rightEar.geometry().resize(earSize * scale);
     m_leftEye.geometry().resize(eyeSize * scale);
@@ -120,7 +120,7 @@ void FlappyCatMascot::syncChildren()
     m_head.transformation().setOrigin((center - headPosRes) * scale);
     m_backLeg.transformation().setOrigin((center - backLegPosRes) * scale);
     m_frontLeg.transformation().setOrigin((center - frontLegPosRes) * scale);
-    mTail.transformation().setOrigin((center - tailPosRes) * scale);
+    m_tail.transformation().setOrigin((center - tailPosRes) * scale);
     m_leftEar.transformation().setOrigin((center - leftEarPosRes) * scale);
     m_rightEar.transformation().setOrigin((center - rightEarPosRes) * scale);
     m_leftEye.transformation().setOrigin((center - leftEyePosRes) * scale);
@@ -133,7 +133,7 @@ void FlappyCatMascot::syncChildren()
     m_head.transformation().setRotation(angle);
     m_backLeg.transformation().setRotation(angle);
     m_frontLeg.transformation().setRotation(angle);
-    mTail.transformation().setRotation(angle);
+    m_tail.transformation().setRotation(angle);
     m_leftEar.transformation().setRotation(angle);
     m_rightEar.transformation().setRotation(angle);
     m_leftEye.transformation().setRotation(angle);
@@ -150,7 +150,7 @@ void FlappyCatMascot::setColor(const Color& bodyColor,
     m_body.setColor(bodyColor);
     m_backLeg.setColor(bodyColor);
     m_frontLeg.setColor(bodyColor);
-    mTail.setColor(bodyColor);
+    m_tail.setColor(bodyColor);
     m_head.setColor(bodyColor);
     m_leftEar.setColor(bodyColor);
     m_rightEar.setColor(bodyColor);

@@ -18,7 +18,7 @@ private:
     void syncChildren() override;
 
 private:
-    std::string mText;
-    std::vector<FlappyCatTextCharacter> mTextBody;
-    Color mTextColor;
+    std::string m_text;
+    std::vector<FlappyCatTextCharacter> m_textBody;
+    Color m_textColor;
 };

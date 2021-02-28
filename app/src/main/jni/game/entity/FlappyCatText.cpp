@@ -3,23 +3,23 @@
 
 FlappyCatText::FlappyCatText(const FlappyCatGameConstants& gameConstants)
     : FlappyCatStateNode<FlappyCatText>(gameConstants)
-    , mText("")
-    , mTextBody()
-    , mTextColor()
+    , m_text("")
+    , m_textBody()
+    , m_textColor()
 {
     //
 }
 
 void FlappyCatText::setText(const std::string& text)
 {
-    mText = text;
+    m_text = text;
     syncChildren();
 }
 
 void FlappyCatText::syncChildren()
 {
-    mTextBody.clear();
-    mTextBody.reserve(mText.size());
+    m_textBody.clear();
+    m_textBody.reserve(m_text.size());
 
     Position moveOffset(0.f, 0.f);
 
@@ -27,15 +27,15 @@ void FlappyCatText::syncChildren()
         Spacing = 10
     };
 
-    for (char character : mText) {
+    for (char character : m_text) {
 
-        mTextBody.emplace_back(gameConstants());
+        m_textBody.emplace_back(gameConstants());
 
-        REQUIRE(TAG, !mTextBody.empty(), "Character must exist!");
+        REQUIRE(TAG, !m_textBody.empty(), "Character must exist!");
 
-        FlappyCatTextCharacter& characterBody = mTextBody.back();
+        FlappyCatTextCharacter& characterBody = m_textBody.back();
         characterBody.setCharacter(character);
-        characterBody.setColor(mTextColor);
+        characterBody.setColor(m_textColor);
 
         characterBody.moveBy(position() + Position(moveOffset.x(), 0.f));
         moveOffset = moveOffset + characterBody.size() + Spacing;
@@ -44,16 +44,16 @@ void FlappyCatText::syncChildren()
 
 void FlappyCatText::drawOn(const Window& window) const
 {
-    for (const FlappyCatTextCharacter& character : mTextBody) {
+    for (const FlappyCatTextCharacter& character : m_textBody) {
         character.drawOn(window);
     }
 }
 
 void FlappyCatText::setColor(const Color& textColor)
 {
-    mTextColor = textColor;
+    m_textColor = textColor;
 
-    for (FlappyCatTextCharacter& character : mTextBody) {
+    for (FlappyCatTextCharacter& character : m_textBody) {
         character.setColor(textColor);
     }
 }

@@ -14,12 +14,12 @@ private:
     void syncChildren() override;
 
 private:
-    RectangleShape mTop;
-    RectangleShape mTopRight;
+    RectangleShape m_top;
+    RectangleShape m_topRight;
     RectangleShape m_right;
     RectangleShape m_bottomRight;
     RectangleShape m_bottom;
     RectangleShape m_bottomLeft;
     RectangleShape m_left;
-    RectangleShape mTopLeft;
+    RectangleShape m_topLeft;
 };

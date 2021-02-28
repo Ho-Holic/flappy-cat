@@ -7,7 +7,7 @@ FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
     : FlappyCatStateNode<FlappyCatWall>(gameConstants)
     , m_gapInterval(0.f)
     , m_gapDisplacement(0.f)
-    , mTopBlock()
+    , m_topBlock()
     , m_bottomBlock()
     , mWallState(WallState::Normal)
 {
@@ -28,25 +28,25 @@ void FlappyCatWall::setGapDisplacement(float displacement)
 
 bool FlappyCatWall::collideWithCircle(const Position& center, float radius)
 {
-    return Collide::circleRect(center, radius, mTopBlock)
+    return Collide::circleRect(center, radius, m_topBlock)
         || Collide::circleRect(center, radius, m_bottomBlock);
 }
 
 void FlappyCatWall::drawOn(const Window& window) const
 {
-    window.draw(mTopBlock);
+    window.draw(m_topBlock);
     window.draw(m_bottomBlock);
 }
 
 void FlappyCatWall::setColor(const Color& color)
 {
-    mTopBlock.setColor(color);
+    m_topBlock.setColor(color);
     m_bottomBlock.setColor(color);
 }
 
 const Color& FlappyCatWall::color() const
 {
-    return mTopBlock.color();
+    return m_topBlock.color();
 }
 
 void FlappyCatWall::syncChildren()
@@ -70,8 +70,8 @@ void FlappyCatWall::syncChildren()
     m_bottomBlock.transformation().setPosition(Position(position().x(), A1));
     m_bottomBlock.geometry().resize(Position(size().x(), (A2 - A1)));
 
-    mTopBlock.transformation().setPosition(Position(position().x(), A3));
-    mTopBlock.geometry().resize(Position(size().x(), (A4 - A3)));
+    m_topBlock.transformation().setPosition(Position(position().x(), A3));
+    m_topBlock.geometry().resize(Position(size().x(), (A4 - A3)));
 }
 
 void FlappyCatWall::activateWall()
