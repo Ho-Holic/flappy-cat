@@ -29,9 +29,9 @@ private:
     RectangleShape mScarf;
     RectangleShape mScarfTail;
     RectangleShape m_head;
-    TriangleShape mLeftEar;
+    TriangleShape m_leftEar;
     TriangleShape mRightEar;
-    RectangleShape mLeftEye;
+    RectangleShape m_leftEye;
     RectangleShape mRightEye;
     RectangleShape mMouth;
 };

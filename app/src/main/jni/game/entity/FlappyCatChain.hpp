@@ -46,11 +46,11 @@ private:
     Position section() const;
 
 private:
-    Position mLinkSize;
+    Position m_linkSize;
     Position mOffsetBetweenLinks;
     Position mStartOffset;
     Position mMovementDisplacement;
-    std::vector<entity_type> mLinks;
+    std::vector<entity_type> m_links;
     modifier_type mWrapAroundModifier;
 };
 
@@ -59,11 +59,11 @@ private:
 template <typename Link>
 FlappyCatChain<Link>::FlappyCatChain(const FlappyCatGameConstants& gameConstants)
     : FlappyCatStateNode<FlappyCatChain<Link>>(gameConstants)
-    , mLinkSize()
+    , m_linkSize()
     , mOffsetBetweenLinks(0.f, 0.f)
     , mStartOffset(0.f, 0.f)
     , mMovementDisplacement(0.f, 0.f)
-    , mLinks()
+    , m_links()
     , mWrapAroundModifier([](entity_type&) {})
 {
     static_assert(std::is_base_of<FlappyCatEntity, Link>::value, "Must be derived from Entity");
@@ -92,7 +92,7 @@ float FlappyCatChain<Link>::chainLength() const
 template <typename Link>
 Position FlappyCatChain<Link>::section() const
 {
-    return mLinkSize + mOffsetBetweenLinks;
+    return m_linkSize + mOffsetBetweenLinks;
 }
 
 template <typename Link>
@@ -113,14 +113,14 @@ void FlappyCatChain<Link>::initialize()
     std::size_t linkCount = static_cast<std::size_t>(chainLength() / section().x());
 
     CAUTION("If all of a sudden no object appears on the screen, please pass"
-            "some hardcoded value e.g 'mLinks.reserve(120)' and check if bug appears"
+            "some hardcoded value e.g 'm_links.reserve(120)' and check if bug appears"
             "this appears if 'emplace_back' is not implemented properly");
 
-    mLinks.reserve(linkCount);
+    m_links.reserve(linkCount);
 
     for (std::size_t i = 0; i < linkCount; ++i) {
 
-        mLinks.emplace_back(this->gameConstants());
+        m_links.emplace_back(this->gameConstants());
     }
 }
 
@@ -129,22 +129,22 @@ void FlappyCatChain<Link>::reset()
 {
     FlappyCatStateNode<FlappyCatChain<Link>>::reset();
 
-    for (std::size_t i = 0; i < mLinks.size(); ++i) {
+    for (std::size_t i = 0; i < m_links.size(); ++i) {
 
         // TODO: replace with Position pos(position + Position(i * section().x(), 0.f));
         Position pos(this->position().x() + i * section().x(), this->position().y());
 
-        mLinks[i].moveTo(pos + mStartOffset); // shift off-screen if needed by mStartOffset
-        mLinks[i].resize(mLinkSize);
+        m_links[i].moveTo(pos + mStartOffset); // shift off-screen if needed by mStartOffset
+        m_links[i].resize(m_linkSize);
 
-        mLinks[i].reset();
+        m_links[i].reset();
     }
 }
 
 template <typename Link>
 void FlappyCatChain<Link>::update(const FrameDuration& time)
 {
-    for (Link& link : mLinks) {
+    for (Link& link : m_links) {
 
         link.moveBy(mMovementDisplacement);
         link.update(time);
@@ -165,7 +165,7 @@ void FlappyCatChain<Link>::update(const FrameDuration& time)
 template <typename Link>
 void FlappyCatChain<Link>::drawOn(const Window& window) const
 {
-    for (const entity_type& link : mLinks) {
+    for (const entity_type& link : m_links) {
         link.drawOn(window);
     }
 }
@@ -179,7 +179,7 @@ void FlappyCatChain<Link>::setWrapAroundModifier(const modifier_type& modifier)
 template <typename Link>
 void FlappyCatChain<Link>::setLinkSize(const Position& linkSize)
 {
-    mLinkSize = linkSize;
+    m_linkSize = linkSize;
 }
 
 template <typename Link>
@@ -204,7 +204,7 @@ template <typename Link>
 template <typename Fn>
 void FlappyCatChain<Link>::foreachLink(const Fn& modifier)
 {
-    for (Link& link : mLinks) {
+    for (Link& link : m_links) {
         modifier(link);
     }
 }

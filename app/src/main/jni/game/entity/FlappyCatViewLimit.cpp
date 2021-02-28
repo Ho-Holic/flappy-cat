@@ -8,7 +8,7 @@ FlappyCatViewLimit::FlappyCatViewLimit(const FlappyCatGameConstants& gameConstan
     , m_bottomRight()
     , m_bottom()
     , m_bottomLeft()
-    , mLeft()
+    , m_left()
     , mTopLeft()
 {
     //
@@ -26,7 +26,7 @@ void FlappyCatViewLimit::syncChildren()
     m_bottomRight.transformation().setPosition(position + Position(size.x(), -size.y()));
     m_bottom.transformation().setPosition(position + Position(0.f, -size.y()));
     m_bottomLeft.transformation().setPosition(position + Position(-size.x(), -size.y()));
-    mLeft.transformation().setPosition(position + Position(-size.x(), 0.f));
+    m_left.transformation().setPosition(position + Position(-size.x(), 0.f));
     mTopLeft.transformation().setPosition(position + Position(-size.x(), size.y()));
 
     // resize
@@ -36,7 +36,7 @@ void FlappyCatViewLimit::syncChildren()
     m_bottomRight.geometry().resize(size);
     m_bottom.geometry().resize(size);
     m_bottomLeft.geometry().resize(size);
-    mLeft.geometry().resize(size);
+    m_left.geometry().resize(size);
     mTopLeft.geometry().resize(size);
 }
 
@@ -48,6 +48,6 @@ void FlappyCatViewLimit::drawOn(const Window& window) const
     window.draw(m_bottomRight);
     window.draw(m_bottom);
     window.draw(m_bottomLeft);
-    window.draw(mLeft);
+    window.draw(m_left);
     window.draw(mTopLeft);
 }

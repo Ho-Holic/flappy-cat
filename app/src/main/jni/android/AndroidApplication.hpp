@@ -100,7 +100,7 @@ private:
     bool m_isDestroyed;
     bool m_isDestroyRequested;
     AndroidConfiguration m_configuration;
-    AndroidLooper mLooper;
+    AndroidLooper m_looper;
     AndroidWindow mWindow;
     std::queue<AndroidEvent> m_events; // TODO: add thread safe queue
 };

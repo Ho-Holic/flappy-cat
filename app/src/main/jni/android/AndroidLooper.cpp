@@ -5,7 +5,7 @@
 #include <core/Log.hpp>
 
 AndroidLooper::AndroidLooper()
-    : mLooper(nullptr)
+    : m_looper(nullptr)
     , m_inputQueue(nullptr, &AInputQueue_detachLooper)
 {
     //
@@ -14,10 +14,10 @@ AndroidLooper::AndroidLooper()
 void AndroidLooper::prepare()
 {
 
-    REQUIRE(TAG, mLooper == nullptr, "must prepare looper once");
+    REQUIRE(TAG, m_looper == nullptr, "must prepare looper once");
 
     // don't move it to constructor
-    mLooper = ALooper_prepare(ALOOPER_PREPARE_ALLOW_NON_CALLBACKS);
+    m_looper = ALooper_prepare(ALOOPER_PREPARE_ALLOW_NON_CALLBACKS);
 }
 
 void AndroidLooper::setInputQueue(AInputQueue* inputQueue)
@@ -27,7 +27,7 @@ void AndroidLooper::setInputQueue(AInputQueue* inputQueue)
 
     if (m_inputQueue) {
         AInputQueue_attachLooper(m_inputQueue.get(),
-            mLooper, InputQueueId,
+            m_looper, InputQueueId,
             nullptr, nullptr);
     }
 }

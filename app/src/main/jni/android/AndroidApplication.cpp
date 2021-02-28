@@ -20,7 +20,7 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
     , m_isDestroyed(false)
     , m_isDestroyRequested(false)
     , m_configuration(activity->assetManager)
-    , mLooper()
+    , m_looper()
     , mWindow()
     , m_events()
 {
@@ -317,7 +317,7 @@ void AndroidApplication::changeInputQueue(AInputQueue* queue)
     event.setInputQueueEventData(queue);
 
     auto isQueueChanged = [&queue, this]() -> bool {
-        return this->mLooper.inputQueue() == queue;
+        return this->m_looper.inputQueue() == queue;
     };
 
     std::unique_lock<std::mutex> lock(mMutex);
@@ -448,7 +448,7 @@ bool AndroidApplication::pollEvent(AndroidEvent& event)
     {
 
         AndroidEvent looperEvent;
-        bool hasEventsInLooper = mLooper.pollEvent(looperEvent);
+        bool hasEventsInLooper = m_looper.pollEvent(looperEvent);
 
         if (hasEventsInLooper) {
             postEvent(looperEvent);
@@ -494,7 +494,7 @@ void AndroidApplication::initialize()
     Log::i(TAG, m_configuration.toString());
 
     // prepare looper for this thread to read events
-    mLooper.prepare();
+    m_looper.prepare();
 }
 
 void AndroidApplication::terminate()
@@ -623,7 +623,7 @@ void AndroidApplication::setInputQueue(const AndroidEvent& event)
 
     std::lock_guard<std::mutex> lock(mMutex);
 
-    mLooper.setInputQueue(event.inputQueueEvent().pendingQueue);
+    m_looper.setInputQueue(event.inputQueueEvent().pendingQueue);
 
     m_conditionVariable.notify_all();
 }

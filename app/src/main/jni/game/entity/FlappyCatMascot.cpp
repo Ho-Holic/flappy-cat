@@ -9,9 +9,9 @@ FlappyCatMascot::FlappyCatMascot(const FlappyCatGameConstants& gameConstants)
     , mScarf()
     , mScarfTail()
     , m_head()
-    , mLeftEar()
+    , m_leftEar()
     , mRightEar()
-    , mLeftEye()
+    , m_leftEye()
     , mRightEye()
     , mMouth()
 {
@@ -27,9 +27,9 @@ void FlappyCatMascot::drawOn(const Window& window) const
     window.draw(mScarf);
     window.draw(mScarfTail);
     window.draw(m_head);
-    window.draw(mLeftEar);
+    window.draw(m_leftEar);
     window.draw(mRightEar);
-    window.draw(mLeftEye);
+    window.draw(m_leftEye);
     window.draw(mRightEye);
     window.draw(mMouth);
 }
@@ -90,9 +90,9 @@ void FlappyCatMascot::syncChildren()
     m_backLeg.transformation().setPosition(pos + backLegPosRes * scale);
     m_frontLeg.transformation().setPosition(pos + frontLegPosRes * scale);
     mTail.transformation().setPosition(pos + tailPosRes * scale);
-    mLeftEar.transformation().setPosition(pos + leftEarPosRes * scale);
+    m_leftEar.transformation().setPosition(pos + leftEarPosRes * scale);
     mRightEar.transformation().setPosition(pos + rightEarPosRes * scale);
-    mLeftEye.transformation().setPosition(pos + leftEyePosRes * scale);
+    m_leftEye.transformation().setPosition(pos + leftEyePosRes * scale);
     mRightEye.transformation().setPosition(pos + rightEyePosRes * scale);
     mScarf.transformation().setPosition(pos + scarfPosRes * scale);
     mScarfTail.transformation().setPosition(pos + scarfTailPosRes * scale);
@@ -104,9 +104,9 @@ void FlappyCatMascot::syncChildren()
     m_backLeg.geometry().resize(legAndTailSize * scale);
     m_frontLeg.geometry().resize(legAndTailSize * scale);
     mTail.geometry().resize(legAndTailSize * scale);
-    mLeftEar.geometry().resize(earSize * scale);
+    m_leftEar.geometry().resize(earSize * scale);
     mRightEar.geometry().resize(earSize * scale);
-    mLeftEye.geometry().resize(eyeSize * scale);
+    m_leftEye.geometry().resize(eyeSize * scale);
     mRightEye.geometry().resize(eyeSize * scale);
     mScarf.geometry().resize(scarfSize * scale);
     mScarfTail.geometry().resize(scarfTailSize * scale);
@@ -121,9 +121,9 @@ void FlappyCatMascot::syncChildren()
     m_backLeg.transformation().setOrigin((center - backLegPosRes) * scale);
     m_frontLeg.transformation().setOrigin((center - frontLegPosRes) * scale);
     mTail.transformation().setOrigin((center - tailPosRes) * scale);
-    mLeftEar.transformation().setOrigin((center - leftEarPosRes) * scale);
+    m_leftEar.transformation().setOrigin((center - leftEarPosRes) * scale);
     mRightEar.transformation().setOrigin((center - rightEarPosRes) * scale);
-    mLeftEye.transformation().setOrigin((center - leftEyePosRes) * scale);
+    m_leftEye.transformation().setOrigin((center - leftEyePosRes) * scale);
     mRightEye.transformation().setOrigin((center - rightEyePosRes) * scale);
     mScarf.transformation().setOrigin((center - scarfPosRes) * scale);
     mScarfTail.transformation().setOrigin((center - scarfTailPosRes) * scale);
@@ -134,9 +134,9 @@ void FlappyCatMascot::syncChildren()
     m_backLeg.transformation().setRotation(angle);
     m_frontLeg.transformation().setRotation(angle);
     mTail.transformation().setRotation(angle);
-    mLeftEar.transformation().setRotation(angle);
+    m_leftEar.transformation().setRotation(angle);
     mRightEar.transformation().setRotation(angle);
-    mLeftEye.transformation().setRotation(angle);
+    m_leftEye.transformation().setRotation(angle);
     mRightEye.transformation().setRotation(angle);
     mScarf.transformation().setRotation(angle);
     mScarfTail.transformation().setRotation(angle);
@@ -152,12 +152,12 @@ void FlappyCatMascot::setColor(const Color& bodyColor,
     m_frontLeg.setColor(bodyColor);
     mTail.setColor(bodyColor);
     m_head.setColor(bodyColor);
-    mLeftEar.setColor(bodyColor);
+    m_leftEar.setColor(bodyColor);
     mRightEar.setColor(bodyColor);
 
     mScarf.setColor(scarfColor);
     mScarfTail.setColor(scarfColor);
-    mLeftEye.setColor(scarfColor);
+    m_leftEye.setColor(scarfColor);
     mRightEye.setColor(scarfColor);
 
     mMouth.setColor(mouthColor);

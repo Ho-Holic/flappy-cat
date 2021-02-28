@@ -20,6 +20,6 @@ private:
     RectangleShape m_bottomRight;
     RectangleShape m_bottom;
     RectangleShape m_bottomLeft;
-    RectangleShape mLeft;
+    RectangleShape m_left;
     RectangleShape mTopLeft;
 };

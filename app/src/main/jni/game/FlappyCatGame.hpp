@@ -50,7 +50,7 @@ private:
     FlappyCatChain<FlappyCatSpike> m_backgroundCity;
     FlappyCatCloud m_backgroundSky;
     FlappyCatHero m_hero;
-    FlappyCatViewLimit mLimit;
+    FlappyCatViewLimit m_limit;
 
     // score element
     FlappyCatText mScore;

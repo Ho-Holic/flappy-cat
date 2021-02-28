@@ -14,7 +14,7 @@ FlappyCatGame::FlappyCatGame()
     , m_backgroundCity(m_gameConstants)
     , m_backgroundSky(m_gameConstants)
     , m_hero(m_gameConstants)
-    , mLimit(m_gameConstants)
+    , m_limit(m_gameConstants)
     , mScore(m_gameConstants)
     , mScoreCounter(0)
     , m_fps(m_gameConstants)
@@ -47,8 +47,8 @@ void FlappyCatGame::initialize()
         });
 
     // limit
-    mLimit.moveTo(-(m_gameConstants[Constant::CameraSize] / 2.f));
-    mLimit.resize(m_gameConstants[Constant::CameraSize]);
+    m_limit.moveTo(-(m_gameConstants[Constant::CameraSize] / 2.f));
+    m_limit.resize(m_gameConstants[Constant::CameraSize]);
 
     // floor
     m_floor.moveTo(m_gameConstants[Constant::FloorPosition]);
@@ -239,7 +239,7 @@ void FlappyCatGame::initialize()
     m_backgroundCity.initialize();
     m_backgroundSky.initialize();
     m_hero.initialize();
-    mLimit.initialize();
+    m_limit.initialize();
     mScore.initialize();
     m_fps.initialize();
 }
@@ -255,7 +255,7 @@ void FlappyCatGame::reset()
     m_floor.reset();
     m_backgroundCity.reset();
     m_backgroundSky.reset();
-    mLimit.reset();
+    m_limit.reset();
     resetScore();
 }
 
@@ -322,7 +322,7 @@ void FlappyCatGame::render(const Window& window) const
     m_barricade.drawOn(window);
     m_hero.drawOn(window);
     m_floor.drawOn(window);
-    mLimit.drawOn(window);
+    m_limit.drawOn(window);
     mScore.drawOn(window);
     m_fps.drawOn(window);
 

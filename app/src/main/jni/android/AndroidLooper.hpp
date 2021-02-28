@@ -46,7 +46,7 @@ private:
     int32_t dispatchTouchEvent(AInputEvent* inputEvent, AndroidEvent& event);
 
 private:
-    ALooper* mLooper;
+    ALooper* m_looper;
     std::unique_ptr<AInputQueue, DetachLooperDeleter> m_inputQueue;
 };
 
