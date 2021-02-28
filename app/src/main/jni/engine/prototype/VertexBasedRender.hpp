@@ -17,6 +17,6 @@ public:
     virtual void drawOn(const Window& window, const Transformation& transformation) const override;
 
 private:
-    Vertices mVertices;
+    Vertices m_vertices;
     Color m_brushColor;
 };

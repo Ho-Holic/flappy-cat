@@ -19,6 +19,6 @@ public:
 private:
     Position m_gravity;
     Position m_acceleration;
-    Position mVelocity;
+    Position m_velocity;
     Position m_distance;
 };

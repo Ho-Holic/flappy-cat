@@ -9,7 +9,7 @@
 
 VertexBasedRender::VertexBasedRender()
     : Render()
-    , mVertices()
+    , m_vertices()
     , m_brushColor()
 {
     //
@@ -24,7 +24,7 @@ void VertexBasedRender::setBrushColor(const Color& color)
 void VertexBasedRender::drawOn(const Window& window, const Transformation& transformation) const
 {
 
-    window.drawVertices(mVertices, transformation);
+    window.drawVertices(m_vertices, transformation);
 }
 
 void VertexBasedRender::update(const Shape& shape)
@@ -33,7 +33,7 @@ void VertexBasedRender::update(const Shape& shape)
     Geometry::size_type points = shape.geometry().points();
 
     // TODO: not optimal, create more clever approach later
-    mVertices.reset();
+    m_vertices.reset();
 
     if (points < 3) { // give me some love <3
         return;
@@ -65,7 +65,7 @@ void VertexBasedRender::update(const Shape& shape)
         // representation on the screen, but local scale is not implemented
         //
 
-        mVertices << Vertex(shape.transformation().position()
+        m_vertices << Vertex(shape.transformation().position()
                 + Position(rotatedX, rotatedY)
                 + shape.transformation().origin(),
             m_brushColor);

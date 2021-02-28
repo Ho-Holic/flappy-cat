@@ -2,7 +2,7 @@
 #include "Vertices.hpp"
 
 Vertices::Vertices()
-    : mVertices()
+    : m_vertices()
 {
     //
 }
@@ -10,23 +10,23 @@ Vertices::Vertices()
 size_t Vertices::size() const
 {
 
-    return mVertices.size();
+    return m_vertices.size();
 }
 
 const Vertex& Vertices::operator[](std::size_t index) const
 {
 
-    return mVertices[index];
+    return m_vertices[index];
 }
 
 Vertices& Vertices::operator<<(const Vertex& vertex)
 {
 
-    mVertices.push_back(vertex);
+    m_vertices.push_back(vertex);
     return *this;
 }
 
 void Vertices::reset()
 {
-    mVertices.resize(0);
+    m_vertices.resize(0);
 }

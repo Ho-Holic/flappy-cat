@@ -20,5 +20,5 @@ public:
     void reset();
 
 private:
-    std::vector<Vertex> mVertices;
+    std::vector<Vertex> m_vertices;
 };

@@ -22,5 +22,5 @@ public:
     View& view();
 
 private:
-    View mView;
+    View m_view;
 };

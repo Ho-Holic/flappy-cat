@@ -2,7 +2,7 @@
 #include "Window.hpp"
 
 Window::Window()
-    : mView()
+    : m_view()
 {
     //
 }
@@ -10,11 +10,11 @@ Window::Window()
 const View& Window::view() const
 {
 
-    return mView;
+    return m_view;
 }
 
 View& Window::view()
 {
 
-    return mView;
+    return m_view;
 }
