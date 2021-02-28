@@ -8,7 +8,7 @@ FlappyCatWall::FlappyCatWall(const FlappyCatGameConstants& gameConstants)
     , mGapInterval(0.f)
     , mGapDisplacement(0.f)
     , mTopBlock()
-    , mBottomBlock()
+    , m_bottomBlock()
     , mWallState(WallState::Normal)
 {
     //
@@ -29,19 +29,19 @@ void FlappyCatWall::setGapDisplacement(float displacement)
 bool FlappyCatWall::collideWithCircle(const Position& center, float radius)
 {
     return Collide::circleRect(center, radius, mTopBlock)
-        || Collide::circleRect(center, radius, mBottomBlock);
+        || Collide::circleRect(center, radius, m_bottomBlock);
 }
 
 void FlappyCatWall::drawOn(const Window& window) const
 {
     window.draw(mTopBlock);
-    window.draw(mBottomBlock);
+    window.draw(m_bottomBlock);
 }
 
 void FlappyCatWall::setColor(const Color& color)
 {
     mTopBlock.setColor(color);
-    mBottomBlock.setColor(color);
+    m_bottomBlock.setColor(color);
 }
 
 const Color& FlappyCatWall::color() const
@@ -67,8 +67,8 @@ void FlappyCatWall::syncChildren()
     // Need to deal with situation when all values are 0.f to make assert work
     //REQUIRE(TAG, ((A1 < A2) && (A2 < A3) && (A3 < A4)), "Vectors must not overlap");
 
-    mBottomBlock.transformation().setPosition(Position(position().x(), A1));
-    mBottomBlock.geometry().resize(Position(size().x(), (A2 - A1)));
+    m_bottomBlock.transformation().setPosition(Position(position().x(), A1));
+    m_bottomBlock.geometry().resize(Position(size().x(), (A2 - A1)));
 
     mTopBlock.transformation().setPosition(Position(position().x(), A3));
     mTopBlock.geometry().resize(Position(size().x(), (A4 - A3)));

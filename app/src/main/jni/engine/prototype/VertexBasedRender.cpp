@@ -10,7 +10,7 @@
 VertexBasedRender::VertexBasedRender()
     : Render()
     , mVertices()
-    , mBrushColor()
+    , m_brushColor()
 {
     //
 }
@@ -18,7 +18,7 @@ VertexBasedRender::VertexBasedRender()
 void VertexBasedRender::setBrushColor(const Color& color)
 {
 
-    mBrushColor = color;
+    m_brushColor = color;
 }
 
 void VertexBasedRender::drawOn(const Window& window, const Transformation& transformation) const
@@ -68,11 +68,11 @@ void VertexBasedRender::update(const Shape& shape)
         mVertices << Vertex(shape.transformation().position()
                 + Position(rotatedX, rotatedY)
                 + shape.transformation().origin(),
-            mBrushColor);
+            m_brushColor);
     }
 }
 
 const Color& VertexBasedRender::getBrushColor() const
 {
-    return mBrushColor;
+    return m_brushColor;
 }

@@ -37,5 +37,5 @@ private:
     Position mPosition;
     Position mSize;
     float m_angle;
-    PhysicsBody mBody;
+    PhysicsBody m_body;
 };

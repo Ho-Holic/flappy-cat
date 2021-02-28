@@ -6,7 +6,7 @@ FlappyCatFloor::FlappyCatFloor(const FlappyCatGameConstants& gameConstants)
     , mSpikesSize()
     , mFloor()
     , mFloorSpikes(gameConstants)
-    , mBackgroundDirt()
+    , m_backgroundDirt()
 {
     //
 }
@@ -31,13 +31,13 @@ void FlappyCatFloor::syncChildren()
     mFloorSpikes.resize(Position(size().x(), 0.f));
 
     // dirt under floor
-    mBackgroundDirt.transformation().setPosition(position() - Position(0.f, size().y()));
-    mBackgroundDirt.geometry().resize(Position(size().x(), size().y()));
+    m_backgroundDirt.transformation().setPosition(position() - Position(0.f, size().y()));
+    m_backgroundDirt.geometry().resize(Position(size().x(), size().y()));
 }
 
 void FlappyCatFloor::drawOn(const Window& window) const
 {
-    window.draw(mBackgroundDirt);
+    window.draw(m_backgroundDirt);
     mFloorSpikes.drawOn(window);
     window.draw(mFloor);
 }
@@ -68,7 +68,7 @@ void FlappyCatFloor::setColor(const Color& floorColor, const Color& dirtColor)
             spike.setColor(floorColor);
         });
 
-    mBackgroundDirt.setColor(dirtColor);
+    m_backgroundDirt.setColor(dirtColor);
 }
 
 void FlappyCatFloor::setMovementDisplacement(const Position& movementDisplacement)

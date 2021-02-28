@@ -44,11 +44,11 @@ private:
     GameState mGameState;
 
     // elements
-    FlappyCatBackground mBackground;
+    FlappyCatBackground m_background;
     FlappyCatFloor mFloor;
-    FlappyCatChain<FlappyCatWall> mBarricade;
-    FlappyCatChain<FlappyCatSpike> mBackgroundCity;
-    FlappyCatCloud mBackgroundSky;
+    FlappyCatChain<FlappyCatWall> m_barricade;
+    FlappyCatChain<FlappyCatSpike> m_backgroundCity;
+    FlappyCatCloud m_backgroundSky;
     FlappyCatHero mHero;
     FlappyCatViewLimit mLimit;
 

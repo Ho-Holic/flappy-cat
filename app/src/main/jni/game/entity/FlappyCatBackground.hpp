@@ -17,5 +17,5 @@ private:
     void syncChildren() override;
 
 private:
-    RectangleShape mBackground;
+    RectangleShape m_background;
 };

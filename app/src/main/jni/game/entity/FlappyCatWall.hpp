@@ -51,6 +51,6 @@ private:
     float mGapInterval;
     float mGapDisplacement;
     RectangleShape mTopBlock;
-    RectangleShape mBottomBlock;
+    RectangleShape m_bottomBlock;
     WallState mWallState;
 };

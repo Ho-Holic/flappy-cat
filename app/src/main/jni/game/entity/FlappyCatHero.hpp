@@ -34,7 +34,7 @@ private:
 private:
     Position mJumpAcceleration;
     Position mJumpVelocity;
-    CircleShape mBall;
-    PhysicsBody mBallBody;
+    CircleShape m_ball;
+    PhysicsBody m_ballBody;
     FlappyCatMascot mMascot;
 };

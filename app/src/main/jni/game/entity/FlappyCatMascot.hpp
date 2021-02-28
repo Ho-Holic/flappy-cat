@@ -22,8 +22,8 @@ private:
     void syncChildren() override;
 
 private:
-    RectangleShape mBody;
-    RectangleShape mBackLeg;
+    RectangleShape m_body;
+    RectangleShape m_backLeg;
     RectangleShape mFrontLeg;
     RectangleShape mTail;
     RectangleShape mScarf;

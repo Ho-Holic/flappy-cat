@@ -31,5 +31,5 @@ private:
     Position mSpikesSize;
     RectangleShape mFloor;
     FlappyCatChain<FlappyCatSpike> mFloorSpikes;
-    RectangleShape mBackgroundDirt;
+    RectangleShape m_backgroundDirt;
 };

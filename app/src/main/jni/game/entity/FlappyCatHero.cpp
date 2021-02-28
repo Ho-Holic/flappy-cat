@@ -7,7 +7,7 @@ FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
     : FlappyCatStateNode<FlappyCatHero>(gameConstants)
     , mJumpAcceleration()
     , mJumpVelocity()
-    , mBall()
+    , m_ball()
     , mMascot(gameConstants)
 {
     //
@@ -15,37 +15,37 @@ FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
 
 void FlappyCatHero::reset()
 {
-    mBallBody.reset();
+    m_ballBody.reset();
     FlappyCatStateNode<FlappyCatHero>::reset();
 }
 
 void FlappyCatHero::update(const FrameDuration& frameDuration)
 {
     float time = std::chrono::duration_cast<GameSecond>(frameDuration).count();
-    mBallBody.update(time);
+    m_ballBody.update(time);
 
     FlappyCatStateNode<FlappyCatHero>::update(frameDuration);
 }
 
 float FlappyCatHero::radius() const
 {
-    return mBall.geometry().radius();
+    return m_ball.geometry().radius();
 }
 
 void FlappyCatHero::setGravity(const Position& gravity)
 {
-    mBallBody.setGravity(gravity);
+    m_ballBody.setGravity(gravity);
 }
 
 void FlappyCatHero::setRadius(float radius)
 {
-    mBall.geometry().setRadius(radius);
+    m_ball.geometry().setRadius(radius);
     syncChildren();
 }
 
 void FlappyCatHero::drawOn(const Window& window) const
 {
-    window.draw(mBall);
+    window.draw(m_ball);
     mMascot.drawOn(window);
 }
 
@@ -54,7 +54,7 @@ void FlappyCatHero::setColor(const Color& backgroundColor,
     const Color& scarfColor,
     const Color& mouthColor)
 {
-    mBall.setColor(backgroundColor);
+    m_ball.setColor(backgroundColor);
     mMascot.setColor(bodyColor, scarfColor, mouthColor);
 }
 
@@ -66,31 +66,31 @@ void FlappyCatHero::setJumpConstants(const Position& acceleration, const Positio
 
 void FlappyCatHero::jump()
 {
-    mBallBody.setAcceleration(mJumpAcceleration);
-    mBallBody.setVelocity(mJumpVelocity);
+    m_ballBody.setAcceleration(mJumpAcceleration);
+    m_ballBody.setVelocity(mJumpVelocity);
 }
 
 const Position& FlappyCatHero::distance() const
 {
-    return mBallBody.distance();
+    return m_ballBody.distance();
 }
 
 void FlappyCatHero::syncChildren()
 {
     //
-    // TODO: add rotation to mBall
+    // TODO: add rotation to m_ball
     // Currently origin of ball is not in the center of the ball
     // so rotation would cause bad render, fix origin code
     // and uncomment rotation line
     //
-    // mBall.transformation().setRotation(m_angle);
+    // m_ball.transformation().setRotation(m_angle);
     //
 
-    mBall.transformation().setPosition(position());
+    m_ball.transformation().setPosition(position());
 
-    float diameter = mBall.geometry().radius() * 2.f;
+    float diameter = m_ball.geometry().radius() * 2.f;
 
-    Position mascotPos = mBall.transformation().position()
+    Position mascotPos = m_ball.transformation().position()
         + Position(diameter * 0.25f, diameter * 0.3f);
 
     mMascot.moveTo(mascotPos);

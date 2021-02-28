@@ -18,5 +18,5 @@ public:
 
 private:
     Vertices mVertices;
-    Color mBrushColor;
+    Color m_brushColor;
 };

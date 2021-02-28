@@ -2,23 +2,23 @@
 
 FlappyCatBackground::FlappyCatBackground(const FlappyCatGameConstants& gameConstants)
     : FlappyCatStateNode<FlappyCatBackground>(gameConstants)
-    , mBackground()
+    , m_background()
 {
     //
 }
 
 void FlappyCatBackground::drawOn(const Window& window) const
 {
-    window.draw(mBackground);
+    window.draw(m_background);
 }
 
 void FlappyCatBackground::setColor(const Color& color)
 {
-    mBackground.setColor(color);
+    m_background.setColor(color);
 }
 
 void FlappyCatBackground::syncChildren()
 {
-    mBackground.transformation().setPosition(position());
-    mBackground.geometry().resize(size());
+    m_background.transformation().setPosition(position());
+    m_background.geometry().resize(size());
 }
