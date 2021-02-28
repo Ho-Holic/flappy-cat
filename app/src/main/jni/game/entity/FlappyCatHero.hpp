@@ -32,8 +32,8 @@ private:
     void syncChildren() override;
 
 private:
-    Position mJumpAcceleration;
-    Position mJumpVelocity;
+    Position m_jumpAcceleration;
+    Position m_jumpVelocity;
     CircleShape m_ball;
     PhysicsBody m_ballBody;
     FlappyCatMascot mMascot;

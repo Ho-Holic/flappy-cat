@@ -5,8 +5,8 @@
 
 FlappyCatHero::FlappyCatHero(const FlappyCatGameConstants& gameConstants)
     : FlappyCatStateNode<FlappyCatHero>(gameConstants)
-    , mJumpAcceleration()
-    , mJumpVelocity()
+    , m_jumpAcceleration()
+    , m_jumpVelocity()
     , m_ball()
     , mMascot(gameConstants)
 {
@@ -60,14 +60,14 @@ void FlappyCatHero::setColor(const Color& backgroundColor,
 
 void FlappyCatHero::setJumpConstants(const Position& acceleration, const Position& velocity)
 {
-    mJumpAcceleration = acceleration;
-    mJumpVelocity = velocity;
+    m_jumpAcceleration = acceleration;
+    m_jumpVelocity = velocity;
 }
 
 void FlappyCatHero::jump()
 {
-    m_ballBody.setAcceleration(mJumpAcceleration);
-    m_ballBody.setVelocity(mJumpVelocity);
+    m_ballBody.setAcceleration(m_jumpAcceleration);
+    m_ballBody.setVelocity(m_jumpVelocity);
 }
 
 const Position& FlappyCatHero::distance() const
