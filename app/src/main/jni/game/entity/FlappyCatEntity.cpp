@@ -3,7 +3,7 @@
 
 FlappyCatEntity::FlappyCatEntity(const FlappyCatGameConstants& gameConstants)
     : m_gameConstants(gameConstants)
-    , mPosition()
+    , m_position()
     , mSize()
     , m_angle(0.f)
 {
@@ -24,7 +24,7 @@ void FlappyCatEntity::moveBy(const Position& offset)
 
 void FlappyCatEntity::moveTo(const Position& position)
 {
-    mPosition = position;
+    m_position = position;
     syncChildren();
 }
 
@@ -47,7 +47,7 @@ const FlappyCatGameConstants& FlappyCatEntity::gameConstants() const
 
 const Position& FlappyCatEntity::position() const
 {
-    return mPosition;
+    return m_position;
 }
 
 const Position& FlappyCatEntity::size() const

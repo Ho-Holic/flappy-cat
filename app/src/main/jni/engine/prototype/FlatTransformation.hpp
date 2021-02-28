@@ -27,7 +27,7 @@ public:
     virtual void setRotation(float angle) override;
 
 private:
-    Position mPosition;
+    Position m_position;
     Position m_origin;
     Position mScale;
     float m_angle;

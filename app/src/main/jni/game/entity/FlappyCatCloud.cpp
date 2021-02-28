@@ -4,7 +4,7 @@
 
 FlappyCatCloud::FlappyCatCloud(const FlappyCatGameConstants& gameConstants)
     : FlappyCatStateNode<FlappyCatCloud>(gameConstants)
-    , mParts(0.f)
+    , m_parts(0.f)
     , m_cloudParts()
 {
     //
@@ -12,9 +12,9 @@ FlappyCatCloud::FlappyCatCloud(const FlappyCatGameConstants& gameConstants)
 
 void FlappyCatCloud::initialize()
 {
-    m_cloudParts.reserve(static_cast<size_t>(mParts));
+    m_cloudParts.reserve(static_cast<size_t>(m_parts));
 
-    for (size_t i = 0; i < mParts; ++i) {
+    for (size_t i = 0; i < m_parts; ++i) {
         m_cloudParts.emplace_back(Position(0.f, 0.f), 0.f, 32);
     }
 }
@@ -38,7 +38,7 @@ void FlappyCatCloud::setColor(const Color& color)
 
 void FlappyCatCloud::setParts(float parts)
 {
-    mParts = parts;
+    m_parts = parts;
 }
 
 void FlappyCatCloud::foreachCloud(const std::function<void(CircleShape&)>& modifier)

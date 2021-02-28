@@ -14,6 +14,6 @@ public:
     const Color& color() const;
 
 private:
-    Position mPosition;
+    Position m_position;
     Color m_color;
 };

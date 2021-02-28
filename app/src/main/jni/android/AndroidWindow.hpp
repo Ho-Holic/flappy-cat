@@ -70,5 +70,5 @@ private:
     EGLSurface mSurface;
     EGLint mWidth;
     EGLint m_height;
-    GLuint mProgram;
+    GLuint m_program;
 };

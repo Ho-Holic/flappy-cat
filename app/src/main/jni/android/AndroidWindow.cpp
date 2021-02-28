@@ -36,7 +36,7 @@ AndroidWindow::AndroidWindow()
     , mSurface(EGL_NO_SURFACE)
     , mWidth(0)
     , m_height(0)
-    , mProgram(0)
+    , m_program(0)
 {
     //
 }
@@ -279,7 +279,7 @@ void AndroidWindow::initializeProgram()
         createShader(GL_FRAGMENT_SHADER, strFragmentShader)
     };
 
-    mProgram = createProgram(shaderList);
+    m_program = createProgram(shaderList);
 
     std::for_each(shaderList.begin(), shaderList.end(), glDeleteShader);
 }
@@ -426,7 +426,7 @@ void AndroidWindow::drawVertices(const Vertices& vertices,
     glEnableVertexAttribArray(VERTEX_POSITION_INDEX);
     glEnableVertexAttribArray(VERTEX_COLOR_INDEX);
 
-    glUseProgram(mProgram);
+    glUseProgram(m_program);
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, static_cast<GLsizei>(vertices.size()));
 

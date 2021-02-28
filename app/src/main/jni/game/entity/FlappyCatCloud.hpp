@@ -18,6 +18,6 @@ public:
     void foreachCloud(const std::function<void(CircleShape&)>& modifier);
 
 public:
-    float mParts;
+    float m_parts;
     std::vector<CircleShape> m_cloudParts;
 };

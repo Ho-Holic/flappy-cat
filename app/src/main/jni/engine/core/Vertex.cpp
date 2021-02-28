@@ -2,7 +2,7 @@
 #include "Vertex.hpp"
 
 Vertex::Vertex(const Position& position, const Color& color)
-    : mPosition(position)
+    : m_position(position)
     , m_color(color)
 {
     //
@@ -16,7 +16,7 @@ Vertex::Vertex()
 const Position& Vertex::position() const
 {
 
-    return mPosition;
+    return m_position;
 }
 
 const Color& Vertex::color() const
