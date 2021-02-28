@@ -6,7 +6,7 @@ FlatTransformation::FlatTransformation(const Position& position)
     , mPosition(position)
     , mOrigin(0.f, 0.f)
     , mScale(1.f, 1.f)
-    , mAngle(0.f)
+    , m_angle(0.f)
     , mOnUpdate()
 {
     //
@@ -45,7 +45,7 @@ const Position& FlatTransformation::scale() const
 float FlatTransformation::rotation() const
 {
 
-    return mAngle;
+    return m_angle;
 }
 
 void FlatTransformation::setPosition(const Position& position)
@@ -72,6 +72,6 @@ void FlatTransformation::setScale(const Position& factor)
 void FlatTransformation::setRotation(float angle)
 {
 
-    mAngle = angle;
+    m_angle = angle;
     mOnUpdate.emit();
 }

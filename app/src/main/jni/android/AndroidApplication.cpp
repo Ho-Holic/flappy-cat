@@ -12,8 +12,8 @@
 AndroidApplication::AndroidApplication(ANativeActivity* activity,
     void* savedState,
     size_t savedStateSize)
-    : mActivity(activity)
-    , mActivityState(InitializationActivityState)
+    : m_activity(activity)
+    , m_activityState(InitializationActivityState)
     , mMutex()
     , mConditionVariable()
     , mIsRunning(false)
@@ -26,7 +26,7 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
 {
     UNUSED(savedState); // we don't save and load state for now
     UNUSED(savedStateSize); // --/--
-    UNUSED(mActivity); // this variable also don't used now
+    UNUSED(m_activity); // this variable also don't used now
 
     activity->callbacks->onDestroy = &AndroidApplication::onDestroy;
     activity->callbacks->onStart = &AndroidApplication::onStart;
@@ -403,7 +403,7 @@ bool AndroidApplication::isDestroyRequested() const
 AndroidApplication::ActivityState AndroidApplication::activityState() const
 {
 
-    return mActivityState;
+    return m_activityState;
 }
 
 void AndroidApplication::exec()
@@ -575,7 +575,7 @@ void AndroidApplication::setActivityState(AndroidApplication::ActivityState acti
 
     std::lock_guard<std::mutex> lock(mMutex);
 
-    mActivityState = activityState;
+    m_activityState = activityState;
 
     mConditionVariable.notify_all();
 }

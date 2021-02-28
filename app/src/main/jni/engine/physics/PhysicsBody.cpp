@@ -2,7 +2,7 @@
 
 PhysicsBody::PhysicsBody()
     : mGravity(0.f, 0.f)
-    , mAcceleration()
+    , m_acceleration()
     , mVelocity()
     , mDistance()
 {
@@ -11,7 +11,7 @@ PhysicsBody::PhysicsBody()
 
 void PhysicsBody::reset()
 {
-    mAcceleration = Position(0.f, 0.f);
+    m_acceleration = Position(0.f, 0.f);
     mVelocity = Position(0.f, 0.f);
     mDistance = Position(0.f, 0.f);
 }
@@ -19,15 +19,15 @@ void PhysicsBody::reset()
 void PhysicsBody::update(float time)
 {
     // TODO: make list of physical forces instead of gravity variable
-    mAcceleration = mAcceleration - mGravity;
-    mVelocity = mVelocity + (mAcceleration * time);
+    m_acceleration = m_acceleration - mGravity;
+    mVelocity = mVelocity + (m_acceleration * time);
 
     mDistance = mVelocity * time; // distance passed by last update
 }
 
 const Position& PhysicsBody::acceleration() const
 {
-    return mAcceleration;
+    return m_acceleration;
 }
 
 const Position& PhysicsBody::velocity() const
@@ -42,7 +42,7 @@ const Position& PhysicsBody::distance() const
 
 void PhysicsBody::setAcceleration(const Position& acceleration)
 {
-    mAcceleration = acceleration;
+    m_acceleration = acceleration;
 }
 
 void PhysicsBody::setVelocity(const Position& velocity)

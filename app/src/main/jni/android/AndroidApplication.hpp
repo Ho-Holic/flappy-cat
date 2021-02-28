@@ -92,8 +92,8 @@ private:
     void reloadConfiguration();
 
 private:
-    ANativeActivity* mActivity;
-    ActivityState mActivityState;
+    ANativeActivity* m_activity;
+    ActivityState m_activityState;
     std::mutex mMutex;
     std::condition_variable mConditionVariable;
     bool mIsRunning;

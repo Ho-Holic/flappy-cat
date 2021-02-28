@@ -6,7 +6,7 @@ View::View()
     , mOrigin(0.f, 0.f)
     , mSize(0.f, 0.f)
     , mScale(1.f, 1.f)
-    , mAngle(0.f)
+    , m_angle(0.f)
 {
     //
 }
@@ -50,11 +50,11 @@ const Position& View::scale() const
 void View::setRotation(float angle)
 {
 
-    mAngle = angle;
+    m_angle = angle;
 }
 
 float View::rotation() const
 {
 
-    return mAngle;
+    return m_angle;
 }

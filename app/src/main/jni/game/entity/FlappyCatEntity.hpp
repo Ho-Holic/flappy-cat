@@ -36,6 +36,6 @@ private:
     const FlappyCatGameConstants& mGameConstants;
     Position mPosition;
     Position mSize;
-    float mAngle;
+    float m_angle;
     PhysicsBody mBody;
 };

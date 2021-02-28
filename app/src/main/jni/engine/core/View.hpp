@@ -25,5 +25,5 @@ public:
     Position mOrigin;
     Position mSize;
     Position mScale;
-    float mAngle;
+    float m_angle;
 };

@@ -83,7 +83,7 @@ void FlappyCatHero::syncChildren()
     // so rotation would cause bad render, fix origin code
     // and uncomment rotation line
     //
-    // mBall.transformation().setRotation(mAngle);
+    // mBall.transformation().setRotation(m_angle);
     //
 
     mBall.transformation().setPosition(position());

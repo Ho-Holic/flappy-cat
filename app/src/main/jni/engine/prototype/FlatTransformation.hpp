@@ -30,6 +30,6 @@ private:
     Position mPosition;
     Position mOrigin;
     Position mScale;
-    float mAngle;
+    float m_angle;
     OnUpdateSignal mOnUpdate;
 };

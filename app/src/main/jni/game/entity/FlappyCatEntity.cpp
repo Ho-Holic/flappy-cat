@@ -5,7 +5,7 @@ FlappyCatEntity::FlappyCatEntity(const FlappyCatGameConstants& gameConstants)
     : mGameConstants(gameConstants)
     , mPosition()
     , mSize()
-    , mAngle(0.f)
+    , m_angle(0.f)
 {
     //
 }
@@ -36,7 +36,7 @@ void FlappyCatEntity::resize(const Position& size)
 
 void FlappyCatEntity::rotateTo(float angle)
 {
-    mAngle = angle;
+    m_angle = angle;
     syncChildren();
 }
 
@@ -57,5 +57,5 @@ const Position& FlappyCatEntity::size() const
 
 float FlappyCatEntity::rotation() const
 {
-    return mAngle;
+    return m_angle;
 }

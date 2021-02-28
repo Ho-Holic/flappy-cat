@@ -8,7 +8,7 @@ Color::Color(uint8_t r, uint8_t g, uint8_t b, uint8_t alpha)
     : mRed(r)
     , mGreen(g)
     , mBlue(b)
-    , mAlpha(alpha)
+    , m_alpha(alpha)
 {
     //
 }
@@ -52,7 +52,7 @@ uint8_t Color::b() const
 
 uint8_t Color::alpha() const
 {
-    return mAlpha;
+    return m_alpha;
 }
 
 Color Color::grayscale() const
@@ -83,7 +83,7 @@ Color operator+(const Color& left, const Color& right)
     return Color(uint8_t(std::min(int(left.mRed) + right.mRed, 255)),
         uint8_t(std::min(int(left.mGreen) + right.mGreen, 255)),
         uint8_t(std::min(int(left.mBlue) + right.mBlue, 255)),
-        uint8_t(std::min(int(left.mAlpha) + right.mAlpha, 255)));
+        uint8_t(std::min(int(left.m_alpha) + right.m_alpha, 255)));
 }
 
 Color operator-(const Color& left, const Color& right)
@@ -94,7 +94,7 @@ Color operator-(const Color& left, const Color& right)
     return Color(uint8_t(std::max(int(left.mRed) - right.mRed, 0)),
         uint8_t(std::max(int(left.mGreen) - right.mGreen, 0)),
         uint8_t(std::max(int(left.mBlue) - right.mBlue, 0)),
-        uint8_t(std::max(int(left.mAlpha) - right.mAlpha, 0)));
+        uint8_t(std::max(int(left.m_alpha) - right.m_alpha, 0)));
 }
 
 Color operator*(const Color& left, const Color& right)
@@ -105,7 +105,7 @@ Color operator*(const Color& left, const Color& right)
     return Color(uint8_t(int(left.mRed) * right.mRed / 255),
         uint8_t(int(left.mGreen) * right.mGreen / 255),
         uint8_t(int(left.mBlue) * right.mBlue / 255),
-        uint8_t(int(left.mAlpha) * right.mAlpha / 255));
+        uint8_t(int(left.m_alpha) * right.m_alpha / 255));
 }
 
 Color operator*(Color::value_type factor, const Color& right)

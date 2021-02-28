@@ -36,5 +36,5 @@ private:
     uint8_t mRed;
     uint8_t mGreen;
     uint8_t mBlue;
-    uint8_t mAlpha;
+    uint8_t m_alpha;
 };
