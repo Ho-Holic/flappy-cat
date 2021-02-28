@@ -15,5 +15,5 @@ public:
 
 private:
     Position mPosition;
-    Color mColor;
+    Color m_color;
 };

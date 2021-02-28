@@ -32,7 +32,7 @@ AndroidWindow::AndroidWindow()
     , mIsReady(false)
     , mWindow(nullptr)
     , mDisplay(EGL_NO_DISPLAY)
-    , mContext(EGL_NO_CONTEXT)
+    , m_context(EGL_NO_CONTEXT)
     , mSurface(EGL_NO_SURFACE)
     , mWidth(0)
     , mHeight(0)
@@ -188,7 +188,7 @@ void AndroidWindow::initialize()
 
     // when all done
     mDisplay = display;
-    mContext = context;
+    m_context = context;
     mSurface = surface;
 
     // set window size
@@ -212,8 +212,8 @@ void AndroidWindow::terminate()
 
         eglMakeCurrent(mDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 
-        if (mContext != EGL_NO_CONTEXT) {
-            eglDestroyContext(mDisplay, mContext);
+        if (m_context != EGL_NO_CONTEXT) {
+            eglDestroyContext(mDisplay, m_context);
         }
 
         if (mSurface != EGL_NO_SURFACE) {
@@ -224,7 +224,7 @@ void AndroidWindow::terminate()
     }
 
     mDisplay = EGL_NO_DISPLAY;
-    mContext = EGL_NO_CONTEXT;
+    m_context = EGL_NO_CONTEXT;
     mSurface = EGL_NO_SURFACE;
 }
 

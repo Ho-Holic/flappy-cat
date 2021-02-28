@@ -95,11 +95,11 @@ private:
     ANativeActivity* m_activity;
     ActivityState m_activityState;
     std::mutex mMutex;
-    std::condition_variable mConditionVariable;
+    std::condition_variable m_conditionVariable;
     bool mIsRunning;
     bool mIsDestroyed;
     bool mIsDestroyRequested;
-    AndroidConfiguration mConfiguration;
+    AndroidConfiguration m_configuration;
     AndroidLooper mLooper;
     AndroidWindow mWindow;
     std::queue<AndroidEvent> mEvents; // TODO: add thread safe queue

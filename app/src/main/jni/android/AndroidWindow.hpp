@@ -66,7 +66,7 @@ private:
     bool mIsReady;
     ANativeWindow* mWindow;
     EGLDisplay mDisplay;
-    EGLContext mContext;
+    EGLContext m_context;
     EGLSurface mSurface;
     EGLint mWidth;
     EGLint mHeight;

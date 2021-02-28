@@ -3,7 +3,7 @@
 
 Vertex::Vertex(const Position& position, const Color& color)
     : mPosition(position)
-    , mColor(color)
+    , m_color(color)
 {
     //
 }
@@ -22,5 +22,5 @@ const Position& Vertex::position() const
 const Color& Vertex::color() const
 {
 
-    return mColor;
+    return m_color;
 }

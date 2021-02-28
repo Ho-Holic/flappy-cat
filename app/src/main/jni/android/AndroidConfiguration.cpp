@@ -6,29 +6,29 @@
 
 AndroidConfiguration::AndroidConfiguration(AAssetManager* manager)
     : mManager(manager)
-    , mConfiguration(AConfiguration_new(), &AConfiguration_delete)
-    , mCacheForToString()
+    , m_configuration(AConfiguration_new(), &AConfiguration_delete)
+    , m_cacheForToString()
 {
-    mCacheForToString.reserve(AproximateToStringLength);
+    m_cacheForToString.reserve(AproximateToStringLength);
 }
 
 void AndroidConfiguration::reload()
 {
 
-    AConfiguration_fromAssetManager(mConfiguration.get(), mManager);
+    AConfiguration_fromAssetManager(m_configuration.get(), mManager);
     reloadCacheForToString();
 }
 
 std::string AndroidConfiguration::toString() const
 {
 
-    return mCacheForToString;
+    return m_cacheForToString;
 }
 
 void AndroidConfiguration::reloadCacheForToString()
 {
 
-    AConfiguration* config = mConfiguration.get();
+    AConfiguration* config = m_configuration.get();
 
     std::stringstream stream;
 
@@ -54,12 +54,12 @@ void AndroidConfiguration::reloadCacheForToString()
            << "modetype=" << AConfiguration_getUiModeType(config) << " "
            << "modenight=" << AConfiguration_getUiModeNight(config) << ""
            << "\n";
-    mCacheForToString = stream.str();
+    m_cacheForToString = stream.str();
 }
 
 void AndroidConfiguration::reset()
 {
 
-    mCacheForToString.clear();
-    mConfiguration.reset();
+    m_cacheForToString.clear();
+    m_configuration.reset();
 }

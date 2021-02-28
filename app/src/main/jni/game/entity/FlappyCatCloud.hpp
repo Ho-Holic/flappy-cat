@@ -19,5 +19,5 @@ public:
 
 public:
     float mParts;
-    std::vector<CircleShape> mCloudParts;
+    std::vector<CircleShape> m_cloudParts;
 };

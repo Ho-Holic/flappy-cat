@@ -47,7 +47,7 @@ private:
     void processCharacterWith(const_rearrange_modifier modifier) const;
 
 private:
-    char mCharacter;
-    std::array<RectangleShape, CharacterWidth * CharacterHeight> mCharacterBody;
+    char m_character;
+    std::array<RectangleShape, CharacterWidth * CharacterHeight> m_characterBody;
     Position mSize;
 };

@@ -48,8 +48,8 @@ private:
 private:
     std::random_device mRandomDevice;
     std::mt19937 mGenerator;
-    FlappyCatColorScheme mColorScheme;
-    std::vector<Position> mConstants;
+    FlappyCatColorScheme m_colorScheme;
+    std::vector<Position> m_constants;
     int32_t mDaytimeFactor;
 };
 

@@ -15,11 +15,11 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
     : m_activity(activity)
     , m_activityState(InitializationActivityState)
     , mMutex()
-    , mConditionVariable()
+    , m_conditionVariable()
     , mIsRunning(false)
     , mIsDestroyed(false)
     , mIsDestroyRequested(false)
-    , mConfiguration(activity->assetManager)
+    , m_configuration(activity->assetManager)
     , mLooper()
     , mWindow()
     , mEvents()
@@ -218,7 +218,7 @@ void AndroidApplication::waitForStarted()
 {
 
     std::unique_lock<std::mutex> lock(mMutex);
-    mConditionVariable.wait(lock, std::bind(&AndroidApplication::isRunning, std::ref(*this)));
+    m_conditionVariable.wait(lock, std::bind(&AndroidApplication::isRunning, std::ref(*this)));
     mMutex.unlock();
 }
 
@@ -229,7 +229,7 @@ void AndroidApplication::waitForDestruction()
 
     mIsDestroyRequested = true;
 
-    mConditionVariable.wait(lock, std::bind(&AndroidApplication::isDestroyed, std::ref(*this)));
+    m_conditionVariable.wait(lock, std::bind(&AndroidApplication::isDestroyed, std::ref(*this)));
     mMutex.unlock();
 }
 
@@ -265,7 +265,7 @@ void AndroidApplication::changeActivityStateTo(AndroidApplication::ActivityState
 
     this->postEvent(event);
 
-    mConditionVariable.wait(lock, isInState);
+    m_conditionVariable.wait(lock, isInState);
     mMutex.unlock();
 }
 
@@ -286,7 +286,7 @@ void AndroidApplication::changeNativeWindow(ANativeWindow* window)
 
         this->postEvent(event);
 
-        mConditionVariable.wait(lock, isUserEventLoopFinished);
+        m_conditionVariable.wait(lock, isUserEventLoopFinished);
         mMutex.unlock();
     }
 
@@ -304,7 +304,7 @@ void AndroidApplication::changeNativeWindow(ANativeWindow* window)
 
     this->postEvent(event);
 
-    mConditionVariable.wait(lock, isWindowChanged);
+    m_conditionVariable.wait(lock, isWindowChanged);
     mMutex.unlock();
 }
 
@@ -324,7 +324,7 @@ void AndroidApplication::changeInputQueue(AInputQueue* queue)
 
     this->postEvent(event);
 
-    mConditionVariable.wait(lock, isQueueChanged);
+    m_conditionVariable.wait(lock, isQueueChanged);
     mMutex.unlock();
 }
 
@@ -340,7 +340,7 @@ void AndroidApplication::changeNativeWindowSize()
     event.setResizeEventData(window().requestWidth(), window().requestHeight());
     this->postEvent(event);
 
-    mConditionVariable.notify_all();
+    m_conditionVariable.notify_all();
 }
 
 void AndroidApplication::changeFocus(AndroidApplication::Focus focus)
@@ -364,7 +364,7 @@ void AndroidApplication::changeFocus(AndroidApplication::Focus focus)
 
     this->postEvent(event);
 
-    mConditionVariable.notify_all();
+    m_conditionVariable.notify_all();
 }
 
 void AndroidApplication::reloadConfiguration()
@@ -372,10 +372,10 @@ void AndroidApplication::reloadConfiguration()
 
     std::lock_guard<std::mutex> lock(mMutex);
 
-    mConfiguration.reload();
-    Log::i(TAG, mConfiguration.toString());
+    m_configuration.reload();
+    Log::i(TAG, m_configuration.toString());
 
-    mConditionVariable.notify_all();
+    m_conditionVariable.notify_all();
 }
 
 //
@@ -416,7 +416,7 @@ void AndroidApplication::exec()
 
         std::lock_guard<std::mutex> lock(mMutex);
         mIsRunning = true;
-        mConditionVariable.notify_all();
+        m_conditionVariable.notify_all();
     }
 
     // start 'system event loop'
@@ -490,8 +490,8 @@ void AndroidApplication::initialize()
 {
 
     // load configuration
-    mConfiguration.reload();
-    Log::i(TAG, mConfiguration.toString());
+    m_configuration.reload();
+    Log::i(TAG, m_configuration.toString());
 
     // prepare looper for this thread to read events
     mLooper.prepare();
@@ -504,11 +504,11 @@ void AndroidApplication::terminate()
 
     std::lock_guard<std::mutex> lock(mMutex);
 
-    mConfiguration.reset();
+    m_configuration.reset();
 
     mIsDestroyed = true;
 
-    mConditionVariable.notify_all();
+    m_conditionVariable.notify_all();
 
     CAUTION("If you 'unlock' mutex, you can't touch 'this' object");
 }
@@ -577,7 +577,7 @@ void AndroidApplication::setActivityState(AndroidApplication::ActivityState acti
 
     m_activityState = activityState;
 
-    mConditionVariable.notify_all();
+    m_conditionVariable.notify_all();
 }
 
 void AndroidApplication::initializeNativeWindow(const AndroidEvent& event)
@@ -591,7 +591,7 @@ void AndroidApplication::initializeNativeWindow(const AndroidEvent& event)
 
     mWindow.initialize();
 
-    mConditionVariable.notify_all();
+    m_conditionVariable.notify_all();
 }
 
 void AndroidApplication::terminateNativeWindow(const AndroidEvent& event)
@@ -605,7 +605,7 @@ void AndroidApplication::terminateNativeWindow(const AndroidEvent& event)
 
     mWindow.setNativeWindow(event.nativeWindowEvent().pendingWindow);
 
-    mConditionVariable.notify_all();
+    m_conditionVariable.notify_all();
 }
 
 void AndroidApplication::resizeNativeWindow(const AndroidEvent& event)
@@ -615,7 +615,7 @@ void AndroidApplication::resizeNativeWindow(const AndroidEvent& event)
 
     mWindow.resize(event.resizeEvent().width, event.resizeEvent().height);
 
-    mConditionVariable.notify_all();
+    m_conditionVariable.notify_all();
 }
 
 void AndroidApplication::setInputQueue(const AndroidEvent& event)
@@ -625,7 +625,7 @@ void AndroidApplication::setInputQueue(const AndroidEvent& event)
 
     mLooper.setInputQueue(event.inputQueueEvent().pendingQueue);
 
-    mConditionVariable.notify_all();
+    m_conditionVariable.notify_all();
 }
 
 void AndroidApplication::setEventLoopState(const AndroidEvent& event)
@@ -635,5 +635,5 @@ void AndroidApplication::setEventLoopState(const AndroidEvent& event)
 
     window().setReady(event.eventLoopEvent().windowReady);
 
-    mConditionVariable.notify_all();
+    m_conditionVariable.notify_all();
 }

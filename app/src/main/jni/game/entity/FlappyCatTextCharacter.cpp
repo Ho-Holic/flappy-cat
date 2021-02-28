@@ -99,8 +99,8 @@ static std::map<char, std::vector<size_t>> g_characterTable = {
 
 FlappyCatTextCharacter::FlappyCatTextCharacter(const FlappyCatGameConstants& gameConstants)
     : FlappyCatStateNode<FlappyCatTextCharacter>(gameConstants)
-    , mCharacter('\0')
-    , mCharacterBody()
+    , m_character('\0')
+    , m_characterBody()
     , mSize(CharacterPartWidth * CharacterWidth,
           CharacterPartHeight * CharacterHeight)
 {
@@ -109,7 +109,7 @@ FlappyCatTextCharacter::FlappyCatTextCharacter(const FlappyCatGameConstants& gam
 
 void FlappyCatTextCharacter::processCharacterWith(rearrange_modifier modifier)
 {
-    auto found = g_characterTable.find(mCharacter);
+    auto found = g_characterTable.find(m_character);
 
     REQUIRE(TAG, found != g_characterTable.end(), "Try to rearrange to non existing character");
 
@@ -120,14 +120,14 @@ void FlappyCatTextCharacter::processCharacterWith(rearrange_modifier modifier)
 
             size_t accessIndex = y * CharacterWidth + x;
 
-            modifier(x, y, characterParts[accessIndex], mCharacterBody[accessIndex]);
+            modifier(x, y, characterParts[accessIndex], m_characterBody[accessIndex]);
         }
     }
 }
 
 void FlappyCatTextCharacter::processCharacterWith(const_rearrange_modifier modifier) const
 {
-    auto found = g_characterTable.find(mCharacter);
+    auto found = g_characterTable.find(m_character);
 
     REQUIRE(TAG, found != g_characterTable.end(), "Try to rearrange to non existing character");
 
@@ -138,14 +138,14 @@ void FlappyCatTextCharacter::processCharacterWith(const_rearrange_modifier modif
 
             size_t accessIndex = y * CharacterWidth + x;
 
-            modifier(x, y, characterParts[accessIndex], mCharacterBody[accessIndex]);
+            modifier(x, y, characterParts[accessIndex], m_characterBody[accessIndex]);
         }
     }
 }
 
 void FlappyCatTextCharacter::setCharacter(char character)
 {
-    mCharacter = character;
+    m_character = character;
     syncChildren();
 }
 
@@ -178,7 +178,7 @@ const Position& FlappyCatTextCharacter::size() const
 
 void FlappyCatTextCharacter::setColor(const Color& textColor)
 {
-    for (RectangleShape& body : mCharacterBody) {
+    for (RectangleShape& body : m_characterBody) {
         body.setColor(textColor);
     }
 }

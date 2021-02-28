@@ -32,7 +32,7 @@ private:
     FlatTransformation mTransformation;
     GeometryType mGeometry;
     VertexBasedRender mRender;
-    Color mColor;
+    Color m_color;
 };
 
 template <typename GeometryType>
@@ -42,7 +42,7 @@ ShapeConstructor<GeometryType>::ShapeConstructor(const Position& position, Args.
     , mTransformation(position)
     , mGeometry(args...)
     , mRender()
-    , mColor()
+    , m_color()
 {
     mGeometry.onUpdate().connect(std::bind(&ShapeConstructor<GeometryType>::update, this));
     mTransformation.onUpdate().connect(std::bind(&ShapeConstructor<GeometryType>::update, this));
@@ -72,7 +72,7 @@ void ShapeConstructor<GeometryType>::setColor(const Color& color)
 template <typename GeometryType>
 const Color& ShapeConstructor<GeometryType>::color() const
 {
-    return mColor;
+    return m_color;
 }
 
 template <typename GeometryType>

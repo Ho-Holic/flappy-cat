@@ -32,6 +32,6 @@ private:
 
 private:
     AAssetManager* mManager;
-    std::unique_ptr<AConfiguration, ConfigurationDeleter> mConfiguration;
-    std::string mCacheForToString;
+    std::unique_ptr<AConfiguration, ConfigurationDeleter> m_configuration;
+    std::string m_cacheForToString;
 };
