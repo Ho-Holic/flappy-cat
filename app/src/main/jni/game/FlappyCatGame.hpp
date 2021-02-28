@@ -53,8 +53,8 @@ private:
     FlappyCatViewLimit m_limit;
 
     // score element
-    FlappyCatText mScore;
-    size_t mScoreCounter;
+    FlappyCatText m_score;
+    size_t m_scoreCounter;
 
     // fps element
     FlappyCatText m_fps;

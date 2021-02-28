@@ -10,7 +10,7 @@
 
 HslColor::HslColor(value_type hue, value_type saturation, value_type luminance)
     : m_hue(hue)
-    , mSaturation(saturation)
+    , m_saturation(saturation)
     , m_luminance(luminance)
 {
     //
@@ -28,7 +28,7 @@ Color HslColor::toRgb(uint8_t alpha)
     // normalization
     value_type hue = m_hue / 360.0;
     value_type luminance = m_luminance / 100.0;
-    value_type saturation = mSaturation / 100.0;
+    value_type saturation = m_saturation / 100.0;
 
     // algorithm
     value_type temporary_1
@@ -85,7 +85,7 @@ HslColor::value_type HslColor::hue() const
 
 HslColor::value_type HslColor::saturation() const
 {
-    return mSaturation;
+    return m_saturation;
 }
 
 HslColor::value_type HslColor::luminance() const
@@ -107,7 +107,7 @@ void HslColor::setSaturation(value_type saturation)
 
     //REQUIRE(TAG, saturation >= 0.0 && saturation <= 100.0, "saturation out of bounds");
 
-    mSaturation = saturation;
+    m_saturation = saturation;
 }
 
 void HslColor::setLuminance(value_type luminance)
@@ -134,12 +134,12 @@ void HslColor::rotateHue(value_type shift)
 void HslColor::addSaturation(value_type shift)
 {
 
-    mSaturation += shift;
+    m_saturation += shift;
 
-    if (mSaturation > 1.0)
-        mSaturation = 1.0;
-    if (mSaturation < 0.0)
-        mSaturation = 0.0;
+    if (m_saturation > 1.0)
+        m_saturation = 1.0;
+    if (m_saturation < 0.0)
+        m_saturation = 0.0;
 }
 
 void HslColor::addLuminance(value_type shift)

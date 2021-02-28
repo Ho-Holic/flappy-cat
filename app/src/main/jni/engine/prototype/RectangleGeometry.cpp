@@ -6,7 +6,7 @@
 
 RectangleGeometry::RectangleGeometry(const Position& size)
     : Geometry()
-    , mSize(size)
+    , m_size(size)
     , m_onUpdate()
 {
     //
@@ -31,13 +31,13 @@ Position RectangleGeometry::pointAt(size_type index) const
         return Position(0.f, 0.f);
         break;
     case 1:
-        return Position(mSize.x(), 0.f);
+        return Position(m_size.x(), 0.f);
         break;
     case 2:
-        return Position(mSize.x(), mSize.y());
+        return Position(m_size.x(), m_size.y());
         break;
     case 3:
-        return Position(0.f, mSize.y());
+        return Position(0.f, m_size.y());
         break;
     default:
         return Position(0.f, 0.f);
@@ -53,11 +53,11 @@ RectangleGeometry::OnUpdateSignal& RectangleGeometry::onUpdate()
 
 void RectangleGeometry::resize(const Position& size)
 {
-    mSize = size;
+    m_size = size;
     m_onUpdate.emit();
 }
 
 const Position& RectangleGeometry::size() const
 {
-    return mSize;
+    return m_size;
 }

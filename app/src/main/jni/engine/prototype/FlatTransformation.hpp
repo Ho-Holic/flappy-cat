@@ -29,7 +29,7 @@ public:
 private:
     Position m_position;
     Position m_origin;
-    Position mScale;
+    Position m_scale;
     float m_angle;
     OnUpdateSignal m_onUpdate;
 };

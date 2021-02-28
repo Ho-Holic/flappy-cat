@@ -28,7 +28,7 @@ private:
 private:
     mutable std::random_device m_randomDevice;
     mutable std::mt19937 m_generator;
-    std::vector<Color> mScheme;
+    std::vector<Color> m_scheme;
 };
 
 enum FlappyCatColorScheme::Colors : size_t {

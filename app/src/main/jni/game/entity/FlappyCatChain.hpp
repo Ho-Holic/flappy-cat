@@ -48,7 +48,7 @@ private:
 private:
     Position m_linkSize;
     Position m_offsetBetweenLinks;
-    Position mStartOffset;
+    Position m_startOffset;
     Position m_movementDisplacement;
     std::vector<entity_type> m_links;
     modifier_type mWrapAroundModifier;
@@ -61,7 +61,7 @@ FlappyCatChain<Link>::FlappyCatChain(const FlappyCatGameConstants& gameConstants
     : FlappyCatStateNode<FlappyCatChain<Link>>(gameConstants)
     , m_linkSize()
     , m_offsetBetweenLinks(0.f, 0.f)
-    , mStartOffset(0.f, 0.f)
+    , m_startOffset(0.f, 0.f)
     , m_movementDisplacement(0.f, 0.f)
     , m_links()
     , mWrapAroundModifier([](entity_type&) {})
@@ -78,7 +78,7 @@ float FlappyCatChain<Link>::chainLength() const
    * We don't have proper cmath header, replace with code below in NDK r15 (May 27 , 2017)
    * replace code with:
    *
-   *     return std::round(mSize.x() / section().x()) * section().x();
+   *     return std::round(m_size.x() / section().x()) * section().x();
    *
    * Read more about problem:
    * https://github.com/android-ndk/ndk/milestone/7
@@ -134,7 +134,7 @@ void FlappyCatChain<Link>::reset()
         // TODO: replace with Position pos(position + Position(i * section().x(), 0.f));
         Position pos(this->position().x() + i * section().x(), this->position().y());
 
-        m_links[i].moveTo(pos + mStartOffset); // shift off-screen if needed by mStartOffset
+        m_links[i].moveTo(pos + m_startOffset); // shift off-screen if needed by m_startOffset
         m_links[i].resize(m_linkSize);
 
         m_links[i].reset();
@@ -197,7 +197,7 @@ void FlappyCatChain<Link>::setOffsetBetweenLinks(const Position& offset)
 template <typename Link>
 void FlappyCatChain<Link>::setStartOffset(const Position& offset)
 {
-    mStartOffset = offset;
+    m_startOffset = offset;
 }
 
 template <typename Link>

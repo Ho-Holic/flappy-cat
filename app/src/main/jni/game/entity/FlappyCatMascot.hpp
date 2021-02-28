@@ -26,8 +26,8 @@ private:
     RectangleShape m_backLeg;
     RectangleShape m_frontLeg;
     RectangleShape mTail;
-    RectangleShape mScarf;
-    RectangleShape mScarfTail;
+    RectangleShape m_scarf;
+    RectangleShape m_scarfTail;
     RectangleShape m_head;
     TriangleShape m_leftEar;
     TriangleShape m_rightEar;

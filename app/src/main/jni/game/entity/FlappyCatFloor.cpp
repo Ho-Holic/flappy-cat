@@ -3,7 +3,7 @@
 FlappyCatFloor::FlappyCatFloor(const FlappyCatGameConstants& gameConstants)
     : FlappyCatStateNode<FlappyCatFloor>(gameConstants)
     , m_organicSurfaceSize()
-    , mSpikesSize()
+    , m_spikesSize()
     , m_floor()
     , m_floorSpikes(gameConstants)
     , m_backgroundDirt()
@@ -23,10 +23,10 @@ void FlappyCatFloor::syncChildren()
     m_floor.geometry().resize(Position(size().x(), m_organicSurfaceSize.y()));
 
     // spikes for movement effect
-    m_floorSpikes.moveTo(position() - Position(0.f, mSpikesSize.y()));
+    m_floorSpikes.moveTo(position() - Position(0.f, m_spikesSize.y()));
 
-    m_floorSpikes.setLinkSize(mSpikesSize);
-    m_floorSpikes.setOffsetBetweenLinks(mSpikesSize);
+    m_floorSpikes.setLinkSize(m_spikesSize);
+    m_floorSpikes.setOffsetBetweenLinks(m_spikesSize);
 
     m_floorSpikes.resize(Position(size().x(), 0.f));
 
@@ -80,7 +80,7 @@ void FlappyCatFloor::setDecorationSizes(const Position& surfaceSize,
     const Position& spikesSize)
 {
     m_organicSurfaceSize = surfaceSize;
-    mSpikesSize = spikesSize;
+    m_spikesSize = spikesSize;
 
     syncChildren();
 }

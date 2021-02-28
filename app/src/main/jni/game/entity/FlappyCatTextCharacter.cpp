@@ -101,7 +101,7 @@ FlappyCatTextCharacter::FlappyCatTextCharacter(const FlappyCatGameConstants& gam
     : FlappyCatStateNode<FlappyCatTextCharacter>(gameConstants)
     , m_character('\0')
     , m_characterBody()
-    , mSize(CharacterPartWidth * CharacterWidth,
+    , m_size(CharacterPartWidth * CharacterWidth,
           CharacterPartHeight * CharacterHeight)
 {
     //
@@ -173,7 +173,7 @@ void FlappyCatTextCharacter::drawOn(const Window& window) const
 
 const Position& FlappyCatTextCharacter::size() const
 {
-    return mSize;
+    return m_size;
 }
 
 void FlappyCatTextCharacter::setColor(const Color& textColor)

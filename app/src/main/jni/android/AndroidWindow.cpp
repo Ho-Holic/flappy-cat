@@ -33,7 +33,7 @@ AndroidWindow::AndroidWindow()
     , mWindow(nullptr)
     , m_display(EGL_NO_DISPLAY)
     , m_context(EGL_NO_CONTEXT)
-    , mSurface(EGL_NO_SURFACE)
+    , m_surface(EGL_NO_SURFACE)
     , mWidth(0)
     , m_height(0)
     , m_program(0)
@@ -189,7 +189,7 @@ void AndroidWindow::initialize()
     // when all done
     m_display = display;
     m_context = context;
-    mSurface = surface;
+    m_surface = surface;
 
     // set window size
     mWidth = requestWidth();
@@ -216,8 +216,8 @@ void AndroidWindow::terminate()
             eglDestroyContext(m_display, m_context);
         }
 
-        if (mSurface != EGL_NO_SURFACE) {
-            eglDestroySurface(m_display, mSurface);
+        if (m_surface != EGL_NO_SURFACE) {
+            eglDestroySurface(m_display, m_surface);
         }
 
         eglTerminate(m_display);
@@ -225,7 +225,7 @@ void AndroidWindow::terminate()
 
     m_display = EGL_NO_DISPLAY;
     m_context = EGL_NO_CONTEXT;
-    mSurface = EGL_NO_SURFACE;
+    m_surface = EGL_NO_SURFACE;
 }
 
 void AndroidWindow::initializeOpengl()
@@ -362,7 +362,7 @@ GLuint AndroidWindow::createProgram(const std::vector<GLuint>& shaderList)
 void AndroidWindow::display() const
 {
 
-    eglSwapBuffers(m_display, mSurface);
+    eglSwapBuffers(m_display, m_surface);
 }
 
 int32_t AndroidWindow::width() const

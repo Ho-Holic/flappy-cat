@@ -2,23 +2,23 @@
 
 FlappyCatSpike::FlappyCatSpike(const FlappyCatGameConstants& gameConstants)
     : FlappyCatStateNode<FlappyCatSpike>(gameConstants)
-    , mSpike()
+    , m_spike()
 {
     //
 }
 
 void FlappyCatSpike::drawOn(const Window& window) const
 {
-    window.draw(mSpike);
+    window.draw(m_spike);
 }
 
 void FlappyCatSpike::setColor(const Color& color)
 {
-    mSpike.setColor(color);
+    m_spike.setColor(color);
 }
 
 void FlappyCatSpike::syncChildren()
 {
-    mSpike.transformation().setPosition(position());
-    mSpike.geometry().resize(size());
+    m_spike.transformation().setPosition(position());
+    m_spike.geometry().resize(size());
 }

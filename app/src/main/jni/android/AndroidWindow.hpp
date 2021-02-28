@@ -67,7 +67,7 @@ private:
     ANativeWindow* mWindow;
     EGLDisplay m_display;
     EGLContext m_context;
-    EGLSurface mSurface;
+    EGLSurface m_surface;
     EGLint mWidth;
     EGLint m_height;
     GLuint m_program;

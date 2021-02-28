@@ -23,7 +23,7 @@ public:
 
 public:
     Position m_origin;
-    Position mSize;
-    Position mScale;
+    Position m_size;
+    Position m_scale;
     float m_angle;
 };

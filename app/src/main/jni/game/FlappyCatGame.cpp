@@ -15,8 +15,8 @@ FlappyCatGame::FlappyCatGame()
     , m_backgroundSky(m_gameConstants)
     , m_hero(m_gameConstants)
     , m_limit(m_gameConstants)
-    , mScore(m_gameConstants)
-    , mScoreCounter(0)
+    , m_score(m_gameConstants)
+    , m_scoreCounter(0)
     , m_fps(m_gameConstants)
     , m_fpsCounter(0)
 {
@@ -209,7 +209,7 @@ void FlappyCatGame::initialize()
             hero.rotateTo(angle);
 
             float offset = m_gameConstants[Constant::HeroSize].x();
-            mScore.moveTo(m_hero.position() - Position(offset, offset / 4.f));
+            m_score.moveTo(m_hero.position() - Position(offset, offset / 4.f));
         });
 
     m_hero.setResetModifier(
@@ -227,7 +227,7 @@ void FlappyCatGame::initialize()
         });
 
     // score counter
-    mScore.setText("0");
+    m_score.setText("0");
 
     // fps counter
     m_fps.setText("0");
@@ -240,7 +240,7 @@ void FlappyCatGame::initialize()
     m_backgroundSky.initialize();
     m_hero.initialize();
     m_limit.initialize();
-    mScore.initialize();
+    m_score.initialize();
     m_fps.initialize();
 }
 
@@ -323,7 +323,7 @@ void FlappyCatGame::render(const Window& window) const
     m_hero.drawOn(window);
     m_floor.drawOn(window);
     m_limit.drawOn(window);
-    mScore.drawOn(window);
+    m_score.drawOn(window);
     m_fps.drawOn(window);
 
     window.display();
@@ -331,25 +331,25 @@ void FlappyCatGame::render(const Window& window) const
 
 void FlappyCatGame::incrementScore()
 {
-    mScoreCounter += 1;
-    mScore.setText(std::to_string(mScoreCounter));
+    m_scoreCounter += 1;
+    m_score.setText(std::to_string(m_scoreCounter));
 }
 
 void FlappyCatGame::resetScore()
 {
-    mScoreCounter = 0;
-    mScore.setText(std::to_string(mScoreCounter));
+    m_scoreCounter = 0;
+    m_score.setText(std::to_string(m_scoreCounter));
 
     using Constant = FlappyCatGameConstants::Constants;
     float offset = m_gameConstants[Constant::HeroSize].x();
-    mScore.moveTo(m_hero.position() - Position(offset, offset / 4.f));
+    m_score.moveTo(m_hero.position() - Position(offset, offset / 4.f));
 
     /*
    * TODO: create own reset modifier for Score element
    */
     const FlappyCatColorScheme& colorScheme = m_gameConstants.colorScheme();
     using ColorConstant = FlappyCatColorScheme::Colors;
-    mScore.setColor(colorScheme[ColorConstant::TextColor]);
+    m_score.setColor(colorScheme[ColorConstant::TextColor]);
 
     /*
    * TODO: create own reset modifier for Fps element

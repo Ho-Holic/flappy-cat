@@ -49,5 +49,5 @@ private:
 private:
     char m_character;
     std::array<RectangleShape, CharacterWidth * CharacterHeight> m_characterBody;
-    Position mSize;
+    Position m_size;
 };

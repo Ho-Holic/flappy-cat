@@ -4,7 +4,7 @@
 
 TriangleGeometry::TriangleGeometry(const Position& size)
     : Geometry()
-    , mSize(size)
+    , m_size(size)
     , m_onUpdate()
 {
     //
@@ -23,14 +23,14 @@ TriangleGeometry::OnUpdateSignal& TriangleGeometry::onUpdate()
 
 void TriangleGeometry::resize(const Position& size)
 {
-    mSize = size;
+    m_size = size;
     m_onUpdate.emit();
 }
 
 const Position& TriangleGeometry::size() const
 {
 
-    return mSize;
+    return m_size;
 }
 
 Geometry::size_type TriangleGeometry::points() const
@@ -47,10 +47,10 @@ Position TriangleGeometry::pointAt(Geometry::size_type index) const
         return Position(0.f, 0.f);
         break;
     case 1:
-        return Position(mSize.x(), 0.f);
+        return Position(m_size.x(), 0.f);
         break;
     case 2:
-        return Position(0.f, mSize.y());
+        return Position(0.f, m_size.y());
         break;
     default:
         return Position(0.f, 0.f);

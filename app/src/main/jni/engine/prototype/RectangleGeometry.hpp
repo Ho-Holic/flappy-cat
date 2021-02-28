@@ -22,6 +22,6 @@ public:
     virtual Position pointAt(size_type index) const override;
 
 private:
-    Position mSize;
+    Position m_size;
     OnUpdateSignal m_onUpdate;
 };

@@ -17,5 +17,5 @@ private:
     void syncChildren() override;
 
 private:
-    RectangleShape mSpike;
+    RectangleShape m_spike;
 };

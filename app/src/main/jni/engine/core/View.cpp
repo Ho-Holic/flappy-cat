@@ -4,8 +4,8 @@
 View::View()
     : Transformation()
     , m_origin(0.f, 0.f)
-    , mSize(0.f, 0.f)
-    , mScale(1.f, 1.f)
+    , m_size(0.f, 0.f)
+    , m_scale(1.f, 1.f)
     , m_angle(0.f)
 {
     //
@@ -26,25 +26,25 @@ const Position& View::origin() const
 void View::setPosition(const Position& position)
 {
 
-    mSize = position;
+    m_size = position;
 }
 
 const Position& View::position() const
 {
 
-    return mSize;
+    return m_size;
 }
 
 void View::setScale(const Position& factor)
 {
 
-    mScale = factor;
+    m_scale = factor;
 }
 
 const Position& View::scale() const
 {
 
-    return mScale;
+    return m_scale;
 }
 
 void View::setRotation(float angle)

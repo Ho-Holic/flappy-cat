@@ -5,7 +5,7 @@ FlatTransformation::FlatTransformation(const Position& position)
     : Transformation()
     , m_position(position)
     , m_origin(0.f, 0.f)
-    , mScale(1.f, 1.f)
+    , m_scale(1.f, 1.f)
     , m_angle(0.f)
     , m_onUpdate()
 {
@@ -39,7 +39,7 @@ const Position& FlatTransformation::origin() const
 const Position& FlatTransformation::scale() const
 {
 
-    return mScale;
+    return m_scale;
 }
 
 float FlatTransformation::rotation() const
@@ -65,7 +65,7 @@ void FlatTransformation::setOrigin(const Position& origin)
 void FlatTransformation::setScale(const Position& factor)
 {
 
-    mScale = factor;
+    m_scale = factor;
     m_onUpdate.emit();
 }
 

@@ -33,6 +33,6 @@ public:
 
 private:
     value_type m_hue;
-    value_type mSaturation;
+    value_type m_saturation;
     value_type m_luminance;
 };
