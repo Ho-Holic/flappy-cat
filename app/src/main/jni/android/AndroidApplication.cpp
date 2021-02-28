@@ -16,9 +16,9 @@ AndroidApplication::AndroidApplication(ANativeActivity* activity,
     , m_activityState(InitializationActivityState)
     , mMutex()
     , m_conditionVariable()
-    , mIsRunning(false)
-    , mIsDestroyed(false)
-    , mIsDestroyRequested(false)
+    , m_isRunning(false)
+    , m_isDestroyed(false)
+    , m_isDestroyRequested(false)
     , m_configuration(activity->assetManager)
     , mLooper()
     , mWindow()
@@ -227,7 +227,7 @@ void AndroidApplication::waitForDestruction()
 
     std::unique_lock<std::mutex> lock(mMutex);
 
-    mIsDestroyRequested = true;
+    m_isDestroyRequested = true;
 
     m_conditionVariable.wait(lock, std::bind(&AndroidApplication::isDestroyed, std::ref(*this)));
     mMutex.unlock();
@@ -385,19 +385,19 @@ void AndroidApplication::reloadConfiguration()
 bool AndroidApplication::isRunning() const
 {
 
-    return mIsRunning;
+    return m_isRunning;
 }
 
 bool AndroidApplication::isDestroyed() const
 {
 
-    return mIsDestroyed;
+    return m_isDestroyed;
 }
 
 bool AndroidApplication::isDestroyRequested() const
 {
 
-    return mIsDestroyRequested;
+    return m_isDestroyRequested;
 }
 
 AndroidApplication::ActivityState AndroidApplication::activityState() const
@@ -415,7 +415,7 @@ void AndroidApplication::exec()
     {
 
         std::lock_guard<std::mutex> lock(mMutex);
-        mIsRunning = true;
+        m_isRunning = true;
         m_conditionVariable.notify_all();
     }
 
@@ -506,7 +506,7 @@ void AndroidApplication::terminate()
 
     m_configuration.reset();
 
-    mIsDestroyed = true;
+    m_isDestroyed = true;
 
     m_conditionVariable.notify_all();
 

@@ -47,7 +47,7 @@ private:
 
 private:
     ALooper* mLooper;
-    std::unique_ptr<AInputQueue, DetachLooperDeleter> mInputQueue;
+    std::unique_ptr<AInputQueue, DetachLooperDeleter> m_inputQueue;
 };
 
 // enums

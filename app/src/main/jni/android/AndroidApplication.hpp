@@ -96,9 +96,9 @@ private:
     ActivityState m_activityState;
     std::mutex mMutex;
     std::condition_variable m_conditionVariable;
-    bool mIsRunning;
-    bool mIsDestroyed;
-    bool mIsDestroyRequested;
+    bool m_isRunning;
+    bool m_isDestroyed;
+    bool m_isDestroyRequested;
     AndroidConfiguration m_configuration;
     AndroidLooper mLooper;
     AndroidWindow mWindow;

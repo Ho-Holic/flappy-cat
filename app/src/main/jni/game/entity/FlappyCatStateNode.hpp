@@ -27,7 +27,7 @@ public:
     void drawOn(const Window& window) const override;
 
 private:
-    initialize_modifier_type mInitializeModifier;
+    initialize_modifier_type m_initializeModifier;
     reset_modifier_type mResetModifier;
     update_modifier_type mUpdateModifier;
     draw_modifier_type m_drawModifier;
@@ -38,7 +38,7 @@ private:
 template <typename T>
 void FlappyCatStateNode<T>::initialize()
 {
-    mInitializeModifier(*static_cast<entity_type*>(this));
+    m_initializeModifier(*static_cast<entity_type*>(this));
 }
 
 template <typename T>
@@ -62,7 +62,7 @@ void FlappyCatStateNode<T>::drawOn(const Window& window) const
 template <typename T>
 FlappyCatStateNode<T>::FlappyCatStateNode(const FlappyCatGameConstants& gameConstants)
     : FlappyCatEntity(gameConstants)
-    , mInitializeModifier([](entity_type&) {})
+    , m_initializeModifier([](entity_type&) {})
     , mResetModifier([](entity_type&) {})
     , mUpdateModifier([](entity_type&, const FrameDuration&) {})
     , m_drawModifier([](const entity_type&, const Window&) {})
@@ -73,7 +73,7 @@ FlappyCatStateNode<T>::FlappyCatStateNode(const FlappyCatGameConstants& gameCons
 template <typename T>
 void FlappyCatStateNode<T>::setInitializeModifier(initialize_modifier_type modifier)
 {
-    mInitializeModifier = modifier;
+    m_initializeModifier = modifier;
 }
 
 template <typename T>

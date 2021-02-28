@@ -6,7 +6,7 @@
 
 AndroidLooper::AndroidLooper()
     : mLooper(nullptr)
-    , mInputQueue(nullptr, &AInputQueue_detachLooper)
+    , m_inputQueue(nullptr, &AInputQueue_detachLooper)
 {
     //
 }
@@ -23,10 +23,10 @@ void AndroidLooper::prepare()
 void AndroidLooper::setInputQueue(AInputQueue* inputQueue)
 {
 
-    mInputQueue.reset(inputQueue);
+    m_inputQueue.reset(inputQueue);
 
-    if (mInputQueue) {
-        AInputQueue_attachLooper(mInputQueue.get(),
+    if (m_inputQueue) {
+        AInputQueue_attachLooper(m_inputQueue.get(),
             mLooper, InputQueueId,
             nullptr, nullptr);
     }
@@ -35,7 +35,7 @@ void AndroidLooper::setInputQueue(AInputQueue* inputQueue)
 AInputQueue* AndroidLooper::inputQueue() const
 {
 
-    return mInputQueue.get();
+    return m_inputQueue.get();
 }
 
 bool AndroidLooper::pollEvent(AndroidEvent& event)
@@ -61,7 +61,7 @@ bool AndroidLooper::pollEvent(AndroidEvent& event)
 void AndroidLooper::pollFromInputQueue(AndroidEvent& event)
 {
 
-    AInputQueue* queue = mInputQueue.get();
+    AInputQueue* queue = m_inputQueue.get();
 
     AInputEvent* inputEvent = nullptr;
 

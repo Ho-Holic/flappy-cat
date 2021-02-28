@@ -63,7 +63,7 @@ private:
     static GLuint createProgram(const std::vector<GLuint>& shaderList);
 
 private:
-    bool mIsReady;
+    bool m_isReady;
     ANativeWindow* mWindow;
     EGLDisplay m_display;
     EGLContext m_context;

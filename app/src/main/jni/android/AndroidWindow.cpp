@@ -29,7 +29,7 @@ enum : GLsizei {
 
 AndroidWindow::AndroidWindow()
     : Window()
-    , mIsReady(false)
+    , m_isReady(false)
     , mWindow(nullptr)
     , m_display(EGL_NO_DISPLAY)
     , m_context(EGL_NO_CONTEXT)
@@ -44,21 +44,21 @@ AndroidWindow::AndroidWindow()
 bool AndroidWindow::isReady() const
 {
 
-    return mIsReady;
+    return m_isReady;
 }
 
 void AndroidWindow::setReady(bool ready)
 {
 
-    mIsReady = ready;
+    m_isReady = ready;
 }
 
 void AndroidWindow::setNativeWindow(ANativeWindow* window)
 {
 
-    Log::i(TAG, "Call to setNativeWindow: %p, ready: %d", window, mIsReady);
+    Log::i(TAG, "Call to setNativeWindow: %p, ready: %d", window, m_isReady);
 
-    REQUIRE(TAG, !mIsReady, "Must be inactive");
+    REQUIRE(TAG, !m_isReady, "Must be inactive");
 
     mWindow = window;
 }
@@ -72,7 +72,7 @@ ANativeWindow* AndroidWindow::nativeWindow() const
 void AndroidWindow::initialize()
 {
 
-    Log::i(TAG, "Call to initialize: %p, ready: %d", mWindow, mIsReady);
+    Log::i(TAG, "Call to initialize: %p, ready: %d", mWindow, m_isReady);
 
     // get display and init it
     EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
@@ -198,15 +198,15 @@ void AndroidWindow::initialize()
     // deal with opengl now
     initializeOpengl();
 
-    mIsReady = true;
+    m_isReady = true;
 }
 
 void AndroidWindow::terminate()
 {
 
-    Log::i(TAG, "Call to terminate: %p, ready: %d", mWindow, mIsReady);
+    Log::i(TAG, "Call to terminate: %p, ready: %d", mWindow, m_isReady);
 
-    REQUIRE(TAG, !mIsReady, "Must be inactive");
+    REQUIRE(TAG, !m_isReady, "Must be inactive");
 
     if (m_display != EGL_NO_DISPLAY) {
 
