@@ -3,7 +3,7 @@
 
 View::View()
     : Transformation()
-    , mOrigin(0.f, 0.f)
+    , m_origin(0.f, 0.f)
     , mSize(0.f, 0.f)
     , mScale(1.f, 1.f)
     , m_angle(0.f)
@@ -14,13 +14,13 @@ View::View()
 void View::setOrigin(const Position& origin)
 {
 
-    mOrigin = origin;
+    m_origin = origin;
 }
 
 const Position& View::origin() const
 {
 
-    return mOrigin;
+    return m_origin;
 }
 
 void View::setPosition(const Position& position)

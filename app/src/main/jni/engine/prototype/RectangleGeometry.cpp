@@ -7,7 +7,7 @@
 RectangleGeometry::RectangleGeometry(const Position& size)
     : Geometry()
     , mSize(size)
-    , mOnUpdate()
+    , m_onUpdate()
 {
     //
 }
@@ -48,13 +48,13 @@ Position RectangleGeometry::pointAt(size_type index) const
 
 RectangleGeometry::OnUpdateSignal& RectangleGeometry::onUpdate()
 {
-    return mOnUpdate;
+    return m_onUpdate;
 }
 
 void RectangleGeometry::resize(const Position& size)
 {
     mSize = size;
-    mOnUpdate.emit();
+    m_onUpdate.emit();
 }
 
 const Position& RectangleGeometry::size() const

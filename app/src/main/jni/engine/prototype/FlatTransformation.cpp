@@ -4,10 +4,10 @@
 FlatTransformation::FlatTransformation(const Position& position)
     : Transformation()
     , mPosition(position)
-    , mOrigin(0.f, 0.f)
+    , m_origin(0.f, 0.f)
     , mScale(1.f, 1.f)
     , m_angle(0.f)
-    , mOnUpdate()
+    , m_onUpdate()
 {
     //
 }
@@ -21,7 +21,7 @@ FlatTransformation::FlatTransformation()
 FlatTransformation::OnUpdateSignal& FlatTransformation::onUpdate()
 {
 
-    return mOnUpdate;
+    return m_onUpdate;
 }
 
 const Position& FlatTransformation::position() const
@@ -33,7 +33,7 @@ const Position& FlatTransformation::position() const
 const Position& FlatTransformation::origin() const
 {
 
-    return mOrigin;
+    return m_origin;
 }
 
 const Position& FlatTransformation::scale() const
@@ -52,26 +52,26 @@ void FlatTransformation::setPosition(const Position& position)
 {
 
     mPosition = position;
-    mOnUpdate.emit();
+    m_onUpdate.emit();
 }
 
 void FlatTransformation::setOrigin(const Position& origin)
 {
 
-    mOrigin = origin;
-    mOnUpdate.emit();
+    m_origin = origin;
+    m_onUpdate.emit();
 }
 
 void FlatTransformation::setScale(const Position& factor)
 {
 
     mScale = factor;
-    mOnUpdate.emit();
+    m_onUpdate.emit();
 }
 
 void FlatTransformation::setRotation(float angle)
 {
 
     m_angle = angle;
-    mOnUpdate.emit();
+    m_onUpdate.emit();
 }

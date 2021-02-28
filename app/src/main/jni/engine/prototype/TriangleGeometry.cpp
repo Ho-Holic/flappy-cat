@@ -5,7 +5,7 @@
 TriangleGeometry::TriangleGeometry(const Position& size)
     : Geometry()
     , mSize(size)
-    , mOnUpdate()
+    , m_onUpdate()
 {
     //
 }
@@ -18,13 +18,13 @@ TriangleGeometry::TriangleGeometry()
 
 TriangleGeometry::OnUpdateSignal& TriangleGeometry::onUpdate()
 {
-    return mOnUpdate;
+    return m_onUpdate;
 }
 
 void TriangleGeometry::resize(const Position& size)
 {
     mSize = size;
-    mOnUpdate.emit();
+    m_onUpdate.emit();
 }
 
 const Position& TriangleGeometry::size() const

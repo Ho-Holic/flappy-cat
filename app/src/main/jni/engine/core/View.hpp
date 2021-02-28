@@ -22,7 +22,7 @@ public:
     virtual float rotation() const override;
 
 public:
-    Position mOrigin;
+    Position m_origin;
     Position mSize;
     Position mScale;
     float m_angle;

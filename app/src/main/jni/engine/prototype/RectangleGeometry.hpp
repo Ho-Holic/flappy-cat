@@ -23,5 +23,5 @@ public:
 
 private:
     Position mSize;
-    OnUpdateSignal mOnUpdate;
+    OnUpdateSignal m_onUpdate;
 };

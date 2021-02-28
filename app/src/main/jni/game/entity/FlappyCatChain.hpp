@@ -47,7 +47,7 @@ private:
 
 private:
     Position m_linkSize;
-    Position mOffsetBetweenLinks;
+    Position m_offsetBetweenLinks;
     Position mStartOffset;
     Position m_movementDisplacement;
     std::vector<entity_type> m_links;
@@ -60,7 +60,7 @@ template <typename Link>
 FlappyCatChain<Link>::FlappyCatChain(const FlappyCatGameConstants& gameConstants)
     : FlappyCatStateNode<FlappyCatChain<Link>>(gameConstants)
     , m_linkSize()
-    , mOffsetBetweenLinks(0.f, 0.f)
+    , m_offsetBetweenLinks(0.f, 0.f)
     , mStartOffset(0.f, 0.f)
     , m_movementDisplacement(0.f, 0.f)
     , m_links()
@@ -92,7 +92,7 @@ float FlappyCatChain<Link>::chainLength() const
 template <typename Link>
 Position FlappyCatChain<Link>::section() const
 {
-    return m_linkSize + mOffsetBetweenLinks;
+    return m_linkSize + m_offsetBetweenLinks;
 }
 
 template <typename Link>
@@ -107,7 +107,7 @@ void FlappyCatChain<Link>::initialize()
     /*
    * TODO: Write code for better offset usage
    *
-   * If mOffsetBetweenLinks is set before `initialize()` then incorrect behaviour
+   * If m_offsetBetweenLinks is set before `initialize()` then incorrect behaviour
    * would be observed when one would call setOffsetBetweenLinks()
    */
     std::size_t linkCount = static_cast<std::size_t>(chainLength() / section().x());
@@ -191,7 +191,7 @@ void FlappyCatChain<Link>::setMovementDisplacement(const Position& movementDispl
 template <typename Link>
 void FlappyCatChain<Link>::setOffsetBetweenLinks(const Position& offset)
 {
-    mOffsetBetweenLinks = offset;
+    m_offsetBetweenLinks = offset;
 }
 
 template <typename Link>

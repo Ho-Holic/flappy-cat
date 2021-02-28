@@ -9,7 +9,7 @@ CircleGeometry::CircleGeometry(float radius, std::size_t resolution)
     : Geometry()
     , mRadius(radius)
     , mResolution(resolution)
-    , mOnUpdate()
+    , m_onUpdate()
 {
     //
 }
@@ -41,21 +41,21 @@ Position CircleGeometry::pointAt(size_type index) const
 CircleGeometry::OnUpdateSignal& CircleGeometry::onUpdate()
 {
 
-    return mOnUpdate;
+    return m_onUpdate;
 }
 
 void CircleGeometry::setResolution(std::size_t resolution)
 {
 
     mResolution = resolution;
-    mOnUpdate.emit();
+    m_onUpdate.emit();
 }
 
 void CircleGeometry::setRadius(float radius)
 {
 
     mRadius = radius;
-    mOnUpdate.emit();
+    m_onUpdate.emit();
 }
 
 float CircleGeometry::radius() const

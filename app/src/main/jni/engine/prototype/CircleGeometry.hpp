@@ -25,5 +25,5 @@ public:
 private:
     float mRadius;
     std::size_t mResolution;
-    OnUpdateSignal mOnUpdate;
+    OnUpdateSignal m_onUpdate;
 };

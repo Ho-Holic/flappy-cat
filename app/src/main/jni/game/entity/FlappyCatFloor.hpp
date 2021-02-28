@@ -27,7 +27,7 @@ private:
     void syncChildren() override;
 
 private:
-    Position mOrganicSurfaceSize;
+    Position m_organicSurfaceSize;
     Position mSpikesSize;
     RectangleShape m_floor;
     FlappyCatChain<FlappyCatSpike> m_floorSpikes;
