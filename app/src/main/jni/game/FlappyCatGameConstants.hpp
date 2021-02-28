@@ -46,7 +46,7 @@ private:
     Daytime chooseDaytime();
 
 private:
-    std::random_device mRandomDevice;
+    std::random_device m_randomDevice;
     std::mt19937 m_generator;
     FlappyCatColorScheme m_colorScheme;
     std::vector<Position> m_constants;

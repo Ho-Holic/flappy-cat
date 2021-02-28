@@ -10,9 +10,9 @@ FlappyCatMascot::FlappyCatMascot(const FlappyCatGameConstants& gameConstants)
     , mScarfTail()
     , m_head()
     , m_leftEar()
-    , mRightEar()
+    , m_rightEar()
     , m_leftEye()
-    , mRightEye()
+    , m_rightEye()
     , m_mouth()
 {
     //
@@ -28,9 +28,9 @@ void FlappyCatMascot::drawOn(const Window& window) const
     window.draw(mScarfTail);
     window.draw(m_head);
     window.draw(m_leftEar);
-    window.draw(mRightEar);
+    window.draw(m_rightEar);
     window.draw(m_leftEye);
-    window.draw(mRightEye);
+    window.draw(m_rightEye);
     window.draw(m_mouth);
 }
 
@@ -91,9 +91,9 @@ void FlappyCatMascot::syncChildren()
     m_frontLeg.transformation().setPosition(pos + frontLegPosRes * scale);
     mTail.transformation().setPosition(pos + tailPosRes * scale);
     m_leftEar.transformation().setPosition(pos + leftEarPosRes * scale);
-    mRightEar.transformation().setPosition(pos + rightEarPosRes * scale);
+    m_rightEar.transformation().setPosition(pos + rightEarPosRes * scale);
     m_leftEye.transformation().setPosition(pos + leftEyePosRes * scale);
-    mRightEye.transformation().setPosition(pos + rightEyePosRes * scale);
+    m_rightEye.transformation().setPosition(pos + rightEyePosRes * scale);
     mScarf.transformation().setPosition(pos + scarfPosRes * scale);
     mScarfTail.transformation().setPosition(pos + scarfTailPosRes * scale);
     m_mouth.transformation().setPosition(pos + mouthPosRes * scale);
@@ -105,9 +105,9 @@ void FlappyCatMascot::syncChildren()
     m_frontLeg.geometry().resize(legAndTailSize * scale);
     mTail.geometry().resize(legAndTailSize * scale);
     m_leftEar.geometry().resize(earSize * scale);
-    mRightEar.geometry().resize(earSize * scale);
+    m_rightEar.geometry().resize(earSize * scale);
     m_leftEye.geometry().resize(eyeSize * scale);
-    mRightEye.geometry().resize(eyeSize * scale);
+    m_rightEye.geometry().resize(eyeSize * scale);
     mScarf.geometry().resize(scarfSize * scale);
     mScarfTail.geometry().resize(scarfTailSize * scale);
     m_mouth.geometry().resize(mouthSize * scale);
@@ -122,9 +122,9 @@ void FlappyCatMascot::syncChildren()
     m_frontLeg.transformation().setOrigin((center - frontLegPosRes) * scale);
     mTail.transformation().setOrigin((center - tailPosRes) * scale);
     m_leftEar.transformation().setOrigin((center - leftEarPosRes) * scale);
-    mRightEar.transformation().setOrigin((center - rightEarPosRes) * scale);
+    m_rightEar.transformation().setOrigin((center - rightEarPosRes) * scale);
     m_leftEye.transformation().setOrigin((center - leftEyePosRes) * scale);
-    mRightEye.transformation().setOrigin((center - rightEyePosRes) * scale);
+    m_rightEye.transformation().setOrigin((center - rightEyePosRes) * scale);
     mScarf.transformation().setOrigin((center - scarfPosRes) * scale);
     mScarfTail.transformation().setOrigin((center - scarfTailPosRes) * scale);
     m_mouth.transformation().setOrigin((center - mouthPosRes) * scale);
@@ -135,9 +135,9 @@ void FlappyCatMascot::syncChildren()
     m_frontLeg.transformation().setRotation(angle);
     mTail.transformation().setRotation(angle);
     m_leftEar.transformation().setRotation(angle);
-    mRightEar.transformation().setRotation(angle);
+    m_rightEar.transformation().setRotation(angle);
     m_leftEye.transformation().setRotation(angle);
-    mRightEye.transformation().setRotation(angle);
+    m_rightEye.transformation().setRotation(angle);
     mScarf.transformation().setRotation(angle);
     mScarfTail.transformation().setRotation(angle);
     m_mouth.transformation().setRotation(angle);
@@ -153,12 +153,12 @@ void FlappyCatMascot::setColor(const Color& bodyColor,
     mTail.setColor(bodyColor);
     m_head.setColor(bodyColor);
     m_leftEar.setColor(bodyColor);
-    mRightEar.setColor(bodyColor);
+    m_rightEar.setColor(bodyColor);
 
     mScarf.setColor(scarfColor);
     mScarfTail.setColor(scarfColor);
     m_leftEye.setColor(scarfColor);
-    mRightEye.setColor(scarfColor);
+    m_rightEye.setColor(scarfColor);
 
     m_mouth.setColor(mouthColor);
 }

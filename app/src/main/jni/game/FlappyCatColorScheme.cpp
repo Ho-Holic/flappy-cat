@@ -11,8 +11,8 @@
 #include <style/Guidelines.hpp>
 
 FlappyCatColorScheme::FlappyCatColorScheme()
-    : mRandomDevice()
-    , m_generator(mRandomDevice())
+    : m_randomDevice()
+    , m_generator(m_randomDevice())
     , mScheme(ColorsSize, Color())
 {
     //

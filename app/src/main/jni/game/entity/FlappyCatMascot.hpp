@@ -30,8 +30,8 @@ private:
     RectangleShape mScarfTail;
     RectangleShape m_head;
     TriangleShape m_leftEar;
-    TriangleShape mRightEar;
+    TriangleShape m_rightEar;
     RectangleShape m_leftEye;
-    RectangleShape mRightEye;
+    RectangleShape m_rightEye;
     RectangleShape m_mouth;
 };

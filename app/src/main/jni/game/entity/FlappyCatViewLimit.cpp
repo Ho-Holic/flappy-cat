@@ -4,7 +4,7 @@ FlappyCatViewLimit::FlappyCatViewLimit(const FlappyCatGameConstants& gameConstan
     : FlappyCatStateNode<FlappyCatViewLimit>(gameConstants)
     , mTop()
     , mTopRight()
-    , mRight()
+    , m_right()
     , m_bottomRight()
     , m_bottom()
     , m_bottomLeft()
@@ -22,7 +22,7 @@ void FlappyCatViewLimit::syncChildren()
     // move
     mTop.transformation().setPosition(position + Position(0.f, size.y()));
     mTopRight.transformation().setPosition(position + Position(size.x(), size.y()));
-    mRight.transformation().setPosition(position + Position(size.x(), 0.f));
+    m_right.transformation().setPosition(position + Position(size.x(), 0.f));
     m_bottomRight.transformation().setPosition(position + Position(size.x(), -size.y()));
     m_bottom.transformation().setPosition(position + Position(0.f, -size.y()));
     m_bottomLeft.transformation().setPosition(position + Position(-size.x(), -size.y()));
@@ -32,7 +32,7 @@ void FlappyCatViewLimit::syncChildren()
     // resize
     mTop.geometry().resize(size);
     mTopRight.geometry().resize(size);
-    mRight.geometry().resize(size);
+    m_right.geometry().resize(size);
     m_bottomRight.geometry().resize(size);
     m_bottom.geometry().resize(size);
     m_bottomLeft.geometry().resize(size);
@@ -44,7 +44,7 @@ void FlappyCatViewLimit::drawOn(const Window& window) const
 {
     window.draw(mTop);
     window.draw(mTopRight);
-    window.draw(mRight);
+    window.draw(m_right);
     window.draw(m_bottomRight);
     window.draw(m_bottom);
     window.draw(m_bottomLeft);

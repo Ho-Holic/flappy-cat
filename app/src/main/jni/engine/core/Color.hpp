@@ -33,7 +33,7 @@ public:
     Color grayscale() const;
 
 private:
-    uint8_t mRed;
+    uint8_t m_red;
     uint8_t m_green;
     uint8_t m_blue;
     uint8_t m_alpha;

@@ -6,8 +6,8 @@
 #include <style/Guidelines.hpp>
 
 FlappyCatGameConstants::FlappyCatGameConstants()
-    : mRandomDevice()
-    , m_generator(mRandomDevice())
+    : m_randomDevice()
+    , m_generator(m_randomDevice())
     , m_colorScheme()
     , m_constants(ConstantsSize, Position())
     , m_daytimeFactor(0)

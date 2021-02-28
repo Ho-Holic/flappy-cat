@@ -16,7 +16,7 @@ private:
 private:
     RectangleShape mTop;
     RectangleShape mTopRight;
-    RectangleShape mRight;
+    RectangleShape m_right;
     RectangleShape m_bottomRight;
     RectangleShape m_bottom;
     RectangleShape m_bottomLeft;

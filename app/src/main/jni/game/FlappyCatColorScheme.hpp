@@ -26,7 +26,7 @@ private:
     void generateNightScheme();
 
 private:
-    mutable std::random_device mRandomDevice;
+    mutable std::random_device m_randomDevice;
     mutable std::mt19937 m_generator;
     std::vector<Color> mScheme;
 };
