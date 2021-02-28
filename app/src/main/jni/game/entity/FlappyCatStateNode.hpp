@@ -30,7 +30,7 @@ private:
     initialize_modifier_type mInitializeModifier;
     reset_modifier_type mResetModifier;
     update_modifier_type mUpdateModifier;
-    draw_modifier_type mDrawModifier;
+    draw_modifier_type m_drawModifier;
 };
 
 // implementation
@@ -56,7 +56,7 @@ void FlappyCatStateNode<T>::update(const FrameDuration& frameDuration)
 template <typename T>
 void FlappyCatStateNode<T>::drawOn(const Window& window) const
 {
-    mDrawModifier(*static_cast<const entity_type*>(this), window);
+    m_drawModifier(*static_cast<const entity_type*>(this), window);
 }
 
 template <typename T>
@@ -65,7 +65,7 @@ FlappyCatStateNode<T>::FlappyCatStateNode(const FlappyCatGameConstants& gameCons
     , mInitializeModifier([](entity_type&) {})
     , mResetModifier([](entity_type&) {})
     , mUpdateModifier([](entity_type&, const FrameDuration&) {})
-    , mDrawModifier([](const entity_type&, const Window&) {})
+    , m_drawModifier([](const entity_type&, const Window&) {})
 {
     //
 }
@@ -91,5 +91,5 @@ void FlappyCatStateNode<T>::setUpdateModifier(update_modifier_type modifier)
 template <typename T>
 void FlappyCatStateNode<T>::setDrawModifier(draw_modifier_type modifier)
 {
-    mDrawModifier = modifier;
+    m_drawModifier = modifier;
 }

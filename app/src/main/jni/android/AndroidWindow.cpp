@@ -31,7 +31,7 @@ AndroidWindow::AndroidWindow()
     : Window()
     , mIsReady(false)
     , mWindow(nullptr)
-    , mDisplay(EGL_NO_DISPLAY)
+    , m_display(EGL_NO_DISPLAY)
     , m_context(EGL_NO_CONTEXT)
     , mSurface(EGL_NO_SURFACE)
     , mWidth(0)
@@ -187,7 +187,7 @@ void AndroidWindow::initialize()
     UNUSED(isCurrent);
 
     // when all done
-    mDisplay = display;
+    m_display = display;
     m_context = context;
     mSurface = surface;
 
@@ -208,22 +208,22 @@ void AndroidWindow::terminate()
 
     REQUIRE(TAG, !mIsReady, "Must be inactive");
 
-    if (mDisplay != EGL_NO_DISPLAY) {
+    if (m_display != EGL_NO_DISPLAY) {
 
-        eglMakeCurrent(mDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+        eglMakeCurrent(m_display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 
         if (m_context != EGL_NO_CONTEXT) {
-            eglDestroyContext(mDisplay, m_context);
+            eglDestroyContext(m_display, m_context);
         }
 
         if (mSurface != EGL_NO_SURFACE) {
-            eglDestroySurface(mDisplay, mSurface);
+            eglDestroySurface(m_display, mSurface);
         }
 
-        eglTerminate(mDisplay);
+        eglTerminate(m_display);
     }
 
-    mDisplay = EGL_NO_DISPLAY;
+    m_display = EGL_NO_DISPLAY;
     m_context = EGL_NO_CONTEXT;
     mSurface = EGL_NO_SURFACE;
 }
@@ -362,7 +362,7 @@ GLuint AndroidWindow::createProgram(const std::vector<GLuint>& shaderList)
 void AndroidWindow::display() const
 {
 
-    eglSwapBuffers(mDisplay, mSurface);
+    eglSwapBuffers(m_display, mSurface);
 }
 
 int32_t AndroidWindow::width() const

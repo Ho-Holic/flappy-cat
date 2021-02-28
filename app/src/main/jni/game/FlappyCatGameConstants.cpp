@@ -10,11 +10,11 @@ FlappyCatGameConstants::FlappyCatGameConstants()
     , mGenerator(mRandomDevice())
     , m_colorScheme()
     , m_constants(ConstantsSize, Position())
-    , mDaytimeFactor(0)
+    , m_daytimeFactor(0)
 {
 
     /**
-   * TODO: Remove 'reset()' and 'mDaytimeFactor = 0'
+   * TODO: Remove 'reset()' and 'm_daytimeFactor = 0'
    *
    * Call is not needed but directly we can't remove it
    * This would cause all objects to disappear
@@ -23,7 +23,7 @@ FlappyCatGameConstants::FlappyCatGameConstants()
    * improve the design
    */
     reset();
-    mDaytimeFactor = 0;
+    m_daytimeFactor = 0;
 }
 
 Daytime FlappyCatGameConstants::chooseDaytime()
@@ -35,10 +35,10 @@ Daytime FlappyCatGameConstants::chooseDaytime()
         Period = 3
     };
 
-    Daytime daytime = (mDaytimeFactor < Period) ? Daytime::Day
+    Daytime daytime = (m_daytimeFactor < Period) ? Daytime::Day
                                                 : Daytime::Night;
 
-    mDaytimeFactor = (mDaytimeFactor + 1) % (Period * 2);
+    m_daytimeFactor = (m_daytimeFactor + 1) % (Period * 2);
 
     return daytime;
 }

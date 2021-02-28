@@ -50,7 +50,7 @@ private:
     std::mt19937 mGenerator;
     FlappyCatColorScheme m_colorScheme;
     std::vector<Position> m_constants;
-    int32_t mDaytimeFactor;
+    int32_t m_daytimeFactor;
 };
 
 enum FlappyCatGameConstants::Constants : size_t {

@@ -20,5 +20,5 @@ private:
     Position mGravity;
     Position m_acceleration;
     Position mVelocity;
-    Position mDistance;
+    Position m_distance;
 };
