@@ -9,7 +9,7 @@
 // stl
 #include <algorithm>
 
-bool Collide::circleRect(const Position& circleCenter,
+bool Collide::circleRect(const vec2& circleCenter,
     float circleRadius,
     const Shape& rect)
 {
@@ -18,10 +18,10 @@ bool Collide::circleRect(const Position& circleCenter,
 
     REQUIRE(TAG, rect.geometry().points() == 4, "Rect must have four points");
 
-    Position a = rect.transformation().position() + rect.geometry().pointAt(0);
-    Position b = rect.transformation().position() + rect.geometry().pointAt(1);
-    Position c = rect.transformation().position() + rect.geometry().pointAt(2);
-    Position d = rect.transformation().position() + rect.geometry().pointAt(3);
+    vec2 a = rect.transformation().position() + rect.geometry().pointAt(0);
+    vec2 b = rect.transformation().position() + rect.geometry().pointAt(1);
+    vec2 c = rect.transformation().position() + rect.geometry().pointAt(2);
+    vec2 d = rect.transformation().position() + rect.geometry().pointAt(3);
 
     return pointRect(circleCenter, a, b, c, d)
         || lineCircle(circleCenter, circleRadius, a, b)
@@ -30,11 +30,11 @@ bool Collide::circleRect(const Position& circleCenter,
         || lineCircle(circleCenter, circleRadius, d, a);
 }
 
-bool Collide::pointRect(const Position& p,
-    const Position& a,
-    const Position& b,
-    const Position& c,
-    const Position& d)
+bool Collide::pointRect(const vec2& p,
+    const vec2& a,
+    const vec2& b,
+    const vec2& c,
+    const vec2& d)
 {
 
     UNUSED(c); // algorithm don't use 'c' point to find intersection
@@ -47,12 +47,12 @@ bool Collide::pointRect(const Position& p,
     return (0 <= apab && apab <= ab2) && (0 <= apad && apad <= ad2);
 }
 
-bool Collide::lineCircle(const Position& circleCenter, float circleRadius,
-    const Position& a,
-    const Position& b)
+bool Collide::lineCircle(const vec2& circleCenter, float circleRadius,
+    const vec2& a,
+    const vec2& b)
 {
 
-    Position c = VectorMath::projectionPointLine(circleCenter, a, b);
+    vec2 c = VectorMath::projectionPointLine(circleCenter, a, b);
 
     auto distanceAB = VectorMath::distance(a, b);
     auto distanceAC = VectorMath::distance(a, c);

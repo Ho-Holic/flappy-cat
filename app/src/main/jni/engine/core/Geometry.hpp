@@ -4,7 +4,7 @@
 #include <cstddef>
 
 // engine
-#include "Position.hpp"
+#include <math/vec2.hpp>
 
 class Geometry {
 public:
@@ -15,5 +15,5 @@ public:
 
 public:
     virtual size_type points() const = 0;
-    virtual Position pointAt(size_type index) const = 0;
+    virtual vec2 pointAt(size_type index) const = 0;
 };

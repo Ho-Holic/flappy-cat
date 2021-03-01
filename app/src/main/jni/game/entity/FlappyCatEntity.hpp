@@ -16,14 +16,14 @@ public:
     virtual void update(const FrameDuration& frameDuration) = 0;
     virtual void drawOn(const Window& window) const = 0;
 
-    virtual const Position& position() const;
+    virtual const vec2& position() const;
     virtual float rotation() const;
-    virtual const Position& size() const;
+    virtual const vec2& size() const;
 
-    virtual void moveTo(const Position& position);
-    virtual void moveBy(const Position& offset);
+    virtual void moveTo(const vec2& position);
+    virtual void moveBy(const vec2& offset);
 
-    virtual void resize(const Position& size);
+    virtual void resize(const vec2& size);
     virtual void rotateTo(float angle);
 
 public:
@@ -34,8 +34,8 @@ private:
 
 private:
     const FlappyCatGameConstants& m_gameConstants;
-    Position m_position;
-    Position m_size;
+    vec2 m_position;
+    vec2 m_size;
     float m_angle;
     PhysicsBody m_body;
 };

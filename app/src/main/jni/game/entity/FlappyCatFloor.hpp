@@ -20,15 +20,15 @@ public:
 
 public:
     void setColor(const Color& floorColor, const Color& dirtColor);
-    void setMovementDisplacement(const Position& movementDisplacement);
-    void setDecorationSizes(const Position& surfaceSize, const Position& spikesSize);
+    void setMovementDisplacement(const vec2& movementDisplacement);
+    void setDecorationSizes(const vec2& surfaceSize, const vec2& spikesSize);
 
 private:
     void syncChildren() override;
 
 private:
-    Position m_organicSurfaceSize;
-    Position m_spikesSize;
+    vec2 m_organicSurfaceSize;
+    vec2 m_spikesSize;
     RectangleShape m_floor;
     FlappyCatChain<FlappyCatSpike> m_floorSpikes;
     RectangleShape m_backgroundDirt;

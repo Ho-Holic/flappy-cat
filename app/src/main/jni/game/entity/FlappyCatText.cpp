@@ -21,7 +21,7 @@ void FlappyCatText::syncChildren()
     m_textBody.clear();
     m_textBody.reserve(m_text.size());
 
-    Position moveOffset(0.f, 0.f);
+    vec2 moveOffset(0.f, 0.f);
 
     enum {
         Spacing = 10
@@ -37,7 +37,7 @@ void FlappyCatText::syncChildren()
         characterBody.setCharacter(character);
         characterBody.setColor(m_textColor);
 
-        characterBody.moveBy(position() + Position(moveOffset.x(), 0.f));
+        characterBody.moveBy(position() + vec2(moveOffset.x(), 0.f));
         moveOffset = moveOffset + characterBody.size() + Spacing;
     }
 }

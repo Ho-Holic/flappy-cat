@@ -15,7 +15,7 @@ void FlappyCatCloud::initialize()
     m_cloudParts.reserve(static_cast<size_t>(m_parts));
 
     for (size_t i = 0; i < m_parts; ++i) {
-        m_cloudParts.emplace_back(Position(0.f, 0.f), 0.f, 32);
+        m_cloudParts.emplace_back(vec2(0.f, 0.f), 0.f, 32);
     }
 }
 

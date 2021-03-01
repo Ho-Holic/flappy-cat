@@ -2,18 +2,18 @@
 
 // engine
 #include "Color.hpp"
-#include "Position.hpp"
+#include <math/vec2.hpp>
 
 class Vertex {
 public:
-    Vertex(const Position& position, const Color& color);
+    Vertex(const vec2& position, const Color& color);
     Vertex();
 
 public:
-    const Position& position() const;
+    const vec2& position() const;
     const Color& color() const;
 
 private:
-    Position m_position;
+    vec2 m_position;
     Color m_color;
 };

@@ -72,7 +72,7 @@ void QtWindow::shouldRepaint()
                 float windowHeight = static_cast<float>(size().height());
                 float cameraHeight = game.cameraSize().y();
                 float scale = windowHeight / cameraHeight;
-                view().setScale(Position(scale, scale));
+                view().setScale(vec2(scale, scale));
 
                 while (!m_windowCloseRequested) {
                     auto now = Clock::now();
@@ -114,7 +114,7 @@ void QtWindow::shouldRepaint()
     if (m_paintDevice->size() != size()) {
 
         m_paintDevice->setSize(size());
-        view().setPosition(Position(static_cast<float>(size().width()), static_cast<float>(size().height())));
+        view().setPosition(vec2(static_cast<float>(size().width()), static_cast<float>(size().height())));
     }
 
     m_context->makeCurrent(this);

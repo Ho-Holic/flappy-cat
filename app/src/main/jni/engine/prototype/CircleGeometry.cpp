@@ -26,7 +26,7 @@ Geometry::size_type CircleGeometry::points() const
     return m_resolution;
 }
 
-Position CircleGeometry::pointAt(size_type index) const
+vec2 CircleGeometry::pointAt(size_type index) const
 {
 
     constexpr float pi = 3.141592654f;
@@ -35,7 +35,7 @@ Position CircleGeometry::pointAt(size_type index) const
     float x = std::cos(angle) * m_radius;
     float y = std::sin(angle) * m_radius;
 
-    return Position(m_radius + x, m_radius + y);
+    return vec2(m_radius + x, m_radius + y);
 }
 
 CircleGeometry::OnUpdateSignal& CircleGeometry::onUpdate()

@@ -27,17 +27,17 @@ public:
     float radius() const;
 
     void setJumpModifier(jump_modifier_type modifier);
-    void setGravity(const Position& gravity);
-    void setJumpConstants(const Position& acceleration, const Position& velocity);
+    void setGravity(const vec2& gravity);
+    void setJumpConstants(const vec2& acceleration, const vec2& velocity);
     void jump();
-    const Position& distance() const;
+    const vec2& distance() const;
 
 private:
     void syncChildren() override;
 
 private:
-    Position m_jumpAcceleration;
-    Position m_jumpVelocity;
+    vec2 m_jumpAcceleration;
+    vec2 m_jumpVelocity;
     CircleShape m_ball;
     PhysicsBody m_ballBody;
     FlappyCatMascot m_mascot;

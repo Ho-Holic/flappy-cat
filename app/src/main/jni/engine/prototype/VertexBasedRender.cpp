@@ -50,7 +50,7 @@ void VertexBasedRender::update(const Shape& shape)
         float sinValue = std::sin(angle);
         float cosValue = std::cos(angle);
 
-        Position p = shape.geometry().pointAt(index) - shape.transformation().origin();
+        vec2 p = shape.geometry().pointAt(index) - shape.transformation().origin();
 
         float rotatedX = p.x() * cosValue - p.y() * sinValue;
         float rotatedY = p.x() * sinValue + p.y() * cosValue;
@@ -66,7 +66,7 @@ void VertexBasedRender::update(const Shape& shape)
         //
 
         m_vertices << Vertex(shape.transformation().position()
-                + Position(rotatedX, rotatedY)
+                + vec2(rotatedX, rotatedY)
                 + shape.transformation().origin(),
             m_brushColor);
     }

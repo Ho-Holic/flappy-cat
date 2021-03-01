@@ -36,52 +36,52 @@ void FlappyCatMascot::drawOn(const Window& window) const
 
 void FlappyCatMascot::syncChildren()
 {
-    const Position& pos = position();
+    const vec2& pos = position();
     float angle = rotation();
 
-    Position referenceSize(2000.f, 2000.f); // must be equal, 2000x2000 square
+    vec2 referenceSize(2000.f, 2000.f); // must be equal, 2000x2000 square
 
-    Position scale = size() / referenceSize;
+    vec2 scale = size() / referenceSize;
 
     // relation between parts
-    Position bodyPos = Position(0.f, 0.f);
+    vec2 bodyPos = vec2(0.f, 0.f);
 
-    Position bodySize(1000.f, 500.f);
-    Position headPos(660.f, 340.f);
-    Position headSize(570.f, 440.f);
-    Position backLegPos(0.f, -375.f);
-    Position frontLegPos(625.f, 0.f);
-    Position legAndTailSize(150.f, 500.f);
-    Position tailPos(0.f, 250.f);
-    Position earSize(200.f, 375.f);
-    Position leftEarPos(0.f, headSize.y()); // 0.f, 440.f
-    Position rightEarPos(headSize.x() - earSize.x(), 0.f); // 360.f, 0
-    Position eyeSize(145.f, 145.f);
-    Position leftEyePos(80.f, 200.f);
-    Position rightEyePos(300.f, 0.f);
-    Position scarfSize(750.f, 210.f);
-    Position scarfPos(400.f, 210.f);
-    Position scarfTailSize(150.f, 315.f);
-    Position scarfTailPos(75.f, -148.f);
-    Position mouthSize(56.f, 36.f);
-    Position mouthPos(280.f, 96.f);
+    vec2 bodySize(1000.f, 500.f);
+    vec2 headPos(660.f, 340.f);
+    vec2 headSize(570.f, 440.f);
+    vec2 backLegPos(0.f, -375.f);
+    vec2 frontLegPos(625.f, 0.f);
+    vec2 legAndTailSize(150.f, 500.f);
+    vec2 tailPos(0.f, 250.f);
+    vec2 earSize(200.f, 375.f);
+    vec2 leftEarPos(0.f, headSize.y()); // 0.f, 440.f
+    vec2 rightEarPos(headSize.x() - earSize.x(), 0.f); // 360.f, 0
+    vec2 eyeSize(145.f, 145.f);
+    vec2 leftEyePos(80.f, 200.f);
+    vec2 rightEyePos(300.f, 0.f);
+    vec2 scarfSize(750.f, 210.f);
+    vec2 scarfPos(400.f, 210.f);
+    vec2 scarfTailSize(150.f, 315.f);
+    vec2 scarfTailPos(75.f, -148.f);
+    vec2 mouthSize(56.f, 36.f);
+    vec2 mouthPos(280.f, 96.f);
 
     // move
     // TODO: later remove additional Res variables
-    Position bodyPosRes = bodyPos;
-    Position headPosRes = bodyPos + headPos;
-    Position backLegPosRes = bodyPos + backLegPos;
-    Position frontLegPosRes = bodyPos + backLegPos + frontLegPos;
-    Position tailPosRes = bodyPos + tailPos;
-    Position leftEarPosRes = bodyPos + headPos + leftEarPos;
-    Position rightEarPosRes = bodyPos + headPos + leftEarPos + rightEarPos;
+    vec2 bodyPosRes = bodyPos;
+    vec2 headPosRes = bodyPos + headPos;
+    vec2 backLegPosRes = bodyPos + backLegPos;
+    vec2 frontLegPosRes = bodyPos + backLegPos + frontLegPos;
+    vec2 tailPosRes = bodyPos + tailPos;
+    vec2 leftEarPosRes = bodyPos + headPos + leftEarPos;
+    vec2 rightEarPosRes = bodyPos + headPos + leftEarPos + rightEarPos;
 
-    Position leftEyePosRes = bodyPos + headPos + leftEyePos;
-    Position rightEyePosRes = bodyPos + headPos + leftEyePos + rightEyePos;
+    vec2 leftEyePosRes = bodyPos + headPos + leftEyePos;
+    vec2 rightEyePosRes = bodyPos + headPos + leftEyePos + rightEyePos;
 
-    Position scarfPosRes = bodyPos + scarfPos;
-    Position scarfTailPosRes = bodyPos + scarfPos + scarfTailPos;
-    Position mouthPosRes = bodyPos + headPos + mouthPos;
+    vec2 scarfPosRes = bodyPos + scarfPos;
+    vec2 scarfTailPosRes = bodyPos + scarfPos + scarfTailPos;
+    vec2 mouthPosRes = bodyPos + headPos + mouthPos;
 
     // place objects
 
@@ -114,7 +114,7 @@ void FlappyCatMascot::syncChildren()
 
     // rotate
 
-    Position center(bodySize.x() / 2.f, bodySize.y() / 2.f);
+    vec2 center(bodySize.x() / 2.f, bodySize.y() / 2.f);
 
     m_body.transformation().setOrigin((center - bodyPosRes) * scale);
     m_head.transformation().setOrigin((center - headPosRes) * scale);

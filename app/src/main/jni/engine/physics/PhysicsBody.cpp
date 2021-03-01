@@ -11,9 +11,9 @@ PhysicsBody::PhysicsBody()
 
 void PhysicsBody::reset()
 {
-    m_acceleration = Position(0.f, 0.f);
-    m_velocity = Position(0.f, 0.f);
-    m_distance = Position(0.f, 0.f);
+    m_acceleration = vec2(0.f, 0.f);
+    m_velocity = vec2(0.f, 0.f);
+    m_distance = vec2(0.f, 0.f);
 }
 
 void PhysicsBody::update(float time)
@@ -25,32 +25,32 @@ void PhysicsBody::update(float time)
     m_distance = m_velocity * time; // distance passed by last update
 }
 
-const Position& PhysicsBody::acceleration() const
+const vec2& PhysicsBody::acceleration() const
 {
     return m_acceleration;
 }
 
-const Position& PhysicsBody::velocity() const
+const vec2& PhysicsBody::velocity() const
 {
     return m_velocity;
 }
 
-const Position& PhysicsBody::distance() const
+const vec2& PhysicsBody::distance() const
 {
     return m_distance;
 }
 
-void PhysicsBody::setAcceleration(const Position& acceleration)
+void PhysicsBody::setAcceleration(const vec2& acceleration)
 {
     m_acceleration = acceleration;
 }
 
-void PhysicsBody::setVelocity(const Position& velocity)
+void PhysicsBody::setVelocity(const vec2& velocity)
 {
     m_velocity = velocity;
 }
 
-void PhysicsBody::setGravity(const Position& gravity)
+void PhysicsBody::setGravity(const vec2& gravity)
 {
     m_gravity = gravity;
 }

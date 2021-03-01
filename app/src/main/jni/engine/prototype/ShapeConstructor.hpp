@@ -9,7 +9,7 @@ template <typename GeometryType>
 class ShapeConstructor : public Shape {
 public:
     template <typename... Args>
-    ShapeConstructor(const Position& position, Args... args);
+    ShapeConstructor(const vec2& position, Args... args);
     ShapeConstructor();
 
 public:
@@ -37,7 +37,7 @@ private:
 
 template <typename GeometryType>
 template <typename... Args>
-ShapeConstructor<GeometryType>::ShapeConstructor(const Position& position, Args... args)
+ShapeConstructor<GeometryType>::ShapeConstructor(const vec2& position, Args... args)
     : Shape()
     , m_transformation(position)
     , m_geometry(args...)
@@ -51,7 +51,7 @@ ShapeConstructor<GeometryType>::ShapeConstructor(const Position& position, Args.
 
 template <typename GeometryType>
 ShapeConstructor<GeometryType>::ShapeConstructor()
-    : ShapeConstructor(Position(0.f, 0.f))
+    : ShapeConstructor(vec2(0.f, 0.f))
 {
     //
 }

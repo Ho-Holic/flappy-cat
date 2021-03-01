@@ -1,6 +1,6 @@
 #pragma once
 
-#include <core/Position.hpp>
+#include <math/vec2.hpp>
 
 class PhysicsBody {
 public:
@@ -9,16 +9,16 @@ public:
     void update(float time);
 
 public:
-    const Position& acceleration() const;
-    const Position& velocity() const;
-    const Position& distance() const;
-    void setAcceleration(const Position& acceleration);
-    void setVelocity(const Position& velocity);
-    void setGravity(const Position& gravity);
+    const vec2& acceleration() const;
+    const vec2& velocity() const;
+    const vec2& distance() const;
+    void setAcceleration(const vec2& acceleration);
+    void setVelocity(const vec2& velocity);
+    void setGravity(const vec2& gravity);
 
 private:
-    Position m_gravity;
-    Position m_acceleration;
-    Position m_velocity;
-    Position m_distance;
+    vec2 m_gravity;
+    vec2 m_acceleration;
+    vec2 m_velocity;
+    vec2 m_distance;
 };

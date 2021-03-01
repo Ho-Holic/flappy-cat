@@ -5,7 +5,7 @@
 #include <core/Clock.hpp>
 #include <core/Color.hpp>
 #include <core/Log.hpp>
-#include <core/Position.hpp>
+#include <math/vec2.hpp>
 #include <core/Window.hpp>
 #include <style/Guidelines.hpp>
 #include <vector>
@@ -30,10 +30,10 @@ public:
     void drawOn(const Window& window) const override;
 
 public:
-    void setLinkSize(const Position& linkSize);
-    void setOffsetBetweenLinks(const Position& offset);
-    void setStartOffset(const Position& offset);
-    void setMovementDisplacement(const Position& movementDisplacement);
+    void setLinkSize(const vec2& linkSize);
+    void setOffsetBetweenLinks(const vec2& offset);
+    void setStartOffset(const vec2& offset);
+    void setMovementDisplacement(const vec2& movementDisplacement);
     void setWrapAroundModifier(const modifier_type& modifier);
 
 public:
@@ -42,14 +42,14 @@ public:
 
 private:
     float chainLength() const;
-    bool isWarpNeeded(const Position& point) const;
-    Position section() const;
+    bool isWarpNeeded(const vec2& point) const;
+    vec2 section() const;
 
 private:
-    Position m_linkSize;
-    Position m_offsetBetweenLinks;
-    Position m_startOffset;
-    Position m_movementDisplacement;
+    vec2 m_linkSize;
+    vec2 m_offsetBetweenLinks;
+    vec2 m_startOffset;
+    vec2 m_movementDisplacement;
     std::vector<entity_type> m_links;
     modifier_type m_wrapAroundModifier;
 };
@@ -90,13 +90,13 @@ float FlappyCatChain<Link>::chainLength() const
 }
 
 template <typename Link>
-Position FlappyCatChain<Link>::section() const
+vec2 FlappyCatChain<Link>::section() const
 {
     return m_linkSize + m_offsetBetweenLinks;
 }
 
 template <typename Link>
-bool FlappyCatChain<Link>::isWarpNeeded(const Position& point) const
+bool FlappyCatChain<Link>::isWarpNeeded(const vec2& point) const
 {
     return point.x() < this->position().x();
 }
@@ -132,7 +132,7 @@ void FlappyCatChain<Link>::reset()
     for (std::size_t i = 0; i < m_links.size(); ++i) {
 
         // TODO: replace with Position pos(position + Position(i * section().x(), 0.f));
-        Position pos(this->position().x() + i * section().x(), this->position().y());
+        vec2 pos(this->position().x() + i * section().x(), this->position().y());
 
         m_links[i].moveTo(pos + m_startOffset); // shift off-screen if needed by m_startOffset
         m_links[i].resize(m_linkSize);
@@ -149,12 +149,12 @@ void FlappyCatChain<Link>::update(const FrameDuration& time)
         link.moveBy(m_movementDisplacement);
         link.update(time);
 
-        Position p = link.position();
+        vec2 p = link.position();
 
         if (isWarpNeeded(p)) {
 
             // TODO: If 'p.x()' bigger then '2.f * chainLength' then wrap fails, need a loop
-            link.moveTo(Position(p.x() + chainLength(), p.y()));
+            link.moveTo(vec2(p.x() + chainLength(), p.y()));
 
             REQUIRE(TAG, m_wrapAroundModifier != nullptr, "WrapAround modifier must be not null");
             m_wrapAroundModifier(link);
@@ -177,25 +177,25 @@ void FlappyCatChain<Link>::setWrapAroundModifier(const modifier_type& modifier)
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::setLinkSize(const Position& linkSize)
+void FlappyCatChain<Link>::setLinkSize(const vec2& linkSize)
 {
     m_linkSize = linkSize;
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::setMovementDisplacement(const Position& movementDisplacement)
+void FlappyCatChain<Link>::setMovementDisplacement(const vec2& movementDisplacement)
 {
     m_movementDisplacement = movementDisplacement;
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::setOffsetBetweenLinks(const Position& offset)
+void FlappyCatChain<Link>::setOffsetBetweenLinks(const vec2& offset)
 {
     m_offsetBetweenLinks = offset;
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::setStartOffset(const Position& offset)
+void FlappyCatChain<Link>::setStartOffset(const vec2& offset)
 {
     m_startOffset = offset;
 }

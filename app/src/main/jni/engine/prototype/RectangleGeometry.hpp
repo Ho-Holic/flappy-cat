@@ -9,19 +9,19 @@ public:
     using OnUpdateSignal = Signal<void()>;
 
 public:
-    RectangleGeometry(const Position& size);
+    RectangleGeometry(const vec2& size);
     RectangleGeometry();
 
 public:
     OnUpdateSignal& onUpdate();
-    void resize(const Position& size);
-    const Position& size() const;
+    void resize(const vec2& size);
+    const vec2& size() const;
 
 public:
     virtual size_type points() const override;
-    virtual Position pointAt(size_type index) const override;
+    virtual vec2 pointAt(size_type index) const override;
 
 private:
-    Position m_size;
+    vec2 m_size;
     OnUpdateSignal m_onUpdate;
 };

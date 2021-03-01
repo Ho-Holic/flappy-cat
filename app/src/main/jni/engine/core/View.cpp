@@ -11,37 +11,37 @@ View::View()
     //
 }
 
-void View::setOrigin(const Position& origin)
+void View::setOrigin(const vec2& origin)
 {
 
     m_origin = origin;
 }
 
-const Position& View::origin() const
+const vec2& View::origin() const
 {
 
     return m_origin;
 }
 
-void View::setPosition(const Position& position)
+void View::setPosition(const vec2& position)
 {
 
     m_size = position;
 }
 
-const Position& View::position() const
+const vec2& View::position() const
 {
 
     return m_size;
 }
 
-void View::setScale(const Position& factor)
+void View::setScale(const vec2& factor)
 {
 
     m_scale = factor;
 }
 
-const Position& View::scale() const
+const vec2& View::scale() const
 {
 
     return m_scale;

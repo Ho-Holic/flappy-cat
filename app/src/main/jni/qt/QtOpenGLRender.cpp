@@ -88,7 +88,7 @@ void QtOpenGLRender::enqueue(int layerIndex, const Vertices& vertices, const Tra
         auto x = (2.f / transformation.position().x()) * vertices[i].position().x() * transformation.scale().x();
         auto y = (2.f / transformation.position().y()) * vertices[i].position().y() * transformation.scale().y();
 
-        polygon.vertices << Vertex(Position(x, y), vertices[i].color());
+        polygon.vertices << Vertex(vec2(x, y), vertices[i].color());
     }
 
     m_layersBackBuffer[layerIndex].push_back(polygon);

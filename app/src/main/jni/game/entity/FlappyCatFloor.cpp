@@ -20,19 +20,19 @@ void FlappyCatFloor::syncChildren()
 {
     // floor for collide
     m_floor.transformation().setPosition(position());
-    m_floor.geometry().resize(Position(size().x(), m_organicSurfaceSize.y()));
+    m_floor.geometry().resize(vec2(size().x(), m_organicSurfaceSize.y()));
 
     // spikes for movement effect
-    m_floorSpikes.moveTo(position() - Position(0.f, m_spikesSize.y()));
+    m_floorSpikes.moveTo(position() - vec2(0.f, m_spikesSize.y()));
 
     m_floorSpikes.setLinkSize(m_spikesSize);
     m_floorSpikes.setOffsetBetweenLinks(m_spikesSize);
 
-    m_floorSpikes.resize(Position(size().x(), 0.f));
+    m_floorSpikes.resize(vec2(size().x(), 0.f));
 
     // dirt under floor
-    m_backgroundDirt.transformation().setPosition(position() - Position(0.f, size().y()));
-    m_backgroundDirt.geometry().resize(Position(size().x(), size().y()));
+    m_backgroundDirt.transformation().setPosition(position() - vec2(0.f, size().y()));
+    m_backgroundDirt.geometry().resize(vec2(size().x(), size().y()));
 }
 
 void FlappyCatFloor::drawOn(const Window& window) const
@@ -71,13 +71,13 @@ void FlappyCatFloor::setColor(const Color& floorColor, const Color& dirtColor)
     m_backgroundDirt.setColor(dirtColor);
 }
 
-void FlappyCatFloor::setMovementDisplacement(const Position& movementDisplacement)
+void FlappyCatFloor::setMovementDisplacement(const vec2& movementDisplacement)
 {
     m_floorSpikes.setMovementDisplacement(movementDisplacement);
 }
 
-void FlappyCatFloor::setDecorationSizes(const Position& surfaceSize,
-    const Position& spikesSize)
+void FlappyCatFloor::setDecorationSizes(const vec2& surfaceSize,
+    const vec2& spikesSize)
 {
     m_organicSurfaceSize = surfaceSize;
     m_spikesSize = spikesSize;

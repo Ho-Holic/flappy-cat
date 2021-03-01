@@ -37,7 +37,7 @@ void FlappyCatHero::setJumpModifier(jump_modifier_type modifier)
     m_jumpModifier = modifier;
 }
 
-void FlappyCatHero::setGravity(const Position& gravity)
+void FlappyCatHero::setGravity(const vec2& gravity)
 {
     m_ballBody.setGravity(gravity);
 }
@@ -63,7 +63,7 @@ void FlappyCatHero::setColor(const Color& backgroundColor,
     m_mascot.setColor(bodyColor, scarfColor, mouthColor);
 }
 
-void FlappyCatHero::setJumpConstants(const Position& acceleration, const Position& velocity)
+void FlappyCatHero::setJumpConstants(const vec2& acceleration, const vec2& velocity)
 {
     m_jumpAcceleration = acceleration;
     m_jumpVelocity = velocity;
@@ -78,7 +78,7 @@ void FlappyCatHero::jump()
     }
 }
 
-const Position& FlappyCatHero::distance() const
+const vec2& FlappyCatHero::distance() const
 {
     return m_ballBody.distance();
 }
@@ -98,10 +98,10 @@ void FlappyCatHero::syncChildren()
 
     float diameter = m_ball.geometry().radius() * 2.f;
 
-    Position mascotPos = m_ball.transformation().position()
-        + Position(diameter * 0.25f, diameter * 0.3f);
+    vec2 mascotPos = m_ball.transformation().position()
+        + vec2(diameter * 0.25f, diameter * 0.3f);
 
     m_mascot.moveTo(mascotPos);
-    m_mascot.resize(Position(diameter, diameter));
+    m_mascot.resize(vec2(diameter, diameter));
     m_mascot.rotateTo(rotation());
 }

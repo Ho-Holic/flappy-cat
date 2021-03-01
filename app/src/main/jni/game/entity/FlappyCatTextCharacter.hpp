@@ -10,7 +10,7 @@ public:
 
 public:
     void drawOn(const Window& window) const override;
-    const Position& size() const override;
+    const vec2& size() const override;
 
 public:
     void setCharacter(char character);
@@ -49,5 +49,5 @@ private:
 private:
     char m_character;
     std::array<RectangleShape, CharacterWidth * CharacterHeight> m_characterBody;
-    Position m_size;
+    vec2 m_size;
 };

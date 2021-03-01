@@ -26,7 +26,7 @@ void FlappyCatWall::setGapDisplacement(float displacement)
     syncChildren();
 }
 
-bool FlappyCatWall::collideWithCircle(const Position& center, float radius)
+bool FlappyCatWall::collideWithCircle(const vec2& center, float radius)
 {
     return Collide::circleRect(center, radius, m_topBlock)
         || Collide::circleRect(center, radius, m_bottomBlock);
@@ -67,11 +67,11 @@ void FlappyCatWall::syncChildren()
     // Need to deal with situation when all values are 0.f to make assert work
     //REQUIRE(TAG, ((A1 < A2) && (A2 < A3) && (A3 < A4)), "Vectors must not overlap");
 
-    m_bottomBlock.transformation().setPosition(Position(position().x(), A1));
-    m_bottomBlock.geometry().resize(Position(size().x(), (A2 - A1)));
+    m_bottomBlock.transformation().setPosition(vec2(position().x(), A1));
+    m_bottomBlock.geometry().resize(vec2(size().x(), (A2 - A1)));
 
-    m_topBlock.transformation().setPosition(Position(position().x(), A3));
-    m_topBlock.geometry().resize(Position(size().x(), (A4 - A3)));
+    m_topBlock.transformation().setPosition(vec2(position().x(), A3));
+    m_topBlock.geometry().resize(vec2(size().x(), (A4 - A3)));
 }
 
 void FlappyCatWall::activateWall()

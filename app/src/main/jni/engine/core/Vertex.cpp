@@ -1,7 +1,7 @@
 // engine
 #include "Vertex.hpp"
 
-Vertex::Vertex(const Position& position, const Color& color)
+Vertex::Vertex(const vec2& position, const Color& color)
     : m_position(position)
     , m_color(color)
 {
@@ -9,11 +9,11 @@ Vertex::Vertex(const Position& position, const Color& color)
 }
 
 Vertex::Vertex()
-    : Vertex(Position(0, 0), Color(0x000000ff))
+    : Vertex(vec2(0, 0), Color(0x000000ff))
 {
 }
 
-const Position& Vertex::position() const
+const vec2& Vertex::position() const
 {
 
     return m_position;

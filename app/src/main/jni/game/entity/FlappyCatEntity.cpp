@@ -17,18 +17,18 @@ void FlappyCatEntity::syncChildren()
     // intentionally left blank
 }
 
-void FlappyCatEntity::moveBy(const Position& offset)
+void FlappyCatEntity::moveBy(const vec2& offset)
 {
     moveTo(position() + offset);
 }
 
-void FlappyCatEntity::moveTo(const Position& position)
+void FlappyCatEntity::moveTo(const vec2& position)
 {
     m_position = position;
     syncChildren();
 }
 
-void FlappyCatEntity::resize(const Position& size)
+void FlappyCatEntity::resize(const vec2& size)
 {
     m_size = size;
     syncChildren();
@@ -45,12 +45,12 @@ const FlappyCatGameConstants& FlappyCatEntity::gameConstants() const
     return m_gameConstants;
 }
 
-const Position& FlappyCatEntity::position() const
+const vec2& FlappyCatEntity::position() const
 {
     return m_position;
 }
 
-const Position& FlappyCatEntity::size() const
+const vec2& FlappyCatEntity::size() const
 {
     return m_size;
 }

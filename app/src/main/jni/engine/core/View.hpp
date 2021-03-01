@@ -10,20 +10,20 @@ public:
     virtual ~View() = default;
 
 public:
-    virtual void setOrigin(const Position& origin) override;
+    virtual void setOrigin(const vec2& origin) override;
     // little hack here 'position' is 'size'
-    virtual void setPosition(const Position& position) override;
-    virtual void setScale(const Position& factor) override;
+    virtual void setPosition(const vec2& position) override;
+    virtual void setScale(const vec2& factor) override;
     virtual void setRotation(float angle) override;
 
-    virtual const Position& origin() const override;
-    virtual const Position& position() const override;
-    virtual const Position& scale() const override;
+    virtual const vec2& origin() const override;
+    virtual const vec2& position() const override;
+    virtual const vec2& scale() const override;
     virtual float rotation() const override;
 
 public:
-    Position m_origin;
-    Position m_size;
-    Position m_scale;
+    vec2 m_origin;
+    vec2 m_size;
+    vec2 m_scale;
     float m_angle;
 };

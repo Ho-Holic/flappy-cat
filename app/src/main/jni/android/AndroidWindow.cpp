@@ -455,7 +455,7 @@ void AndroidWindow::resize(int32_t width, int32_t height)
     m_width = width;
     m_height = height;
 
-    view().setPosition(Position(static_cast<float>(m_width),
+    view().setPosition(vec2(static_cast<float>(m_width),
         static_cast<float>(m_height)));
 
     // Set the viewport

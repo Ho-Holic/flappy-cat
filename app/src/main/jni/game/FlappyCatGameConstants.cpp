@@ -6,7 +6,7 @@ FlappyCatGameConstants::FlappyCatGameConstants()
     : m_randomDevice()
     , m_generator(m_randomDevice())
     , m_colorScheme()
-    , m_constants(ConstantsSize, Position())
+    , m_constants(ConstantsSize, vec2())
     , m_daytimeFactor(0)
 {
     //
@@ -38,7 +38,7 @@ Daytime FlappyCatGameConstants::chooseDaytime()
     return daytime;
 }
 
-Position FlappyCatGameConstants::operator[](FlappyCatGameConstants::Constants index) const
+vec2 FlappyCatGameConstants::operator[](FlappyCatGameConstants::Constants index) const
 {
     REQUIRE(TAG, index < ConstantsSize, "m_constants out of bounds");
     return m_constants[index];
@@ -50,7 +50,7 @@ void FlappyCatGameConstants::reset()
 
     m_colorScheme.generateNewScheme(daytime);
 
-    Position cameraSize = Position(1080.f, 1920.f);
+    vec2 cameraSize = vec2(1080.f, 1920.f);
 
     float plateWidth = 1000.f;
 
@@ -61,49 +61,49 @@ void FlappyCatGameConstants::reset()
     m_constants[CameraSize] = cameraSize;
 
     // floor
-    m_constants[FloorPosition] = Position(-plateWidth, -offsetFloorY);
-    m_constants[FloorSize] = Position(plateWidth * 2.f, halfCameraY - offsetFloorY);
-    m_constants[FloorOrganicSurfaceSize] = Position(0.f, 20.f);
-    m_constants[FloorSpikesSize] = Position(25.f, 25.f);
+    m_constants[FloorPosition] = vec2(-plateWidth, -offsetFloorY);
+    m_constants[FloorSize] = vec2(plateWidth * 2.f, halfCameraY - offsetFloorY);
+    m_constants[FloorOrganicSurfaceSize] = vec2(0.f, 20.f);
+    m_constants[FloorSpikesSize] = vec2(25.f, 25.f);
 
     // barricade
-    m_constants[BarricadeWallSize] = Position(180.f, halfCameraY + offsetFloorY);
-    m_constants[BarricadeBetweenWallOffset] = 2.2f * Position(180.f, 0.f);
-    m_constants[BarricadePosition] = Position(-plateWidth, -offsetFloorY);
-    m_constants[BarricadeSize] = Position(plateWidth * 2.f, halfCameraY + offsetFloorY);
-    m_constants[BarricadeWallGapDisplacement] = Position(0.f, 300.f);
-    m_constants[BarricadeStartOffset] = Position(plateWidth * 2.5f, 0.f);
+    m_constants[BarricadeWallSize] = vec2(180.f, halfCameraY + offsetFloorY);
+    m_constants[BarricadeBetweenWallOffset] = 2.2f * vec2(180.f, 0.f);
+    m_constants[BarricadePosition] = vec2(-plateWidth, -offsetFloorY);
+    m_constants[BarricadeSize] = vec2(plateWidth * 2.f, halfCameraY + offsetFloorY);
+    m_constants[BarricadeWallGapDisplacement] = vec2(0.f, 300.f);
+    m_constants[BarricadeStartOffset] = vec2(plateWidth * 2.5f, 0.f);
 
     // city
-    m_constants[CityHouseOffset] = Position(0.f, 200.f);
-    m_constants[CityHouseSize] = Position(100.f, 150.f);
-    m_constants[CityPosition] = Position(-plateWidth, -offsetFloorY);
-    m_constants[CitySize] = Position(plateWidth * 2.f, 0.f);
+    m_constants[CityHouseOffset] = vec2(0.f, 200.f);
+    m_constants[CityHouseSize] = vec2(100.f, 150.f);
+    m_constants[CityPosition] = vec2(-plateWidth, -offsetFloorY);
+    m_constants[CitySize] = vec2(plateWidth * 2.f, 0.f);
 
     // hero
-    m_constants[HeroPosition] = Position(-300.f, 0.f);
-    m_constants[HeroSize] = Position(50.f, 50.f);
+    m_constants[HeroPosition] = vec2(-300.f, 0.f);
+    m_constants[HeroSize] = vec2(50.f, 50.f);
 
     // clouds
     // constants for 'daytime == Daytime::Day'
-    m_constants[SkyCloudSize] = Position(20.f, 20.f);
-    m_constants[SkyCloudOffset] = Position(0.f, 100.f);
-    m_constants[SkyOffset] = Position(0.f, 500.f);
-    m_constants[SkyCloudParts] = Position(100.f, 0.f);
+    m_constants[SkyCloudSize] = vec2(20.f, 20.f);
+    m_constants[SkyCloudOffset] = vec2(0.f, 100.f);
+    m_constants[SkyOffset] = vec2(0.f, 500.f);
+    m_constants[SkyCloudParts] = vec2(100.f, 0.f);
 
     if (daytime == Daytime::Night) {
-        m_constants[SkyCloudSize] = Position(1.f, 0.f);
-        m_constants[SkyCloudOffset] = Position(0.f, 5.f);
-        m_constants[SkyOffset] = Position(0.f, 500.f);
-        m_constants[SkyCloudParts] = Position(50.f, 0.f);
+        m_constants[SkyCloudSize] = vec2(1.f, 0.f);
+        m_constants[SkyCloudOffset] = vec2(0.f, 5.f);
+        m_constants[SkyOffset] = vec2(0.f, 500.f);
+        m_constants[SkyCloudParts] = vec2(50.f, 0.f);
     }
 
     // physics
-    m_constants[PhysicsGravity] = Position(0.f, 100.f);
-    m_constants[PhysicsBackgroundDisplacement] = Position(-2.8f, 0.f);
-    m_constants[PhysicsForegroundDisplacement] = Position(-7.f, 0.f);
-    m_constants[PhysicsJumpAcceleration] = Position(0.f, -800.f);
-    m_constants[PhysicsJumpVelocity] = Position(0.f, 800.f);
+    m_constants[PhysicsGravity] = vec2(0.f, 100.f);
+    m_constants[PhysicsBackgroundDisplacement] = vec2(-2.8f, 0.f);
+    m_constants[PhysicsForegroundDisplacement] = vec2(-7.f, 0.f);
+    m_constants[PhysicsJumpAcceleration] = vec2(0.f, -800.f);
+    m_constants[PhysicsJumpVelocity] = vec2(0.f, 800.f);
 }
 
 const FlappyCatColorScheme& FlappyCatGameConstants::colorScheme() const

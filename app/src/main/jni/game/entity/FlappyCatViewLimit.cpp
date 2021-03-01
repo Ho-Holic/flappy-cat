@@ -16,18 +16,18 @@ FlappyCatViewLimit::FlappyCatViewLimit(const FlappyCatGameConstants& gameConstan
 
 void FlappyCatViewLimit::syncChildren()
 {
-    const Position& position = this->position();
-    const Position& size = this->size();
+    const vec2& position = this->position();
+    const vec2& size = this->size();
 
     // move
-    m_top.transformation().setPosition(position + Position(0.f, size.y()));
-    m_topRight.transformation().setPosition(position + Position(size.x(), size.y()));
-    m_right.transformation().setPosition(position + Position(size.x(), 0.f));
-    m_bottomRight.transformation().setPosition(position + Position(size.x(), -size.y()));
-    m_bottom.transformation().setPosition(position + Position(0.f, -size.y()));
-    m_bottomLeft.transformation().setPosition(position + Position(-size.x(), -size.y()));
-    m_left.transformation().setPosition(position + Position(-size.x(), 0.f));
-    m_topLeft.transformation().setPosition(position + Position(-size.x(), size.y()));
+    m_top.transformation().setPosition(position + vec2(0.f, size.y()));
+    m_topRight.transformation().setPosition(position + vec2(size.x(), size.y()));
+    m_right.transformation().setPosition(position + vec2(size.x(), 0.f));
+    m_bottomRight.transformation().setPosition(position + vec2(size.x(), -size.y()));
+    m_bottom.transformation().setPosition(position + vec2(0.f, -size.y()));
+    m_bottomLeft.transformation().setPosition(position + vec2(-size.x(), -size.y()));
+    m_left.transformation().setPosition(position + vec2(-size.x(), 0.f));
+    m_topLeft.transformation().setPosition(position + vec2(-size.x(), size.y()));
 
     // resize
     m_top.geometry().resize(size);

@@ -24,7 +24,7 @@ FlappyCatGame::FlappyCatGame()
     reset();
 }
 
-Position FlappyCatGame::cameraSize() const
+vec2 FlappyCatGame::cameraSize() const
 {
     using Constant = FlappyCatGameConstants::Constants;
 
@@ -69,13 +69,13 @@ void FlappyCatGame::initialize()
             float radius = m_hero.radius();
             // TODO: implement proper origin in 'transformation' and remove this line
             // circle origin in bottom left so we shift by radius
-            Position center = m_hero.position() + Position(radius, radius);
+            vec2 center = m_hero.position() + vec2(radius, radius);
 
             if (m_gameState == PlayState || m_gameState == LoseState) {
 
                 if (Collide::circleRect(center, radius, m_floor.boundingBox())) {
                     m_gameState = OnTheFloorState;
-                    m_hero.moveTo(Position(m_hero.position().x(), m_floor.position().y()));
+                    m_hero.moveTo(vec2(m_hero.position().x(), m_floor.position().y()));
                 }
             }
         });
@@ -96,7 +96,7 @@ void FlappyCatGame::initialize()
 
                 wall.setGapInterval(m_hero.radius() * 2.f * 4.f);
 
-                Position offset = m_gameConstants[Constant::BarricadeWallGapDisplacement];
+                vec2 offset = m_gameConstants[Constant::BarricadeWallGapDisplacement];
                 wall.setGapDisplacement(m_gameConstants.clampedRandomOffsetFrom(offset.x(), offset.y()));
 
                 wall.setColor(colorScheme[ColorConstant::BlockColor]);
@@ -107,14 +107,14 @@ void FlappyCatGame::initialize()
                 float radius = m_hero.radius();
                 // TODO: implement proper origin in 'transformation' and remove this code
                 // circle origin in bottom left so we shift by radius
-                Position center = m_hero.position() + Position(radius, radius);
+                vec2 center = m_hero.position() + vec2(radius, radius);
 
                 if (m_gameState == PlayState) {
 
                     if (wall.collideWithCircle(center, radius)) {
 
                         m_gameState = LoseState;
-                        m_floor.setMovementDisplacement(Position(0.f, 0.f));
+                        m_floor.setMovementDisplacement(vec2(0.f, 0.f));
                     } else if (!wall.isActivated() && wall.collideWithCircle(center, radius + radius * 0.2f)) {
 
                         wall.activateWall();
@@ -128,7 +128,7 @@ void FlappyCatGame::initialize()
 
     m_barricade.setWrapAroundModifier(
         [this](FlappyCatWall& wall) {
-            Position offset = m_gameConstants[Constant::BarricadeWallGapDisplacement];
+            vec2 offset = m_gameConstants[Constant::BarricadeWallGapDisplacement];
             wall.setGapDisplacement(m_gameConstants.clampedRandomOffsetFrom(offset.x(), offset.y()));
         });
 
@@ -144,9 +144,9 @@ void FlappyCatGame::initialize()
                 house.setResetModifier([this](FlappyCatSpike& house) {
                     const FlappyCatColorScheme& colorScheme = m_gameConstants.colorScheme();
 
-                    Position offset = m_gameConstants[Constant::CityHouseOffset];
-                    Position varyingSize(m_gameConstants[Constant::CityHouseSize]
-                        + Position(0.f, std::abs(m_gameConstants.randomOffsetFrom(offset.x(), offset.y()))));
+                    vec2 offset = m_gameConstants[Constant::CityHouseOffset];
+                    vec2 varyingSize(m_gameConstants[Constant::CityHouseSize]
+                        + vec2(0.f, std::abs(m_gameConstants.randomOffsetFrom(offset.x(), offset.y()))));
                     house.resize(varyingSize);
                     house.setColor(colorScheme[ColorConstant::HouseColor]);
                 });
@@ -156,9 +156,9 @@ void FlappyCatGame::initialize()
     m_backgroundCity.setWrapAroundModifier(
         [this](FlappyCatSpike& house) {
             // add some variation to city buildings height
-            Position offset = m_gameConstants[Constant::CityHouseOffset];
-            Position varyingSize(m_gameConstants[Constant::CityHouseSize]
-                + Position(0.f, std::abs(m_gameConstants.randomOffsetFrom(offset.x(), offset.y()))));
+            vec2 offset = m_gameConstants[Constant::CityHouseOffset];
+            vec2 varyingSize(m_gameConstants[Constant::CityHouseSize]
+                + vec2(0.f, std::abs(m_gameConstants.randomOffsetFrom(offset.x(), offset.y()))));
             house.resize(varyingSize);
         });
 
@@ -169,14 +169,14 @@ void FlappyCatGame::initialize()
             sky.foreachCloud([this](CircleShape& cloud) {
                 const FlappyCatColorScheme& colorScheme = m_gameConstants.colorScheme();
 
-                Position cloudOffset = m_gameConstants[Constant::SkyCloudOffset];
-                Position skyOffset = m_gameConstants[Constant::SkyOffset];
+                vec2 cloudOffset = m_gameConstants[Constant::SkyCloudOffset];
+                vec2 skyOffset = m_gameConstants[Constant::SkyOffset];
 
                 cloud.geometry().setRadius(m_gameConstants[Constant::SkyCloudSize].x()
                     + std::abs(m_gameConstants.randomOffsetFrom(cloudOffset.x(),
                         cloudOffset.y())));
 
-                Position pos(m_gameConstants.randomOffsetFrom(skyOffset.x(), skyOffset.y()),
+                vec2 pos(m_gameConstants.randomOffsetFrom(skyOffset.x(), skyOffset.y()),
                     m_gameConstants.randomOffsetFrom(skyOffset.x(), skyOffset.y()));
 
                 cloud.transformation().setPosition(pos);
@@ -213,7 +213,7 @@ void FlappyCatGame::initialize()
             hero.rotateTo(angle);
 
             float offset = m_gameConstants[Constant::HeroSize].x();
-            m_score.moveTo(m_hero.position() - Position(offset, offset / 4.f));
+            m_score.moveTo(m_hero.position() - vec2(offset, offset / 4.f));
         });
 
     m_hero.setResetModifier(
@@ -239,7 +239,7 @@ void FlappyCatGame::initialize()
         score.setText(std::to_string(m_scoreCounter));
 
         float offset = m_gameConstants[Constant::HeroSize].x();
-        score.moveTo(m_hero.position() - Position(offset, offset / 4.f));
+        score.moveTo(m_hero.position() - vec2(offset, offset / 4.f));
 
         score.setColor(colorScheme[ColorConstant::TextColor]);
     });

@@ -154,9 +154,9 @@ void FlappyCatTextCharacter::syncChildren()
     processCharacterWith([this](size_t x, size_t y,
                              const CharacterData&,
                              RectangleShape& body) {
-        body.transformation().setPosition(position() + Position((x * CharacterPartWidth), -static_cast<float>(y * CharacterPartHeight)));
+        body.transformation().setPosition(position() + vec2((x * CharacterPartWidth), -static_cast<float>(y * CharacterPartHeight)));
 
-        body.geometry().resize(Position(CharacterPartWidth, CharacterPartHeight));
+        body.geometry().resize(vec2(CharacterPartWidth, CharacterPartHeight));
     });
 }
 
@@ -171,7 +171,7 @@ void FlappyCatTextCharacter::drawOn(const Window& window) const
     });
 }
 
-const Position& FlappyCatTextCharacter::size() const
+const vec2& FlappyCatTextCharacter::size() const
 {
     return m_size;
 }

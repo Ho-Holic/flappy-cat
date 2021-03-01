@@ -20,7 +20,7 @@ public:
 
 public:
     virtual size_type points() const override;
-    virtual Position pointAt(size_type index) const override;
+    virtual vec2 pointAt(size_type index) const override;
 
 private:
     float m_radius;

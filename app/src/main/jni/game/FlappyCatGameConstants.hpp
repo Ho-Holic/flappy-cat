@@ -4,7 +4,7 @@
 #include "FlappyCatColorScheme.hpp"
 
 // engine
-#include <core/Position.hpp>
+#include <math/vec2.hpp>
 
 // stl
 #include <random>
@@ -33,7 +33,7 @@ public:
     // and don't want to deal with forward declarations of modern enums =)
     const FlappyCatColorScheme& colorScheme() const;
 
-    Position operator[](Constants index) const;
+    vec2 operator[](Constants index) const;
 
 public:
     float randomOffsetFrom(float initial,
@@ -49,7 +49,7 @@ private:
     std::random_device m_randomDevice;
     std::mt19937 m_generator;
     FlappyCatColorScheme m_colorScheme;
-    std::vector<Position> m_constants;
+    std::vector<vec2> m_constants;
     int32_t m_daytimeFactor;
 };
 

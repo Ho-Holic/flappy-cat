@@ -2,7 +2,7 @@
 
 #include "entity/FlappyCatStateNode.hpp"
 #include <core/Clock.hpp>
-#include <core/Position.hpp>
+#include <math/vec2.hpp>
 #include <core/Window.hpp>
 #include <prototype/RectangleShape.hpp>
 
@@ -27,7 +27,7 @@ public:
 public:
     void setGapInterval(float interval);
     void setGapDisplacement(float displacement);
-    bool collideWithCircle(const Position& center, float radius);
+    bool collideWithCircle(const vec2& center, float radius);
 
 public:
     void drawOn(const Window& window) const override;

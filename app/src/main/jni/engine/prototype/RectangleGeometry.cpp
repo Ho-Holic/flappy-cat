@@ -4,7 +4,7 @@
 // style
 #include <style/Guidelines.hpp>
 
-RectangleGeometry::RectangleGeometry(const Position& size)
+RectangleGeometry::RectangleGeometry(const vec2& size)
     : Geometry()
     , m_size(size)
     , m_onUpdate()
@@ -13,7 +13,7 @@ RectangleGeometry::RectangleGeometry(const Position& size)
 }
 
 RectangleGeometry::RectangleGeometry()
-    : RectangleGeometry(Position())
+    : RectangleGeometry(vec2())
 {
     //
 }
@@ -23,27 +23,27 @@ Geometry::size_type RectangleGeometry::points() const
     return 4;
 }
 
-Position RectangleGeometry::pointAt(size_type index) const
+vec2 RectangleGeometry::pointAt(size_type index) const
 {
 
     switch (index) {
     case 0:
-        return Position(0.f, 0.f);
+        return vec2(0.f, 0.f);
         break;
     case 1:
-        return Position(m_size.x(), 0.f);
+        return vec2(m_size.x(), 0.f);
         break;
     case 2:
-        return Position(m_size.x(), m_size.y());
+        return vec2(m_size.x(), m_size.y());
         break;
     case 3:
-        return Position(0.f, m_size.y());
+        return vec2(0.f, m_size.y());
         break;
     default:
-        return Position(0.f, 0.f);
+        return vec2(0.f, 0.f);
     }
 
-    return Position(0.f, 0.f);
+    return vec2(0.f, 0.f);
 }
 
 RectangleGeometry::OnUpdateSignal& RectangleGeometry::onUpdate()
@@ -51,13 +51,13 @@ RectangleGeometry::OnUpdateSignal& RectangleGeometry::onUpdate()
     return m_onUpdate;
 }
 
-void RectangleGeometry::resize(const Position& size)
+void RectangleGeometry::resize(const vec2& size)
 {
     m_size = size;
     m_onUpdate.emit();
 }
 
-const Position& RectangleGeometry::size() const
+const vec2& RectangleGeometry::size() const
 {
     return m_size;
 }
