@@ -2,7 +2,6 @@
 #include "FlappyCatClock.hpp"
 #include <core/Log.hpp>
 #include <physics/Collide.hpp>
-#include <physics/VectorMath.hpp>
 #include <string>
 
 FlappyCatGame::FlappyCatGame()

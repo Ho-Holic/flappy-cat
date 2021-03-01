@@ -1,7 +1,7 @@
 // engine
 #include "Collide.hpp"
 #include <core/Log.hpp>
-#include <physics/VectorMath.hpp>
+#include <math/geometric.hpp>
 
 // style
 #include <style/Guidelines.hpp>
@@ -39,10 +39,10 @@ bool Collide::pointRect(const vec2& p,
 
     UNUSED(c); // algorithm don't use 'c' point to find intersection
 
-    auto apab = VectorMath::dot(p - a, b - a);
-    auto ab2 = VectorMath::dot(b - a, b - a);
-    auto apad = VectorMath::dot(p - a, d - a);
-    auto ad2 = VectorMath::dot(d - a, d - a);
+    auto apab = dot(p - a, b - a);
+    auto ab2 = dot(b - a, b - a);
+    auto apad = dot(p - a, d - a);
+    auto ad2 = dot(d - a, d - a);
 
     return (0 <= apab && apab <= ab2) && (0 <= apad && apad <= ad2);
 }
@@ -52,11 +52,11 @@ bool Collide::lineCircle(const vec2& circleCenter, float circleRadius,
     const vec2& b)
 {
 
-    vec2 c = VectorMath::projectionPointLine(circleCenter, a, b);
+    vec2 c = projectionPointLine(circleCenter, a, b);
 
-    auto distanceAB = VectorMath::distance(a, b);
-    auto distanceAC = VectorMath::distance(a, c);
-    auto distanceCB = VectorMath::distance(c, b);
+    auto distanceAB = distance(a, b);
+    auto distanceAC = distance(a, c);
+    auto distanceCB = distance(c, b);
 
     bool isPointOnLine = distanceAC + distanceCB <= distanceAB; // insure we inside a line
 
@@ -68,5 +68,5 @@ bool Collide::lineCircle(const vec2& circleCenter, float circleRadius,
    * this line segment, but we still in the circle yet =)
    */
 
-    return isPointOnLine && (VectorMath::distance(circleCenter, c) <= circleRadius);
+    return isPointOnLine && (distance(circleCenter, c) <= circleRadius);
 }
