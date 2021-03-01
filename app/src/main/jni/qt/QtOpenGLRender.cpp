@@ -34,6 +34,13 @@ void QtOpenGLRender::init()
 {
     initializeOpenGLFunctions(); // before any use of `gl*` prefixed functions
 
+    // setup gl state
+    glEnable(GL_CULL_FACE);
+    glDisable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     static std::string vertexShader(R"(
       attribute vec4 a_position;
       attribute vec4 a_color;
@@ -175,7 +182,7 @@ GLuint QtOpenGLRender::createProgram(const std::vector<GLuint>& shaders)
 
     for (auto shader : shaders) {
         glAttachShader(program, shader);
-    }    
+    }
 
     {
         glBindAttribLocation(program, AttributePosition, "a_position_modelspace");
