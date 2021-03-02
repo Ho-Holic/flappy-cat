@@ -9,67 +9,63 @@ public:
     vec2(value_type x, value_type y);
 
 public:
-    value_type x() const;
-    value_type y() const;
-
-private:
-    value_type mX;
-    value_type mY;
+    value_type x;
+    value_type y;
 };
 
 inline vec2 operator+(const vec2& left, const vec2& right)
 {
 
-    return vec2(left.x() + right.x(),
-        left.y() + right.y());
+    return vec2(left.x + right.x,
+        left.y + right.y);
 }
 
 inline vec2 operator-(const vec2& left, const vec2& right)
 {
 
-    return vec2(left.x() - right.x(),
-        left.y() - right.y());
+    return vec2(left.x - right.x,
+        left.y - right.y);
 }
 
 inline vec2 operator*(const vec2& left, float scalar)
 {
 
-    return vec2(left.x() * scalar, left.y() * scalar);
+    return vec2(left.x * scalar, left.y * scalar);
 }
 
 inline vec2 operator*(float scalar, const vec2& right)
 {
 
-    return vec2(scalar * right.x(), scalar * right.y());
+    return vec2(scalar * right.x, scalar * right.y);
 }
 
 inline vec2 operator/(const vec2& left, float scalar)
 {
 
-    return vec2(left.x() / scalar, left.y() / scalar);
+    return vec2(left.x / scalar, left.y / scalar);
 }
 
 inline vec2 operator/(float scalar, const vec2& right)
 {
 
-    return vec2(scalar / right.x(), scalar / right.y());
+    return vec2(scalar / right.x, scalar / right.y);
 }
 
 inline vec2 operator+(const vec2& left, float scalar)
 {
 
-    return vec2(left.x() + scalar, left.y() + scalar);
+    return vec2(left.x + scalar, left.y + scalar);
 }
 
 inline vec2 operator+(float scalar, const vec2& right)
 {
 
-    return vec2(scalar + right.x(), scalar + right.y());
+    return vec2(scalar + right.x, scalar + right.y);
 }
 
 inline vec2 operator-(const vec2& p)
 {
-    return vec2(-p.x(), -p.y());
+    return vec2(-p.x, -p.y);
 }
 
 // remove functions below, or make good design for this functions
@@ -79,12 +75,12 @@ inline vec2 operator-(const vec2& p)
 inline vec2 operator*(const vec2& left, const vec2& right)
 {
 
-    return vec2(left.x() * right.x(),
-        left.y() * right.y());
+    return vec2(left.x * right.x,
+        left.y * right.y);
 }
 
 inline vec2 operator/(const vec2& left, const vec2& right)
 {
-    return vec2(left.x() / right.x(),
-        left.y() / right.y());
+    return vec2(left.x / right.x,
+        left.y / right.y);
 }

@@ -78,7 +78,7 @@ float FlappyCatChain<Link>::chainLength() const
    * We don't have proper cmath header, replace with code below in NDK r15 (May 27 , 2017)
    * replace code with:
    *
-   *     return std::round(m_size.x() / section().x()) * section().x();
+   *     return std::round(m_size.x / section().x) * section().x;
    *
    * Read more about problem:
    * https://github.com/android-ndk/ndk/milestone/7
@@ -86,7 +86,7 @@ float FlappyCatChain<Link>::chainLength() const
    * https://code.google.com/p/android/issues/detail?id=82734
    */
 
-    return static_cast<size_t>(this->size().x() / section().x()) * section().x();
+    return static_cast<size_t>(this->size().x / section().x) * section().x;
 }
 
 template <typename Link>
@@ -98,7 +98,7 @@ vec2 FlappyCatChain<Link>::section() const
 template <typename Link>
 bool FlappyCatChain<Link>::isWarpNeeded(const vec2& point) const
 {
-    return point.x() < this->position().x();
+    return point.x < this->position().x;
 }
 
 template <typename Link>
@@ -110,7 +110,7 @@ void FlappyCatChain<Link>::initialize()
    * If m_offsetBetweenLinks is set before `initialize()` then incorrect behaviour
    * would be observed when one would call setOffsetBetweenLinks()
    */
-    std::size_t linkCount = static_cast<std::size_t>(chainLength() / section().x());
+    std::size_t linkCount = static_cast<std::size_t>(chainLength() / section().x);
 
     CAUTION("If all of a sudden no object appears on the screen, please pass"
             "some hardcoded value e.g 'm_links.reserve(120)' and check if bug appears"
@@ -131,8 +131,8 @@ void FlappyCatChain<Link>::reset()
 
     for (std::size_t i = 0; i < m_links.size(); ++i) {
 
-        // TODO: replace with Position pos(position + Position(i * section().x(), 0.f));
-        vec2 pos(this->position().x() + i * section().x(), this->position().y());
+        // TODO: replace with Position pos(position + Position(i * section().x, 0.f));
+        vec2 pos(this->position().x + i * section().x, this->position().y);
 
         m_links[i].moveTo(pos + m_startOffset); // shift off-screen if needed by m_startOffset
         m_links[i].resize(m_linkSize);
@@ -153,8 +153,8 @@ void FlappyCatChain<Link>::update(const FrameDuration& time)
 
         if (isWarpNeeded(p)) {
 
-            // TODO: If 'p.x()' bigger then '2.f * chainLength' then wrap fails, need a loop
-            link.moveTo(vec2(p.x() + chainLength(), p.y()));
+            // TODO: If 'p.x' bigger then '2.f * chainLength' then wrap fails, need a loop
+            link.moveTo(vec2(p.x + chainLength(), p.y));
 
             REQUIRE(TAG, m_wrapAroundModifier != nullptr, "WrapAround modifier must be not null");
             m_wrapAroundModifier(link);

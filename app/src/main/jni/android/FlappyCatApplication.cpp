@@ -18,7 +18,7 @@ void FlappyCatApplication::main()
 
     float windowHeight = static_cast<float>(window().height());
 
-    float cameraHeight = game.cameraSize().y();
+    float cameraHeight = game.cameraSize().y;
 
     float scale = windowHeight / cameraHeight;
 

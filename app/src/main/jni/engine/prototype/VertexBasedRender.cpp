@@ -52,8 +52,8 @@ void VertexBasedRender::update(const Shape& shape)
 
         vec2 p = shape.geometry().pointAt(index) - shape.transformation().origin();
 
-        float rotatedX = p.x() * cosValue - p.y() * sinValue;
-        float rotatedY = p.x() * sinValue + p.y() * cosValue;
+        float rotatedX = p.x * cosValue - p.y * sinValue;
+        float rotatedY = p.x * sinValue + p.y * cosValue;
 
         //
         // TODO: add scale/origin later

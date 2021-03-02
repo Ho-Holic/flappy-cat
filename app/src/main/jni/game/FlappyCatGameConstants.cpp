@@ -54,7 +54,7 @@ void FlappyCatGameConstants::reset()
 
     float plateWidth = 1000.f;
 
-    float halfCameraY = cameraSize.y() / 2.f;
+    float halfCameraY = cameraSize.y / 2.f;
     float offsetFloorY = halfCameraY * 0.8f; // ground takes 20%
 
     // camera

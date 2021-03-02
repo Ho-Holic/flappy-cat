@@ -92,8 +92,8 @@ void QtOpenGLRender::enqueue(int layerIndex, const Vertices& vertices, const Tra
 
     for (std::size_t i = 0; i < vertices.size(); ++i) {
 
-        auto x = (2.f / transformation.position().x()) * vertices[i].position().x() * transformation.scale().x();
-        auto y = (2.f / transformation.position().y()) * vertices[i].position().y() * transformation.scale().y();
+        auto x = (2.f / transformation.position().x) * vertices[i].position().x * transformation.scale().x;
+        auto y = (2.f / transformation.position().y) * vertices[i].position().y * transformation.scale().y;
 
         polygon.vertices << Vertex(vec2(x, y), vertices[i].color());
     }
@@ -126,8 +126,8 @@ void QtOpenGLRender::render()
 
                 std::size_t stride = i * AttributeSize;
 
-                buffer[AttributePositionX + stride] = polygon.vertices[i].position().x();
-                buffer[AttributePositionY + stride] = polygon.vertices[i].position().y();
+                buffer[AttributePositionX + stride] = polygon.vertices[i].position().x;
+                buffer[AttributePositionY + stride] = polygon.vertices[i].position().y;
 
                 buffer[AttributeColorR + stride] = polygon.vertices[i].color().r() / 255.f;
                 buffer[AttributeColorG + stride] = polygon.vertices[i].color().g() / 255.f;

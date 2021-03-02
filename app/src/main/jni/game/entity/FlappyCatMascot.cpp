@@ -54,8 +54,8 @@ void FlappyCatMascot::syncChildren()
     vec2 legAndTailSize(150.f, 500.f);
     vec2 tailPos(0.f, 250.f);
     vec2 earSize(200.f, 375.f);
-    vec2 leftEarPos(0.f, headSize.y()); // 0.f, 440.f
-    vec2 rightEarPos(headSize.x() - earSize.x(), 0.f); // 360.f, 0
+    vec2 leftEarPos(0.f, headSize.y); // 0.f, 440.f
+    vec2 rightEarPos(headSize.x - earSize.x, 0.f); // 360.f, 0
     vec2 eyeSize(145.f, 145.f);
     vec2 leftEyePos(80.f, 200.f);
     vec2 rightEyePos(300.f, 0.f);
@@ -114,7 +114,7 @@ void FlappyCatMascot::syncChildren()
 
     // rotate
 
-    vec2 center(bodySize.x() / 2.f, bodySize.y() / 2.f);
+    vec2 center(bodySize.x / 2.f, bodySize.y / 2.f);
 
     m_body.transformation().setOrigin((center - bodyPosRes) * scale);
     m_head.transformation().setOrigin((center - headPosRes) * scale);

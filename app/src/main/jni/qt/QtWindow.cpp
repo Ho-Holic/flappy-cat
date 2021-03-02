@@ -70,7 +70,7 @@ void QtWindow::shouldRepaint()
 
                 FlappyCatGame game;
                 float windowHeight = static_cast<float>(size().height());
-                float cameraHeight = game.cameraSize().y();
+                float cameraHeight = game.cameraSize().y;
                 float scale = windowHeight / cameraHeight;
                 view().setScale(vec2(scale, scale));
 

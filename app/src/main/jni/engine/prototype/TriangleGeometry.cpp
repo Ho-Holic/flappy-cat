@@ -47,10 +47,10 @@ vec2 TriangleGeometry::pointAt(Geometry::size_type index) const
         return vec2(0.f, 0.f);
         break;
     case 1:
-        return vec2(m_size.x(), 0.f);
+        return vec2(m_size.x, 0.f);
         break;
     case 2:
-        return vec2(0.f, m_size.y());
+        return vec2(0.f, m_size.y);
         break;
     default:
         return vec2(0.f, 0.f);

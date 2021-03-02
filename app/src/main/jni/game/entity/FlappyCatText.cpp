@@ -37,7 +37,7 @@ void FlappyCatText::syncChildren()
         characterBody.setCharacter(character);
         characterBody.setColor(m_textColor);
 
-        characterBody.moveBy(position() + vec2(moveOffset.x(), 0.f));
+        characterBody.moveBy(position() + vec2(moveOffset.x, 0.f));
         moveOffset = moveOffset + characterBody.size() + Spacing;
     }
 }
