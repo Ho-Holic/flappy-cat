@@ -1,6 +1,7 @@
 #include "FlappyCatGame.hpp"
 #include "FlappyCatClock.hpp"
 #include <core/Log.hpp>
+#include <math/geometric.hpp>
 #include <physics/Collide.hpp>
 #include <string>
 
@@ -197,7 +198,7 @@ void FlappyCatGame::initialize()
             hero.moveBy(hero.distance());
 
             // tilt the hero
-            float angle = hero.rotation();
+            float angle = degrees(hero.rotation());
 
             if (hero.distance().y > 0.f) {
                 if (angle < 35.f) {
@@ -209,7 +210,7 @@ void FlappyCatGame::initialize()
                 }
             }
 
-            hero.rotateTo(angle);
+            hero.rotateTo(radians(angle));
 
             float offset = m_gameConstants[Constant::HeroSize].x;
             m_score.moveTo(m_hero.position() - vec2(offset, offset / 4.f));

@@ -41,11 +41,9 @@ void VertexBasedRender::update(const Shape& shape)
 
     for (Geometry::size_type index = 0; index < points; ++index) {
 
-        constexpr float pi = 3.141592654f;
-
         // TODO: remove this part and make transform matrix
         // rotate
-        float angle = shape.transformation().rotation() * pi / 180.f;
+        float angle = shape.transformation().rotation();
 
         float sinValue = std::sin(angle);
         float cosValue = std::cos(angle);
