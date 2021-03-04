@@ -6,6 +6,7 @@ public:
 
 public:
     vec2();
+    vec2(value_type xy);
     vec2(value_type x, value_type y);
 
 public:

@@ -1,5 +1,4 @@
 #include "QtEvent.hpp"
-
 #include <core/Log.hpp>
 
 QtEvent::QtEvent()
@@ -24,4 +23,13 @@ void QtEvent::setTouchEventData(float x, float y)
 
     m_eventData.touchEvent.x = x;
     m_eventData.touchEvent.y = y;
+}
+
+void QtEvent::setResizeEventData(int width, int height)
+{
+
+    REQUIRE(TAG, m_eventType == ResizedEventType, "Must be 'ResizedEventType'");
+
+    m_eventData.resizeEvent.width = width;
+    m_eventData.resizeEvent.height = height;
 }

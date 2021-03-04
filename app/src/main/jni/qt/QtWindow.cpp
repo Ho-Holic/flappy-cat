@@ -1,16 +1,14 @@
 #include "QtWindow.hpp"
+#include "FlappyCatClock.hpp"
+#include "FlappyCatGame.hpp"
 #include "QtOpenGLRender.hpp"
 #include <QEvent>
 #include <QGuiApplication>
 #include <QMouseEvent>
 #include <QOpenGLPaintDevice>
 #include <QTimer>
-#include <thread>
-
-// engine
-#include "FlappyCatClock.hpp"
-#include "FlappyCatGame.hpp"
 #include <core/Clock.hpp>
+#include <thread>
 
 QtWindow::QtWindow(QWindow* parent)
     : QWindow(parent)
@@ -69,10 +67,9 @@ void QtWindow::shouldRepaint()
                 auto smoothing = 0.9f;
 
                 FlappyCatGame game;
-                float windowHeight = static_cast<float>(size().height());
-                float cameraHeight = game.cameraSize().y;
-                float scale = windowHeight / cameraHeight;
-                view().setScale(vec2(scale, scale));
+
+                QtEvent event(QtEvent::EventType::ResizedEventType);
+                event.setResizeEventData(size().width(), size().height());
 
                 while (!m_windowCloseRequested) {
                     auto now = Clock::now();
@@ -93,6 +90,13 @@ void QtWindow::shouldRepaint()
 
                         Event event;
                         while (pollEvent(event)) {
+
+                            if (event.type() == Event::EventType::ResizedEventType) {
+                                float windowHeight = static_cast<float>(size().height());
+                                float cameraHeight = game.cameraSize().y;
+                                float scale = windowHeight / cameraHeight;
+                                view().setScale(vec2(scale * 2.f / static_cast<float>(size().width()), scale * 2.f / static_cast<float>(size().height())));
+                            }
                             game.processEvent(event);
                         }
 
@@ -114,7 +118,11 @@ void QtWindow::shouldRepaint()
     if (m_paintDevice->size() != size()) {
 
         m_paintDevice->setSize(size());
-        view().setPosition(vec2(static_cast<float>(size().width()), static_cast<float>(size().height())));
+
+        QtEvent event(QtEvent::EventType::ResizedEventType);
+
+        event.setResizeEventData(size().width(), size().height());
+        this->postEvent(event);
     }
 
     m_context->makeCurrent(this);
@@ -132,9 +140,7 @@ bool QtWindow::event(QEvent* event)
 
 void QtWindow::mouseReleaseEvent(QMouseEvent*)
 {
-    using EventType = QtEvent::EventType;
-
-    QtEvent event(EventType::TouchEventType);
+    QtEvent event(QtEvent::EventType::TouchEventType);
 
     event.setTouchEventData(0.f, 0.f);
 
@@ -144,9 +150,8 @@ void QtWindow::mouseReleaseEvent(QMouseEvent*)
 void QtWindow::keyReleaseEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Space) {
-        using EventType = QtEvent::EventType;
 
-        QtEvent event(EventType::TouchEventType);
+        QtEvent event(QtEvent::EventType::TouchEventType);
 
         event.setTouchEventData(0.f, 0.f);
 

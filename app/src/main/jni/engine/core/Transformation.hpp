@@ -1,6 +1,6 @@
 #pragma once
 
-// engine
+#include <math/mat3.hpp>
 #include <math/vec2.hpp>
 
 class Transformation {
@@ -18,4 +18,7 @@ public:
     virtual const vec2& position() const = 0;
     virtual const vec2& scale() const = 0;
     virtual float rotation() const = 0;
+
+public:
+    mat3 toMat3() const;
 };

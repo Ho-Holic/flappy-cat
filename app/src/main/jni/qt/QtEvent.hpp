@@ -1,13 +1,8 @@
 #pragma once
 
-// stl
-#include <cstdint>
-
-// engine
 #include "QtEventData.hpp"
-
-// style
 #include "style/Guidelines.hpp"
+#include <cstdint>
 
 class QtEvent {
 public:
@@ -18,6 +13,7 @@ public:
     EventType type() const;
 
     void setTouchEventData(float x, float y);
+    void setResizeEventData(int width, int height);
 
 private:
     EventType m_eventType;
@@ -27,4 +23,5 @@ private:
 enum QtEvent::EventType : int8_t {
     EmptyEventType,
     TouchEventType,
+    ResizedEventType,
 };

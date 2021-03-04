@@ -1,4 +1,3 @@
-// engine
 #include "Window.hpp"
 
 Window::Window()
@@ -9,12 +8,10 @@ Window::Window()
 
 const View& Window::view() const
 {
-
     return m_view;
 }
 
 View& Window::view()
 {
-
     return m_view;
 }

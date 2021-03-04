@@ -1,12 +1,10 @@
 #pragma once
 
+#include "core/Transformation.hpp"
+#include "core/Vertices.hpp"
 #include <QOpenGLFunctions>
 #include <map>
 #include <vector>
-
-// engine
-#include "core/Transformation.hpp"
-#include "core/Vertices.hpp"
 
 struct Polygon {
     Vertices vertices;
