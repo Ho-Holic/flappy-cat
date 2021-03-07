@@ -13,8 +13,8 @@ public:
     const Color& getBrushColor() const;
 
 public:
-    virtual void update(const Shape& shape) override;
-    virtual void drawOn(const Window& window, const Transformation& transformation) const override;
+    void update(const Shape& shape) override;
+    void drawOn(const Window& window, const Transformation& transformation) const override;
 
 private:
     Vertices m_vertices;

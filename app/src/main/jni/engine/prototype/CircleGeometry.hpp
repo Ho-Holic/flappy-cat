@@ -19,8 +19,8 @@ public:
     float radius() const;
 
 public:
-    virtual size_type points() const override;
-    virtual vec2 pointAt(size_type index) const override;
+    size_type points() const override;
+    vec2 pointAt(size_type index) const override;
 
 private:
     float m_radius;

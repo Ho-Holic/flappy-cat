@@ -18,8 +18,8 @@ public:
     const vec2& size() const;
 
 public:
-    virtual size_type points() const override;
-    virtual vec2 pointAt(size_type index) const override;
+    size_type points() const override;
+    vec2 pointAt(size_type index) const override;
 
 private:
     vec2 m_size;

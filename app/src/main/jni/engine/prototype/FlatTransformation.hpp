@@ -1,6 +1,5 @@
 #pragma once
 
-// engine
 #include <core/Signal.hpp>
 #include <core/Transformation.hpp>
 
@@ -16,15 +15,15 @@ public:
     OnUpdateSignal& onUpdate();
 
 public:
-    virtual const vec2& origin() const override;
-    virtual const vec2& position() const override;
-    virtual const vec2& scale() const override;
-    virtual float rotation() const override;
+    const vec2& origin() const override;
+    const vec2& position() const override;
+    const vec2& scale() const override;
+    float rotation() const override;
 
-    virtual void setOrigin(const vec2& origin) override;
-    virtual void setPosition(const vec2& position) override;
-    virtual void setScale(const vec2& factor) override;
-    virtual void setRotation(float angle) override;
+    void setOrigin(const vec2& origin) override;
+    void setPosition(const vec2& position) override;
+    void setScale(const vec2& factor) override;
+    void setRotation(float angle) override;
 
 private:
     vec2 m_position;

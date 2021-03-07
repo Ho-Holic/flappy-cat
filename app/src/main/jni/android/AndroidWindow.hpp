@@ -32,11 +32,11 @@ public:
     AndroidWindow();
 
 public:
-    virtual void clear(const Color& color) const override;
-    virtual void draw(const Shape& shape) const override;
+    void clear(const Color& color) const override;
+    void draw(const Shape& shape) const override;
     virtual void drawVertices(const Vertices& vertices,
         const Transformation& transformation) const override;
-    virtual void display() const override;
+    void display() const override;
 
 public:
     void setNativeWindow(ANativeWindow* window);

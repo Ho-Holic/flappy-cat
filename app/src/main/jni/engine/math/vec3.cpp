@@ -8,6 +8,12 @@ vec3::vec3(vec3::value_type x, vec3::value_type y, vec3::value_type z)
     //
 }
 
+vec3::vec3(vec2 xy, vec3::value_type z)
+    : vec3(xy.x, xy.y, z)
+{
+    //
+}
+
 vec3::vec3()
     : vec3(0.f, 0.f, 0.f)
 {

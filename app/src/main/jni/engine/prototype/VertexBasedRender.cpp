@@ -17,13 +17,11 @@ VertexBasedRender::VertexBasedRender()
 
 void VertexBasedRender::setBrushColor(const Color& color)
 {
-
     m_brushColor = color;
 }
 
 void VertexBasedRender::drawOn(const Window& window, const Transformation& transformation) const
 {
-
     window.drawVertices(m_vertices, transformation);
 }
 

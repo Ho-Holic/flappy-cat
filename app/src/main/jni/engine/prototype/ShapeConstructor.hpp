@@ -17,13 +17,13 @@ public:
     const Color& color() const;
 
 public:
-    virtual GeometryType& geometry() override;
-    virtual FlatTransformation& transformation() override;
-    virtual VertexBasedRender& render() override;
+    GeometryType& geometry() override;
+    FlatTransformation& transformation() override;
+    VertexBasedRender& render() override;
 
-    virtual const GeometryType& geometry() const override;
-    virtual const FlatTransformation& transformation() const override;
-    virtual const VertexBasedRender& render() const override;
+    const GeometryType& geometry() const override;
+    const FlatTransformation& transformation() const override;
+    const VertexBasedRender& render() const override;
 
 private:
     void update();
