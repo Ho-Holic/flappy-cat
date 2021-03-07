@@ -20,18 +20,18 @@ FlappyCatMascot::FlappyCatMascot(const FlappyCatGameConstants& gameConstants)
 
 void FlappyCatMascot::drawOn(const Window& window) const
 {
-    window.draw(m_body);
-    window.draw(m_backLeg);
-    window.draw(m_frontLeg);
-    window.draw(m_tail);
-    window.draw(m_scarf);
-    window.draw(m_scarfTail);
-    window.draw(m_head);
-    window.draw(m_leftEar);
-    window.draw(m_rightEar);
-    window.draw(m_leftEye);
-    window.draw(m_rightEye);
-    window.draw(m_mouth);
+    m_body.render().drawOn(window, window.view());
+    m_backLeg.render().drawOn(window, window.view());
+    m_frontLeg.render().drawOn(window, window.view());
+    m_tail.render().drawOn(window, window.view());
+    m_scarf.render().drawOn(window, window.view());
+    m_scarfTail.render().drawOn(window, window.view());
+    m_head.render().drawOn(window, window.view());
+    m_leftEar.render().drawOn(window, window.view());
+    m_rightEar.render().drawOn(window, window.view());
+    m_leftEye.render().drawOn(window, window.view());
+    m_rightEye.render().drawOn(window, window.view());
+    m_mouth.render().drawOn(window, window.view());
 }
 
 void FlappyCatMascot::syncChildren()

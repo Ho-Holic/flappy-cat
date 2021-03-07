@@ -21,7 +21,6 @@ private:
 
 private:
     void clear(const Color& color) const override;
-    void draw(const Shape& shape) const override;
     void drawVertices(const Vertices& vertices, const Transformation& transformation) const override;
     void display() const override;
 

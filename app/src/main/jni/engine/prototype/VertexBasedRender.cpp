@@ -1,11 +1,8 @@
-
-// engine
 #include "VertexBasedRender.hpp"
-#include <core/Log.hpp>
-#include <core/Window.hpp>
-
-// stl
 #include <cmath>
+#include <core/Log.hpp>
+#include <core/Shape.hpp>
+#include <core/Window.hpp>
 
 VertexBasedRender::VertexBasedRender()
     : Render()

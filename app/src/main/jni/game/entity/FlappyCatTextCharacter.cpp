@@ -166,7 +166,7 @@ void FlappyCatTextCharacter::drawOn(const Window& window) const
                              const CharacterData& characterData,
                              const RectangleShape& body) {
         if (characterData > 0) {
-            window.draw(body);
+            body.render().drawOn(window, window.view());
         }
     });
 }

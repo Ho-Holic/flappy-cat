@@ -42,12 +42,12 @@ void FlappyCatViewLimit::syncChildren()
 
 void FlappyCatViewLimit::drawOn(const Window& window) const
 {
-    window.draw(m_top);
-    window.draw(m_topRight);
-    window.draw(m_right);
-    window.draw(m_bottomRight);
-    window.draw(m_bottom);
-    window.draw(m_bottomLeft);
-    window.draw(m_left);
-    window.draw(m_topLeft);
+    m_top.render().drawOn(window, window.view());
+    m_topRight.render().drawOn(window, window.view());
+    m_right.render().drawOn(window, window.view());
+    m_bottomRight.render().drawOn(window, window.view());
+    m_bottom.render().drawOn(window, window.view());
+    m_bottomLeft.render().drawOn(window, window.view());
+    m_left.render().drawOn(window, window.view());
+    m_topLeft.render().drawOn(window, window.view());
 }

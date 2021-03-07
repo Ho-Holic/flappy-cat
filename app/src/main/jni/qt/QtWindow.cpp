@@ -164,11 +164,6 @@ void QtWindow::clear(const Color& color) const
     // do nothing in qt build
 }
 
-void QtWindow::draw(const Shape& shape) const
-{
-    shape.render().drawOn(*this, view());
-}
-
 void QtWindow::drawVertices(const Vertices& vertices, const Transformation& transformation) const
 {
     m_render->enqueue(0, vertices, transformation);

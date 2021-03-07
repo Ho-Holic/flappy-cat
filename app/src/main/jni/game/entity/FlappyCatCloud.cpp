@@ -24,7 +24,7 @@ void FlappyCatCloud::drawOn(const Window& window) const
     for (const CircleShape& part : m_cloudParts) {
         // TODO: make game circle abstraction from entity
         // part.drawOn(window);
-        window.draw(part);
+        part.render().drawOn(window, window.view());
     }
 }
 

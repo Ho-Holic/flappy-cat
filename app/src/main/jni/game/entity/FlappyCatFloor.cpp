@@ -37,9 +37,9 @@ void FlappyCatFloor::syncChildren()
 
 void FlappyCatFloor::drawOn(const Window& window) const
 {
-    window.draw(m_backgroundDirt);
+    m_backgroundDirt.render().drawOn(window, window.view());
     m_floorSpikes.drawOn(window);
-    window.draw(m_floor);
+    m_floor.render().drawOn(window, window.view());
 }
 
 void FlappyCatFloor::update(const FrameDuration& time)

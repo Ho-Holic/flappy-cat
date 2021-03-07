@@ -50,7 +50,7 @@ void FlappyCatHero::setRadius(float radius)
 
 void FlappyCatHero::drawOn(const Window& window) const
 {
-    window.draw(m_ball);
+    m_ball.render().drawOn(window, window.view());
     m_mascot.drawOn(window);
 }
 

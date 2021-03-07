@@ -1,6 +1,5 @@
 #pragma once
 
-// engine
 #include <core/Render.hpp>
 #include <core/Vertices.hpp>
 
