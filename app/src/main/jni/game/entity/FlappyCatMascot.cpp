@@ -162,10 +162,3 @@ void FlappyCatMascot::setColor(const Color& bodyColor,
 
     m_mouth.setColor(mouthColor);
 }
-
-std::vector<std::shared_ptr<Geometry>> FlappyCatMascot::duplicateParts() const
-{
-    std::vector<std::shared_ptr<Geometry>> parts;
-    //parts.push_back(std::make_shared<RectangleShape>(m_body));
-    return parts;
-}

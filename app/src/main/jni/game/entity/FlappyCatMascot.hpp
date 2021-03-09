@@ -15,8 +15,7 @@ public:
 public:
     void setColor(const Color& bodyColor,
         const Color& scarfColor,
-        const Color& mouthColor);
-    std::vector<std::shared_ptr<Geometry>> duplicateParts() const;
+        const Color& mouthColor);    
 
 private:
     void syncChildren() override;
