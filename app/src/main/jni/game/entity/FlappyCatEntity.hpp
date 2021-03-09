@@ -3,7 +3,6 @@
 #include <core/Window.hpp>
 #include <game/FlappyCatClock.hpp>
 #include <game/FlappyCatGameConstants.hpp>
-#include <physics/PhysicsBody.hpp>
 
 class FlappyCatEntity {
 public:
@@ -36,6 +35,5 @@ private:
     const FlappyCatGameConstants& m_gameConstants;
     vec2 m_position;
     vec2 m_size;
-    float m_angle;
-    PhysicsBody m_body;
+    float m_angle;    
 };
