@@ -18,20 +18,20 @@ FlappyCatMascot::FlappyCatMascot(const FlappyCatGameConstants& gameConstants)
     //
 }
 
-void FlappyCatMascot::drawOn(const Window& window) const
+void FlappyCatMascot::drawOn(const Window& window, const Transformation& transformation) const
 {
-    m_body.render().drawOn(window, window.view());
-    m_backLeg.render().drawOn(window, window.view());
-    m_frontLeg.render().drawOn(window, window.view());
-    m_tail.render().drawOn(window, window.view());
-    m_scarf.render().drawOn(window, window.view());
-    m_scarfTail.render().drawOn(window, window.view());
-    m_head.render().drawOn(window, window.view());
-    m_leftEar.render().drawOn(window, window.view());
-    m_rightEar.render().drawOn(window, window.view());
-    m_leftEye.render().drawOn(window, window.view());
-    m_rightEye.render().drawOn(window, window.view());
-    m_mouth.render().drawOn(window, window.view());
+    m_body.render().drawOn(window, transformation);
+    m_backLeg.render().drawOn(window, transformation);
+    m_frontLeg.render().drawOn(window, transformation);
+    m_tail.render().drawOn(window, transformation);
+    m_scarf.render().drawOn(window, transformation);
+    m_scarfTail.render().drawOn(window, transformation);
+    m_head.render().drawOn(window, transformation);
+    m_leftEar.render().drawOn(window, transformation);
+    m_rightEar.render().drawOn(window, transformation);
+    m_leftEye.render().drawOn(window, transformation);
+    m_rightEye.render().drawOn(window, transformation);
+    m_mouth.render().drawOn(window, transformation);
 }
 
 void FlappyCatMascot::syncChildren()

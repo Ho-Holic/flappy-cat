@@ -7,9 +7,9 @@ FlappyCatBackground::FlappyCatBackground(const FlappyCatGameConstants& gameConst
     //
 }
 
-void FlappyCatBackground::drawOn(const Window& window) const
+void FlappyCatBackground::drawOn(const Window& window, const Transformation& transformation) const
 {
-    m_background.render().drawOn(window, window.view());
+    m_background.render().drawOn(window, transformation);
 }
 
 void FlappyCatBackground::setColor(const Color& color)

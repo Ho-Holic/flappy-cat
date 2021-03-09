@@ -42,10 +42,10 @@ void FlappyCatText::syncChildren()
     }
 }
 
-void FlappyCatText::drawOn(const Window& window) const
+void FlappyCatText::drawOn(const Window& window, const Transformation& transformation) const
 {
     for (const FlappyCatTextCharacter& character : m_textBody) {
-        character.drawOn(window);
+        character.drawOn(window, transformation);
     }
 }
 

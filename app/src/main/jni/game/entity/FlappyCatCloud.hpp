@@ -10,7 +10,7 @@ public:
 
 public:
     void initialize() override;
-    void drawOn(const Window& window) const override;
+    void drawOn(const Window& window, const Transformation& transformation) const override;
 
 public:
     void setColor(const Color& color);

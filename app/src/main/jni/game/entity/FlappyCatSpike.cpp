@@ -7,9 +7,9 @@ FlappyCatSpike::FlappyCatSpike(const FlappyCatGameConstants& gameConstants)
     //
 }
 
-void FlappyCatSpike::drawOn(const Window& window) const
+void FlappyCatSpike::drawOn(const Window& window, const Transformation& transformation) const
 {
-    m_spike.render().drawOn(window, window.view());
+    m_spike.render().drawOn(window, transformation);
 }
 
 void FlappyCatSpike::setColor(const Color& color)

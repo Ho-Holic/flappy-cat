@@ -14,7 +14,7 @@ public:
     virtual void initialize() = 0;
     virtual void reset() = 0;
     virtual void update(const FrameDuration& frameDuration) = 0;
-    virtual void drawOn(const Window& window) const = 0;
+    virtual void drawOn(const Window& window, const Transformation& transformation) const = 0;
 
     virtual const vec2& position() const;
     virtual float rotation() const;

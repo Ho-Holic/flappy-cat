@@ -5,8 +5,8 @@
 #include <core/Clock.hpp>
 #include <core/Color.hpp>
 #include <core/Log.hpp>
-#include <math/vec2.hpp>
 #include <core/Window.hpp>
+#include <math/vec2.hpp>
 #include <style/Guidelines.hpp>
 #include <vector>
 
@@ -27,7 +27,7 @@ public:
     void initialize() override;
     void reset() override;
     void update(const FrameDuration& time) override;
-    void drawOn(const Window& window) const override;
+    void drawOn(const Window& window, const Transformation& transformation) const override;
 
 public:
     void setLinkSize(const vec2& linkSize);
@@ -163,10 +163,10 @@ void FlappyCatChain<Link>::update(const FrameDuration& time)
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::drawOn(const Window& window) const
+void FlappyCatChain<Link>::drawOn(const Window& window, const Transformation& transformation) const
 {
     for (const entity_type& link : m_links) {
-        link.drawOn(window);
+        link.drawOn(window, transformation);
     }
 }
 

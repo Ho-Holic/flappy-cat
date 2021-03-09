@@ -24,7 +24,7 @@ public:
     void initialize() override;
     void reset() override;
     void update(const FrameDuration& frameDuration) override;
-    void drawOn(const Window& window) const override;
+    void drawOn(const Window& window, const Transformation& transformation) const override;
 
 private:
     initialize_modifier_type m_initializeModifier;
@@ -54,7 +54,7 @@ void FlappyCatStateNode<T>::update(const FrameDuration& frameDuration)
 }
 
 template <typename T>
-void FlappyCatStateNode<T>::drawOn(const Window& window) const
+void FlappyCatStateNode<T>::drawOn(const Window& window, const Transformation& transformation) const
 {
     m_drawModifier(*static_cast<const entity_type*>(this), window);
 }

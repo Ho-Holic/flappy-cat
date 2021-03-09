@@ -330,17 +330,19 @@ void FlappyCatGame::render(const Window& window) const
 {
     window.clear(Color(0, 0, 0));
 
-    m_background.drawOn(window);
+    auto transformation = window.view();
 
-    m_backgroundSky.drawOn(window);
-    m_backgroundCity.drawOn(window);
+    m_background.drawOn(window, transformation);
 
-    m_barricade.drawOn(window);
-    m_hero.drawOn(window);
-    m_floor.drawOn(window);
-    m_limit.drawOn(window);
-    m_score.drawOn(window);
-    m_fps.drawOn(window);
+    m_backgroundSky.drawOn(window, transformation);
+    m_backgroundCity.drawOn(window, transformation);
+
+    m_barricade.drawOn(window, transformation);
+    m_hero.drawOn(window, transformation);
+    m_floor.drawOn(window, transformation);
+    m_limit.drawOn(window, transformation);
+    m_score.drawOn(window, transformation);
+    m_fps.drawOn(window, transformation);
 
     window.display();
 }

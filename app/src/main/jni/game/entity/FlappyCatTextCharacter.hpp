@@ -9,7 +9,7 @@ public:
     FlappyCatTextCharacter(const FlappyCatGameConstants& gameConstants);
 
 public:
-    void drawOn(const Window& window) const override;
+    void drawOn(const Window& window, const Transformation& transformation) const override;
     const vec2& size() const override;
 
 public:

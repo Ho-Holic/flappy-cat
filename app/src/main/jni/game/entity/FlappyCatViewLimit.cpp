@@ -40,14 +40,14 @@ void FlappyCatViewLimit::syncChildren()
     m_topLeft.geometry().resize(size);
 }
 
-void FlappyCatViewLimit::drawOn(const Window& window) const
+void FlappyCatViewLimit::drawOn(const Window& window, const Transformation& transformation) const
 {
-    m_top.render().drawOn(window, window.view());
-    m_topRight.render().drawOn(window, window.view());
-    m_right.render().drawOn(window, window.view());
-    m_bottomRight.render().drawOn(window, window.view());
-    m_bottom.render().drawOn(window, window.view());
-    m_bottomLeft.render().drawOn(window, window.view());
-    m_left.render().drawOn(window, window.view());
-    m_topLeft.render().drawOn(window, window.view());
+    m_top.render().drawOn(window, transformation);
+    m_topRight.render().drawOn(window, transformation);
+    m_right.render().drawOn(window, transformation);
+    m_bottomRight.render().drawOn(window, transformation);
+    m_bottom.render().drawOn(window, transformation);
+    m_bottomLeft.render().drawOn(window, transformation);
+    m_left.render().drawOn(window, transformation);
+    m_topLeft.render().drawOn(window, transformation);
 }

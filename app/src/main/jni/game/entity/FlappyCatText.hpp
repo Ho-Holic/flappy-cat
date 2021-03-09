@@ -8,7 +8,7 @@ public:
     FlappyCatText(const FlappyCatGameConstants& gameConstants);
 
 public:
-    void drawOn(const Window& window) const override;
+    void drawOn(const Window& window, const Transformation& transformation) const override;
 
 public:
     void setText(const std::string& text);

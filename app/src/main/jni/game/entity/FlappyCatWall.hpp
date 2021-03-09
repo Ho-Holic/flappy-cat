@@ -2,8 +2,8 @@
 
 #include "entity/FlappyCatStateNode.hpp"
 #include <core/Clock.hpp>
-#include <math/vec2.hpp>
 #include <core/Window.hpp>
+#include <math/vec2.hpp>
 #include <prototype/RectangleShape.hpp>
 
 //
@@ -30,7 +30,7 @@ public:
     bool collideWithCircle(const vec2& center, float radius);
 
 public:
-    void drawOn(const Window& window) const override;
+    void drawOn(const Window& window, const Transformation& transformation) const override;
 
 public:
     void setColor(const Color& color);

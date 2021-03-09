@@ -8,7 +8,7 @@ public:
     FlappyCatViewLimit(const FlappyCatGameConstants& gameConstants);
 
 public:
-    void drawOn(const Window& window) const override;
+    void drawOn(const Window& window, const Transformation& transformation) const override;
 
 private:
     void syncChildren() override;

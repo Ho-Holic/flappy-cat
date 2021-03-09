@@ -48,10 +48,10 @@ void FlappyCatHero::setRadius(float radius)
     syncChildren();
 }
 
-void FlappyCatHero::drawOn(const Window& window) const
+void FlappyCatHero::drawOn(const Window& window, const Transformation& transformation) const
 {
-    m_ball.render().drawOn(window, window.view());
-    m_mascot.drawOn(window);
+    m_ball.render().drawOn(window, transformation);
+    m_mascot.drawOn(window, transformation);
 }
 
 void FlappyCatHero::setColor(const Color& backgroundColor,
