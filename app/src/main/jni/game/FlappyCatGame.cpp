@@ -332,17 +332,19 @@ void FlappyCatGame::render(const Window& window) const
 
     auto transformation = window.view();
 
-    m_background.drawOn(window, transformation);
+    RenderContext renderContext { transformation.toMat3() };
 
-    m_backgroundSky.drawOn(window, transformation);
-    m_backgroundCity.drawOn(window, transformation);
+    m_background.drawOn(window, renderContext);
 
-    m_barricade.drawOn(window, transformation);
-    m_hero.drawOn(window, transformation);
-    m_floor.drawOn(window, transformation);
-    m_limit.drawOn(window, transformation);
-    m_score.drawOn(window, transformation);
-    m_fps.drawOn(window, transformation);
+    m_backgroundSky.drawOn(window, renderContext);
+    m_backgroundCity.drawOn(window, renderContext);
+
+    m_barricade.drawOn(window, renderContext);
+    m_hero.drawOn(window, renderContext);
+    m_floor.drawOn(window, renderContext);
+    m_limit.drawOn(window, renderContext);
+    m_score.drawOn(window, renderContext);
+    m_fps.drawOn(window, renderContext);
 
     window.display();
 }

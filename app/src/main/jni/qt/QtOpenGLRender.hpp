@@ -20,7 +20,7 @@ public:
     bool isSwapBuffersRequested() const;
 
 public:
-    void enqueue(int layerIndex, const Vertices& vertices, const Transformation& transformation);
+    void enqueue(int layerIndex, const Vertices& vertices, const mat3& transformMatrix);
     void render();
     void clearQueue();
 

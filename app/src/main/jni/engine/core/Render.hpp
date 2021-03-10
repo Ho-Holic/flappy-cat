@@ -2,7 +2,7 @@
 
 class Window;
 class Shape;
-class Transformation;
+struct RenderContext;
 
 class Render {
 public:
@@ -11,5 +11,5 @@ public:
 
 public:
     virtual void update(const Shape& shape) = 0;
-    virtual void drawOn(const Window& window, const Transformation& transformation) const = 0;
+    virtual void drawOn(const Window& window, const RenderContext& renderContext) const = 0;
 };

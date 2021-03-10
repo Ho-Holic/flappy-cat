@@ -86,7 +86,7 @@ void QtOpenGLRender::clearQueue()
     m_layersBackBuffer.clear();
 }
 
-void QtOpenGLRender::enqueue(int layerIndex, const Vertices& vertices, const Transformation& transformation)
+void QtOpenGLRender::enqueue(int layerIndex, const Vertices& vertices, const mat3& transformMatrix)
 {
     Polygon polygon;
 
@@ -95,7 +95,7 @@ void QtOpenGLRender::enqueue(int layerIndex, const Vertices& vertices, const Tra
         auto x = vertices[i].position().x;
         auto y = vertices[i].position().y;
 
-        auto pos = transformation.toMat3() * vec3(x, y, 1.f);
+        auto pos = transformMatrix * vec3(x, y, 1.f);
         polygon.vertices << Vertex(vec2 { pos.x, pos.y }, vertices[i].color());
     }
 

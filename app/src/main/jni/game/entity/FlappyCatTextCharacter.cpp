@@ -160,13 +160,13 @@ void FlappyCatTextCharacter::syncChildren()
     });
 }
 
-void FlappyCatTextCharacter::drawOn(const Window& window, const Transformation& transformation) const
+void FlappyCatTextCharacter::drawOn(const Window& window, const RenderContext& renderContext) const
 {
-    processCharacterWith([this, &window, &transformation](size_t, size_t,
+    processCharacterWith([this, &window, &renderContext](size_t, size_t,
                              const CharacterData& characterData,
                              const RectangleShape& body) {
         if (characterData > 0) {
-            body.render().drawOn(window, transformation);
+            body.render().drawOn(window, renderContext);
         }
     });
 }

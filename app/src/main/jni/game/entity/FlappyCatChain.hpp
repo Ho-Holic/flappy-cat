@@ -27,7 +27,7 @@ public:
     void initialize() override;
     void reset() override;
     void update(const FrameDuration& time) override;
-    void drawOn(const Window& window, const Transformation& transformation) const override;
+    void drawOn(const Window& window, const RenderContext& renderContext) const override;
 
 public:
     void setLinkSize(const vec2& linkSize);
@@ -163,10 +163,10 @@ void FlappyCatChain<Link>::update(const FrameDuration& time)
 }
 
 template <typename Link>
-void FlappyCatChain<Link>::drawOn(const Window& window, const Transformation& transformation) const
+void FlappyCatChain<Link>::drawOn(const Window& window, const RenderContext& renderContext) const
 {
     for (const entity_type& link : m_links) {
-        link.drawOn(window, transformation);
+        link.drawOn(window, renderContext);
     }
 }
 

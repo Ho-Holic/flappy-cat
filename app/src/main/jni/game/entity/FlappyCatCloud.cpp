@@ -19,10 +19,10 @@ void FlappyCatCloud::initialize()
     }
 }
 
-void FlappyCatCloud::drawOn(const Window& window, const Transformation& transformation) const
+void FlappyCatCloud::drawOn(const Window& window, const RenderContext& renderContext) const
 {
     for (const CircleShape& part : m_cloudParts) {
-        part.render().drawOn(window, transformation);
+        part.render().drawOn(window, renderContext);
     }
 }
 

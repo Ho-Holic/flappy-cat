@@ -32,10 +32,10 @@ bool FlappyCatWall::collideWithCircle(const vec2& center, float radius)
         || Collide::circleRect(center, radius, m_bottomBlock);
 }
 
-void FlappyCatWall::drawOn(const Window& window, const Transformation& transformation) const
+void FlappyCatWall::drawOn(const Window& window, const RenderContext& renderContext) const
 {
-    m_topBlock.render().drawOn(window, transformation);
-    m_bottomBlock.render().drawOn(window, transformation);
+    m_topBlock.render().drawOn(window, renderContext);
+    m_bottomBlock.render().drawOn(window, renderContext);
 }
 
 void FlappyCatWall::setColor(const Color& color)

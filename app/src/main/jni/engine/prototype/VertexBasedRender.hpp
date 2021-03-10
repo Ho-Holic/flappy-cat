@@ -13,7 +13,7 @@ public:
 
 public:
     void update(const Shape& shape) override;
-    void drawOn(const Window& window, const Transformation& transformation) const override;
+    void drawOn(const Window& window, const RenderContext& renderContext) const override;
 
 private:
     Vertices m_vertices;

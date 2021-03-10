@@ -164,9 +164,9 @@ void QtWindow::clear(const Color& color) const
     // do nothing in qt build
 }
 
-void QtWindow::drawVertices(const Vertices& vertices, const Transformation& transformation) const
+void QtWindow::drawVertices(const Vertices& vertices, const RenderContext& renderContext) const
 {
-    m_render->enqueue(0, vertices, transformation);
+    m_render->enqueue(0, vertices, renderContext.transformation);
 }
 
 void QtWindow::display() const

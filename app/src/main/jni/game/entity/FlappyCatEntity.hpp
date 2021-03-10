@@ -13,7 +13,7 @@ public:
     virtual void initialize() = 0;
     virtual void reset() = 0;
     virtual void update(const FrameDuration& frameDuration) = 0;
-    virtual void drawOn(const Window& window, const Transformation& transformation) const = 0;
+    virtual void drawOn(const Window& window, const RenderContext& renderContext) const = 0;
 
     virtual const vec2& position() const;
     virtual float rotation() const;
@@ -35,5 +35,5 @@ private:
     const FlappyCatGameConstants& m_gameConstants;
     vec2 m_position;
     vec2 m_size;
-    float m_angle;    
+    float m_angle;
 };

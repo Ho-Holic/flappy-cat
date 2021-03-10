@@ -10,12 +10,12 @@ public:
     FlappyCatMascot(const FlappyCatGameConstants& gameConstants);
 
 public:
-    void drawOn(const Window& window, const Transformation& transformation) const override;
+    void drawOn(const Window& window, const RenderContext& renderContext) const override;
 
 public:
     void setColor(const Color& bodyColor,
         const Color& scarfColor,
-        const Color& mouthColor);    
+        const Color& mouthColor);
 
 private:
     void syncChildren() override;

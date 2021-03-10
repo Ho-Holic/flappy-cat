@@ -14,7 +14,7 @@ public:
 
 public:
     void initialize() override;
-    void drawOn(const Window& window, const Transformation& transformation) const override;
+    void drawOn(const Window& window, const RenderContext& renderContext) const override;
     void update(const FrameDuration& time) override;
     void reset() override;
 

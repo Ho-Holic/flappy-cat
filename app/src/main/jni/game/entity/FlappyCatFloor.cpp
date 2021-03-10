@@ -35,11 +35,11 @@ void FlappyCatFloor::syncChildren()
     m_backgroundDirt.geometry().resize(vec2(size().x, size().y));
 }
 
-void FlappyCatFloor::drawOn(const Window& window, const Transformation& transformation) const
+void FlappyCatFloor::drawOn(const Window& window, const RenderContext& renderContext) const
 {
-    m_backgroundDirt.render().drawOn(window, transformation);
-    m_floorSpikes.drawOn(window, transformation);
-    m_floor.render().drawOn(window, transformation);
+    m_backgroundDirt.render().drawOn(window, renderContext);
+    m_floorSpikes.drawOn(window, renderContext);
+    m_floor.render().drawOn(window, renderContext);
 }
 
 void FlappyCatFloor::update(const FrameDuration& time)

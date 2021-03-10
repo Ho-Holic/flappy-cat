@@ -17,9 +17,9 @@ void VertexBasedRender::setBrushColor(const Color& color)
     m_brushColor = color;
 }
 
-void VertexBasedRender::drawOn(const Window& window, const Transformation& transformation) const
+void VertexBasedRender::drawOn(const Window& window, const RenderContext& renderContext) const
 {
-    window.drawVertices(m_vertices, transformation);
+    window.drawVertices(m_vertices, renderContext);
 }
 
 void VertexBasedRender::update(const Shape& shape)
