@@ -390,7 +390,7 @@ int32_t AndroidWindow::requestHeight() const
 }
 
 void AndroidWindow::drawVertices(const Vertices& vertices,
-    const Transformation& transformation) const
+    const RenderContext& renderContext) const
 {
 
     std::size_t verticesDataSize = vertices.size() * VERTEX_SIZE;
@@ -401,15 +401,13 @@ void AndroidWindow::drawVertices(const Vertices& vertices,
 
         std::size_t stride = i * VERTEX_SIZE;
 
-        // TODO: add transformation rotation/origin later
+        auto x = vertices[i].position().x;
+        auto y = vertices[i].position().y;
 
-        verticesData[VERTEX_X_INDEX + stride] = (2.f / transformation.position().x)
-            * vertices[i].position().x
-            * transformation.scale().x;
+        auto pos = renderContext.transformation * vec3(x, y, 1.f);
 
-        verticesData[VERTEX_Y_INDEX + stride] = (2.f / transformation.position().y)
-            * vertices[i].position().y
-            * transformation.scale().y;
+        verticesData[VERTEX_X_INDEX + stride] = pos.x;
+        verticesData[VERTEX_Y_INDEX + stride] = pos.y;
 
         verticesData[VERTEX_R_INDEX + stride] = vertices[i].color().r() / 255.f;
         verticesData[VERTEX_G_INDEX + stride] = vertices[i].color().g() / 255.f;
@@ -455,15 +453,6 @@ void AndroidWindow::resize(int32_t width, int32_t height)
     m_width = width;
     m_height = height;
 
-    view().setPosition(vec2(static_cast<float>(m_width),
-        static_cast<float>(m_height)));
-
     // Set the viewport
     glViewport(0, 0, m_width, m_height);
-}
-
-void AndroidWindow::draw(const Shape& shape) const
-{
-
-    shape.render().drawOn(*this, view());
 }

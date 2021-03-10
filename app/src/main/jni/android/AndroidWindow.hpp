@@ -2,7 +2,6 @@
 
 // engine
 #include <core/Color.hpp>
-#include <core/Shape.hpp>
 #include <core/Vertices.hpp>
 #include <core/View.hpp>
 #include <core/Window.hpp>
@@ -33,9 +32,8 @@ public:
 
 public:
     void clear(const Color& color) const override;
-    void draw(const Shape& shape) const override;
     virtual void drawVertices(const Vertices& vertices,
-        const Transformation& transformation) const override;
+        const RenderContext& renderContext) const override;
     void display() const override;
 
 public:

@@ -22,7 +22,8 @@ void FlappyCatApplication::main()
 
     float scale = windowHeight / cameraHeight;
 
-    window().view().setScale(Position(scale, scale));
+    View view;
+    view.setScale(vec2(scale * 2.f / static_cast<float>(window().width()), scale * 2.f / static_cast<float>(window().height())));
 
     // game loop
     using std::chrono::duration_cast;
@@ -64,6 +65,6 @@ void FlappyCatApplication::main()
             break; // pollEvent processed window termination event and window is not ready and invalid
         }
 
-        game.render(window());
+        game.render(window(), view);
     }
 }
