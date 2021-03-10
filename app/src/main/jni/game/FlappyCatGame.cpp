@@ -326,13 +326,11 @@ void FlappyCatGame::update(const FrameDuration& time)
     m_fps.setText(std::to_string(m_fpsCounter));
 }
 
-void FlappyCatGame::render(const Window& window) const
+void FlappyCatGame::render(const Window& window, const View& view) const
 {
-    window.clear(Color(0, 0, 0));
+    window.clear(Color(0, 0, 0));    
 
-    auto transformation = window.view();
-
-    RenderContext renderContext { transformation.toMat3() };
+    RenderContext renderContext { view.toMat3() };
 
     m_background.drawOn(window, renderContext);
 

@@ -26,7 +26,7 @@ public:
 public:
     void processEvent(const Event& event);
     void update(const FrameDuration& time);
-    void render(const Window&) const;
+    void render(const Window& window, const View& view) const;
     vec2 cameraSize() const;
     void setFpsCounter(size_t fpsCount);
 

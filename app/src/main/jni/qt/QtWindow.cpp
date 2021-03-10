@@ -67,6 +67,7 @@ void QtWindow::shouldRepaint()
                 auto smoothing = 0.9f;
 
                 FlappyCatGame game;
+                View view;
 
                 QtEvent event(QtEvent::EventType::ResizedEventType);
                 event.setResizeEventData(size().width(), size().height());
@@ -95,7 +96,7 @@ void QtWindow::shouldRepaint()
                                 float windowHeight = static_cast<float>(size().height());
                                 float cameraHeight = game.cameraSize().y;
                                 float scale = windowHeight / cameraHeight;
-                                view().setScale(vec2(scale * 2.f / static_cast<float>(size().width()), scale * 2.f / static_cast<float>(size().height())));
+                                view.setScale(vec2(scale * 2.f / static_cast<float>(size().width()), scale * 2.f / static_cast<float>(size().height())));
                             }
                             game.processEvent(event);
                         }
@@ -105,7 +106,7 @@ void QtWindow::shouldRepaint()
 
                     if (!m_render->isSwapBuffersRequested()) {
                         m_render->clearQueue();
-                        game.render(*this);
+                        game.render(*this, view);
                         m_render->requestSwapBuffers();
                     }
                 }
