@@ -170,6 +170,21 @@ void QtWindow::drawVertices(const Vertices& vertices, const RenderContext& rende
     m_render->enqueue(0, vertices, renderContext.transformation);
 }
 
+void QtWindow::drawPoint(const Vertex& vertex, const RenderContext& renderContext) const
+{
+    vec2 point = vertex.position();
+
+    Vertices vertices;
+
+    float offset = 4.f;
+
+    vertices << Vertex(vec2(point.x - offset, point.y - offset), vertex.color())
+             << Vertex(vec2(point.x + offset, point.y - offset), vertex.color())
+             << Vertex(vec2(point.x + offset, point.y + offset), vertex.color())
+             << Vertex(vec2(point.x - offset, point.y + offset), vertex.color());
+    m_render->enqueue(1, vertices, renderContext.transformation);
+}
+
 void QtWindow::display() const
 {
     // do nothing in qt build
@@ -177,7 +192,6 @@ void QtWindow::display() const
 
 void QtWindow::postEvent(const QtEvent& event)
 {
-
     m_events.push(event);
 }
 

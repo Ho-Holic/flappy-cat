@@ -131,8 +131,7 @@ void FlappyCatChain<Link>::reset()
 
     for (std::size_t i = 0; i < m_links.size(); ++i) {
 
-        // TODO: replace with Position pos(position + Position(i * section().x, 0.f));
-        vec2 pos(this->position().x + i * section().x, this->position().y);
+        vec2 pos(this->position() + vec2(i * section().x, 0.f));
 
         m_links[i].moveTo(pos + m_startOffset); // shift off-screen if needed by m_startOffset
         m_links[i].resize(m_linkSize);

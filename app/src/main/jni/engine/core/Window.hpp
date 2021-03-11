@@ -12,5 +12,6 @@ public:
     virtual void clear(const Color& color) const = 0;
     virtual void drawVertices(const Vertices& vertices,
         const RenderContext& renderContext) const = 0;
+    virtual void drawPoint(const Vertex& vertex, const RenderContext& renderContext) const = 0;
     virtual void display() const = 0;
 };

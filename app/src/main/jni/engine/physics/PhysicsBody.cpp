@@ -18,7 +18,6 @@ void PhysicsBody::reset()
 
 void PhysicsBody::update(float time)
 {
-    // TODO: make list of physical forces instead of gravity variable
     m_acceleration = m_acceleration - m_gravity;
     m_velocity = m_velocity + (m_acceleration * time);
 
