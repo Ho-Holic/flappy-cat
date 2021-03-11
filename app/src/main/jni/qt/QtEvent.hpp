@@ -15,6 +15,8 @@ public:
     void setTouchEventData(float x, float y);
     void setResizeEventData(int width, int height);
 
+    const QtTouchEvent& touchEvent() const;
+
 private:
     EventType m_eventType;
     QtEventData m_eventData;

@@ -18,6 +18,7 @@
 #include <memory>
 #include <prototype/RectangleShape.hpp>
 #include <vector>
+#include <core/View.hpp>
 
 class FlappyCatGame {
 public:

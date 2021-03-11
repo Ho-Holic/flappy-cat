@@ -33,3 +33,10 @@ void QtEvent::setResizeEventData(int width, int height)
     m_eventData.resizeEvent.width = width;
     m_eventData.resizeEvent.height = height;
 }
+
+const QtTouchEvent& QtEvent::touchEvent() const
+{
+    REQUIRE(TAG, m_eventType == TouchEventType, "Must be 'MotionEventType'");
+
+    return m_eventData.touchEvent;
+}
