@@ -67,15 +67,13 @@ void FlappyCatGame::initialize()
     m_floor.setUpdateModifier(
         [this](FlappyCatFloor& floor, const FrameDuration&) {
             float radius = m_hero.radius();
-            // TODO: implement proper origin in 'transformation' and remove this line
-            // circle origin in bottom left so we shift by radius
-            vec2 center = m_hero.position() + vec2(radius, radius);
+            vec2 center = m_hero.position();
 
             if (m_gameState == PlayState || m_gameState == LoseState) {
 
                 if (Collide::circleRect(center, radius, m_floor.boundingBox())) {
                     m_gameState = OnTheFloorState;
-                    m_hero.moveTo(vec2(m_hero.position().x, m_floor.position().y));
+                    m_hero.moveTo(vec2(center.x, m_floor.position().y + radius));
                 }
             }
         });
@@ -105,9 +103,7 @@ void FlappyCatGame::initialize()
             // update
             wall.setUpdateModifier([this](FlappyCatWall& wall, const FrameDuration&) {
                 float radius = m_hero.radius();
-                // TODO: implement proper origin in 'transformation' and remove this code
-                // circle origin in bottom left so we shift by radius
-                vec2 center = m_hero.position() + vec2(radius, radius);
+                vec2 center = m_hero.position();
 
                 if (m_gameState == PlayState) {
 
@@ -213,7 +209,7 @@ void FlappyCatGame::initialize()
             hero.rotateTo(radians(angle));
 
             float offset = m_gameConstants[Constant::HeroSize].x;
-            m_score.moveTo(m_hero.position() - vec2(offset, offset / 4.f));
+            m_score.moveTo(m_hero.position() - vec2(offset * 2.f, offset * 1.5f));
         });
 
     m_hero.setResetModifier(
@@ -239,7 +235,7 @@ void FlappyCatGame::initialize()
         score.setText(std::to_string(m_scoreCounter));
 
         float offset = m_gameConstants[Constant::HeroSize].x;
-        score.moveTo(m_hero.position() - vec2(offset, offset / 4.f));
+        m_score.moveTo(m_hero.position() - vec2(offset * 2.f, offset * 1.5f));
 
         score.setColor(colorScheme[ColorConstant::TextColor]);
     });
@@ -328,7 +324,7 @@ void FlappyCatGame::update(const FrameDuration& time)
 
 void FlappyCatGame::render(const Window& window, const View& view) const
 {
-    window.clear(Color(0, 0, 0));    
+    window.clear(Color(0, 0, 0));
 
     RenderContext renderContext { view.toMat3() };
 

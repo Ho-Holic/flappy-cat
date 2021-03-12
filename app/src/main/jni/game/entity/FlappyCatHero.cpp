@@ -85,21 +85,13 @@ const vec2& FlappyCatHero::distance() const
 
 void FlappyCatHero::syncChildren()
 {
-    //
-    // TODO: add rotation to m_ball
-    // Currently origin of ball is not in the center of the ball
-    // so rotation would cause bad render, fix origin code
-    // and uncomment rotation line
-    //
-    // m_ball.transformation().setRotation(m_angle);
-    //
-
+    m_ball.transformation().setRotation(rotation());
     m_ball.transformation().setPosition(position());
 
     float diameter = m_ball.geometry().radius() * 2.f;
 
     vec2 mascotPos = m_ball.transformation().position()
-        + vec2(diameter * 0.25f, diameter * 0.3f);
+        - vec2(diameter * 0.25f, diameter * 0.2f);
 
     m_mascot.moveTo(mascotPos);
     m_mascot.resize(vec2(diameter, diameter));

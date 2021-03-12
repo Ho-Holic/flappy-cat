@@ -28,14 +28,13 @@ Geometry::size_type CircleGeometry::points() const
 
 vec2 CircleGeometry::pointAt(size_type index) const
 {
-
     constexpr float pi = 3.141592654f;
 
     float angle = index * 2.f * pi / m_resolution - pi / 2.f;
     float x = std::cos(angle) * m_radius;
     float y = std::sin(angle) * m_radius;
 
-    return vec2(m_radius + x, m_radius + y);
+    return vec2(x, y);
 }
 
 CircleGeometry::OnUpdateSignal& CircleGeometry::onUpdate()
