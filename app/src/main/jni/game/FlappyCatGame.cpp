@@ -326,7 +326,7 @@ void FlappyCatGame::render(const Window& window, const View& view) const
 {
     window.clear(Color(0, 0, 0));
 
-    RenderContext renderContext { view.toMat3() };
+    RenderContext renderContext { to_mat3(view) };
 
     m_background.drawOn(window, renderContext);
 

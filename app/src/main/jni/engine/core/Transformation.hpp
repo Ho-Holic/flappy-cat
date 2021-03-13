@@ -15,7 +15,6 @@ public:
     virtual const vec2& position() const = 0;
     virtual const vec2& scale() const = 0;
     virtual float rotation() const = 0;
-
-public:
-    mat3 toMat3() const; // TODO: make it as a free function 'to_mat3(const Transformation&)'
 };
+
+mat3 to_mat3(const Transformation& transformation);

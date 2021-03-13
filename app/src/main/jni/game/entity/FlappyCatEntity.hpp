@@ -34,6 +34,6 @@ private:
 private:
     const FlappyCatGameConstants& m_gameConstants;
     vec2 m_position;
-    vec2 m_size;
     float m_angle;
+    vec2 m_size;
 };

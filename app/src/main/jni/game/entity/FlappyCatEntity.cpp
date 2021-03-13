@@ -4,8 +4,8 @@
 FlappyCatEntity::FlappyCatEntity(const FlappyCatGameConstants& gameConstants)
     : m_gameConstants(gameConstants)
     , m_position()
-    , m_size()
     , m_angle(0.f)
+    , m_size()
 {
     //
 }

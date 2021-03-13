@@ -41,7 +41,7 @@ void VertexBasedRender::update(const Shape& shape)
 
     for (Geometry::size_type index = 0; index < points; ++index) {
 
-        auto p = shape.transformation().toMat3() * vec3(shape.geometry().pointAt(index), 1.f);
+        auto p = to_mat3(shape.transformation()) * vec3(shape.geometry().pointAt(index), 1.f);
 
         m_vertices << Vertex(vec2(p.x, p.y), m_brushColor);
     }

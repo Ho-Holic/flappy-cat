@@ -1,11 +1,11 @@
 #include "Transformation.hpp"
 #include <cmath>
 
-mat3 Transformation::toMat3() const
+mat3 to_mat3(const Transformation& transformation)
 {
-    vec2 t = position();
-    vec2 s = scale();
-    float angle = rotation();
+    vec2 t = transformation.position();
+    vec2 s = transformation.scale();
+    float angle = transformation.rotation();
     float sinv = std::sin(angle);
     float cosv = std::cos(angle);
 

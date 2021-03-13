@@ -27,7 +27,7 @@ void FlappyCatMascot::drawOn(const Window& window, const RenderContext& renderCo
     mascotView.setRotation(this->rotation());
     mascotView.setScale(vec2(1.f, 1.f));
 
-    RenderContext newRenderContext { renderContext.transformation * mascotView.toMat3() };
+    RenderContext newRenderContext { renderContext.transformation * to_mat3(mascotView) };
 
     m_body.render().drawOn(window, newRenderContext);
     m_backLeg.render().drawOn(window, newRenderContext);
