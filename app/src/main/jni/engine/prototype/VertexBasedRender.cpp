@@ -20,10 +20,15 @@ void VertexBasedRender::setBrushColor(const Color& color)
 void VertexBasedRender::drawOn(const Window& window, const RenderContext& renderContext) const
 {
     window.drawVertices(m_vertices, renderContext);
+
+    if (m_drawCenter) {
+        window.drawPoint(Vertex(m_center, Color(255, 0, 0)), renderContext);
+    }
 }
 
 void VertexBasedRender::update(const Shape& shape)
 {
+    m_center = shape.transformation().position();
 
     Geometry::size_type points = shape.geometry().points();
 
@@ -45,4 +50,9 @@ void VertexBasedRender::update(const Shape& shape)
 const Color& VertexBasedRender::getBrushColor() const
 {
     return m_brushColor;
+}
+
+void VertexBasedRender::setDrawCenter(bool enabled)
+{
+    m_drawCenter = enabled;
 }
