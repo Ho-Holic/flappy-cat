@@ -36,32 +36,9 @@ void VertexBasedRender::update(const Shape& shape)
 
     for (Geometry::size_type index = 0; index < points; ++index) {
 
-        // TODO: remove this part and make transform matrix
-        // rotate
-        float angle = shape.transformation().rotation();
+        auto p = shape.transformation().toMat3() * vec3(shape.geometry().pointAt(index), 1.f);
 
-        float sinValue = std::sin(angle);
-        float cosValue = std::cos(angle);
-
-        vec2 p = shape.geometry().pointAt(index) - shape.transformation().origin();
-
-        float rotatedX = p.x * cosValue - p.y * sinValue;
-        float rotatedY = p.x * sinValue + p.y * cosValue;
-
-        //
-        // TODO: add scale/origin later
-        //
-        // When object is moved, origin doesn't take into account
-        // only for rotation.
-        //
-        // Scale is implemented only for 'View' to change all objects
-        // representation on the screen, but local scale is not implemented
-        //
-
-        m_vertices << Vertex(shape.transformation().position()
-                + vec2(rotatedX, rotatedY)
-                + shape.transformation().origin(),
-            m_brushColor);
+        m_vertices << Vertex(vec2(p.x, p.y), m_brushColor);
     }
 }
 

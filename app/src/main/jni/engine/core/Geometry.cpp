@@ -1,2 +1,1 @@
-// engine
 #include "Geometry.hpp"

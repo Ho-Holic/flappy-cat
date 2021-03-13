@@ -1,4 +1,5 @@
 #include "FlappyCatMascot.hpp"
+#include <core/View.hpp>
 
 FlappyCatMascot::FlappyCatMascot(const FlappyCatGameConstants& gameConstants)
     : FlappyCatStateNode<FlappyCatMascot>(gameConstants)
@@ -20,25 +21,30 @@ FlappyCatMascot::FlappyCatMascot(const FlappyCatGameConstants& gameConstants)
 
 void FlappyCatMascot::drawOn(const Window& window, const RenderContext& renderContext) const
 {
-    m_body.render().drawOn(window, renderContext);
-    m_backLeg.render().drawOn(window, renderContext);
-    m_frontLeg.render().drawOn(window, renderContext);
-    m_tail.render().drawOn(window, renderContext);
-    m_scarf.render().drawOn(window, renderContext);
-    m_scarfTail.render().drawOn(window, renderContext);
-    m_head.render().drawOn(window, renderContext);
-    m_leftEar.render().drawOn(window, renderContext);
-    m_rightEar.render().drawOn(window, renderContext);
-    m_leftEye.render().drawOn(window, renderContext);
-    m_rightEye.render().drawOn(window, renderContext);
-    m_mouth.render().drawOn(window, renderContext);
+    // TODO: make Transform inside Entity to avoid this View reconstruction
+    View mascotView;
+    mascotView.setPosition(this->position());
+    mascotView.setRotation(this->rotation());
+    mascotView.setScale(vec2(1.f, 1.f));
+
+    RenderContext newRenderContext { renderContext.transformation * mascotView.toMat3() };
+
+    m_body.render().drawOn(window, newRenderContext);
+    m_backLeg.render().drawOn(window, newRenderContext);
+    m_frontLeg.render().drawOn(window, newRenderContext);
+    m_tail.render().drawOn(window, newRenderContext);
+    m_scarf.render().drawOn(window, newRenderContext);
+    m_scarfTail.render().drawOn(window, newRenderContext);
+    m_head.render().drawOn(window, newRenderContext);
+    m_leftEar.render().drawOn(window, newRenderContext);
+    m_rightEar.render().drawOn(window, newRenderContext);
+    m_leftEye.render().drawOn(window, newRenderContext);
+    m_rightEye.render().drawOn(window, newRenderContext);
+    m_mouth.render().drawOn(window, newRenderContext);
 }
 
 void FlappyCatMascot::syncChildren()
 {
-    const vec2& pos = position();
-    float angle = rotation();
-
     vec2 referenceSize(2000.f, 2000.f); // must be equal, 2000x2000 square
 
     vec2 scale = size() / referenceSize;
@@ -66,37 +72,38 @@ void FlappyCatMascot::syncChildren()
     vec2 mouthSize(56.f, 36.f);
     vec2 mouthPos(280.f, 96.f);
 
+    vec2 center(bodySize.x / 2.f, bodySize.y / 2.f);
+
     // move
-    // TODO: later remove additional Res variables
-    vec2 bodyPosRes = bodyPos;
-    vec2 headPosRes = bodyPos + headPos;
-    vec2 backLegPosRes = bodyPos + backLegPos;
-    vec2 frontLegPosRes = bodyPos + backLegPos + frontLegPos;
-    vec2 tailPosRes = bodyPos + tailPos;
-    vec2 leftEarPosRes = bodyPos + headPos + leftEarPos;
-    vec2 rightEarPosRes = bodyPos + headPos + leftEarPos + rightEarPos;
+    vec2 bodyPosRes = bodyPos - center;
+    vec2 headPosRes = bodyPos + headPos - center;
+    vec2 backLegPosRes = bodyPos + backLegPos - center;
+    vec2 frontLegPosRes = bodyPos + backLegPos + frontLegPos - center;
+    vec2 tailPosRes = bodyPos + tailPos - center;
+    vec2 leftEarPosRes = bodyPos + headPos + leftEarPos - center;
+    vec2 rightEarPosRes = bodyPos + headPos + leftEarPos + rightEarPos - center;
 
-    vec2 leftEyePosRes = bodyPos + headPos + leftEyePos;
-    vec2 rightEyePosRes = bodyPos + headPos + leftEyePos + rightEyePos;
+    vec2 leftEyePosRes = bodyPos + headPos + leftEyePos - center;
+    vec2 rightEyePosRes = bodyPos + headPos + leftEyePos + rightEyePos - center;
 
-    vec2 scarfPosRes = bodyPos + scarfPos;
-    vec2 scarfTailPosRes = bodyPos + scarfPos + scarfTailPos;
-    vec2 mouthPosRes = bodyPos + headPos + mouthPos;
+    vec2 scarfPosRes = bodyPos + scarfPos - center;
+    vec2 scarfTailPosRes = bodyPos + scarfPos + scarfTailPos - center;
+    vec2 mouthPosRes = bodyPos + headPos + mouthPos - center;
 
     // place objects
 
-    m_body.transformation().setPosition(pos + bodyPosRes * scale);
-    m_head.transformation().setPosition(pos + headPosRes * scale);
-    m_backLeg.transformation().setPosition(pos + backLegPosRes * scale);
-    m_frontLeg.transformation().setPosition(pos + frontLegPosRes * scale);
-    m_tail.transformation().setPosition(pos + tailPosRes * scale);
-    m_leftEar.transformation().setPosition(pos + leftEarPosRes * scale);
-    m_rightEar.transformation().setPosition(pos + rightEarPosRes * scale);
-    m_leftEye.transformation().setPosition(pos + leftEyePosRes * scale);
-    m_rightEye.transformation().setPosition(pos + rightEyePosRes * scale);
-    m_scarf.transformation().setPosition(pos + scarfPosRes * scale);
-    m_scarfTail.transformation().setPosition(pos + scarfTailPosRes * scale);
-    m_mouth.transformation().setPosition(pos + mouthPosRes * scale);
+    m_body.transformation().setPosition(bodyPosRes * scale);
+    m_head.transformation().setPosition(headPosRes * scale);
+    m_backLeg.transformation().setPosition(backLegPosRes * scale);
+    m_frontLeg.transformation().setPosition(frontLegPosRes * scale);
+    m_tail.transformation().setPosition(tailPosRes * scale);
+    m_leftEar.transformation().setPosition(leftEarPosRes * scale);
+    m_rightEar.transformation().setPosition(rightEarPosRes * scale);
+    m_leftEye.transformation().setPosition(leftEyePosRes * scale);
+    m_rightEye.transformation().setPosition(rightEyePosRes * scale);
+    m_scarf.transformation().setPosition(scarfPosRes * scale);
+    m_scarfTail.transformation().setPosition(scarfTailPosRes * scale);
+    m_mouth.transformation().setPosition(mouthPosRes * scale);
 
     // resize objects
     m_body.geometry().resize(bodySize * scale);
@@ -111,36 +118,6 @@ void FlappyCatMascot::syncChildren()
     m_scarf.geometry().resize(scarfSize * scale);
     m_scarfTail.geometry().resize(scarfTailSize * scale);
     m_mouth.geometry().resize(mouthSize * scale);
-
-    // rotate
-
-    vec2 center(bodySize.x / 2.f, bodySize.y / 2.f);
-
-    m_body.transformation().setOrigin((center - bodyPosRes) * scale);
-    m_head.transformation().setOrigin((center - headPosRes) * scale);
-    m_backLeg.transformation().setOrigin((center - backLegPosRes) * scale);
-    m_frontLeg.transformation().setOrigin((center - frontLegPosRes) * scale);
-    m_tail.transformation().setOrigin((center - tailPosRes) * scale);
-    m_leftEar.transformation().setOrigin((center - leftEarPosRes) * scale);
-    m_rightEar.transformation().setOrigin((center - rightEarPosRes) * scale);
-    m_leftEye.transformation().setOrigin((center - leftEyePosRes) * scale);
-    m_rightEye.transformation().setOrigin((center - rightEyePosRes) * scale);
-    m_scarf.transformation().setOrigin((center - scarfPosRes) * scale);
-    m_scarfTail.transformation().setOrigin((center - scarfTailPosRes) * scale);
-    m_mouth.transformation().setOrigin((center - mouthPosRes) * scale);
-
-    m_body.transformation().setRotation(angle);
-    m_head.transformation().setRotation(angle);
-    m_backLeg.transformation().setRotation(angle);
-    m_frontLeg.transformation().setRotation(angle);
-    m_tail.transformation().setRotation(angle);
-    m_leftEar.transformation().setRotation(angle);
-    m_rightEar.transformation().setRotation(angle);
-    m_leftEye.transformation().setRotation(angle);
-    m_rightEye.transformation().setRotation(angle);
-    m_scarf.transformation().setRotation(angle);
-    m_scarfTail.transformation().setRotation(angle);
-    m_mouth.transformation().setRotation(angle);
 }
 
 void FlappyCatMascot::setColor(const Color& bodyColor,

@@ -7,6 +7,7 @@
 RectangleGeometry::RectangleGeometry(const vec2& size)
     : Geometry()
     , m_size(size)
+    , m_origin(0.f, 0.f)
     , m_onUpdate()
 {
     //
@@ -44,6 +45,18 @@ vec2 RectangleGeometry::pointAt(size_type index) const
     }
 
     return vec2(0.f, 0.f);
+}
+
+void RectangleGeometry::setOrigin(const vec2& position)
+{
+    REQUIRE(TAG, false, "origin is not supported yet");
+    m_origin = origin();
+    m_onUpdate.emit();
+}
+
+const vec2& RectangleGeometry::origin() const
+{
+    return m_origin;
 }
 
 RectangleGeometry::OnUpdateSignal& RectangleGeometry::onUpdate()

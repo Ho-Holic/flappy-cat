@@ -1,5 +1,3 @@
-
-// engine
 #include "TriangleGeometry.hpp"
 
 TriangleGeometry::TriangleGeometry(const vec2& size)
@@ -29,19 +27,16 @@ void TriangleGeometry::resize(const vec2& size)
 
 const vec2& TriangleGeometry::size() const
 {
-
     return m_size;
 }
 
 Geometry::size_type TriangleGeometry::points() const
 {
-
     return 3;
 }
 
 vec2 TriangleGeometry::pointAt(Geometry::size_type index) const
 {
-
     switch (index) {
     case 0:
         return vec2(0.f, 0.f);
@@ -57,4 +52,16 @@ vec2 TriangleGeometry::pointAt(Geometry::size_type index) const
     }
 
     return vec2(0.f, 0.f);
+}
+
+void TriangleGeometry::setOrigin(const vec2& position)
+{
+    REQUIRE(TAG, false, "origin is not supported yet");
+    m_origin = position;
+    m_onUpdate.emit();
+}
+
+const vec2& TriangleGeometry::origin() const
+{
+    return m_origin;
 }

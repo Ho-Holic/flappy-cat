@@ -90,10 +90,7 @@ void FlappyCatHero::syncChildren()
 
     float diameter = m_ball.geometry().radius() * 2.f;
 
-    vec2 mascotPos = m_ball.transformation().position()
-        - vec2(diameter * 0.25f, diameter * 0.2f);
-
-    m_mascot.moveTo(mascotPos);
+    m_mascot.moveTo(position());
     m_mascot.resize(vec2(diameter, diameter));
     m_mascot.rotateTo(rotation());
 }
